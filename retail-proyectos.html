@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proyectos retail — Giandeco Studio Design</title>
+<meta name="description" content="Nueve casos de retail y espacios comerciales: El Corte Inglés, Pycca, Walon, Enchantée Paris, Baby Club, Mássimo Café y Hotel Unión Cusco. Reto, qué hicimos y resultado.">
+<meta name="theme-color" content="#0A0A09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=7">
+<style>
+  /* ============ CASOS — editorial de scroll fijo (sticky), todo visible ============
+     Nada se oculta: los 9 casos están siempre completos en la página. Lo nuevo es
+     CÓMO se recorren: la foto de cada caso queda anclada (position:sticky) dentro
+     de su propio bloque mientras el texto avanza al lado — la foto se "suelta"
+     recién cuando termina el texto de ese caso y empieza el siguiente. Es el
+     mismo recurso editorial que usan sitios de estudios/agencias de alto nivel
+     para casos de portafolio; en CSS puro, sin librerías. */
+  .pr-filtros{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:clamp(32px,4.5vw,52px); }
+  .pr-filtro{
+    font-family:var(--body); font-size:.72rem; letter-spacing:.06em; color:var(--text-dim);
+    background:none; border:1px solid var(--line); border-radius:20px; padding:9px 16px 9px 18px;
+    cursor:pointer; transition:border-color .25s ease, color .25s ease, background-color .25s ease;
+  }
+  .pr-filtro b{ color:var(--text-faint); font-weight:400; margin-left:5px; }
+  .pr-filtro:hover{ border-color:var(--accent); color:var(--lino); }
+  .pr-filtro.is-active{ background:var(--accent); border-color:var(--accent); color:var(--ebano); }
+  .pr-filtro.is-active b{ color:rgba(10,9,6,.6); }
+
+  .pr-item{ position:relative; border-top:1px solid var(--line); padding-block:clamp(56px,7vw,104px); }
+  .pr-item:last-child{ border-bottom:1px solid var(--line); }
+  .pr-item.is-filtered{ display:none; }
+
+  .pr-grid{ position:relative; z-index:1; display:grid; grid-template-columns:1fr; gap:clamp(28px,4vw,48px); }
+  @media (min-width:900px){
+    .pr-grid{ grid-template-columns:1fr 1.1fr; gap:clamp(40px,5vw,72px); }
+    .pr-item:nth-child(even) .pr-grid{ direction:rtl; }
+    .pr-item:nth-child(even) .pr-grid > *{ direction:ltr; }
+  }
+  @media (min-width:900px){ .pr-visual-in{ position:sticky; top:calc(var(--h-total) + 28px); } }
+  .pr-media{ position:relative; border-radius:2px; overflow:hidden; aspect-ratio:4/3; box-shadow:0 30px 60px -20px rgba(0,0,0,.5); }
+  .pr-media img{ width:100%; height:100%; object-fit:cover; }
+  .pr-visual-cap{ display:flex; align-items:baseline; gap:14px; margin-top:18px; }
+  .pr-num{ font-family:var(--display); font-weight:400; font-size:clamp(1.1rem,1.6vw,1.35rem); color:var(--accent); flex:none; }
+  .pr-cat{ font-family:var(--body); font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--text-faint); }
+
+  .pr-texto{ position:relative; }
+  .pr-nombre{ font-family:var(--display); font-weight:400; font-size:clamp(2rem,3.4vw,2.7rem); color:var(--lino); margin:0 0 6px; line-height:1.05; }
+  .pr-sub{ display:block; font-family:var(--script); font-style:italic; font-weight:300; font-size:1.1rem; color:var(--text-faint); margin:0 0 clamp(24px,3vw,36px); }
+
+  .pr-stepper{ display:flex; align-items:center; margin-bottom:clamp(24px,3vw,34px); flex-wrap:wrap; row-gap:10px; }
+  .pr-step{ display:flex; align-items:center; gap:8px; flex:none; }
+  .pr-step b{
+    width:22px; height:22px; border-radius:50%; border:1px solid var(--accent); color:var(--accent);
+    display:flex; align-items:center; justify-content:center; font-family:var(--body); font-size:.6rem; flex:none;
+  }
+  .pr-step span{ font-family:var(--body); font-size:.72rem; color:var(--text-faint); white-space:nowrap; }
+  .pr-step-line{ flex:1 1 20px; height:1px; background:var(--line); margin:0 10px; min-width:16px; }
+
+  .pr-bloque{ margin-bottom:20px; }
+  .pr-bloque b{ display:block; font-family:var(--body); font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--text-faint); margin-bottom:8px; }
+  .pr-bloque p{ margin:0; color:var(--text-dim); font-size:1rem; line-height:1.75; max-width:52ch; }
+
+  .pr-quote-wrap{ margin-top:26px; padding-top:20px; border-top:1px solid var(--line); }
+  .pr-quote-label{ display:block; font-family:var(--body); font-size:.62rem; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:10px; }
+  .pr-quote{
+    margin:0; font-family:var(--script); font-style:italic; font-weight:300;
+    font-size:clamp(1.2rem,1.7vw,1.4rem); line-height:1.5; color:var(--lino); max-width:44ch;
+  }
+  .pr-quote::before{ content:'“'; color:var(--accent); font-family:var(--display); font-style:normal; margin-right:2px; }
+</style>
+</head>
+<body data-mundo="retail" data-seccion="proyectos">
+
+<div id="gdHeader"></div>
+
+<section class="gd-hero is-corto">
+  <div class="gd-hero-panel">
+    <p class="gd-migas reveal-left"><a href="index.html">Inicio</a> / <a href="retail.html">Retail</a> / <span>Proyectos</span></p>
+    <p class="gd-hero-eyebrow reveal-left"><i></i>Retail · Proyectos</p>
+    <h1 class="reveal-left d1">Nueve locales, <em>nueve problemas</em> distintos</h1>
+    <p class="reveal-left d2">Tiendas departamentales, boutiques, campañas nacionales, cafés y hotelería. Cada caso con su reto, lo que hicimos y lo que pasó después.</p>
+  </div>
+  <div class="gd-hero-media">
+    <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/work/walonfiguritas.jpg" alt="Campaña nacional montada en vitrina"></div>
+    <div class="gd-hero-cap">
+      <span><b>Campaña nacional</b><span>Walon Figuritas</span></span>
+      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+    </div>
+  </div>
+</section>
+
+<section class="gd-sec">
+  <div class="gd-in" id="prLista"></div>
+</section>
+
+<section class="gd-sec gd-claro" style="padding-block:clamp(48px,6vw,80px);">
+  <div class="gd-in" style="text-align:center;">
+    <h2 class="gd-h2 reveal" style="margin-inline:auto; max-width:20ch;">¿Su local es el siguiente?</h2>
+    <p class="gd-body reveal d1" style="margin-inline:auto;">Empezamos con una visita técnica: medimos, leemos el recorrido y le decimos qué cambiaría primero.</p>
+    <div class="reveal d2" style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:var(--sp-24);">
+      <a class="gd-btn gd-btn-primary" href="contacto.html">Agendar visita técnica
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-ghost" href="retail-diseno-tiendas.html">Ver qué hacemos</a>
+    </div>
+  </div>
+</section>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=8"></script>
+<script>
+(function(){
+  var CASOS = [
+    { slug:'el-corte-ingles', cat:'Retail departamental', grupo:'tiendas', nombre:'El Corte Inglés', sub:'Ambientes de exhibición de lujo', img:'images/work/corteingles.jpg',
+      reto:'Crear una experiencia de compra que se sintiera de lujo sin perder claridad de recorrido.',
+      hice:'Curé y monté los ambientes de exhibición combinando mobiliario de diseño, textiles e iluminación puntual sobre paletas neutras. Construí escenarios principales e islotes comerciales con letras corpóreas y niveles arquitectónicos que dirigieron el tráfico a las zonas de mayor conversión.',
+      res:'Mayor ticket promedio, más tráfico y más seguidores en el área infantil.' },
+    { slug:'pycca-ecuador', cat:'Campaña estacional', grupo:'campanas', nombre:'Pycca Ecuador', sub:'Colección navideña Christmas Chalet', img:'images/work/pycca.jpg',
+      reto:'Coordinar una campaña estacional replicable en distintas tiendas del país.',
+      hice:'Concebí y ejecuté las campañas estacionales coordinando paleta, composición e iluminación comercial de punta a punta. Monté espacios modelo para validar zonificación y puntos calientes antes de replicarlos a nivel nacional, y formé a los equipos de tienda en lineamientos visuales.',
+      res:'Más ventas, más tráfico y reconocimiento de marca a nivel nacional.' },
+    { slug:'walon-punta-hermosa', cat:'Tienda boutique · deporte', grupo:'tiendas', nombre:'Walon Punta Hermosa', sub:'La primera boutique de la marca', img:'images/proyectos/walon-puntahermosa.jpg?v=2',
+      reto:'Convertir un espacio vacío en la primera tienda boutique de la marca.',
+      hice:'Diseñé la tienda desde cero. Estructuré zonas de circulación intuitivas por categoría (training, vóley, fútbol, urban), ubiqué la caja en un punto estratégico de control visual e implementé maniquíes isla, mesas promocionales y exhibidores tipo torre en el eje principal.',
+      res:'Más tráfico en tienda y el nacimiento del primer formato boutique de la marca.' },
+    { slug:'walon-figuritas', cat:'Campaña nacional · red de tiendas', grupo:'campanas', nombre:'Walon Figuritas del Barrio', sub:'Fútbol y coleccionismo en vitrina', img:'images/work/walonfiguritas.jpg',
+      reto:'Llevar una misma campaña a tiendas de todo el país sin perder impacto local.',
+      hice:'Concebí e implementé la campaña visual nacional inspirada en la cultura del fútbol y el coleccionismo de figuritas: vitrinas con maniquíes en pleno movimiento deportivo, iluminación LED integrada, pódiums con césped sintético y estructuras tipo carta de figurita enmarcando las prendas clave.',
+      res:'Más ventas en tienda y atención inmediata del público.' },
+    { slug:'enchantee-paris', cat:'Moda · vitrinismo', grupo:'tiendas', nombre:'Enchantée Paris', sub:'Capturar el tráfico del pasillo', img:'images/work/enchantee.jpg',
+      reto:'Capturar tráfico de pasillo en un centro comercial y derivarlo a un nivel superior de tienda.',
+      hice:'Curé el styling de vitrina combinando estampados, capas y accesorios sobre maniquíes en puntos elevados de alto tráfico. Desarrollé el material gráfico promocional, incluida la tipografía en vinilo, e instalé vitrinas island display en los pasillos del centro comercial.',
+      res:'Mayor posicionamiento de marca, más ventas y más tráfico.' },
+    { slug:'baby-club', cat:'Boutique infantil', grupo:'tiendas', nombre:'Baby Club', sub:'Vender sin saturar', img:'images/work/babyclub.jpg',
+      reto:'Vender moda infantil sin saturar visualmente un espacio pequeño.',
+      hice:'Dirigí la experiencia visual completa equilibrando una estética neoclásica con un recorrido intuitivo. Curé utilería náutica y clásica para complementar los outfits sin saturar, agrupé por familias de color en pasteles y tierras, e integré nichos retroiluminados para resaltar texturas y calzado.',
+      res:'Mayor reconocimiento de marca, más ventas y más tráfico.' },
+    { slug:'massimo-cafe', cat:'Gastronomía · concepto integral', grupo:'gastronomia', nombre:'Mássimo Café', sub:'Esencia Bohemia', img:'images/work/massimo.jpg',
+      reto:'Diferenciar un café de barrio con identidad propia frente a la competencia.',
+      hice:'Desarrollé el concepto integral inspirado en los pubs y salones vintage europeos, fusionando maderas cálidas con acentos industriales sobre terracota, verde oliva y tonos amaderados. Planifiqué los dos niveles del local creando microambientes distintos, de la barra a las zonas de alta permanencia.',
+      res:'Mayor afluencia de clientes y referente de decoración bohemia en la zona.' },
+    { slug:'hotel-union-cusco', cat:'Hotelería · restaurante', grupo:'gastronomia', nombre:'Hotel Unión Cusco', sub:'Concepto Raíces', img:'images/work/unioncusco.jpg',
+      reto:'Que el restaurante del hotel contara una historia de identidad local, no solo sirviera mesas.',
+      hice:'Renové integralmente el restaurante bajo el concepto Raíces, centrado en el origen, la artesanía local y la gastronomía inmersiva. Combiné lencería blanca de alta gama con textiles tradicionales y vajilla artesanal, y diseñé repisas y escaleras en madera rústica para exhibir insumos locales y licores de la casa.',
+      res:'Interés nacional e internacional. Hoy es referente frente a la competencia.' },
+    { slug:'casa-grande', cat:'Mobiliario y decoración', grupo:'mobiliario', nombre:'Casa Grande', sub:'Ambientes que se habitan con la mirada', img:'images/proyectos/casagrande-1.jpg?v=2',
+      reto:'Que el cliente se imaginara viviendo en los ambientes exhibidos, no solo viendo muebles.',
+      hice:'Creé ambientes inmersivos tipo vignette dentro del piso de venta, recreando dormitorios, salas y comedores completos. Apliqué paletas por zona combinando maderas nobles, terciopelos, lino y metalizados, y sumé curaduría de arte mural, plantas e iluminación de acento.',
+      res:'Más ventas, más afluencia de clientes y más movimiento en redes sociales.' }
+  ];
+
+  var cont = document.getElementById('prLista');
+  if(!cont) return;
+  var PROCESO = [
+    { n:'01', label:'Visita técnica' },
+    { n:'02', label:'Concepto y paleta' },
+    { n:'03', label:'Montaje en obra' },
+    { n:'04', label:'Entrega y seguimiento' }
+  ];
+  var GRUPOS = [
+    { key:'todos', label:'Todos' },
+    { key:'tiendas', label:'Tiendas y boutiques' },
+    { key:'campanas', label:'Campañas' },
+    { key:'gastronomia', label:'Gastronomía y hotelería' },
+    { key:'mobiliario', label:'Mobiliario y decoración' }
+  ];
+
+  function stepperHTML(){
+    return '<div class="pr-stepper">' + PROCESO.map(function(s, i){
+      var linea = i < PROCESO.length - 1 ? '<span class="pr-step-line" aria-hidden="true"></span>' : '';
+      return '<span class="pr-step"><b>' + s.n + '</b><span>' + s.label + '</span></span>' + linea;
+    }).join('') + '</div>';
+  }
+  function contarGrupo(key){
+    return key === 'todos' ? CASOS.length : CASOS.filter(function(c){ return c.grupo === key; }).length;
+  }
+
+  cont.innerHTML =
+    '<div class="pr-filtros reveal" id="prFiltros"></div>' +
+    '<div id="prItems"></div>';
+
+  var filtrosEl = document.getElementById('prFiltros');
+  var itemsEl = document.getElementById('prItems');
+
+  filtrosEl.innerHTML = GRUPOS.map(function(g){
+    return '<button type="button" class="pr-filtro' + (g.key === 'todos' ? ' is-active' : '') + '" data-grupo="' + g.key + '">' +
+      g.label + ' <b>(' + contarGrupo(g.key) + ')</b></button>';
+  }).join('');
+
+  // todos los casos van siempre completos y visibles — nada se oculta detrás
+  // de un clic; lo único que hace el filtro es mostrar/ocultar por rubro.
+  itemsEl.innerHTML = CASOS.map(function(c, i){
+    var num = (i + 1 < 10 ? '0' : '') + (i + 1);
+    return '<article class="pr-item" id="' + c.slug + '" data-grupo="' + c.grupo + '">' +
+      '<div class="pr-grid">' +
+        '<div class="pr-visual"><div class="pr-visual-in">' +
+          '<div class="pr-media reveal-scale gd-curtain"><img decoding="async" class="gd-kb-img" src="' + c.img + '" alt="' + c.nombre + ' — ' + c.cat + '" loading="lazy"></div>' +
+          '<div class="pr-visual-cap"><span class="pr-num">' + num + '</span><span class="pr-cat">' + c.cat + '</span></div>' +
+        '</div></div>' +
+        '<div class="pr-texto reveal d1">' +
+          '<h2 class="pr-nombre">' + c.nombre + '</h2>' +
+          '<span class="pr-sub">' + c.sub + '</span>' +
+          stepperHTML() +
+          '<div class="pr-bloque"><b>Reto</b><p>' + c.reto + '</p></div>' +
+          '<div class="pr-bloque"><b>Cómo acompañamos el proyecto</b><p>' + c.hice + '</p></div>' +
+          '<div class="pr-quote-wrap"><span class="pr-quote-label">Resultado</span><p class="pr-quote">' + c.res + '</p></div>' +
+        '</div>' +
+      '</div>' +
+    '</article>';
+  }).join('');
+
+  // filtro por rubro — real, cuenta contra los datos, no decorativo. Solo
+  // muestra/oculta; el contenido de cada caso que sí se ve nunca está recortado.
+  filtrosEl.addEventListener('click', function(e){
+    var btn = e.target.closest('.pr-filtro');
+    if(!btn) return;
+    filtrosEl.querySelectorAll('.pr-filtro').forEach(function(b){ b.classList.toggle('is-active', b === btn); });
+    var g = btn.dataset.grupo;
+    itemsEl.querySelectorAll('.pr-item').forEach(function(it){
+      it.classList.toggle('is-filtered', g !== 'todos' && it.dataset.grupo !== g);
+    });
+  });
+
+  // los nodos se crean después del observer inicial de la página: se registra aquí
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(en){
+      en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+    }, { threshold:.12, rootMargin:'0px 0px -6% 0px' });
+    cont.querySelectorAll('.reveal, .reveal-scale, .gd-curtain').forEach(function(el){ io.observe(el); });
+  } else {
+    cont.querySelectorAll('.reveal, .reveal-scale, .gd-curtain').forEach(function(el){ el.classList.add('is-visible'); });
+  }
+})();
+</script>
+</body>
+</html>

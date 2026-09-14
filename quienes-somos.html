@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiénes somos — Giandeco Studio Design</title>
+<meta name="description" content="Giandeco Studio Design: estudio de visual merchandising y diseño de espacios comerciales en Lima. Historia, equipo, misión y marcas con las que hemos trabajado.">
+<meta name="theme-color" content="#0A0A09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=7">
+<style>
+  .qs-historia{ display:grid; gap:clamp(36px,5vw,72px); grid-template-columns:1fr; align-items:start; }
+  @media (min-width:960px){ .qs-historia{ grid-template-columns:.85fr 1.15fr; } }
+  .qs-foto{ position:relative; border-radius:2px; overflow:hidden; aspect-ratio:4/5; background:var(--bg-raised); }
+  .qs-foto img{ width:100%; height:100%; object-fit:cover; object-position:center 20%; }
+  .qs-foto figcaption{
+    position:absolute; left:0; right:0; bottom:0; padding:20px;
+    background:linear-gradient(to top, rgba(10,9,6,.92), transparent);
+    font-family:var(--body); font-size:.78rem; color:var(--text-dim);
+  }
+  .qs-foto figcaption b{ display:block; color:var(--lino); font-weight:500; font-size:.95rem; margin-bottom:3px; }
+  .qs-parrafo{ color:var(--text-dim); font-size:1rem; line-height:1.8; margin:0 0 20px; max-width:62ch; }
+  .qs-parrafo strong{ color:var(--lino); font-weight:400; }
+
+  .qs-hitos{ display:grid; gap:var(--sp-24); grid-template-columns:repeat(2,1fr); margin-top:var(--sp-40); padding-top:var(--sp-24); border-top:1px solid var(--line); }
+  @media (min-width:720px){ .qs-hitos{ grid-template-columns:repeat(4,1fr); } }
+  .qs-hito b{ display:block; font-family:var(--display); font-weight:400; font-size:clamp(2rem,3vw,2.4rem); color:var(--accent); line-height:1; margin-bottom:8px; }
+  .qs-hito span{ font-family:var(--body); font-size:.78rem; color:var(--text-faint); line-height:1.5; }
+
+  /* equipo */
+  .qs-equipo{ display:grid; gap:var(--sp-40); grid-template-columns:1fr; }
+  @media (min-width:760px){ .qs-equipo{ grid-template-columns:repeat(3,1fr); } }
+  .qs-persona{ border-top:1px solid var(--line); padding-top:var(--sp-24); }
+  .qs-persona h3{ font-family:var(--display); font-weight:400; font-size:clamp(1.9rem,2.4vw,2.1rem); color:var(--lino); margin:0 0 6px; }
+  .qs-persona b{ display:block; font-family:var(--body); font-weight:500; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+  .qs-persona p{ margin:0; color:var(--text-dim); font-size:.94rem; line-height:1.7; }
+
+  /* misión / visión */
+  .qs-mv{ display:grid; gap:var(--sp-40); grid-template-columns:1fr; }
+  @media (min-width:820px){ .qs-mv{ grid-template-columns:1fr 1fr; } }
+  .qs-mv-card{ border-left:2px solid var(--accent); padding-left:clamp(20px,2.4vw,32px); }
+  .qs-mv-card h3{ font-family:var(--body); font-weight:500; font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin:0 0 14px; }
+  .qs-mv-card p{ margin:0; color:var(--text-dim); font-size:1.02rem; line-height:1.75; }
+
+  /* marcas */
+  .qs-marcas{ display:grid; gap:1px; grid-template-columns:repeat(2,1fr); background:var(--line); border:1px solid var(--line); border-radius:2px; overflow:hidden; }
+  @media (min-width:720px){ .qs-marcas{ grid-template-columns:repeat(4,1fr); } }
+  .qs-marca{ background:var(--bg); padding:26px 18px; text-align:center; transition:background-color .3s ease; }
+  .qs-marca:hover{ background:var(--bg-raised); }
+  .qs-marca-logo{ display:flex; align-items:center; justify-content:center; height:30px; margin:0 auto 12px; }
+  .qs-marca-logo img{ max-width:100%; max-height:100%; width:auto; height:auto; display:block; filter: grayscale(1) brightness(0) invert(1); opacity:.78; transition:opacity .3s ease; }
+  .qs-marca-logo img.is-nativo{ filter:none; opacity:.9; }
+  .qs-marca:hover .qs-marca-logo img{ opacity:1; }
+  .qs-marca b{ display:block; font-family:var(--body); font-weight:400; font-size:.98rem; color:var(--text-dim); margin-bottom:5px; }
+  .qs-marca span{ font-family:var(--body); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint); }
+</style>
+</head>
+<body data-pagina="nosotros">
+
+<div id="gdHeader"></div>
+
+<section class="gd-hero is-corto">
+  <div class="gd-hero-panel">
+    <p class="gd-migas reveal-left"><a href="index.html">Inicio</a> / <span>Quiénes somos</span></p>
+    <p class="gd-hero-eyebrow reveal-left"><i></i>El estudio · Desde Lima</p>
+    <h1 class="reveal-left d1">Un estudio con <em>nombre propio</em></h1>
+    <p class="reveal-left d2">Diseñamos espacios comerciales con criterio de venta. El que escucha en la primera reunión es el mismo que firma el plano y aparece en obra.</p>
+  </div>
+  <div class="gd-hero-media">
+    <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/shift/casacor-detalle.jpg" alt="Detalle de material en un montaje de Giandeco"></div>
+    <div class="gd-hero-cap">
+      <span><b>Detalle de material</b><span>Casacor 2025</span></span>
+      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HISTORIA ==================== -->
+<section class="gd-sec">
+  <div class="gd-in qs-historia">
+    <figure class="qs-foto reveal-scale gd-curtain" style="margin:0;">
+      <img decoding="async" src="images/estudio/gian-retrato.jpg" alt="Gian Carlo Jiménez Sánchez, fundador de Giandeco Studio Design">
+      <figcaption><b>Luis Giancarlo Jiménez Sánchez</b>Fundador · Director de proyectos</figcaption>
+    </figure>
+
+    <div>
+      <p class="gd-eyebrow reveal">Historia</p>
+      <h2 class="gd-h2 reveal d1">Empezó por una pregunta incómoda</h2>
+
+      <p class="qs-parrafo reveal d2">«¿Por qué esta tienda no vende, si el producto es bueno?» Gian llevaba años montando exhibiciones cuando entendió que el problema casi nunca estaba en el producto: estaba en <strong>el orden en que se le muestra al cliente</strong>. Una vitrina que no cuenta nada. Un mueble que tapa la pared del fondo. Un recorrido que empuja a la salida en lugar de a la caja.</p>
+
+      <p class="qs-parrafo reveal d2">Con esa idea nació Giandeco: no un despacho de arquitectura ni un servicio de decoración, sino <strong>un estudio de diseño comercial</strong>. La primera vitrina llevó a la primera tienda completa; la primera tienda, a una campaña nacional. Hoy el estudio trabaja en dos países y firma proyectos para marcas que un comité reconoce sin explicación: El Corte Inglés, Pycca, Zara, Walon, Enchantée Paris.</p>
+
+      <p class="qs-parrafo reveal d2">Con el tiempo el encargo creció: al diseño se sumó la ejecución, al interiorismo la mueblería a medida, y al proyecto puntual la campaña de temporada. La lógica no cambió. <strong>Primero se resuelve el espacio; el diseño llega después.</strong></p>
+
+      <blockquote class="gd-quote reveal d3" style="margin-top:var(--sp-24);">«Si una decisión no se puede explicar en una reunión de obra, no se presenta.»</blockquote>
+
+      <div class="qs-hitos">
+        <div class="qs-hito reveal"><b>14</b><span>proyectos documentados</span></div>
+        <div class="qs-hito reveal d1"><b>09</b><span>casos de retail</span></div>
+        <div class="qs-hito reveal d2"><b>02</b><span>países: Perú y Ecuador</span></div>
+        <div class="qs-hito reveal d3"><b>2</b><span>ferias: Casacor y Expodeco</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== QUIÉNES FIRMAN ==================== -->
+<section class="gd-sec gd-claro">
+  <div class="gd-in">
+    <p class="gd-eyebrow reveal">Quiénes firman</p>
+    <h2 class="gd-h2 reveal d1">Tres criterios en la misma mesa</h2>
+    <p class="gd-body reveal d2">Detrás hay un equipo más grande —carpintería, montaje, gráfica—, pero cada proyecto pasa por estas tres cabezas antes de salir.</p>
+
+    <div class="qs-equipo" style="margin-top:var(--sp-40);">
+      <div class="qs-persona reveal">
+        <h3>Gian</h3>
+        <b>Fundador y director de proyectos</b>
+        <p>Dirige cada encargo de principio a fin. El que escucha en la primera reunión es el mismo que firma el plano y el que aparece en obra.</p>
+      </div>
+      <div class="qs-persona reveal d1">
+        <h3>Martha</h3>
+        <b>Diseñadora de interiores</b>
+        <p>Concepto, paleta de materiales y selección de mobiliario. Traduce el pliego de necesidades en un ambiente que se sostiene.</p>
+      </div>
+      <div class="qs-persona reveal d2">
+        <h3>Lucía</h3>
+        <b>Arquitecta</b>
+        <p>Planos, distribución y coordinación de especialidades. Se encarga de que lo dibujado se pueda construir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MISIÓN Y VISIÓN ==================== -->
+<section class="gd-sec">
+  <div class="gd-in">
+    <div class="gd-filete is-left reveal"><span aria-hidden="true">◆</span></div>
+    <div class="qs-mv">
+      <div class="qs-mv-card reveal">
+        <h3>Misión</h3>
+        <p>Diseñar y ejecutar puntos de venta donde el recorrido, el mobiliario y la luz están puestos al servicio de la decisión de compra.</p>
+      </div>
+      <div class="qs-mv-card reveal d1">
+        <h3>Visión</h3>
+        <p>Ser el estudio al que las marcas retail de la región llaman primero cuando abren o renuevan local.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CON QUIÉNES HEMOS TRABAJADO ==================== -->
+<section class="gd-sec" style="padding-top:0;">
+  <div class="gd-in">
+    <p class="gd-eyebrow reveal">Con quiénes hemos colaborado</p>
+    <h2 class="gd-h2 reveal d1" style="margin-bottom:var(--sp-40);">Marcas y espacios</h2>
+
+    <div class="qs-marcas reveal d2">
+      <div class="qs-marca"><span class="qs-marca-logo"><img decoding="async" class="is-nativo" src="images/marcas/el-corte-ingles.png" alt="El Corte Inglés" loading="lazy"></span><span>Retail departamental</span></div>
+      <div class="qs-marca"><span class="qs-marca-logo"><img decoding="async" src="images/marcas/pycca.png" alt="Pycca" loading="lazy"></span><span>Campaña nacional · Ecuador</span></div>
+      <div class="qs-marca"><span class="qs-marca-logo"><img decoding="async" src="images/marcas/zara.png" alt="Zara" loading="lazy"></span><span>Visual merchandising</span></div>
+      <div class="qs-marca"><span class="qs-marca-logo"><img decoding="async" src="images/marcas/walon.png" alt="Walon" loading="lazy"></span><span>Tienda, campaña y evento</span></div>
+      <div class="qs-marca"><span class="qs-marca-logo"><img decoding="async" src="images/marcas/enchantee-paris.png" alt="Enchantée Paris" loading="lazy"></span><span>Vitrinismo · moda</span></div>
+      <div class="qs-marca"><span class="qs-marca-logo"><img decoding="async" src="images/marcas/baby-club-chic.png" alt="Baby Club Chic" loading="lazy"></span><span>Boutique infantil</span></div>
+      <div class="qs-marca"><span class="qs-marca-logo"><img decoding="async" src="images/marcas/massimo-cafe.png" alt="Mássimo Café" loading="lazy"></span><span>Gastronomía</span></div>
+      <div class="qs-marca"><span class="qs-marca-logo"><img decoding="async" src="images/marcas/hotel-union-cusco.png" alt="Hotel Unión Cusco" loading="lazy"></span><span>Hotelería</span></div>
+      <div class="qs-marca"><span class="qs-marca-logo"><img decoding="async" src="images/marcas/casa-grande.png" alt="Casa Grande" loading="lazy"></span><span>Mobiliario y decoración</span></div>
+      <div class="qs-marca"><b>Convivir con el Arte</b><span>Arte e interiorismo</span></div>
+      <div class="qs-marca"><span class="qs-marca-logo"><img decoding="async" src="images/marcas/casacor.png" alt="Casacor" loading="lazy"></span><span>Feria de diseño · 2025</span></div>
+      <div class="qs-marca"><span class="qs-marca-logo"><img decoding="async" src="images/marcas/expodeco.png" alt="Expodeco" loading="lazy"></span><span>Feria de decoración · 2024</span></div>
+    </div>
+
+    <div style="margin-top:var(--sp-40); display:flex; flex-wrap:wrap; gap:12px;">
+      <a class="gd-btn gd-btn-primary" href="contacto.html">Conversemos su proyecto
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-ghost" href="retail-proyectos.html">Ver los proyectos</a>
+    </div>
+  </div>
+</section>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=8"></script>
+</body>
+</html>

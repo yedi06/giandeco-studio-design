@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diseño de interiores — Hogar · Giandeco Studio Design</title>
+<meta name="description" content="Diseño de interiores residencial en Lima: distribución, paleta de materiales, mobiliario a medida e iluminación. Visita técnica, render y ejecución.">
+<meta name="theme-color" content="#0A0A09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=7">
+<style>
+  .hi-bloque{ display:grid; gap:clamp(28px,4vw,64px); grid-template-columns:1fr; align-items:center; padding-block:clamp(40px,5vw,72px); border-top:1px solid var(--line); }
+  @media (min-width:900px){
+    .hi-bloque{ grid-template-columns:1fr 1fr; }
+    .hi-bloque:nth-child(even) .hi-media{ order:2; }
+  }
+  .hi-media{ border-radius:2px; overflow:hidden; aspect-ratio:4/3; }
+  .hi-media img{ width:100%; height:100%; object-fit:cover; }
+  .hi-num{ font-family:var(--body); font-size:.66rem; letter-spacing:.2em; color:var(--accent); display:block; margin-bottom:12px; }
+  .hi-bloque h2{ font-family:var(--display); font-weight:400; font-size:clamp(1.9rem,3vw,2.4rem); color:var(--lino); margin:0 0 14px; line-height:1.08; }
+  .hi-bloque p{ color:var(--text-dim); font-size:.98rem; line-height:1.75; margin:0; max-width:54ch; }
+  /* ============ PROCESO — 4 pasos numerados con foto real ============
+     Se probó una línea conectora + punto animado entre los círculos y se
+     quitó: el cliente la vio "partida"/desalineada dos veces seguidas — sin
+     línea no hay nada que alinear mal, los círculos son numerales de apoyo. */
+  .mt-timeline{ position:relative; display:grid; grid-template-columns:1fr; gap:var(--sp-40); margin-top:clamp(48px,6vw,72px); }
+  @media (min-width:720px){ .mt-timeline{ grid-template-columns:repeat(2,1fr); } }
+  @media (min-width:1080px){ .mt-timeline{ grid-template-columns:repeat(4,1fr); } }
+  .mt-step{ position:relative; z-index:1; transition: transform .35s var(--gd-ease); }
+  .mt-step:hover{ transform: translateY(-6px); }
+  .mt-marker{
+    width:46px; height:46px; border-radius:50%; flex:none; background:var(--bronce);
+    border:1px solid var(--bronce); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--display); font-size:1.05rem; margin-bottom:20px;
+  }
+  .mt-media{
+    position:relative; border-radius:2px; overflow:hidden; aspect-ratio:4/5; margin-bottom:18px; background:var(--humo);
+    box-shadow:0 0 0 0 rgba(10,9,6,0); transition: box-shadow .35s ease;
+  }
+  .mt-step:hover .mt-media{ box-shadow:0 22px 40px -18px rgba(10,9,6,.4); }
+  .mt-media img{ width:100%; height:100%; object-fit:cover; transition:transform 1.1s var(--gd-ease); }
+  .mt-step:hover .mt-media img{ transform:scale(1.06); }
+  .mt-media.is-slot{
+    display:grid; place-items:center; text-align:center; padding:16px; border:1px dashed rgba(138,111,60,.4);
+    background:
+      repeating-linear-gradient(90deg, rgba(10,9,6,.035) 0 1px, transparent 1px 20px),
+      radial-gradient(130% 130% at 20% 0%, rgba(138,111,60,.14), transparent 62%),
+      linear-gradient(155deg, #efeadd, #ded5bd);
+  }
+  .mt-media.is-slot span{ font-family:var(--body); font-size:.64rem; letter-spacing:.1em; text-transform:uppercase; color:var(--grafito); line-height:1.7; }
+  .mt-title{ font-family:var(--body); font-weight:500; font-size:1.05rem; color:var(--ebano); margin:0 0 8px; transition: color .3s ease; }
+  .mt-step:hover .mt-title{ color: var(--bronce); }
+  .mt-desc{ margin:0; color:var(--grafito); font-size:.9rem; line-height:1.6; }
+</style>
+</head>
+<body data-mundo="hogar" data-seccion="diseno">
+
+<div id="gdHeader"></div>
+
+<section class="gd-hero is-corto">
+  <div class="gd-hero-panel">
+    <p class="gd-migas reveal-left"><a href="index.html">Inicio</a> / <a href="hogar.html">Hogar</a> / <span>Diseño de interiores</span></p>
+    <p class="gd-hero-eyebrow reveal-left"><i></i>Hogar · Diseño de interiores</p>
+    <h1 class="reveal-left d1">Se diseña el <em>recorrido</em>, después el estilo</h1>
+    <p class="reveal-left d2">Lo mismo que hacemos en una tienda, aplicado a una casa: primero cómo se vive el espacio, luego cómo se ve.</p>
+    <div class="gd-hero-cta reveal-left d3"><a class="gd-btn gd-btn-primary" href="contacto.html">Agendar visita técnica
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+  </div>
+  <div class="gd-hero-media">
+    <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/work/convivir.jpg" alt="Interior residencial con arte de gran formato"></div>
+    <div class="gd-hero-cap">
+      <span><b>Interior residencial</b><span>Convivir con el Arte</span></span>
+      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+    </div>
+  </div>
+</section>
+
+<section class="gd-sec" style="padding-top:clamp(40px,5vw,64px);">
+  <div class="gd-in">
+
+    <div class="hi-bloque">
+      <div class="hi-media reveal-scale gd-curtain"><img decoding="async" src="images/espacios/zara-sala-2.jpg" alt="Sala con mobiliario de líneas suaves" loading="lazy"></div>
+      <div class="reveal d1">
+        <span class="hi-num">01</span>
+        <h2>Distribución y planos</h2>
+        <p>Antes de elegir un solo mueble definimos por dónde se camina, dónde se conversa y dónde entra la luz. Planos, distribución y coordinación de especialidades para que lo dibujado se pueda construir.</p>
+      </div>
+    </div>
+
+    <div class="hi-bloque">
+      <div class="hi-media reveal-scale gd-curtain"><img decoding="async" src="images/shift/casacor-detalle.jpg" alt="Detalle de materiales: madera, latón y textil" loading="lazy"></div>
+      <div class="reveal d1">
+        <span class="hi-num">02</span>
+        <h2>Paleta de materiales</h2>
+        <p>Madera, piedra, latón, lino y luz cálida. La paleta sale de los materiales que especificamos en obra, no de una tendencia de temporada: por eso el ambiente no envejece en dos años.</p>
+      </div>
+    </div>
+
+    <div class="hi-bloque">
+      <div class="hi-media reveal-scale gd-curtain"><img decoding="async" src="images/mobiliario/comoda-flow-1.webp" alt="Cómoda Flow con cajones de correderas telescópicas" loading="lazy"></div>
+      <div class="reveal d1">
+        <span class="hi-num">03</span>
+        <h2>Mobiliario y curaduría</h2>
+        <p>Seleccionamos pieza por pieza y, cuando el catálogo no resuelve, la diseñamos: material, medida y acabado especificados por el estudio, no dejados al criterio del carpintero.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="gd-sec gd-claro">
+  <div class="gd-in">
+    <p class="gd-eyebrow reveal">Cómo avanza el proyecto</p>
+    <h2 class="gd-h2 reveal d1">De la visita a la entrega</h2>
+    <div class="mt-timeline reveal">
+      <div class="mt-step reveal-scale">
+        <div class="mt-marker">01</div>
+        <div class="mt-media gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proceso/convivir-tecnico.jpg" alt="Corte arquitectónico con metrado de un proyecto de interiorismo"></div>
+        <h3 class="mt-title">Visita y metrado</h3>
+        <p class="mt-desc">Medimos el espacio real y escuchamos cómo lo usa su familia.</p>
+      </div>
+      <div class="mt-step reveal-scale d1">
+        <div class="mt-marker">02</div>
+        <div class="mt-media gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proceso/convivir-color.jpg" alt="Propuesta a color del mismo ambiente, con paleta y distribución"></div>
+        <h3 class="mt-title">Propuesta y render</h3>
+        <p class="mt-desc">Distribución, paleta y una imagen fotorrealista antes de decidir.</p>
+      </div>
+      <div class="mt-step reveal-scale d2">
+        <div class="mt-marker">03</div>
+        <div class="mt-media is-slot"><span>FOTO PENDIENTE<br>Selección de mobiliario</span></div>
+        <h3 class="mt-title">Mobiliario y compras</h3>
+        <p class="mt-desc">Especificamos cada pieza, con precio y plazo de entrega cerrados.</p>
+      </div>
+      <div class="mt-step reveal-scale d3">
+        <div class="mt-marker">04</div>
+        <div class="mt-media gd-curtain"><img decoding="async" class="gd-kb-img" src="images/work/convivir.jpg" alt="Convivir con el Arte — espacio ya montado y habitado"></div>
+        <h3 class="mt-title">Montaje</h3>
+        <p class="mt-desc">Instalamos, ambientamos y dejamos el espacio listo para habitar.</p>
+      </div>
+    </div>
+    <div style="margin-top:var(--sp-40); display:flex; flex-wrap:wrap; gap:12px;">
+      <a class="gd-btn gd-btn-primary" href="contacto.html">Conversemos su casa
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-ghost" href="hogar-espacios.html">Ver espacios montados</a>
+    </div>
+  </div>
+</section>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=8"></script>
+</body>
+</html>

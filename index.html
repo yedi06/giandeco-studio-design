@@ -1,0 +1,2592 @@
+<meta charset="UTF-8">
+<title>Giandeco Studio Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0A0A09" id="metaThemeColor">
+<style>
+  :root{
+    /* Paleta oficial GIANDECO — BRANDBOOK, Edición 01 · 2026 (slide 30, "Especificación de color") */
+    --ebano: #0A0A09;    /* fondo principal, texto sobre claro */
+    --laton: #C9A24A;    /* acento — nunca más del 10% de una pieza */
+    --bronce: #8A6F3C;   /* etiquetas y texto de apoyo en claro */
+    --lino: #DED8CB;     /* logotipo negativo, bloques de fondo */
+    --humo: #F4F1EA;     /* fondo de documentos y láminas (reservado para tema claro) */
+    --grafito: #4A4844;  /* texto secundario y pies de foto (fondo claro) */
+
+    /* Tema oscuro (home) construido sobre esa paleta: Ébano de base, Lino como texto,
+       Latón como único acento, Bronce como acento secundario/apagado. */
+    --bg: var(--ebano);
+    --bg-raised: #171613;
+    --panel: #1c1a16;
+    --panel-2: #262319;
+    --line: #2a2621;
+    --text: var(--lino);
+    --text-dim: #B9B3A6;
+    --text-faint: #8a8375;
+    --accent: var(--laton);
+    --accent-2: var(--bronce);
+    --accent-soft: rgba(201,162,74,0.16);
+
+    /* Tres familias, todas del brandbook (slide 31) */
+    --display: 'Bodoni Moda', Georgia, serif;      /* títulos y cifras grandes — nunca < 30px en pantalla */
+    --body: 'Jost', system-ui, sans-serif;         /* subtítulos y cuerpo */
+    --mono: 'Jost', system-ui, sans-serif;         /* etiquetas: mismo Jost, versalitas espaciadas */
+    --script: 'Cormorant Garamond', Georgia, serif; /* destacados — solo cursiva 300, solo citas y conceptos */
+    color-scheme: dark;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ overflow-x: hidden; }
+  body{
+    margin: 0;
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(201,162,74,0.06), transparent),
+      repeating-linear-gradient(90deg, rgba(222,216,203,0.025) 0, rgba(222,216,203,0.025) 1px, transparent 1px, transparent 22px);
+    color: var(--text);
+    font-family: var(--body);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page{ max-width: 1440px; margin: 0 auto; padding: clamp(28px, 6vw, 72px) clamp(18px, 5vw, 64px) 80px; }
+
+  a{ color: inherit; }
+  img{ max-width: 100%; display: block; }
+
+  /* ---------- Header ---------- */
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+
+  h1{
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2rem, 4.4vw, 3.1rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+
+  .lede{
+    max-width: 62ch;
+    color: var(--text-dim);
+    font-size: 1.02rem;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .lede strong{ color: var(--text); font-weight: 600; }
+
+  hr.rule{
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: clamp(36px, 5vw, 56px) 0;
+    transform: scaleX(0);
+    transform-origin: left center;
+    opacity: 0;
+    transition: transform 900ms cubic-bezier(0.16,1,0.3,1), opacity 500ms ease;
+  }
+  hr.rule.is-visible{ transform: scaleX(1); opacity: 1; }
+
+  /* ---------- Scroll-reveal system (usado en toda la página) ---------- */
+  .scroll-progress{
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    will-change: transform;
+    background: linear-gradient(90deg, var(--accent), #e6c688);
+    box-shadow: 0 0 10px rgba(201,162,74,0.45);
+    z-index: 80;
+  }
+  .reveal, .reveal-left, .reveal-scale{
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 900ms cubic-bezier(0.16,1,0.3,1), transform 900ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.is-visible, .reveal-left.is-visible, .reveal-scale.is-visible{ opacity: 1; transform: none; }
+  .reveal-left{ transform: translateX(-26px); }
+  .reveal-scale{ transform: translateY(16px) scale(0.96); }
+  .reveal-underline{
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 700ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal-underline.is-visible{ transform: scaleX(1); }
+  .d1{ transition-delay: 110ms; }
+  .d2{ transition-delay: 220ms; }
+  .d3{ transition-delay: 330ms; }
+  .d4{ transition-delay: 440ms; }
+  .d5{ transition-delay: 550ms; }
+
+  ::selection{ background: var(--laton); color: var(--ebano); }
+  ::-moz-selection{ background: var(--laton); color: var(--ebano); }
+
+  @media (prefers-reduced-motion: reduce){
+    hr.rule, .reveal, .reveal-left, .reveal-scale, .reveal-underline{
+      transition: none; opacity: 1; transform: none;
+    }
+    .scroll-progress{ display: none; }
+  }
+
+  /* ---------- Demo section ---------- */
+  .demo{
+    display: grid;
+    grid-template-columns: minmax(0, 0.62fr) minmax(0, 1.38fr);
+    gap: clamp(28px, 4vw, 64px);
+    align-items: start;
+  }
+
+  @media (max-width: 720px){
+    .demo{ grid-template-columns: 1fr; }
+  }
+
+  .steps-heading{
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.9rem, 2.6vw, 2.2rem);
+    white-space: nowrap;
+    margin: 0 0 6px;
+  }
+
+  @media (max-width: 400px){
+    .steps-heading{ white-space: normal; }
+  }
+
+  .steps-underline{
+    width: 44px;
+    height: 2px;
+    background: var(--accent);
+    margin: 0 0 20px;
+    border: none;
+  }
+
+  .intro-col p{
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 30ch;
+    margin: 0 0 22px;
+  }
+
+  .intro-cta{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--line);
+    transition: border-color 250ms ease, color 250ms ease, gap 250ms ease, transform .3s var(--ease-header, cubic-bezier(.22,.68,.24,1));
+  }
+
+  .intro-cta:hover{
+    color: var(--accent);
+    border-color: var(--accent);
+    gap: 12px;
+  }
+
+  .intro-cta svg{ width: 13px; height: 13px; flex: none; }
+
+  /* ---------- Pattern 1: filling accordion ---------- */
+  .accordion{
+    display: flex;
+    flex-direction: column;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .acc-panel{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 52px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    transition: height 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .acc-panel::before{
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(8,7,5,0.7), rgba(8,7,5,0.05) 48%, rgba(8,7,5,0.25) 100%);
+  }
+
+  .acc-item.is-open .acc-panel{
+    height: 300px;
+    transition-duration: 700ms;
+  }
+
+  .acc-item:not(.is-open) .acc-panel{
+    transition-duration: 320ms;
+  }
+
+  .acc-media-title{
+    position: absolute;
+    top: 0; left: 0;
+    z-index: 2;
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--lino);
+    text-align: left;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.55);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .acc-panel{ transition: none; }
+  }
+
+  /* ---------- Section labels (patterns 2 & 3) ---------- */
+  .section-h{
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.9rem, 2.4vw, 2.2rem);
+    margin: 0 0 24px;
+  }
+  .section-h span{
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text-faint);
+  }
+  /* ---------- Pattern 2: static editorial grid, reveals on page scroll ---------- */
+  .work-eyebrow{
+    font-family: var(--script);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+    color: var(--text-faint);
+    margin: -8px 0 22px;
+  }
+  .work-gallery{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+  .work-gallery-col{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .g-item{
+    display: block;
+    position: relative;
+    width: 100%;
+    border-radius: 2px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(28px);
+    box-shadow: 0 0 0 rgba(10,9,6,0);
+    transition: opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1), background-size .8s var(--gd-ease, ease), box-shadow .5s ease;
+  }
+  .g-item.is-visible{ opacity: 1; transform: translateY(0); }
+  .g-item:hover{ background-size: 110%; box-shadow: 0 26px 46px -20px rgba(10,9,6,.6); }
+  .g-item::before{
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,9,6,0.02) 55%, rgba(10,9,6,0.72));
+  }
+  /* insignia "Ver": reutiliza el data-cursor que ya traía cada tarjeta.
+     Solo CSS —nada de seguir el mouse con JS, eso ya se descartó por lento. */
+  .g-item::after{
+    content: attr(data-cursor);
+    position: absolute; top: 14px; right: 14px; z-index: 3;
+    display: flex; align-items: center; justify-content: center;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--accent); color: var(--ebano);
+    font-family: var(--body); font-weight: 500; font-size: .66rem; letter-spacing: .1em; text-transform: uppercase;
+    opacity: 0; transform: scale(.6) rotate(-8deg);
+    transition: opacity .3s ease, transform .4s cubic-bezier(.22,.68,.24,1);
+    pointer-events: none;
+  }
+  .g-item:hover::after, .g-item:focus-visible::after{ opacity: 1; transform: scale(1) rotate(0deg); }
+  .g-cap{
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+    padding: 14px 16px;
+  }
+  .g-cap .gt{
+    display: block;
+    color: var(--lino);
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+    transition: color .3s ease;
+  }
+  .g-item:hover .g-cap .gt{ color: var(--accent); }
+  .g-cap .gg{
+    display: block;
+    margin-top: 3px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+  }
+  @media (max-width: 640px){
+    .work-gallery{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Pattern 3: horizontal marquee ---------- */
+  .shift-marquee{
+    overflow: hidden;
+    position: relative;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  }
+  .shift-track{
+    display: flex;
+    gap: 16px;
+    width: max-content;
+    animation: scrollLeft 26s linear infinite;
+  }
+  .shift-marquee:hover .shift-track{ animation-play-state: paused; }
+
+  @keyframes scrollLeft{ to{ transform: translateX(-50%); } }
+
+  .shift-card{
+    position: relative;
+    width: min(46vw, 380px);
+    aspect-ratio: 3 / 2;
+    border-radius: 2px;
+    overflow: hidden;
+    flex: none;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+  }
+  .shift-card::before{
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,9,6,0.05), rgba(10,9,6,0.15) 55%, rgba(10,9,6,0.7));
+    transition: opacity .3s ease;
+  }
+  .shift-card .fc2{
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+    padding: 12px 14px;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+  /* pista de vidrio + signo "+" al centro: se nota que la imagen se puede
+     abrir antes de tocarla, sin necesitar texto de instrucción */
+  .shift-card::after{
+    content: '';
+    position: absolute; inset: 0; z-index: 1; margin: auto;
+    width: 46px; height: 46px; border-radius: 50%;
+    border: 1px solid rgba(222,216,203,.55);
+    background:
+      linear-gradient(rgba(222,216,203,.92), rgba(222,216,203,.92)) center/15px 1.5px no-repeat,
+      linear-gradient(rgba(222,216,203,.92), rgba(222,216,203,.92)) center/1.5px 15px no-repeat,
+      rgba(10,9,6,.4);
+    opacity: 0; transform: scale(.7);
+    transition: opacity .3s ease, transform .3s var(--gd-ease);
+  }
+  .shift-card:hover::after{ opacity: 1; transform: scale(1); }
+  .shift-card:hover::before{ opacity: .7; }
+  .shift-card:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+  .shift-card:focus-visible::after{ opacity: 1; transform: scale(1); }
+
+  @media (prefers-reduced-motion: reduce){
+    .shift-track{ animation: none; }
+    .g-item{ transition: none; opacity: 1; transform: none; }
+    .g-item::after{ transition: none; }
+    .shift-card::after{ display: none; }
+  }
+
+  /* ==========================================================================
+     LIGHTBOX — ver la imagen grande sin salir de la página. Reutilizable:
+     cualquier galería puede abrirlo (hoy solo "Diseñamos el Cambio").
+     El enlace "Ver ______" solo aparece cuando la imagen tiene un destino
+     real; si no lo tiene, el lightbox se queda solo en la foto — no se
+     inventa una categoría para cada una.
+     ========================================================================== */
+  .gd-light{
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(6,5,4,.93); backdrop-filter: blur(6px);
+    display: grid; place-items: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity .4s var(--gd-ease), visibility 0s linear .4s;
+  }
+  .gd-light.is-open{ opacity: 1; visibility: visible; transition: opacity .4s var(--gd-ease); }
+  .gd-light-stage{
+    position: relative; width: min(88vw, 1180px); max-height: 84svh;
+    display: flex; flex-direction: column; align-items: center;
+    transform: scale(.96); transition: transform .45s var(--gd-ease);
+  }
+  .gd-light.is-open .gd-light-stage{ transform: none; }
+  .gd-light-frame{ position: relative; width: 100%; max-height: 68svh; overflow: hidden; border-radius: 2px; background: var(--bg-raised); }
+  .gd-light-frame img{
+    display: block; width: 100%; max-height: 68svh; object-fit: contain;
+    opacity: 0; transform: scale(1.02); transition: opacity .45s ease, transform .5s var(--gd-ease);
+  }
+  .gd-light-frame img.is-shown{ opacity: 1; transform: none; }
+  .gd-light-foot{
+    width: 100%; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+    gap: 10px 24px; padding-top: 18px;
+  }
+  .gd-light-cap{ font-family: var(--display); font-weight: 400; font-size: clamp(1.1rem, 1.8vw, 1.4rem); color: var(--lino); margin: 0; }
+  .gd-light-count{ font-family: var(--mono); font-size: .7rem; letter-spacing: .12em; color: var(--text-faint); white-space: nowrap; }
+  .gd-light-cta{
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    font-family: var(--mono); font-size: .74rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent); border-bottom: 1px solid transparent; transition: border-color .25s ease, gap .25s ease;
+  }
+  .gd-light-cta:hover{ border-color: var(--accent); gap: 12px; }
+  .gd-light-cta svg{ width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+
+  .gd-light-close{
+    position: absolute; top: clamp(16px,3vw,32px); right: clamp(16px,3vw,32px); z-index: 3;
+    width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(222,216,203,.25); color: var(--lino);
+    cursor: pointer; transition: background-color .25s ease, border-color .25s ease, transform .25s ease;
+  }
+  .gd-light-close:hover{ background: var(--accent); border-color: var(--accent); color: var(--ebano); transform: rotate(90deg); }
+  .gd-light-close:focus-visible, .gd-light-nav:focus-visible, .gd-light-cta:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+  .gd-light-close svg{ width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+
+  .gd-light-nav{
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+    width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+    background: rgba(10,9,6,.4); border: 1px solid rgba(222,216,203,.3); color: var(--lino);
+    cursor: pointer; transition: background-color .25s ease, border-color .25s ease, opacity .2s ease;
+  }
+  .gd-light-nav:hover{ background: var(--accent); border-color: var(--accent); color: var(--ebano); }
+  .gd-light-nav svg{ width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.7; }
+  .gd-light-prev{ left: clamp(16px, 3vw, 48px); }
+  .gd-light-next{ right: clamp(16px, 3vw, 48px); }
+  @media (max-width: 860px){
+    .gd-light-nav{ width: 38px; height: 38px; }
+    .gd-light-prev{ left: 6px; } .gd-light-next{ right: 6px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .gd-light, .gd-light-stage, .gd-light-frame img, .gd-light-close{ transition: none; }
+  }
+
+  /* ---------- How it works ---------- */
+  .how h2{
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.9rem, 2.4vw, 2.2rem);
+    margin: 0 0 10px;
+  }
+
+  .how > p{
+    color: var(--text-dim);
+    font-size: 0.96rem;
+    line-height: 1.65;
+    max-width: 68ch;
+    margin: 0 0 28px;
+  }
+
+  .how-sub{
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 30px 0 6px;
+  }
+  .how-sub span{
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--text-faint);
+  }
+  .how-note{
+    color: var(--text-faint);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    max-width: 66ch;
+    margin: 0 0 14px;
+  }
+
+  .code-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .code-grid .code-card{
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .code-grid.is-visible .code-card{ opacity: 1; transform: none; }
+  .code-grid.is-visible .code-card:nth-child(2){ transition-delay: 120ms; }
+  @media (prefers-reduced-motion: reduce){
+    .code-grid .code-card{ transition: none; opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 720px){
+    .code-grid{ grid-template-columns: 1fr; }
+  }
+
+  .code-card{
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .code-card-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+  }
+
+  .copy-btn{
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 4px 9px;
+    cursor: pointer;
+  }
+
+  .copy-btn:hover{ color: var(--text); border-color: var(--accent); }
+  .copy-btn:focus-visible, .acc-panel:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  pre{
+    margin: 0;
+    padding: 16px 16px 18px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: #d8d2c2;
+  }
+
+  pre .cm{ color: var(--text-faint); }
+  pre .kw{ color: var(--accent); }
+  pre .str{ color: #9fb389; }
+
+  footer{
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 0.82rem;
+    color: var(--text-faint);
+    line-height: 1.6;
+  }
+
+  /* ==========================================================================
+     HEADER, NAVEGACIÓN Y BANNER — bloque nuevo, agregado encima del diseño
+     de Studio Transitions sin tocar ni una regla de lo de arriba. Vive en su
+     propio espacio de nombres (prefijo sh-, .hero) para no pisar nada.
+     ========================================================================== */
+
+  :root{
+    --bg-header-solid: var(--bg-raised); /* #171613 — mismo neutro de marca que el resto del sitio */
+    --h-marca: 74px;
+    --h-marca-d: 96px;
+    --h-cat-d: 52px;
+    --h-total: 148px; /* 96 + 52 — para el padding-top de páginas que no son home */
+    --ease-header: cubic-bezier(.22,.68,.24,1);
+  }
+
+  html{ scroll-padding-top: var(--h-total); }
+
+  /* ---------- header shell ---------- */
+  .site-header{
+    position: fixed; top: 0; left: 0; right: 0; z-index: 70;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    box-shadow: none;
+    transition: background .4s var(--ease-header), border-color .4s var(--ease-header), box-shadow .4s var(--ease-header);
+  }
+  .site-header.is-solid{
+    background: var(--bg-header-solid);
+    border-bottom-color: rgba(222,216,203,0.1);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+  }
+
+  /* ---------- fila 1: marca ---------- */
+  .sh-marca{ height: var(--h-marca); display: flex; align-items: center; }
+  @media (min-width: 1180px){ .sh-marca{ height: var(--h-marca-d); } }
+
+  .sh-marca-in{
+    width: 100%; max-width: 1440px; margin: 0 auto; padding-inline: clamp(18px, 4vw, 56px);
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem;
+  }
+
+  .sh-left{ display: flex; align-items: center; gap: clamp(1rem, 2vw, 2rem); }
+
+  .sh-burger{
+    display: block; width: 26px; height: 20px; position: relative;
+    background: none; border: none; padding: 0; margin: 0; cursor: pointer; flex: none;
+  }
+  .sh-burger span{
+    position: absolute; left: 0; right: 0; height: 2px; border-radius: 2px;
+    background: var(--text);
+    transition: transform .3s ease, opacity .3s ease, top .3s ease;
+  }
+  .sh-burger span:nth-child(1){ top: 0; }
+  .sh-burger span:nth-child(2){ top: 9px; }
+  .sh-burger span:nth-child(3){ top: 18px; }
+  .sh-burger.is-open span:nth-child(1){ top: 9px; transform: rotate(45deg); }
+  .sh-burger.is-open span:nth-child(2){ opacity: 0; }
+  .sh-burger.is-open span:nth-child(3){ top: 9px; transform: rotate(-45deg); }
+  .site-header:not(.is-solid) .sh-burger span{ box-shadow: 0 1px 4px rgba(0,0,0,.55); }
+  @media (min-width: 1180px){ .sh-burger{ display: none; } }
+
+  .sh-mundos{ display: none; align-items: center; gap: clamp(1rem, 2vw, 2rem); }
+  @media (min-width: 1180px){ .sh-mundos{ display: flex; } }
+  .sh-mundo{
+    position: relative; appearance: none; background: none; border: none; padding: 0 0 4px; margin: 0; cursor: pointer;
+    font-family: var(--body); font-weight: 400; font-size: 0.82rem; color: var(--text-dim);
+    transition: color .2s ease;
+  }
+  .sh-mundo:hover, .sh-mundo:focus-visible, .sh-mundo.is-active{ color: var(--text); }
+  .site-header:not(.is-solid) .sh-mundo{ text-shadow: 0 1px 4px rgba(0,0,0,.55); }
+
+  /* Marca del header: isotipo real (la G del brandbook, extraída de
+     GIANDECO_logo_positivo.svg) + "Giandeco" en Cormorant cursiva — el
+     manual usa esa misma cursiva como sustituto tipográfico del script del
+     logo original (slide 31: "hereda el gesto manuscrito... sin el ruido
+     del script"). El lockup vertical completo no entra en una fila de
+     74–96px sin caer debajo del ancho mínimo digital del manual (120px), así
+     que el isotipo solo es la lectura correcta a este tamaño. */
+  .sh-brand{
+    position: relative; justify-self: center; display: flex; align-items: center; justify-content: center;
+    line-height: 1; text-decoration: none; min-height: var(--h-marca);
+  }
+  @media (min-width: 1180px){ .sh-brand{ min-height: var(--h-marca-d); } }
+
+  /* logo grande — sólo visible arriba del todo (versión negativa, lino sobre
+     ébano, lámina 24). Más alto que la fila del nav; se permite desbordar
+     porque .sh-marca no recorta. Al bajar y solidificarse el header, se
+     desvanece y entra el isotipo dorado compacto (.sh-brand-mini) en su lugar. */
+  .sh-brand-big{
+    height: 58px; width: auto;
+    transition: opacity .5s var(--ease-header), transform .5s var(--ease-header);
+  }
+  @media (min-width: 1180px){ .sh-brand-big{ height: 76px; } }
+  .site-header:not(.is-solid) .sh-brand-big{ filter: drop-shadow(0 1px 8px rgba(0,0,0,.5)); }
+  .site-header.is-solid .sh-brand-big{ opacity: 0; transform: translateY(-6px) scale(.94); pointer-events: none; }
+
+  .sh-brand-mini{
+    position: absolute; inset: 0; margin: auto; height: 54px; width: auto;
+    opacity: 0; transform: scale(.82); pointer-events: none;
+    transition: opacity .5s var(--ease-header), transform .5s var(--ease-header);
+  }
+  @media (min-width: 1180px){ .sh-brand-mini{ height: 70px; } }
+  .site-header.is-solid .sh-brand-mini{ opacity: 1; transform: scale(1); pointer-events: auto; }
+
+  @media (prefers-reduced-motion: reduce){
+    .sh-brand-big, .sh-brand-mini{ transition: none; }
+  }
+
+  .sh-right{ display: flex; align-items: center; justify-content: flex-end; gap: clamp(.8rem, 1.8vw, 1.5rem); }
+
+  .sh-paginas{ display: none; align-items: center; gap: clamp(.9rem, 1.6vw, 1.6rem); }
+  @media (min-width: 1180px){ .sh-paginas{ display: flex; } }
+  .sh-paginas a{
+    position: relative; font-family: var(--body); font-weight: 400; font-size: 0.82rem; color: var(--text-dim);
+    text-decoration: none; padding-bottom: 4px; transition: color .2s ease;
+  }
+  .sh-paginas a:hover{ color: var(--text); }
+  .sh-paginas a::after{
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+    background: var(--accent); transform: scaleX(0); transform-origin: left center;
+    transition: transform .3s cubic-bezier(.16,1,.3,1);
+  }
+  .sh-paginas a:hover::after, .sh-paginas a:focus-visible::after{ transform: scaleX(1); }
+  .site-header:not(.is-solid) .sh-paginas a{ text-shadow: 0 1px 4px rgba(0,0,0,.55); }
+
+  .sh-icon-btn{
+    background: none; border: none; padding: .5rem; margin: 0; line-height: 0;
+    color: var(--text-dim); cursor: pointer; border-radius: 50%;
+    transition: color .2s ease, background-color .2s ease, transform .3s cubic-bezier(.22,.68,.24,1);
+  }
+  .sh-icon-btn svg{ width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.4; }
+  .sh-icon-btn:hover{ color: var(--text); background: var(--accent-soft); }
+  .sh-icon-btn:focus-visible{ color: var(--text); outline: 2px solid var(--accent); outline-offset: 2px; }
+  .site-header:not(.is-solid) .sh-icon-btn svg{ filter: drop-shadow(0 1px 4px rgba(0,0,0,.55)); }
+
+  .sh-buscar-ico{ display: inline-flex; }
+  @media (min-width: 1180px){ .sh-buscar-ico{ display: none; } }
+
+  /* toggle de tema: ícono doble sol/luna, sólo el activo se ve */
+  .sh-tema{
+    position: relative; width: 34px; height: 34px; display: grid; place-items: center;
+    background: none; border: none; padding: 0; margin: 0; color: var(--text-dim);
+    cursor: pointer; border-radius: 50%;
+    transition: color .2s ease, background-color .2s ease, transform .3s cubic-bezier(.22,.68,.24,1);
+  }
+  .sh-tema:hover{ color: var(--text); background: var(--accent-soft); }
+  .sh-tema:focus-visible{ color: var(--text); outline: 2px solid var(--accent); outline-offset: 2px; }
+  .sh-tema svg{
+    width: 18px; height: 18px; position: absolute; stroke: currentColor; fill: none; stroke-width: 1.4;
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .sh-tema .ico-luna{ opacity: 0; transform: scale(.6) rotate(-30deg); }
+  .sh-tema .ico-sol{ opacity: 1; transform: none; }
+  :root[data-tema="claro"] .sh-tema .ico-sol{ opacity: 0; transform: scale(.6) rotate(30deg); }
+  :root[data-tema="claro"] .sh-tema .ico-luna{ opacity: 1; transform: none; }
+  .site-header:not(.is-solid) .sh-tema svg{ filter: drop-shadow(0 1px 4px rgba(0,0,0,.55)); }
+
+  .sh-right > .sh-tema{ display: none; }
+  @media (min-width: 900px){ .sh-right > .sh-tema{ display: grid; } }
+
+  /* ---------- fila 3: categorías (sólo desktop ≥1180px) ---------- */
+  .sh-categorias{ display: none; }
+  @media (min-width: 1180px){
+    .sh-categorias{
+      display: block; height: var(--h-cat-d); max-height: var(--h-cat-d); overflow: hidden;
+      border-top: 1px solid rgba(222,216,203,.08);
+      opacity: 1;
+      transition: opacity .35s ease, max-height .35s ease, border-color .35s ease;
+    }
+    .site-header:not(.is-solid) .sh-categorias{ opacity: 0; max-height: 0; border-top-color: transparent; pointer-events: none; }
+  }
+  .sh-cat-in{
+    max-width: 1440px; margin: 0 auto; height: 100%; padding-inline: clamp(18px, 4vw, 56px);
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .sh-cat-nav{ display: flex; align-items: center; gap: clamp(1.2rem, 2vw, 2rem); flex-wrap: wrap; }
+  .sh-cat-link{
+    position: relative; appearance: none; background: none; border: none; padding: 0 0 4px; margin: 0; cursor: pointer;
+    font-family: var(--body); font-weight: 400; font-size: 0.8rem; color: var(--text-dim); text-decoration: none;
+    transition: color .2s ease;
+  }
+  .sh-cat-link:hover, .sh-cat-link:focus-visible{ color: var(--text); }
+  .sh-cat-link::after{
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+    background: var(--accent); transform: scaleX(0); transform-origin: left center;
+    transition: transform .3s cubic-bezier(.16,1,.3,1);
+  }
+  .sh-cat-link:hover::after, .sh-cat-link:focus-visible::after{ transform: scaleX(1); }
+  .sh-cat-link[data-pronto]{ color: var(--accent-2); opacity: .75; }
+  .sh-cat-link[data-pronto]::after{ display: none; }
+  .sh-cat-right{
+    display: flex; align-items: center; gap: clamp(1rem, 1.8vw, 1.8rem); flex: none;
+    padding-left: clamp(1rem, 1.8vw, 1.8rem); border-left: 1px solid rgba(222,216,203,.12);
+  }
+  .sh-buscar-inline{
+    display: flex; align-items: center; gap: .4rem; background: none; border: none; cursor: pointer;
+    color: var(--text-dim); font-family: var(--body); font-size: 0.78rem; flex: none; white-space: nowrap;
+  }
+  .sh-buscar-inline svg{ width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+  .sh-buscar-inline:hover{ color: var(--text); }
+
+  /* ---------- mega menú (Catálogo) ---------- */
+  .sh-mega{
+    position: absolute; top: 100%; left: 0; right: 0; z-index: 65;
+    background: var(--bg-header-solid);
+    border-top: 1px solid rgba(222,216,203,.08);
+    box-shadow: 0 20px 40px rgba(0,0,0,.35);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: opacity .25s ease, transform .25s ease, visibility 0s linear .25s;
+  }
+  .sh-mega.is-open{ opacity: 1; visibility: visible; transform: none; transition: opacity .25s ease, transform .25s ease; }
+  .sh-mega-in{ max-width: 1440px; margin: 0 auto; padding: clamp(24px, 3vw, 40px) clamp(18px, 4vw, 56px); }
+  .sh-mega-grid{
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(.8rem, 1.4vw, 1.4rem);
+    margin-bottom: 1.2rem;
+  }
+  @media (min-width: 720px){ .sh-mega-grid{ grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1180px){ .sh-mega-grid{ grid-template-columns: repeat(6, 1fr); } }
+  .sh-mega-item{ display: block; text-decoration: none; }
+  .sh-mega-thumb{
+    display: block; aspect-ratio: 4/5; border-radius: 2px; margin-bottom: .6rem;
+    background:
+      repeating-linear-gradient(90deg, rgba(222,216,203,.06) 0 1px, transparent 1px 22px),
+      radial-gradient(130% 130% at 15% 0%, rgba(201,162,74,.2), transparent 58%),
+      linear-gradient(155deg, #171613, #0A0A09);
+    transition: transform .4s ease;
+  }
+  .sh-mega-item:hover .sh-mega-thumb{ transform: scale(1.02); }
+  .sh-mega-name{ font-family: var(--body); font-size: 0.82rem; color: var(--text-dim); transition: color .2s ease; }
+  .sh-mega-item:hover .sh-mega-name{ color: var(--text); }
+  .sh-mega-ver{
+    display: inline-block; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent); text-decoration: none;
+  }
+  .sh-mega-ver:hover{ text-decoration: underline; }
+
+  /* ---------- menú móvil ---------- */
+  .sh-scrim{
+    position: fixed; inset: 0; z-index: 85; background: rgba(10,9,6,.6);
+    opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility 0s linear .3s;
+  }
+  .sh-scrim.is-open{ opacity: 1; visibility: visible; transition: opacity .3s ease; }
+
+  .sh-mobile{
+    position: fixed; top: 0; left: 0; bottom: 0; width: min(400px, 88%); z-index: 90;
+    background: var(--bg-header-solid);
+    transform: translateX(-101%);
+    transition: transform .48s var(--ease-header);
+    overflow-y: auto;
+  }
+  .sh-mobile.is-open{ transform: translateX(0); }
+  @media (min-width: 1180px){ .sh-mobile, .sh-scrim{ display: none; } }
+
+  .sh-mobile-head{
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px clamp(18px, 5vw, 28px); border-bottom: 1px solid var(--line);
+  }
+  .sh-mobile-logo{ font-family: var(--script); font-style: italic; font-weight: 300; font-size: 1.3rem; color: var(--text); }
+  .sh-mobile-close{ background: none; border: none; color: var(--text-dim); font-size: 1.7rem; line-height: 1; cursor: pointer; padding: .2rem .4rem; }
+  .sh-mobile-close:hover{ color: var(--text); }
+
+  .sh-mobile-body{ padding: 4px clamp(18px, 5vw, 28px) 32px; }
+
+  .sh-acc{ border-bottom: 1px solid var(--line); }
+  .sh-acc-btn{
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    background: none; border: none; padding: 16px 0; cursor: pointer;
+    font-family: var(--body); font-weight: 500; font-size: 0.95rem;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--text);
+  }
+  .sh-acc-btn .chev{ width: 14px; height: 14px; transition: transform .3s ease; flex: none; }
+  .sh-acc.is-open .sh-acc-btn .chev{ transform: rotate(180deg); }
+  .sh-acc-panel{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px 16px;
+    max-height: 0; overflow: hidden; padding: 0;
+    transition: max-height .35s ease, padding .35s ease;
+  }
+  .sh-acc.is-open .sh-acc-panel{ max-height: 320px; padding-bottom: 16px; }
+  .sh-acc-panel a{ font-family: var(--body); font-size: 0.86rem; color: var(--text-dim); text-decoration: none; padding: 6px 0; }
+  .sh-acc-panel a:hover{ color: var(--text); }
+  .sh-acc-panel a[data-pronto]{ color: var(--accent-2); opacity: .75; }
+
+  .sh-mobile-paginas{ display: grid; gap: 2px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .sh-mobile-paginas a{ font-family: var(--body); font-size: 0.92rem; color: var(--text-dim); text-decoration: none; padding: 8px 0; }
+  .sh-mobile-paginas a:hover{ color: var(--text); }
+
+  .sh-mobile-tema{ display: flex; align-items: center; justify-content: space-between; padding: 20px 0 8px; }
+  .sh-mobile-tema span{ font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); }
+
+  /* ---------- overlay de búsqueda ---------- */
+  .sh-search-overlay{
+    position: fixed; inset: 0; z-index: 95;
+    background: rgba(20,18,14,0.97); backdrop-filter: blur(6px);
+    display: flex; flex-direction: column; align-items: center;
+    padding: clamp(80px, 12vh, 140px) clamp(20px, 6vw, 40px) 40px;
+    opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility 0s linear .3s;
+  }
+  .sh-search-overlay.is-open{ opacity: 1; visibility: visible; transition: opacity .3s ease; }
+  .sh-search-close{
+    position: absolute; top: 24px; right: clamp(20px, 5vw, 40px);
+    background: none; border: none; color: var(--text-dim); font-size: 2rem; line-height: 1; cursor: pointer;
+  }
+  .sh-search-close:hover{ color: var(--text); }
+  .sh-search-in{ width: 100%; max-width: 720px; }
+  .sh-search-input{
+    width: 100%; background: none; border: none; border-bottom: 1px solid var(--line);
+    padding: 12px 0; font-family: var(--display); font-size: clamp(1.9rem, 3.4vw, 2.4rem); color: var(--text);
+    outline: none;
+  }
+  .sh-search-input::placeholder{ color: var(--text-faint); }
+  .sh-search-chips{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .sh-search-chip{
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-dim); border: 1px solid var(--line); padding: 6px 12px; border-radius: 20px;
+    background: none; cursor: pointer; transition: color .2s ease, border-color .2s ease;
+  }
+  .sh-search-chip:hover{ color: var(--text); border-color: var(--accent); }
+  .sh-search-results{ margin-top: 28px; display: grid; gap: 2px; }
+  .sh-search-result{ padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--text-dim); font-size: 0.92rem; }
+  .sh-search-empty{ color: var(--text-faint); font-size: 0.85rem; margin-top: 28px; }
+
+  /* ---------- banner / hero ---------- */
+  .hero{
+    position: relative; width: 100%; min-height: 100svh;
+    background-color: var(--bg-raised);
+    background-size: cover; background-position: center;
+    overflow: hidden;
+  }
+  .hero-veil-top{
+    position: absolute; top: 0; left: 0; right: 0; height: 230px;
+    background: linear-gradient(to bottom, rgba(10,9,6,.85), transparent);
+    pointer-events: none;
+  }
+  .hero-veil-diag{
+    position: absolute; inset: 0;
+    background: linear-gradient(100deg, rgba(10,9,6,.75) 0%, rgba(10,9,6,.34) 45%, transparent 76%);
+    pointer-events: none;
+  }
+  .hero-play{
+    position: absolute; inset: 0; margin: auto; z-index: 2;
+    width: 90px; height: 90px; border-radius: 50%;
+    background: rgba(222,216,203,.14); border: 1px solid rgba(222,216,203,.5);
+    display: grid; place-items: center; cursor: pointer;
+    transition: background .25s ease, border-color .25s ease, transform .25s ease;
+  }
+  .hero-play svg{ width: 28px; height: 28px; margin-left: 4px; fill: var(--lino); transition: fill .25s ease; }
+  .hero-play:hover{ background: var(--accent); border-color: var(--accent); transform: scale(1.06); }
+  .hero-play:hover svg{ fill: var(--bg); }
+  @media (prefers-reduced-motion: reduce){ .hero-play{ transition: none; } }
+
+</style>
+
+<!-- ==========================================================================
+     SISTEMA DE SECCIONES DEL HOME — prefijo gd- (Giandeco). Construido sobre
+     los mismos tokens del brandbook que ya declara el bloque de arriba:
+     Ébano de fondo, Lino de texto, Latón como único acento (≤10% de la pieza),
+     Bodoni en títulos (nunca <30px), Jost en cuerpo y etiquetas, Cormorant
+     cursiva sólo en citas. Retícula de 12 columnas, medianil 24px, escala de
+     espaciado 8·16·24·40·64·104 (láminas 30–33).
+     ========================================================================== -->
+<style>
+  :root{
+    --gd-max: 1440px;
+    --gd-gut: clamp(20px, 5vw, 64px);
+    --gd-ease: cubic-bezier(.16,1,.3,1);
+    --sp-8:8px; --sp-16:16px; --sp-24:24px; --sp-40:40px; --sp-64:64px; --sp-104:104px;
+  }
+
+  .gd-sec{ padding-block: clamp(64px, 10vw, 128px); }
+  .gd-in{ width:100%; max-width: var(--gd-max); margin-inline:auto; padding-inline: var(--gd-gut); }
+  .gd-in-narrow{ max-width: 1080px; }
+
+  /* --- átomos tipográficos --- */
+  .gd-eyebrow{
+    font-family: var(--body); font-weight:500; font-size:.7rem;
+    letter-spacing:.2em; text-transform:uppercase; color: var(--accent);
+    margin:0 0 var(--sp-16);
+  }
+  .gd-eyebrow.is-muted{ color: var(--text-faint); }
+  .gd-h2{
+    font-family: var(--display); font-weight:400;
+    font-size: clamp(2rem, 4vw, 3rem); line-height:1.05; letter-spacing:-.01em;
+    margin:0 0 var(--sp-24); text-wrap:balance;
+  }
+  .gd-h3{
+    font-family: var(--display); font-weight:400;
+    font-size: clamp(1.5rem, 2.2vw, 1.95rem); line-height:1.1; margin:0 0 10px;
+  }
+  .gd-body{ color: var(--text-dim); font-size:1rem; line-height:1.7; max-width:62ch; margin:0 0 var(--sp-24); }
+  .gd-body.is-lead{ font-size:1.08rem; }
+  .gd-quote{
+    font-family: var(--script); font-style:italic; font-weight:300;
+    font-size: clamp(1.4rem, 2.4vw, 1.85rem); line-height:1.45; color: var(--text); margin:0;
+  }
+
+  /* filete con rombo — recurso gráfico del manual (lámina 35), un uso por pieza */
+  .gd-filete{ display:flex; align-items:center; gap:14px; margin: 0 0 var(--sp-40); }
+  .gd-filete::before, .gd-filete::after{ content:''; height:1px; background: var(--line); flex:1; }
+  .gd-filete span{ display:none; }
+  .gd-filete.is-left::before{ display:none; }
+  .gd-filete.is-left::after{ max-width:160px; }
+
+  /* --- botones --- */
+  .gd-btn{
+    display:inline-flex; align-items:center; gap:10px; cursor:pointer;
+    font-family: var(--body); font-weight:500; font-size:.78rem; letter-spacing:.1em; text-transform:uppercase;
+    padding:14px 26px; border-radius:2px; text-decoration:none; border:1px solid transparent;
+    transition: background-color .25s ease, color .25s ease, border-color .25s ease, gap .25s ease, transform .3s var(--gd-ease);
+  }
+  .gd-btn svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:1.5; flex:none; }
+  .gd-btn-primary{ background: var(--accent); color: var(--ebano); }
+  .gd-btn-primary:hover{ background:#dcb768; gap:14px; }
+  .gd-btn-ghost{ border-color: rgba(222,216,203,.28); color: var(--text); background:none; }
+  .gd-btn-ghost:hover{ border-color: var(--accent); color: var(--accent); gap:14px; }
+  .gd-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+  .gd-link{
+    display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+    font-family: var(--body); font-size:.76rem; letter-spacing:.1em; text-transform:uppercase;
+    color: var(--text); padding-bottom:4px; border-bottom:1px solid var(--line);
+    transition: color .25s ease, border-color .25s ease, gap .25s ease, transform .3s var(--gd-ease);
+  }
+  .gd-link svg{ width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.5; }
+  .gd-link:hover{ color: var(--accent); border-color: var(--accent); gap:12px; }
+
+  /* ==================== HERO (split editorial: ébano + lámina) ==================== */
+  .gd-hero{ position:relative; width:100%; background: var(--ebano); display:grid; grid-template-columns:1fr; min-height:100svh; }
+  @media (min-width: 900px){
+    .gd-hero{ grid-template-columns: 1fr 1.04fr; min-height: min(100svh, 1000px); }
+  }
+  .gd-hero-panel{
+    display:flex; flex-direction:column; justify-content:center; order:2;
+    padding: clamp(44px,7vw,72px) var(--gd-gut) clamp(56px,8vw,88px);
+  }
+  @media (min-width: 900px){
+    .gd-hero-panel{
+      order:1; padding-block: calc(var(--h-marca-d) + 40px) 64px;
+      padding-inline-start: max(var(--gd-gut), calc((100vw - var(--gd-max)) / 2 + var(--gd-gut)));
+      padding-inline-end: clamp(32px, 4vw, 64px);
+    }
+  }
+  .gd-hero-eyebrow{ font-family:var(--body); font-weight:500; font-size:.68rem; letter-spacing:.22em; text-transform:uppercase; color:var(--text-dim); margin:0 0 22px; }
+  .gd-hero-eyebrow i{ display:none; }
+  .gd-hero h1{
+    font-family: var(--display); font-weight:400; color: var(--lino);
+    font-size: clamp(2.5rem, 5.6vw, 4.4rem); line-height:1; letter-spacing:-.02em;
+    margin:0 0 24px; max-width:13ch; text-wrap:balance;
+  }
+  .gd-hero h1 em{ font-style:normal; color: var(--accent); }
+  .gd-hero-panel > p{ color: var(--text-dim); font-size: clamp(.98rem, 1.25vw, 1.08rem); line-height:1.7; max-width:46ch; margin:0 0 36px; }
+  .gd-hero-cta{ display:flex; flex-wrap:wrap; gap:12px; }
+
+  .gd-hero-media{ position:relative; order:1; min-height: 100svh; overflow:hidden; }
+  @media (min-width: 900px){ .gd-hero-media{ order:2; min-height:auto; } }
+  .gd-hero-media .gd-curtain{ position:absolute; inset:0; }
+  .gd-hero-media img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .gd-hero-media::after{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:
+      linear-gradient(to bottom, rgba(10,9,6,.7) 0%, rgba(10,9,6,.12) 22%, transparent 40%),
+      linear-gradient(to right, rgba(10,9,6,.55) 0%, transparent 26%),
+      linear-gradient(to top, rgba(10,9,6,.55) 0%, transparent 34%);
+  }
+  .gd-hero-cap{
+    position:absolute; left:0; right:0; bottom:0; z-index:2; padding: clamp(18px,3vw,30px);
+    display:flex; align-items:flex-end; justify-content:space-between; gap:16px;
+  }
+  .gd-hero-cap b{ display:block; font-family:var(--body); font-weight:500; font-size:1rem; color:var(--lino); }
+  .gd-hero-cap span{ font-family:var(--body); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color: rgba(222,216,203,.68); }
+  .gd-scroll-cue{
+    display:none; align-items:center; gap:10px; writing-mode:vertical-rl;
+    font-family:var(--body); font-size:.62rem; letter-spacing:.24em; text-transform:uppercase; color: rgba(222,216,203,.62);
+  }
+  @media (min-width:900px){ .gd-scroll-cue{ display:flex; } }
+  .gd-scroll-cue i{ width:1px; height:48px; background:linear-gradient(to bottom, var(--accent), transparent); display:block; animation: gdCue 2.4s var(--gd-ease) infinite; }
+  @keyframes gdCue{ 0%{ transform:scaleY(.2); transform-origin:top; } 50%{ transform:scaleY(1); transform-origin:top; } 51%{ transform-origin:bottom; } 100%{ transform:scaleY(.2); transform-origin:bottom; } }
+
+  /* ==================== MANIFIESTO ==================== */
+  .gd-manifiesto-grid{ display:grid; grid-template-columns:1fr; gap: clamp(36px,5vw,80px); align-items:center; }
+  @media (min-width: 900px){ .gd-manifiesto-grid{ grid-template-columns: 1fr 0.82fr; } }
+  .gd-manifiesto .gd-h2{ font-size: clamp(2rem, 4.4vw, 3.2rem); margin-bottom: var(--sp-24); text-align:left; }
+  .gd-manifiesto .gd-body{ text-align:left; }
+  .gd-triada{ display:flex; flex-direction:column; align-items:flex-start; gap:10px; margin-top: var(--sp-40); font-family:var(--body); font-size:.95rem; color: var(--text-faint); }
+  .gd-triada b{ display:block; font-weight:400; }
+  .gd-triada .is-yes{ color: var(--lino); font-family: var(--display); font-size: clamp(1.9rem,2.6vw,2.1rem); margin-top:6px; }
+  .gd-triada .is-yes em{ font-style:normal; color: var(--accent); }
+  .gd-manifiesto-media{ position:relative; border-radius:2px; overflow:hidden; aspect-ratio: 4/4.4; isolation:isolate; }
+  .gd-manifiesto-media .gd-curtain{ position:absolute; inset:0; }
+  .gd-manifiesto-media img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .gd-manifiesto-media::after{
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(to top, rgba(10,9,6,.92) 0%, rgba(10,9,6,.5) 34%, rgba(10,9,6,.02) 62%);
+  }
+  .gd-manifiesto-cap{ position:absolute; left:0; right:0; bottom:0; z-index:2; padding: clamp(20px,3vw,32px); }
+  .gd-manifiesto-cap .gd-eyebrow{ color: var(--accent); margin-bottom:10px; }
+  .gd-manifiesto-cap-texto{
+    font-family: var(--script); font-style:italic; font-weight:300;
+    font-size: clamp(1rem, 1.6vw, 1.2rem); line-height:1.55; color: var(--text-dim); margin:0;
+  }
+  .gd-manifiesto-cap-texto b{ font-weight:400; color: var(--lino); }
+
+  /* ==================== UNIVERSOS ==================== */
+  .gd-univ-grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap: var(--sp-24); }
+  .gd-univ{ position:relative; display:block; text-decoration:none; overflow:hidden; border-radius:2px; isolation:isolate; }
+  .gd-univ--main{ grid-column: span 12; aspect-ratio: 4/5; }
+  .gd-univ--sub{ grid-column: span 12; aspect-ratio: 16/10; }
+  @media (min-width: 860px){
+    .gd-univ--main{ grid-column: span 7; aspect-ratio: 4/4.6; }
+    /* la columna derecha se estira a la altura de la lámina principal y la parte en dos */
+    .gd-univ-col{ grid-column: span 5; display:grid; grid-template-rows: 1fr 1fr; gap: var(--sp-24); }
+    .gd-univ-col .gd-univ--sub{ grid-column: auto; aspect-ratio: auto; min-height:0; }
+  }
+  .gd-univ img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition: transform 1.1s var(--gd-ease); }
+  .gd-univ::after{
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(to top, rgba(10,9,6,.94) 0%, rgba(10,9,6,.78) 20%, rgba(10,9,6,.3) 52%, rgba(10,9,6,.06) 100%);
+    transition: opacity .4s ease;
+  }
+  .gd-univ:hover img{ transform: scale(1.04); }
+  .gd-univ-body{ position:absolute; left:0; right:0; bottom:0; z-index:2; padding: clamp(20px,3vw,34px); }
+  .gd-univ-title{ font-family:var(--display); font-weight:400; color:var(--lino); font-size: clamp(1.9rem,2.8vw,2.4rem); line-height:1.05; margin:0 0 8px; }
+  .gd-univ-desc{ color: rgba(222,216,203,.76); font-size:.9rem; line-height:1.55; max-width:40ch; margin:0 0 14px; }
+  .gd-univ-more{ display:inline-flex; align-items:center; gap:8px; font-family:var(--body); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--lino); }
+  .gd-univ-more i{ width:16px; height:1px; background: var(--accent); display:block; transition: width .35s var(--gd-ease); }
+  .gd-univ:hover .gd-univ-more i{ width:30px; }
+
+  /* ==================== BOCETO → OBRA ==================== */
+  .gd-ba-head{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap: var(--sp-24); margin-bottom: var(--sp-40); }
+  .gd-ba-tabs{ display:flex; flex-wrap:wrap; gap:8px; }
+  .gd-ba-tab{
+    appearance:none; background:none; cursor:pointer; border:1px solid var(--line); border-radius:2px;
+    padding:9px 16px; font-family:var(--body); font-size:.74rem; letter-spacing:.06em; color: var(--text-dim);
+    transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+  }
+  .gd-ba-tab:hover{ color: var(--text); border-color: rgba(222,216,203,.3); }
+  .gd-ba-tab[aria-selected="true"]{ color: var(--ebano); background: var(--accent); border-color: var(--accent); }
+  .gd-ba-tab:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .gd-ba-frame{
+    position:relative; width:100%; aspect-ratio: 3/2; overflow:hidden; border-radius:2px;
+    background: var(--panel); cursor: ew-resize; touch-action: pan-y; user-select:none;
+  }
+  @media (min-width: 760px){
+    /* la altura manda: cada proyecto conserva su proporción sin recortar la acuarela */
+    .gd-ba-frame{ width:auto; height: min(74svh, 760px); max-width:100%; margin-inline:auto; }
+  }
+  .gd-ba-frame img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+  .gd-ba-after{ clip-path: inset(0 0 0 var(--gd-ba, 50%)); }
+  .gd-ba-handle{
+    position:absolute; top:0; bottom:0; left: var(--gd-ba, 50%); width:2px; margin-left:-1px;
+    background: var(--accent); z-index:3; pointer-events:none;
+    box-shadow: 0 0 0 1px rgba(10,9,6,.35), 0 0 18px rgba(201,162,74,.45);
+  }
+  .gd-ba-grip{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:50px; height:50px; border-radius:50%; background: rgba(10,9,6,.66);
+    border:1px solid var(--accent); display:grid; place-items:center; backdrop-filter: blur(3px);
+  }
+  .gd-ba-grip svg{ width:22px; height:22px; stroke: var(--accent); fill:none; stroke-width:1.5; }
+  .gd-ba-tag{
+    position:absolute; bottom:16px; z-index:4; font-family:var(--body); font-size:.64rem;
+    letter-spacing:.18em; text-transform:uppercase; color: var(--lino);
+    background: rgba(10,9,6,.55); padding:7px 13px; border-radius:2px; backdrop-filter: blur(3px);
+  }
+  .gd-ba-tag.is-a{ left:16px; }
+  .gd-ba-tag.is-b{ right:16px; }
+  .gd-ba-range{ position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:ew-resize; z-index:5; margin:0; }
+  .gd-ba-range:focus-visible + .gd-ba-handle{ box-shadow: 0 0 0 2px var(--lino), 0 0 18px rgba(201,162,74,.6); }
+  .gd-ba-caption{ display:flex; flex-wrap:wrap; gap: var(--sp-16) var(--sp-40); justify-content:space-between; margin-top: var(--sp-24); }
+  .gd-ba-caption p{ margin:0; color: var(--text-dim); font-size:.92rem; line-height:1.6; max-width:60ch; }
+  .gd-ba-caption .gd-ba-meta{ font-family:var(--body); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color: var(--text-faint); white-space:nowrap; }
+  .gd-ba-hint{ display:inline-flex; align-items:center; gap:8px; font-family:var(--body); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color: var(--text-faint); }
+  .gd-ba-hint svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.5; }
+
+  /* ==================== DIFERENCIADORES ==================== */
+  .gd-dif-grid{ display:grid; grid-template-columns:1fr; gap:0; }
+  @media (min-width: 800px){ .gd-dif-grid{ grid-template-columns:1fr 1fr; column-gap: var(--sp-64); } }
+  .gd-dif{ display:grid; grid-template-columns: auto 1fr; gap: var(--sp-24); padding-block: var(--sp-40); border-top:1px solid var(--line); }
+  .gd-dif-mark{ width:2px; border-radius:1px; background: var(--accent); align-self:stretch; min-height:100%; }
+  .gd-dif h3{ font-family:var(--body); font-weight:500; font-size:1.1rem; margin:0 0 10px; color:var(--lino); }
+  .gd-dif p{ margin:0; color: var(--text-dim); font-size:.94rem; line-height:1.65; }
+
+  /* ==================== MARCAS ==================== */
+  .gd-marcas{ background: var(--bg-raised); border-block:1px solid var(--line); }
+  .gd-marcas .gd-eyebrow, .gd-marcas .gd-h2{ text-align:center; }
+  .gd-marcas .gd-h2{ margin-bottom:0; }
+  .gd-marcas-wall{ display:flex; flex-direction:column; gap: var(--sp-24); margin-top: clamp(48px,6vw,96px); }
+  .gd-marcas-row{
+    overflow:hidden; position:relative;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+  .gd-marcas-track{
+    display:flex; align-items:center; gap:0; width:max-content;
+    animation: gdMarcasLeft 42s linear infinite;
+  }
+  .gd-marcas-row--rev .gd-marcas-track{ animation-name: gdMarcasRight; animation-duration:50s; }
+  .gd-marcas-row:hover .gd-marcas-track{ animation-play-state: paused; }
+  @keyframes gdMarcasLeft{ to{ transform: translateX(-50%); } }
+  @keyframes gdMarcasRight{ from{ transform: translateX(-50%); } to{ transform: translateX(0); } }
+  .gd-marcas-item{
+    display:flex; align-items:center; flex:none; white-space:nowrap;
+    font-family:var(--body); font-weight:400; letter-spacing:.03em; font-size: clamp(1.15rem,2.1vw,1.65rem); color: var(--text-dim);
+    padding-inline: clamp(22px,3vw,40px);
+  }
+  /* cada logo vive en una casilla del mismo ancho y alto — así todos pesan
+     igual visualmente sin importar si el archivo es un wordmark ancho y
+     plano (Zara, Pycca) o un ícono casi cuadrado (Walon, Casacor), y la
+     separación entre marcas queda pareja en vez de depender del ancho de
+     cada imagen (antes dejaba huecos irregulares entre unas y otras). */
+  .gd-marcas-logo{
+    display:flex; align-items:center; justify-content:center; flex:none;
+    width: clamp(84px, 7.6vw, 116px); height: clamp(34px, 3.8vw, 46px);
+  }
+  .gd-marcas-logo img{
+    max-width:100%; max-height:100%; width:auto; height:auto; display:block;
+    filter: grayscale(1) brightness(0) invert(1); opacity:.68; transition: opacity .3s ease;
+  }
+  .gd-marcas-item:hover .gd-marcas-logo img{ opacity:1; }
+  /* El Corte Inglés ya trae blanco reservado sobre su banderín verde: forzarlo
+     a blanco sólido fusionaría el texto con el fondo y lo haría ilegible. */
+  .gd-marcas-logo img.is-nativo{ filter:none; opacity:.85; }
+  .gd-marcas-item:hover .gd-marcas-logo img.is-nativo{ opacity:1; }
+  @media (prefers-reduced-motion: reduce){ .gd-marcas-track{ animation:none; } }
+
+  /* ==================== ESTUDIO ==================== */
+  .gd-estudio-grid{ display:grid; grid-template-columns:1fr; gap: clamp(32px,5vw,72px); align-items:center; }
+  @media (min-width: 900px){ .gd-estudio-grid{ grid-template-columns: 0.85fr 1fr; } }
+  .gd-estudio-foto{ position:relative; }
+  .gd-estudio-foto img{ width:100%; height:auto; border-radius:2px; display:block; position:relative; z-index:2; }
+  .gd-estudio-foto::before{
+    content:''; position:absolute; inset: 20px -20px -20px 20px; border:1px solid var(--accent); opacity:.42; border-radius:2px; z-index:1;
+  }
+  .gd-estudio-firma{ margin-top: var(--sp-40); padding-top: var(--sp-24); border-top:1px solid var(--line); }
+  .gd-estudio-firma b{ display:block; font-family:var(--body); font-weight:500; font-size:.95rem; color: var(--lino); letter-spacing:.02em; }
+  .gd-estudio-firma span{ font-family:var(--body); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color: var(--text-faint); }
+  .gd-valores{ display:grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: var(--sp-24); margin-top: var(--sp-40); }
+  .gd-valor b{ display:block; font-family:var(--body); font-weight:500; font-size:1rem; color:var(--lino); margin-bottom:4px; }
+  .gd-valor span{ font-size:.85rem; color: var(--text-faint); line-height:1.5; }
+
+  /* ==================== CATÁLOGO (lámina clara — Humo, lámina 29) ==================== */
+  .gd-catalogo{ background: var(--humo); color: var(--ebano); }
+  .gd-catalogo .gd-eyebrow{ color: var(--bronce); }
+  .gd-catalogo .gd-h2{ color: var(--ebano); }
+  .gd-catalogo .gd-body{ color: var(--grafito); }
+  .gd-catalogo .gd-filete::before, .gd-catalogo .gd-filete::after{ background: rgba(10,9,6,.14); }
+  .gd-catalogo .gd-filete span::before{ border-color: var(--bronce); }
+  .gd-cat-head{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:var(--sp-24); margin-bottom: var(--sp-40); }
+  .gd-cat-grid{ display:grid; grid-template-columns: repeat(2,1fr); gap: var(--sp-24); }
+  @media (min-width: 860px){ .gd-cat-grid{ grid-template-columns: repeat(4,1fr); } }
+  .gd-cat-item{ text-decoration:none; display:block; }
+  .gd-cat-thumb{ position:relative; aspect-ratio:4/5; overflow:hidden; border-radius:2px; background:#fff; margin-bottom:14px; }
+  .gd-cat-thumb img{ width:100%; height:100%; object-fit:cover; transition: transform .8s var(--gd-ease); }
+  .gd-cat-item:hover .gd-cat-thumb img{ transform:scale(1.04); }
+  .gd-cat-cat{ font-family:var(--body); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color: var(--bronce); display:block; margin-bottom:5px; }
+  .gd-cat-name{ font-family:var(--body); font-weight:500; font-size:1rem; color: var(--ebano); display:block; margin-bottom:4px; line-height:1.25; }
+  .gd-cat-price{ font-family:var(--body); font-size:.88rem; color: var(--grafito); font-variant-numeric: tabular-nums; }
+  .gd-cat-soon{ font-family:var(--body); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color: var(--bronce); opacity:.8; }
+  .gd-catalogo .gd-link{ color: var(--ebano); border-color: rgba(10,9,6,.18); }
+  .gd-catalogo .gd-link:hover{ color: var(--bronce); border-color: var(--bronce); }
+
+  /* ==================== CTA ==================== */
+  .gd-cta{ text-align:center; position:relative; overflow:hidden; }
+  .gd-cta-media{ position:absolute; inset:0; z-index:0; }
+  .gd-cta-media img{ width:100%; height:100%; object-fit:cover; object-position: 68% 30%; display:block; }
+  .gd-cta::before{
+    content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
+    background:
+      radial-gradient(ellipse 760px 420px at 50% 0%, rgba(201,162,74,.16), transparent 70%),
+      linear-gradient(180deg, rgba(10,9,6,.9) 0%, rgba(10,9,6,.82) 42%, rgba(10,9,6,.93) 100%);
+  }
+  .gd-cta .gd-in{ position:relative; z-index:2; max-width: 860px; }
+  .gd-cta .gd-h2{ font-size: clamp(2.1rem, 5vw, 3.4rem); }
+  .gd-cta .gd-body{ margin-inline:auto; }
+  .gd-cta-btns{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top: var(--sp-40); }
+  .gd-cta-datos{ display:flex; flex-wrap:wrap; gap:10px 28px; justify-content:center; margin-top: var(--sp-40); padding-top: var(--sp-24); border-top:1px solid var(--line); font-family:var(--body); font-size:.8rem; color: var(--text-faint); }
+  .gd-cta-datos b{ color: var(--text-dim); font-weight:400; }
+
+  /* ==================== SEO ==================== */
+  .gd-seo{ padding-block: clamp(40px,5vw,64px); border-top:1px solid var(--line); }
+  .gd-seo-texto{ font-family:var(--body); font-weight:400; font-size:.8rem; line-height:1.9; color: var(--text-faint); text-align:center; }
+  .gd-seo-texto strong{ color: var(--text-dim); font-weight:500; }
+
+  /* ==================== FOOTER ==================== */
+  .gd-footer{ background: var(--bg-raised); border-top:1px solid var(--line); padding-block: clamp(48px,6vw,80px) 0; }
+  .gd-footer-grid{ display:grid; grid-template-columns: repeat(2,1fr); gap: var(--sp-40); }
+  @media (min-width: 860px){ .gd-footer-grid{ grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
+  .gd-footer-brand img{ height:78px; width:auto; margin-bottom:18px; }
+  .gd-footer-brand p{ color: var(--text-faint); font-size:.86rem; line-height:1.65; max-width:34ch; margin:0; }
+  .gd-footer-col h4{ font-family:var(--body); font-weight:500; font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color: var(--accent); margin:0 0 16px; }
+  .gd-footer-col ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px; }
+  .gd-footer-col a{ color: var(--text-dim); text-decoration:none; font-size:.88rem; transition: color .2s ease; }
+  .gd-footer-col a:hover{ color: var(--accent); }
+
+  .gd-footer-contact li a{ display:flex; align-items:flex-start; gap:10px; line-height:1.4; }
+  .gd-footer-contact svg{
+    width:15px; height:15px; margin-top:2px; flex:none;
+    stroke:currentColor; fill:none; stroke-width:1.5; opacity:.85; transition: opacity .2s ease;
+  }
+  .gd-footer-contact a:hover svg{ opacity:1; }
+  .gd-footer-social{ display:flex; gap:10px; margin-top:20px; }
+  .gd-footer-social a{
+    display:grid; place-items:center; width:36px; height:36px; border-radius:50%;
+    border:1px solid var(--line); color: var(--text-dim);
+    transition: color .25s ease, border-color .25s ease, background-color .25s ease;
+  }
+  .gd-footer-social a:hover{ color: var(--ebano); background: var(--accent); border-color: var(--accent); }
+  .gd-footer-social svg{ width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.5; }
+
+  .gd-footer-bar{
+    margin-top: clamp(40px,5vw,64px); padding-block: 22px; border-top:1px solid var(--line);
+    display:flex; flex-wrap:wrap; gap:10px 24px; justify-content:space-between;
+    font-family:var(--body); font-size:.74rem; color: var(--text-faint);
+  }
+  .gd-footer-bar em{ font-family:var(--script); font-style:italic; font-size:1rem; color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce){
+    .gd-univ img, .gd-cat-thumb img, .gd-scroll-cue i{ transition:none; animation:none; }
+  }
+
+  /* ==========================================================================
+     INTERACCIÓN Y MOVIMIENTO — cursor de marca, botones magnéticos, cortina
+     de apertura y zoom lento en imágenes clave. Todo respeta
+     prefers-reduced-motion y se desactiva por completo en touch (sin puntero
+     fino no hay ni cursor propio ni imán de botones).
+     ========================================================================== */
+
+  /* ---- zoom lento (Ken Burns) en fotografías protagonistas ---- */
+  .gd-kb-img{ transform-origin:56% 42%; animation: gdKenBurns 26s ease-in-out infinite alternate; will-change: transform; }
+  @keyframes gdKenBurns{ from{ transform:scale(1); } to{ transform:scale(1.09); } }
+
+  /* ---- cortina de apertura: panel ébano con filo de latón que se retira ---- */
+  .gd-curtain{ position:relative; overflow:hidden; }
+  .gd-curtain::after{
+    content:''; position:absolute; inset:0; z-index:2;
+    background: var(--ebano); border-right:2px solid var(--laton);
+    transform-origin: right center;
+    transition: transform 1150ms cubic-bezier(.76,0,.16,1) 140ms;
+  }
+  .gd-curtain.is-visible::after{ transform: scaleX(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    .gd-kb-img{ animation:none; }
+    .gd-curtain::after{ transition:none; transform:scaleX(0); }
+  }
+
+  /* ---- botones magnéticos: el imán sólo entra con puntero fino ---- */
+  .gd-btn, .gd-link, .intro-cta{ will-change: transform; }
+
+  /* ---- cursor de marca: estático, sin JavaScript ----
+     Antes había un anillo que seguía el mouse con un bucle de animación
+     constante (requestAnimationFrame) — eso era lo que se sentía lento.
+     Esto es una sola imagen de cursor dibujada en línea fina (mismo lenguaje
+     que el resto de los íconos del sitio: trazo, sin relleno grueso, dorado)
+     con costo de rendimiento igual a cero: el navegador la dibuja como
+     dibuja cualquier cursor nativo. Los campos de texto conservan el cursor
+     de "I" para que se note que ahí sí se puede escribir. */
+  html{
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' viewBox='0 0 25 25'><path d='M2.2 1.8 L2.2 16.7 L6.4 12.9 L9.5 20.2 L12.4 18.9 L9.2 11.7 L15 11.7 Z' fill='%23C9A24A' stroke='%230A0A09' stroke-width='1' stroke-linejoin='miter'/></svg>") 2 2, auto;
+  }
+  input, textarea, select{ cursor: text; }
+  input[type="checkbox"], input[type="radio"]{ cursor: default; }
+</style>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ======================================================================
+     HEADER, NAVEGACIÓN Y BANNER — bloque nuevo. No toca nada de lo que
+     sigue abajo (Studio Transitions queda intacto en su <div class="page">).
+     ====================================================================== -->
+<header class="site-header" id="siteHeader">
+  <div class="sh-marca">
+    <div class="sh-marca-in">
+      <div class="sh-left">
+        <button class="sh-burger" id="shBurger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="shMobile">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="sh-mundos" aria-label="Mundos">
+          <a class="sh-mundo is-active" data-mundo="retail" href="retail.html">Retail</a>
+          <a class="sh-mundo" data-mundo="hogar" href="hogar.html">Hogar</a>
+          <a class="sh-mundo" data-mundo="catalogo" href="catalogo.html">Catálogo</a>
+        </nav>
+      </div>
+
+      <a class="sh-brand" href="#top" aria-label="Inicio">
+        <img decoding="async" class="sh-brand-big" src="img/logo-negativo.svg" alt="Giandeco Studio Design">
+        <img decoding="async" class="sh-brand-mark sh-brand-mini" src="img/logo-positivo.svg" alt="Giandeco Studio Design">
+      </a>
+
+      <div class="sh-right">
+        <nav class="sh-paginas" aria-label="Páginas">
+          <a href="quienes-somos.html">Quiénes somos</a>
+          <a href="contacto.html">Contacto</a>
+        </nav>
+        <button class="sh-tema" id="shTemaDesktop" type="button" aria-label="Cambiar a tema claro" title="Cambiar a tema claro">
+          <svg class="ico-sol" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.4"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+          <svg class="ico-luna" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.4"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/></svg>
+        </button>
+        <button class="sh-icon-btn sh-buscar-ico" id="shBuscarIco" type="button" aria-label="Buscar">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>
+        </button>
+        <button class="sh-icon-btn" type="button" aria-label="Carrito">
+          <svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh-categorias">
+    <div class="sh-cat-in">
+      <nav class="sh-cat-nav" id="shCatNav" aria-label="Categorías"></nav>
+      <div class="sh-cat-right" id="shCatRight"></div>
+    </div>
+  </div>
+
+  <div class="sh-mega" id="shMega" aria-hidden="true">
+    <div class="sh-mega-in">
+      <div class="sh-mega-grid" id="shMegaGrid"></div>
+      <a class="sh-mega-ver" href="#">Ver todo →</a>
+    </div>
+  </div>
+</header>
+
+<div class="sh-scrim" id="shScrim"></div>
+<nav class="sh-mobile" id="shMobile" aria-label="Menú móvil" aria-hidden="true">
+  <div class="sh-mobile-head">
+    <span class="sh-mobile-logo">Giandeco</span>
+    <button class="sh-mobile-close" id="shMobileClose" type="button" aria-label="Cerrar menú">&times;</button>
+  </div>
+  <div class="sh-mobile-body">
+    <div class="sh-acc">
+      <button type="button" class="sh-acc-btn">Retail<svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 6l4 4 4-4"/></svg></button>
+      <div class="sh-acc-panel">
+        <a href="retail.html">Retail</a>
+        <a href="retail-diseno-tiendas.html">Diseño de tiendas</a>
+        <a href="retail-proyectos.html">Proyectos</a>
+        <a href="retail-blog.html">Blog</a>
+      </div>
+    </div>
+    <div class="sh-acc">
+      <button type="button" class="sh-acc-btn">Hogar<svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 6l4 4 4-4"/></svg></button>
+      <div class="sh-acc-panel">
+        <a href="hogar.html">Hogar</a>
+        <a href="hogar-diseno-interiores.html">Diseño de interiores</a>
+        <a href="hogar-espacios.html">Espacios</a>
+        <a href="hogar-proyectos.html">Proyectos</a>
+        <a href="hogar-blog.html">Blog</a>
+      </div>
+    </div>
+    <div class="sh-acc">
+      <button type="button" class="sh-acc-btn">Catálogo<svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 6l4 4 4-4"/></svg></button>
+      <div class="sh-acc-panel">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="catalogo-navidad.html">Navidad</a>
+        <a href="catalogo-muebleria.html">Mueblería</a>
+        <a href="catalogo-compra-el-espacio.html">Compra el espacio</a>
+        <a href="proximamente-iluminacion.html" data-pronto title="Disponible próximamente">Iluminación</a>
+        <a href="proximamente-decoracion.html" data-pronto title="Disponible próximamente">Decoración</a>
+        <a href="proximamente-papel-mural.html" data-pronto title="Disponible próximamente">Papel Mural</a>
+      </div>
+    </div>
+
+    <div class="sh-mobile-paginas">
+      <a href="quienes-somos.html">Quiénes somos</a>
+      <a href="contacto.html">Contacto</a>
+    </div>
+
+    <div class="sh-mobile-tema">
+      <span>Tema</span>
+      <button class="sh-tema" id="shTemaMobile" type="button" aria-label="Cambiar a tema claro" title="Cambiar a tema claro">
+        <svg class="ico-sol" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.4"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+        <svg class="ico-luna" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.4"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="sh-search-overlay" id="shSearchOverlay" aria-hidden="true">
+  <button class="sh-search-close" id="shSearchClose" type="button" aria-label="Cerrar búsqueda">&times;</button>
+  <div class="sh-search-in">
+    <input class="sh-search-input" id="shSearchInput" type="text" placeholder="Buscar…" autocomplete="off">
+    <div class="sh-search-chips" id="shSearchChips"></div>
+    <div class="sh-search-results" id="shSearchResults"></div>
+  </div>
+</div>
+
+<section class="gd-hero" id="top">
+  <div class="gd-hero-panel">
+    <p class="gd-hero-eyebrow reveal-left" id="heroReveal0"><i></i>Estudio de diseño comercial · Lima, Perú</p>
+    <h1 class="reveal-left d1" id="heroReveal1">Espacios que <em>saben vender</em></h1>
+    <p class="reveal-left d2" id="heroReveal2">Interiores y visual merchandising para marcas retail. Diseñamos la tienda completa —del layout al mobiliario y la luz— y decidimos dónde va cada producto y cómo se mueve el cliente dentro. Y si quiere, la ejecutamos nosotros.</p>
+    <div class="gd-hero-cta reveal-left d3" id="heroReveal3">
+      <a class="gd-btn gd-btn-primary" data-magnetic href="#trabajo">
+        Ver proyectos retail
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <a class="gd-btn gd-btn-ghost" data-magnetic href="#contacto">Conversemos su local</a>
+    </div>
+  </div>
+
+  <div class="gd-hero-media">
+    <div class="gd-curtain" id="heroCurtain">
+      <img decoding="async" class="gd-kb-img" src="images/hero/hero-retail.jpg" alt="Isla de exhibición en tienda departamental con maniquíes y piezas escultóricas en naranja y verde">
+    </div>
+    <div class="gd-hero-cap">
+      <span>
+        <b>Isla de exhibición</b>
+        <span>Retail departamental</span>
+      </span>
+      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+    </div>
+  </div>
+</section>
+<!-- ================ fin del bloque header / navegación / banner ================ -->
+
+<!-- ==================== MANIFIESTO ==================== -->
+<section class="gd-sec gd-manifiesto">
+  <div class="gd-in gd-manifiesto-grid">
+    <div>
+      <p class="gd-eyebrow reveal">Posicionamiento</p>
+      <h2 class="gd-h2 reveal d1">Para marcas retail que renuevan su punto de venta</h2>
+      <p class="gd-body is-lead reveal d2">Giandeco diseña el espacio con criterio de venta: interiores, mobiliario, iluminación y visual merchandising bajo una sola dirección, con la opción de ejecutarlo. Un solo interlocutor, menos coordinación, menos días cerrados.</p>
+      <div class="gd-triada reveal d3">
+        <b>No es un despacho de arquitectura.</b>
+        <b>No es un servicio de decoración.</b>
+        <b class="is-yes">Es un estudio de <em>diseño comercial</em>.</b>
+      </div>
+    </div>
+    <div class="gd-manifiesto-media reveal-scale d2">
+      <div class="gd-curtain">
+        <img decoding="async" class="gd-kb-img" src="images/posicionamiento/manifiesto.jpg" alt="Equipo Giandeco instalando papel mural en un stand de feria, con la chaqueta de marca del estudio">
+      </div>
+      <div class="gd-manifiesto-cap">
+        <p class="gd-eyebrow is-muted">En cifras</p>
+        <p class="gd-manifiesto-cap-texto">Catorce proyectos documentados, <b>nueve</b> retail, en <b>dos</b> países — Perú y Ecuador. Presencia reciente en <b>Expodeco</b> y <b>Casacor</b>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TRES UNIVERSOS ==================== -->
+<section class="gd-sec" id="universos" style="padding-top:0;">
+  <div class="gd-in">
+    <div class="gd-filete is-left reveal"><span aria-hidden="true">◆</span></div>
+    <p class="gd-eyebrow reveal">Tres universos</p>
+    <h2 class="gd-h2 reveal d1">Dónde trabajamos</h2>
+    <p class="gd-body reveal d2">El mismo criterio aplicado a tres escalas distintas. Retail es donde más obra tenemos y donde el argumento comercial pesa más.</p>
+
+    <div class="gd-univ-grid">
+      <a class="gd-univ gd-univ--main reveal-scale" href="retail-proyectos.html" data-cursor="Ver">
+        <img decoding="async" src="images/universos/retail.jpg" alt="Isla de exhibición en tienda departamental con maniquíes y piezas escultóricas">
+        <div class="gd-univ-body">
+          <h3 class="gd-univ-title">Retail</h3>
+          <p class="gd-univ-desc">Tiendas departamentales, boutiques, córners y campañas estacionales. Layout, mobiliario, iluminación y vitrina decididos en la misma mesa.</p>
+          <span class="gd-univ-more">Ver proyectos retail <i></i></span>
+        </div>
+      </a>
+
+      <div class="gd-univ-col">
+        <a class="gd-univ gd-univ--sub reveal-scale d1" href="hogar-espacios.html" data-cursor="Ver">
+          <img decoding="async" src="images/universos/hogar.jpg" alt="Sala de estar con techo azul profundo, zócalo verde oliva y arte de gran formato">
+          <div class="gd-univ-body">
+            <h3 class="gd-univ-title">Hogar</h3>
+            <p class="gd-univ-desc">Interiorismo residencial con la misma lógica: primero el recorrido, después el estilo.</p>
+            <span class="gd-univ-more">Ver espacios <i></i></span>
+          </div>
+        </a>
+        <a class="gd-univ gd-univ--sub reveal-scale d2" href="catalogo.html" data-cursor="Ver">
+          <img decoding="async" src="images/universos/catalogo.jpg" alt="Ambientación navideña con árbol decorado y mesa servida">
+          <div class="gd-univ-body">
+            <h3 class="gd-univ-title">Catálogo</h3>
+            <p class="gd-univ-desc">Navidad y mueblería propia disponibles ahora. Decoración, papel mural e iluminación, muy pronto.</p>
+            <span class="gd-univ-more">Ver catálogo <i></i></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="page">
+
+  <div class="demo" id="proceso">
+    <div class="intro-col">
+      <h2 class="steps-heading reveal">Nuestro Proceso</h2>
+      <hr class="steps-underline reveal-underline">
+      <p class="reveal d1">Del boceto a la obra terminada, en cuatro etapas con el mismo criterio.</p>
+      <a class="intro-cta reveal d2" href="#accordion">
+        Ver proceso completo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+    <div class="accordion reveal-scale" id="accordion">
+      <div class="acc-item is-open" data-index="0">
+        <button class="acc-panel" style="background-image: url('images/01.jpg');">
+          <span class="acc-media-title">01 — Boceto</span>
+        </button>
+      </div>
+      <div class="acc-item" data-index="1">
+        <button class="acc-panel" style="background-image: url('images/02.jpg');">
+          <span class="acc-media-title">02 — Acuarela</span>
+        </button>
+      </div>
+      <div class="acc-item" data-index="2">
+        <button class="acc-panel" style="background-image: url('images/03.jpg');">
+          <span class="acc-media-title">03 — Proyecto</span>
+        </button>
+      </div>
+      <div class="acc-item" data-index="3">
+        <button class="acc-panel" style="background-image: url('images/04.jpg');">
+          <span class="acc-media-title">04 — Seguimiento</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- ==================== DEL BOCETO A LA OBRA ==================== -->
+  <section id="metodo">
+    <div class="gd-ba-head">
+      <div>
+        <p class="gd-eyebrow reveal">Método</p>
+        <h2 class="gd-h2 reveal d1" style="margin-bottom:12px;">Del boceto a la obra</h2>
+        <p class="gd-body reveal d2" style="margin-bottom:0;">Cada proyecto se dibuja en acuarela antes de levantarse: altura de mueble, recorrido, punto de luz. Lo que se aprueba en papel es lo que se monta en obra.</p>
+      </div>
+      <div class="reveal d2" style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
+        <div class="gd-ba-tabs" role="tablist" aria-label="Proyectos">
+          <button class="gd-ba-tab" type="button" role="tab" aria-selected="true" data-ba="0">Zona Tienda</button>
+          <button class="gd-ba-tab" type="button" role="tab" aria-selected="false" data-ba="1">Lounge Bar</button>
+          <button class="gd-ba-tab" type="button" role="tab" aria-selected="false" data-ba="2">Salón de Eventos</button>
+        </div>
+        <span class="gd-ba-hint">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7L4 12l4 5M16 7l4 5-4 5M12 4v16"/></svg>
+          Arrastre para comparar
+        </span>
+      </div>
+    </div>
+
+    <div class="gd-ba-frame reveal-scale" id="baFrame">
+      <img decoding="async" id="baImgA" src="images/proceso/zonatienda-boceto.jpg" alt="Boceto en acuarela de la zona de tienda">
+      <img decoding="async" id="baImgB" class="gd-ba-after" src="images/proceso/zonatienda-obra.jpg" alt="Zona de tienda ya montada">
+      <span class="gd-ba-tag is-a">Boceto</span>
+      <span class="gd-ba-tag is-b">Obra</span>
+      <input class="gd-ba-range" id="baRange" type="range" min="0" max="100" value="50" step="0.5"
+             aria-label="Comparar boceto y obra terminada">
+      <div class="gd-ba-handle" id="baHandle" aria-hidden="true">
+        <span class="gd-ba-grip">
+          <svg viewBox="0 0 24 24"><path d="M9 7l-4 5 4 5M15 7l4 5-4 5"/></svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="gd-ba-caption">
+      <p id="baCaption">Zona de tienda integrada a un espacio de arte: mobiliario bajo para no tapar la pared de fondo y luz cálida dirigida a la exhibición.</p>
+      <span class="gd-ba-meta" id="baMeta">Retail · Lima</span>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <h2 class="section-h reveal" id="trabajo">Trabajo Seleccionado</h2>
+  <p class="work-eyebrow reveal d1">[ nueve casos entre tiendas departamentales, boutiques, cafés y hotelería ]</p>
+  <div class="work-gallery" id="workGallery">
+    <div class="work-gallery-col" id="wgColA"></div>
+    <div class="work-gallery-col" id="wgColB"></div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- ==================== DIFERENCIADORES ==================== -->
+  <section id="servicios">
+    <p class="gd-eyebrow reveal">Qué nos hace distintos</p>
+    <h2 class="gd-h2 reveal d1">Cuatro argumentos propios</h2>
+    <p class="gd-body reveal d2" style="margin-bottom:var(--sp-24);">La mayoría de proveedores resuelve una mitad del problema. Aquí las dos mitades se deciden en la misma mesa.</p>
+
+    <div class="gd-dif-grid">
+      <article class="gd-dif reveal">
+        <i class="gd-dif-mark" aria-hidden="true"></i>
+        <div>
+          <h3>Interiores y visual merchandising juntos</h3>
+          <p>Unos hacen el contenedor y otros el contenido. Aquí el layout y la exhibición se deciden a la vez, con un solo criterio: dónde va el producto y cómo se mueve el cliente.</p>
+        </div>
+      </article>
+      <article class="gd-dif reveal d1">
+        <i class="gd-dif-mark" aria-hidden="true"></i>
+        <div>
+          <h3>Diseño y ejecución</h3>
+          <p>El estudio entrega el proyecto o lo levanta completo. Usted elige el alcance, no el proveedor: menos coordinación entre terceros, menos días con el local cerrado.</p>
+        </div>
+      </article>
+      <article class="gd-dif reveal d2">
+        <i class="gd-dif-mark" aria-hidden="true"></i>
+        <div>
+          <h3>Mobiliario propio</h3>
+          <p>Mueblería a medida. Cuando el catálogo no exhibe bien el producto, se diseña la pieza: material, medida y acabado especificados por el estudio, no por el carpintero.</p>
+        </div>
+      </article>
+      <article class="gd-dif reveal d3">
+        <i class="gd-dif-mark" aria-hidden="true"></i>
+        <div>
+          <h3>Portafolio verificable</h3>
+          <p>El Corte Inglés, Pycca y Enchantée Paris. Nombres que un comité reconoce sin explicación y que resuelven la primera objeción antes de que se formule.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <h2 class="section-h reveal">Diseñamos el Cambio</h2>
+  <p class="work-eyebrow reveal d1">[ montaje, obra y detalle de material ]</p>
+  <div class="shift-marquee reveal-left" id="shiftMarquee">
+    <div class="shift-track"></div>
+  </div>
+
+
+</div>
+
+<!-- ==================== MARCAS ==================== -->
+<section class="gd-sec gd-marcas">
+  <div class="gd-in">
+    <p class="gd-eyebrow is-muted reveal">Con quiénes hemos colaborado</p>
+    <h2 class="gd-h2 reveal d1">Marcas con las que hemos colaborado</h2>
+  </div>
+  <div class="gd-marcas-wall reveal d2">
+    <div class="gd-marcas-row" id="marcasRow1"><div class="gd-marcas-track" id="marcasTrack1"></div></div>
+    <div class="gd-marcas-row gd-marcas-row--rev" id="marcasRow2"><div class="gd-marcas-track" id="marcasTrack2"></div></div>
+  </div>
+  <p class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">El Corte Inglés, Pycca, Enchantée Paris, Zara, Walon, Baby Club Chic, Hotel Unión Cusco, Mássimo Café, Casa Grande, Casacor, Expodeco.</p>
+</section>
+
+<!-- ==================== EL ESTUDIO ==================== -->
+<section class="gd-sec" id="estudio">
+  <div class="gd-in">
+    <div class="gd-estudio-grid">
+      <div class="gd-estudio-foto reveal-scale">
+        <img decoding="async" src="images/estudio/gian.jpg" alt="Gian Jiménez, fundador y director de diseño de Giandeco">
+      </div>
+      <div>
+        <p class="gd-eyebrow reveal">Autoría</p>
+        <h2 class="gd-h2 reveal d1">Gian firma cada proyecto</h2>
+        <p class="gd-body reveal d2">La marca no se esconde detrás de un equipo anónimo. Toda propuesta llega con la razón detrás: por qué esa altura de mueble, por qué ese recorrido, por qué ese punto de luz. Si no se puede explicar en una reunión de obra, no se presenta.</p>
+        <blockquote class="gd-quote reveal d3">«Resuelvo el espacio primero. El diseño llega después.»</blockquote>
+        <div class="gd-estudio-firma reveal d3">
+          <b>Luis Giancarlo Jiménez Sánchez</b>
+          <span>Fundador · Director de diseño</span>
+        </div>
+        <div class="gd-valores reveal d4">
+          <div class="gd-valor"><b>Criterio</b><span>Si no se explica, no se presenta.</span></div>
+          <div class="gd-valor"><b>Oficio</b><span>Material, medida y acabado especificados.</span></div>
+          <div class="gd-valor"><b>Palabra</b><span>Fecha de entrega y presupuesto se sostienen.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CATÁLOGO ==================== -->
+<section class="gd-sec gd-catalogo" id="catalogo">
+  <div class="gd-in">
+    <div class="gd-filete is-left reveal"><span aria-hidden="true">◆</span></div>
+    <div class="gd-cat-head">
+      <div>
+        <p class="gd-eyebrow reveal">Catálogo</p>
+        <h2 class="gd-h2 reveal d1" style="margin-bottom:12px;">Piezas que salen del mismo criterio</h2>
+        <p class="gd-body reveal d2" style="margin-bottom:0;">Mobiliario, decoración, papel mural y navidad. Lo que especificamos en obra se puede comprar por pieza.</p>
+      </div>
+      <a class="gd-link reveal d2" href="catalogo.html">
+        Ver todo el catálogo
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+    <div class="gd-cat-grid">
+      <a class="gd-cat-item reveal" href="catalogo-muebleria.html#centro-deluxe" data-cursor="Ver">
+        <span class="gd-cat-thumb"><img decoding="async" src="images/catalogo/centro-tv.jpg" alt="Centro de entretenimiento Deluxe Nature en madera con LED integrado"></span>
+        <span class="gd-cat-cat">Mueblería</span>
+        <span class="gd-cat-name">Centro Deluxe Nature</span>
+        <span class="gd-cat-price">S/ 1,179.00</span>
+      </a>
+      <a class="gd-cat-item reveal d1" href="catalogo-muebleria.html#comoda-flow" data-cursor="Ver">
+        <span class="gd-cat-thumb"><img decoding="async" src="images/catalogo/comoda.jpg" alt="Cómoda Flow blanca de cuatro cajones con patas de madera"></span>
+        <span class="gd-cat-cat">Mueblería</span>
+        <span class="gd-cat-name">Cómoda Flow 1.37</span>
+        <span class="gd-cat-price">S/ 879.00</span>
+      </a>
+      <a class="gd-cat-item reveal d2" href="catalogo-navidad.html" data-cursor="Ver">
+        <span class="gd-cat-thumb"><img decoding="async" src="images/catalogo/navidad.jpg" alt="Árbol de navidad decorado en tonos cálidos"></span>
+        <span class="gd-cat-cat">Navidad</span>
+        <span class="gd-cat-name">Ambientación de temporada</span>
+        <span class="gd-cat-soon">Colección 2026</span>
+      </a>
+      <a class="gd-cat-item reveal d3" href="proximamente-decoracion.html" data-cursor="Ver">
+        <span class="gd-cat-thumb"><img decoding="async" src="images/catalogo/mesa-servida.jpg" alt="Mesa servida con vajilla artesanal y textiles bordados"></span>
+        <span class="gd-cat-cat">Decoración</span>
+        <span class="gd-cat-name">Mesa y objeto</span>
+        <span class="gd-cat-soon">Piezas únicas</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="gd-sec gd-cta" id="contacto">
+  <div class="gd-cta-media" aria-hidden="true"><img decoding="async" src="images/cta/cta-bg.jpg?v=2" alt=""></div>
+  <div class="gd-in">
+    <p class="gd-eyebrow reveal">Siguiente paso</p>
+    <h2 class="gd-h2 reveal d1">¿Cuándo toca renovar su local?</h2>
+    <p class="gd-body is-lead reveal d2">Cuéntenos qué local es, qué vende y en qué fecha necesita reabrir. Respondemos con un diagnóstico de espacio y un alcance claro: proyecto, o proyecto más ejecución.</p>
+    <div class="gd-cta-btns reveal d3">
+      <a class="gd-btn gd-btn-primary" href="contacto.html">
+        Escribir al estudio
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <a class="gd-btn gd-btn-ghost" href="#trabajo">Ver el portafolio completo</a>
+    </div>
+    <div class="gd-cta-datos reveal d4">
+      <span>Estudio de diseño comercial — <b>Lima, Perú</b></span>
+      <span>Asesoría <b>con cita previa</b></span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SEO / SOBRE EL ESTUDIO ==================== -->
+<section class="gd-sec gd-seo">
+  <div class="gd-in gd-in-narrow">
+    <p class="gd-seo-texto">Giandeco Studio Design es un estudio de diseño de interiores y visual merchandising en <strong>Lima, Perú</strong>, especializado en proyectos <strong>retail</strong> para marcas como El Corte Inglés, Pycca, Walon y Enchantée Paris. Además del diseño comercial, desarrolla interiorismo residencial (<strong>Hogar</strong>) y una línea propia de mobiliario y decoración (<strong>Catálogo</strong>). Bajo la dirección de Gian Jiménez, el estudio diseña y, cuando el proyecto lo requiere, ejecuta el proyecto completo: layout comercial, mobiliario a medida, iluminación y visual merchandising, con presencia en ferias como Expodeco y Casacor.</p>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="gd-footer">
+  <div class="gd-in">
+    <div class="gd-footer-grid">
+      <div class="gd-footer-brand">
+        <img decoding="async" src="img/logo-positivo.svg" alt="Giandeco Studio Design">
+        <p>Estudio de diseño de interiores y visual merchandising para espacios comerciales. Proyecto y ejecución bajo una sola dirección.</p>
+      </div>
+      <div class="gd-footer-col">
+        <h4>Universos</h4>
+        <ul>
+          <li><a href="retail.html">Retail</a></li>
+          <li><a href="hogar.html">Hogar</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="catalogo-muebleria.html">Mueblería</a></li>
+        </ul>
+      </div>
+      <div class="gd-footer-col">
+        <h4>Estudio</h4>
+        <ul>
+          <li><a href="quienes-somos.html">Quiénes somos</a></li>
+          <li><a href="#metodo">Método</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="retail-proyectos.html">Proyectos</a></li>
+        </ul>
+      </div>
+      <div class="gd-footer-col">
+        <h4>Contacto</h4>
+        <ul class="gd-footer-contact">
+          <li>
+            <a href="https://wa.me/51920775559" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12C22 17.5228 17.5228 22 12 22C10.1786 22 8.47087 21.513 7 20.6622L2 21.5L2.83209 16C2.29689 14.7751 2 13.4222 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"/><path d="M12.9604 13.8683L15.0399 13.4624L17 14.2149V16.0385C17 16.6449 16.4783 17.1073 15.8901 16.9783C14.3671 16.6444 11.5997 15.8043 9.67826 13.8683C7.84859 12.0248 7.22267 9.45734 7.01039 8.04128C6.92535 7.47406 7.3737 7 7.94306 7H9.83707L10.572 8.96888L10.1832 11.0701"/></svg>
+              +51 920 775 559
+            </a>
+          </li>
+          <li>
+            <a href="mailto:contacto@giandeco.com">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
+              contacto@giandeco.com
+            </a>
+          </li>
+          <li>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=Ca.+Las+Bell%C3%ADsimas+170%2C+Urb.+Vipol%2C+Callao+07036" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.7 7-11.5A7 7 0 0 0 5 9.5C5 14.3 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.4"/></svg>
+              Ca. Las Bellísimas 170, Urb. Vipol — Callao 07036
+            </a>
+          </li>
+        </ul>
+        <div class="gd-footer-social">
+          <a href="https://www.instagram.com/giandeco.studio/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61593540694016" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="gd-footer-bar">
+      <span>© 2026 Giandeco Studio Design. Todos los derechos reservados.</span>
+      <em>Espacios que saben vender</em>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var CYCLE_MS = 3400;
+  var accItems = Array.prototype.slice.call(document.querySelectorAll('.acc-item'));
+  var current = 0;
+  var timer = null;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function goTo(index){
+    current = index;
+    accItems.forEach(function(el, idx){
+      el.classList.toggle('is-open', idx === index);
+    });
+  }
+
+  function next(){ goTo((current + 1) % accItems.length); }
+
+  function startTimer(){
+    stopTimer();
+    if(reduced) return;
+    timer = setInterval(next, CYCLE_MS);
+  }
+  function stopTimer(){ if(timer){ clearInterval(timer); timer = null; } }
+
+  accItems.forEach(function(el, idx){
+    el.querySelector('.acc-panel').addEventListener('click', function(){
+      goTo(idx);
+      startTimer();
+    });
+  });
+
+  goTo(0);
+  startTimer();
+
+  var copyButtons = document.querySelectorAll('.copy-btn');
+  copyButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var target = document.getElementById('code-' + btn.dataset.copy);
+      var text = target ? target.innerText : '';
+      var done = function(){ btn.textContent = 'copiado'; setTimeout(function(){ btn.textContent = 'copiar'; }, 1400); };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done, done);
+      } else { done(); }
+    });
+  });
+
+  // ---- Pattern 2: build the static editorial grid ----
+  var galleryColA = [
+    ['El Corte Inglés', 'Retail departamental', 'images/work/corteingles.jpg', [997, 1080], '50% 35%', 'retail-proyectos.html#el-corte-ingles'],
+    ['Convivir con el Arte', 'Arte e interiorismo', 'images/work/convivir.jpg', [1200, 1800], '50% 40%', 'hogar-proyectos.html#convivir-con-el-arte'],
+    ['Mássimo Café', 'Gastronomía · concepto', 'images/work/massimo.jpg', [997, 482], '50% 40%', 'retail-proyectos.html#massimo-cafe'],
+    ['Walon — Figuritas del Barrio', 'Campaña nacional', 'images/work/walonfiguritas.jpg', [997, 1080], '50% 40%', 'retail-proyectos.html#walon-figuritas'],
+    ['Zara — Sala', 'Visual merchandising · departamento hogar', 'images/work/zarasala.jpg', [960, 640], '50% 45%', 'espacio-sala-dorada.html']
+  ];
+  var galleryColB = [
+    ['Pycca Ecuador', 'Campaña estacional', 'images/work/pycca.jpg', [997, 1081], '50% 40%', 'retail-proyectos.html#pycca-ecuador'],
+    ['Hotel Unión Cusco', 'Hotelería · restaurante', 'images/work/unioncusco.jpg', [997, 548], '50% 45%', 'retail-proyectos.html#hotel-union-cusco'],
+    ['Enchantée Paris', 'Moda · vitrinismo', 'images/work/enchantee.jpg', [996, 1080], '50% 38%', 'retail-proyectos.html#enchantee-paris'],
+    ['Baby Club', 'Boutique infantil', 'images/work/babyclub.jpg', [997, 1080], '50% 45%', 'retail-proyectos.html#baby-club']
+  ];
+
+  function buildGalleryColumn(el, items){
+    if(!el) return;
+    el.innerHTML = items.map(function(it){
+      var ratio = it[3][0] + ' / ' + it[3][1];
+      return '<a class="g-item" href="' + it[5] + '" data-cursor="Ver" style="aspect-ratio: ' + ratio + '; background-image:url(\'' + it[2] + '\'); background-position: ' + it[4] + ';">' +
+        '<div class="g-cap"><span class="gt">' + it[0] + '</span><span class="gg">' + it[1] + '</span></div>' +
+      '</a>';
+    }).join('');
+  }
+
+  buildGalleryColumn(document.getElementById('wgColA'), galleryColA);
+  buildGalleryColumn(document.getElementById('wgColB'), galleryColB);
+
+  var galleryEls = document.querySelectorAll('#workGallery .g-item');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    galleryEls.forEach(function(el){ io.observe(el); });
+  } else {
+    galleryEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  // ---- Pattern 3: fill the horizontal marquee ----
+  // Cada imagen: [ caption, archivo, posición, destino-o-null, etiqueta-del-link ]
+  // El destino solo se pone cuando existe una página real que corresponde a
+  // esa foto — "Curaduría de objeto" no tiene una categoría propia, así que
+  // en el lightbox se queda solo como imagen, sin enlace inventado.
+  var shiftItems = [
+    ['Papel mural — instalación en obra', 'images/shift/mural.jpg', '50% 45%', 'proximamente-papel-mural.html', 'Ver Papel Mural'],
+    ['Expodeco 2024 — stand', 'images/shift/expodeco-stand.jpg', '50% 50%', 'hogar-proyectos.html', 'Ver el proyecto'],
+    ['Zona de tienda — montaje', 'images/shift/zonatienda.jpg', '50% 40%', 'retail-diseno-tiendas.html', 'Ver este servicio'],
+    ['Expodeco 2024 — showroom', 'images/shift/expodeco-showroom.jpg', '50% 45%', 'hogar-proyectos.html', 'Ver el proyecto'],
+    ['Casacor 2025 — detalle de material', 'images/shift/casacor-detalle.jpg', '50% 40%', 'hogar-proyectos.html', 'Ver el proyecto'],
+    ['Curaduría de objeto', 'images/shift/detalle-arte.jpg', '45% 55%', null, null]
+  ];
+  window.shiftItems = shiftItems; // el lightbox (script aparte, al final) lo necesita
+  var shiftTrack = document.querySelector('#shiftMarquee .shift-track');
+  if(shiftTrack){
+    // se repite la base antes de duplicarla para el loop, para que en
+    // pantallas anchas nunca se vea el final de la fila (mismo criterio que
+    // el muro de marcas)
+    var REPES_SHIFT = 3, sBase = [];
+    for(var rs = 0; rs < REPES_SHIFT; rs++) sBase = sBase.concat(shiftItems);
+    var sList = sBase.concat(sBase);
+    shiftTrack.innerHTML = sList.map(function(it, i){
+      return '<div class="shift-card" style="background-image:url(\'' + it[1] + '\'); background-position: ' + it[2] + ';" data-idx="' + (i % shiftItems.length) + '" data-cursor="Ver" tabindex="0" role="button" aria-label="Ampliar: ' + it[0] + '">' +
+        '<div class="fc2">' + it[0] + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // ---- Marcas: muro de logos reales con movimiento continuo en dos filas ----
+  // Todos se pintan en blanco sólido (filtro CSS) para que contrasten parejo
+  // sobre el fondo ébano, sin importar el color original de cada logo.
+  // Excepción: El Corte Inglés ya trae blanco reservado dentro de su banderín
+  // verde — forzarlo a blanco sólido fusiona el texto con el fondo y lo hace
+  // ilegible, así que ese conserva sus colores de marca (nativo:true).
+  var marcasFila1 = [
+    { nombre: 'El Corte Inglés', logo: 'images/marcas/el-corte-ingles.png', nativo: true },
+    { nombre: 'Pycca', logo: 'images/marcas/pycca.png' },
+    { nombre: 'Enchantée Paris', logo: 'images/marcas/enchantee-paris.png' },
+    { nombre: 'Zara', logo: 'images/marcas/zara.png' },
+    { nombre: 'Walon', logo: 'images/marcas/walon.png' },
+    { nombre: 'Baby Club Chic', logo: 'images/marcas/baby-club-chic.png' }
+  ];
+  var marcasFila2 = [
+    { nombre: 'Hotel Unión Cusco', logo: 'images/marcas/hotel-union-cusco.png' },
+    { nombre: 'Mássimo Café', logo: 'images/marcas/massimo-cafe.png' },
+    { nombre: 'Casa Grande', logo: 'images/marcas/casa-grande.png' },
+    { nombre: 'Casacor', logo: 'images/marcas/casacor.png' },
+    { nombre: 'Expodeco', logo: 'images/marcas/expodeco.png' }
+  ];
+  function pintarFilaMarcas(el, items){
+    if(!el) return;
+    // El loop infinito mueve la fila con translateX(-50%): para que nunca se
+    // vea el final (hueco vacío en monitores anchos), una "mitad" de la pista
+    // tiene que ser más ancha que cualquier pantalla razonable. Con solo 5
+    // logos no alcanza en monitores grandes, así que se repite la lista antes
+    // de duplicarla para el loop.
+    var REPETICIONES = 6;
+    var base = [];
+    for (var r = 0; r < REPETICIONES; r++) base = base.concat(items);
+    var doble = base.concat(base); // se duplica esa base para que el loop sea perfecto
+    el.innerHTML = doble.map(function(it){
+      var contenido = it.logo
+        ? '<span class="gd-marcas-logo"><img decoding="async" src="' + it.logo + '" alt="' + it.nombre + '" loading="lazy"' + (it.nativo ? ' class="is-nativo"' : '') + '></span>'
+        : it.nombre;
+      return '<span class="gd-marcas-item">' + contenido + '</span>';
+    }).join('');
+  }
+  pintarFilaMarcas(document.getElementById('marcasTrack1'), marcasFila1);
+  pintarFilaMarcas(document.getElementById('marcasTrack2'), marcasFila2);
+
+  // ---- Scroll-reveal general: un solo observer para toda la página ----
+  var revealTargets = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale, .reveal-underline, .gd-curtain, hr.rule');
+  if('IntersectionObserver' in window){
+    var revealIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          revealIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    revealTargets.forEach(function(el){ revealIO.observe(el); });
+  } else {
+    revealTargets.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  // ---- Barra de progreso de lectura ----
+  var progressEl = document.getElementById('scrollProgress');
+  if(progressEl){
+    var ticking = false;
+    function updateProgress(){
+      var scrollTop = window.scrollY || window.pageYOffset || 0;
+      var scrollHeight = Math.max(
+        document.documentElement.scrollHeight,
+        document.body ? document.body.scrollHeight : 0
+      );
+      var max = scrollHeight - window.innerHeight;
+      var pct = max > 0 ? (scrollTop / max) * 100 : 0;
+      pct = Math.min(100, Math.max(0, pct));
+      progressEl.style.transform = 'scaleX(' + (pct / 100) + ')';
+      ticking = false;
+    }
+    updateProgress();
+    window.addEventListener('scroll', function(){
+      if(!ticking){ window.requestAnimationFrame(updateProgress); ticking = true; }
+    }, { passive: true });
+    window.addEventListener('resize', updateProgress);
+  }
+})();
+</script>
+
+<!-- ================ script del header / navegación / banner (independiente) ================ -->
+<script>
+(function(){
+  var pointerFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var header = document.getElementById('siteHeader');
+  var htmlEl = document.documentElement;
+
+  // ---- 1. sólido al bajar ----
+  function setSolid(){ header.classList.toggle('is-solid', window.scrollY > 40); }
+  if(header){ setSolid(); window.addEventListener('scroll', setSolid, { passive: true }); }
+
+  // ---- 2. árbol de navegación ----
+  var MUNDOS = {
+    retail: { label: 'Retail', cats: [
+      { label: 'Retail', href: 'retail.html' },
+      { label: 'Diseño de tiendas', href: 'retail-diseno-tiendas.html' },
+      { label: 'Proyectos', href: 'retail-proyectos.html' },
+      { label: 'Blog', href: 'retail-blog.html' }
+    ]},
+    hogar: { label: 'Hogar', cats: [
+      { label: 'Hogar', href: 'hogar.html' },
+      { label: 'Diseño de interiores', href: 'hogar-diseno-interiores.html' },
+      { label: 'Espacios', href: 'hogar-espacios.html' },
+      { label: 'Proyectos', href: 'hogar-proyectos.html' },
+      { label: 'Blog', href: 'hogar-blog.html' }
+    ]},
+    catalogo: {
+      label: 'Catálogo',
+      activos: [
+        { key: 'navidad', label: 'Navidad', subs: ['Árboles','Adornos','Guirnaldas','Velas','Textiles','Regalos'] }
+      ],
+      simples: [
+        { label: 'Catálogo', href: 'catalogo.html' },
+        { label: 'Mueblería', href: 'catalogo-muebleria.html' },
+        { label: 'Compra el espacio', href: 'catalogo-compra-el-espacio.html' }
+      ],
+      pronto: [
+        { label: 'Iluminación', href: 'proximamente-iluminacion.html' },
+        { label: 'Decoración', href: 'proximamente-decoracion.html' },
+        { label: 'Papel Mural', href: 'proximamente-papel-mural.html' }
+      ]
+    }
+  };
+
+  var catNav = document.getElementById('shCatNav');
+  var catRight = document.getElementById('shCatRight');
+  var megaEl = document.getElementById('shMega');
+  var megaGrid = megaEl ? document.getElementById('shMegaGrid') : null;
+  var megaVer = megaEl ? megaEl.querySelector('.sh-mega-ver') : null;
+  var megaCloseTimer = null;
+
+  function openMega(catKey){
+    var cat = null;
+    MUNDOS.catalogo.activos.forEach(function(c){ if(c.key === catKey) cat = c; });
+    if(!cat || !megaEl) return;
+    megaGrid.innerHTML = cat.subs.map(function(s){
+      return '<a class="sh-mega-item" href="catalogo-navidad.html"><span class="sh-mega-thumb"></span><span class="sh-mega-name">' + s + '</span></a>';
+    }).join('');
+    if(megaVer){
+      megaVer.textContent = 'Ver todo en ' + cat.label + ' →';
+      megaVer.href = 'catalogo-' + cat.key + '.html';
+    }
+    megaEl.dataset.current = catKey;
+    megaEl.classList.add('is-open');
+    megaEl.setAttribute('aria-hidden', 'false');
+  }
+  function closeMega(){
+    if(!megaEl) return;
+    megaEl.classList.remove('is-open');
+    megaEl.setAttribute('aria-hidden', 'true');
+    delete megaEl.dataset.current;
+  }
+  function scheduleCloseMega(){ clearTimeout(megaCloseTimer); megaCloseTimer = setTimeout(closeMega, 150); }
+  function cancelCloseMega(){ clearTimeout(megaCloseTimer); }
+
+  function renderCategorias(mundoKey){
+    var m = MUNDOS[mundoKey];
+    if(!m || !catNav) return;
+    var html = '', rightHtml = '';
+    // en ambas ramas se omite la entrada que repite el nombre del mundo
+    // (ej. "Retail" dentro de la fila de Retail) — ya está marcada como
+    // activa arriba, en la fila de mundos; repetirla aquí es redundante.
+    if(mundoKey === 'catalogo'){
+      m.activos.forEach(function(c){
+        html += '<button type="button" class="sh-cat-link" data-cat="' + c.key + '">' + c.label + '</button>';
+      });
+      m.simples.filter(function(s){ return s.label !== m.label; }).forEach(function(s){
+        html += '<a class="sh-cat-link" href="' + s.href + '">' + s.label + '</a>';
+      });
+      m.pronto.forEach(function(p){
+        rightHtml += '<a class="sh-cat-link" data-pronto href="' + p.href + '" title="Disponible próximamente">' + p.label + '</a>';
+      });
+      rightHtml += '<button type="button" class="sh-buscar-inline" id="shBuscarInline"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>Buscar</button>';
+    } else {
+      m.cats.filter(function(c){ return c.label !== m.label; }).forEach(function(c){
+        html += '<a class="sh-cat-link" href="' + c.href + '">' + c.label + '</a>';
+      });
+    }
+    catNav.innerHTML = html;
+    if(catRight) catRight.innerHTML = rightHtml;
+
+    if(mundoKey === 'catalogo'){
+      var activoEls = catNav.querySelectorAll('[data-cat]');
+      activoEls.forEach(function(btn){
+        if(pointerFine){
+          btn.addEventListener('mouseenter', function(){ cancelCloseMega(); openMega(btn.dataset.cat); });
+          btn.addEventListener('focus', function(){ cancelCloseMega(); openMega(btn.dataset.cat); });
+          btn.addEventListener('mouseleave', scheduleCloseMega);
+        } else {
+          btn.addEventListener('click', function(e){
+            e.preventDefault();
+            if(megaEl.classList.contains('is-open') && megaEl.dataset.current === btn.dataset.cat){ closeMega(); }
+            else { openMega(btn.dataset.cat); }
+          });
+        }
+      });
+      var inlineSearch = document.getElementById('shBuscarInline');
+      if(inlineSearch) inlineSearch.addEventListener('click', openSearch);
+    } else {
+      closeMega();
+    }
+  }
+
+  if(megaEl && pointerFine){
+    megaEl.addEventListener('mouseenter', cancelCloseMega);
+    megaEl.addEventListener('mouseleave', scheduleCloseMega);
+  }
+  if(header && pointerFine){
+    header.addEventListener('mouseleave', scheduleCloseMega);
+  }
+  document.addEventListener('click', function(e){
+    if(megaEl && megaEl.classList.contains('is-open') && !megaEl.contains(e.target) && !e.target.closest('[data-cat]')){
+      closeMega();
+    }
+  });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMega(); });
+
+  var mundoBtns = document.querySelectorAll('.sh-mundo');
+  mundoBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      mundoBtns.forEach(function(b){ b.classList.toggle('is-active', b === btn); });
+      renderCategorias(btn.dataset.mundo);
+    });
+  });
+  renderCategorias('retail');
+
+  // ---- 3. toggle de tema (sol/luna, sin localStorage) ----
+  function themeSwap(){
+    var current = htmlEl.getAttribute('data-tema') || 'oscuro';
+    var next = current === 'oscuro' ? 'claro' : 'oscuro';
+    htmlEl.setAttribute('data-tema', next);
+    var meta = document.getElementById('metaThemeColor');
+    if(meta) meta.setAttribute('content', next === 'oscuro' ? '#0A0A09' : '#F4F1EA');
+    var futuro = next === 'oscuro' ? 'claro' : 'oscuro';
+    var msg = 'Cambiar a tema ' + futuro;
+    document.querySelectorAll('.sh-tema').forEach(function(b){
+      b.setAttribute('aria-label', msg);
+      b.setAttribute('title', msg);
+    });
+  }
+  document.querySelectorAll('.sh-tema').forEach(function(btn){
+    btn.addEventListener('click', themeSwap);
+  });
+
+  // ---- menú móvil ----
+  var burger = document.getElementById('shBurger');
+  var mobilePanel = document.getElementById('shMobile');
+  var scrim = document.getElementById('shScrim');
+  function openMobile(){
+    if(!mobilePanel) return;
+    mobilePanel.classList.add('is-open');
+    scrim.classList.add('is-open');
+    burger.classList.add('is-open');
+    burger.setAttribute('aria-expanded', 'true');
+    mobilePanel.setAttribute('aria-hidden', 'false');
+  }
+  function closeMobile(){
+    if(!mobilePanel) return;
+    mobilePanel.classList.remove('is-open');
+    scrim.classList.remove('is-open');
+    burger.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
+    mobilePanel.setAttribute('aria-hidden', 'true');
+  }
+  if(burger) burger.addEventListener('click', function(){
+    if(mobilePanel.classList.contains('is-open')) closeMobile(); else openMobile();
+  });
+  if(scrim) scrim.addEventListener('click', closeMobile);
+  var mobileClose = document.getElementById('shMobileClose');
+  if(mobileClose) mobileClose.addEventListener('click', closeMobile);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMobile(); });
+
+  document.querySelectorAll('.sh-acc-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var acc = btn.closest('.sh-acc');
+      var wasOpen = acc.classList.contains('is-open');
+      document.querySelectorAll('.sh-acc.is-open').forEach(function(a){ a.classList.remove('is-open'); });
+      if(!wasOpen) acc.classList.add('is-open');
+    });
+  });
+
+  // ---- 4. buscador ----
+  var FRECUENTES = ['Navidad', 'Mueblería', 'Compra el espacio', 'Diseño de interiores'];
+  var SEARCH_INDEX = [
+    'Navidad','Mueblería','Compra el espacio','Iluminación','Decoración','Papel Mural',
+    'Diseño de tiendas','Diseño de interiores','Espacios','Proyectos','Blog','Contacto','Quiénes somos'
+  ];
+  var searchOverlay = document.getElementById('shSearchOverlay');
+  var searchInput = document.getElementById('shSearchInput');
+  var searchChips = document.getElementById('shSearchChips');
+  var searchResults = document.getElementById('shSearchResults');
+
+  function renderChips(){
+    if(!searchChips) return;
+    searchChips.innerHTML = FRECUENTES.map(function(f){ return '<button type="button" class="sh-search-chip">' + f + '</button>'; }).join('');
+    searchChips.querySelectorAll('.sh-search-chip').forEach(function(chip){
+      chip.addEventListener('click', function(){
+        searchInput.value = chip.textContent;
+        runSearch(chip.textContent);
+        searchInput.focus();
+      });
+    });
+  }
+  function runSearch(q){
+    q = (q || '').trim().toLowerCase();
+    if(!searchResults) return;
+    if(!q){ searchResults.innerHTML = ''; return; }
+    var matches = SEARCH_INDEX.filter(function(item){ return item.toLowerCase().indexOf(q) > -1; });
+    if(matches.length){
+      searchResults.innerHTML = matches.map(function(m){ return '<div class="sh-search-result">' + m + '</div>'; }).join('');
+    } else {
+      searchResults.innerHTML = '<div class="sh-search-empty">Sin resultados para “' + q + '”.</div>';
+    }
+  }
+  function openSearch(){
+    if(!searchOverlay) return;
+    renderChips();
+    if(searchResults) searchResults.innerHTML = '';
+    if(searchInput) searchInput.value = '';
+    searchOverlay.classList.add('is-open');
+    searchOverlay.setAttribute('aria-hidden', 'false');
+    setTimeout(function(){ if(searchInput) searchInput.focus(); }, 50);
+  }
+  function closeSearch(){
+    if(!searchOverlay) return;
+    searchOverlay.classList.remove('is-open');
+    searchOverlay.setAttribute('aria-hidden', 'true');
+  }
+  if(searchInput) searchInput.addEventListener('input', function(){ runSearch(searchInput.value); });
+  var searchCloseBtn = document.getElementById('shSearchClose');
+  if(searchCloseBtn) searchCloseBtn.addEventListener('click', closeSearch);
+  if(searchOverlay) searchOverlay.addEventListener('click', function(e){ if(e.target === searchOverlay) closeSearch(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeSearch(); });
+  var searchIcoBtn = document.getElementById('shBuscarIco');
+  if(searchIcoBtn) searchIcoBtn.addEventListener('click', openSearch);
+})();
+</script>
+
+<!-- ================ comparador boceto/obra + video del hero ================ -->
+<script>
+(function(){
+  // ---- comparador boceto → obra ----
+  var PROYECTOS = [
+    {
+      a: 'images/proceso/zonatienda-boceto.jpg',
+      b: 'images/proceso/zonatienda-obra.jpg',
+      altA: 'Boceto en acuarela de la zona de tienda',
+      altB: 'Zona de tienda ya montada',
+      ratio: '4 / 5',
+      meta: 'Retail · Lima',
+      caption: 'Zona de tienda integrada a un espacio de arte: mobiliario bajo para no tapar la pared de fondo y luz cálida dirigida a la exhibición.'
+    },
+    {
+      a: 'images/proceso/lounge-boceto.jpg',
+      b: 'images/proceso/lounge-obra.jpg',
+      altA: 'Boceto en acuarela del lounge bar con muro de cuadros',
+      altB: 'Lounge bar terminado con muro de cuadros de piso a techo',
+      ratio: '3 / 2',
+      meta: 'Hostelería · Lima',
+      caption: 'Galería-bar con muro de cuadros de piso a techo. Cada obra recibe luz dirigida propia, sin lavar el resto del muro.'
+    },
+    {
+      a: 'images/proceso/salon-boceto.jpg',
+      b: 'images/proceso/salon-obra.jpg',
+      altA: 'Boceto en acuarela del salón de eventos con tela drapeada',
+      altB: 'Salón de eventos montado con mesas de banquete e iluminación azul',
+      ratio: '3 / 2',
+      meta: 'Eventos · Lima',
+      caption: 'Salón de banquetes con tela drapeada en el techo. La barra decorativa ancla el eje del espacio y las mesas se distribuyen alrededor de una pista central.'
+    }
+  ];
+
+  var frame   = document.getElementById('baFrame');
+  var imgA    = document.getElementById('baImgA');
+  var imgB    = document.getElementById('baImgB');
+  var range   = document.getElementById('baRange');
+  var caption = document.getElementById('baCaption');
+  var meta    = document.getElementById('baMeta');
+  var tabs    = Array.prototype.slice.call(document.querySelectorAll('.gd-ba-tab'));
+
+  if(frame && range){
+    function setPos(pct){
+      pct = Math.max(0, Math.min(100, pct));
+      frame.style.setProperty('--gd-ba', pct + '%');
+      if(Math.abs(parseFloat(range.value) - pct) > 0.01) range.value = pct;
+    }
+
+    range.addEventListener('input', function(){ setPos(parseFloat(range.value)); });
+
+    var dragging = false;
+    function posFromEvent(ev){
+      var r = frame.getBoundingClientRect();
+      if(!r.width) return 50;
+      return ((ev.clientX - r.left) / r.width) * 100;
+    }
+    frame.addEventListener('pointerdown', function(ev){
+      if(ev.target === range) return;
+      dragging = true;
+      frame.setPointerCapture(ev.pointerId);
+      setPos(posFromEvent(ev));
+    });
+    frame.addEventListener('pointermove', function(ev){
+      if(!dragging) return;
+      ev.preventDefault();
+      setPos(posFromEvent(ev));
+    });
+    ['pointerup','pointercancel'].forEach(function(t){
+      frame.addEventListener(t, function(ev){
+        dragging = false;
+        if(frame.hasPointerCapture && frame.hasPointerCapture(ev.pointerId)) frame.releasePointerCapture(ev.pointerId);
+      });
+    });
+
+    function loadProyecto(i){
+      var p = PROYECTOS[i];
+      if(!p) return;
+      imgA.src = p.a; imgA.alt = p.altA;
+      imgB.src = p.b; imgB.alt = p.altB;
+      frame.style.aspectRatio = p.ratio;
+      caption.textContent = p.caption;
+      meta.textContent = p.meta;
+      tabs.forEach(function(t, idx){ t.setAttribute('aria-selected', idx === i ? 'true' : 'false'); });
+      setPos(50);
+    }
+
+    tabs.forEach(function(tab, i){
+      tab.addEventListener('click', function(){ loadProyecto(i); });
+      tab.addEventListener('keydown', function(ev){
+        if(ev.key !== 'ArrowRight' && ev.key !== 'ArrowLeft') return;
+        ev.preventDefault();
+        var next = (i + (ev.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length;
+        tabs[next].focus();
+        loadProyecto(next);
+      });
+    });
+
+    loadProyecto(0);
+  }
+})();
+</script>
+
+<!-- ==================== BOTONES MAGNÉTICOS ==================== -->
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if(reduced || !finePointer) return;
+
+  // ---- botones magnéticos: un tirón sutil hacia el puntero ----
+  var magnets = document.querySelectorAll('.gd-btn, .gd-link, .intro-cta, .sh-icon-btn, .sh-tema');
+  magnets.forEach(function(el){
+    el.addEventListener('mousemove', function(e){
+      var r = el.getBoundingClientRect();
+      var relX = e.clientX - (r.left + r.width / 2);
+      var relY = e.clientY - (r.top + r.height / 2);
+      el.style.transform = 'translate(' + (relX * 0.28).toFixed(1) + 'px,' + (relY * 0.32).toFixed(1) + 'px)';
+    });
+    el.addEventListener('mouseleave', function(){ el.style.transform = ''; });
+  });
+})();
+</script>
+
+<!-- ==================== LIGHTBOX — ampliar imágenes de galería ==================== -->
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var light = document.createElement('div');
+  light.className = 'gd-light';
+  light.id = 'gdLight';
+  light.setAttribute('role', 'dialog');
+  light.setAttribute('aria-modal', 'true');
+  light.innerHTML =
+    '<button class="gd-light-close" type="button" aria-label="Cerrar">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>' +
+    '</button>' +
+    '<button class="gd-light-nav gd-light-prev" type="button" aria-label="Anterior">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>' +
+    '</button>' +
+    '<button class="gd-light-nav gd-light-next" type="button" aria-label="Siguiente">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>' +
+    '</button>' +
+    '<div class="gd-light-stage">' +
+      '<div class="gd-light-frame"><img decoding="async" id="gdLightImg" alt=""></div>' +
+      '<div class="gd-light-foot">' +
+        '<p class="gd-light-cap" id="gdLightCap"></p>' +
+        '<a class="gd-light-cta" id="gdLightCta" href="#" style="display:none;"></a>' +
+        '<span class="gd-light-count" id="gdLightCount"></span>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(light);
+
+  var imgEl = document.getElementById('gdLightImg');
+  var capEl = document.getElementById('gdLightCap');
+  var ctaEl = document.getElementById('gdLightCta');
+  var countEl = document.getElementById('gdLightCount');
+  var closeBtn = light.querySelector('.gd-light-close');
+  var prevBtn = light.querySelector('.gd-light-prev');
+  var nextBtn = light.querySelector('.gd-light-next');
+
+  var set = [];      // el grupo de fotos activo (array de arrays [cap, src, pos, link, label])
+  var current = 0;
+  var lastFocus = null;
+
+  function render(){
+    var it = set[current];
+    if(!it) return;
+    imgEl.classList.remove('is-shown');
+    var full = new Image();
+    full.onload = function(){
+      imgEl.src = it[1];
+      requestAnimationFrame(function(){ imgEl.classList.add('is-shown'); });
+    };
+    full.src = it[1];
+    capEl.textContent = it[0];
+    countEl.textContent = (current + 1) + ' / ' + set.length;
+    if(it[3]){
+      ctaEl.href = it[3];
+      ctaEl.innerHTML = (it[4] || 'Ver más') + '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+      ctaEl.style.display = 'inline-flex';
+    } else {
+      ctaEl.style.display = 'none';
+    }
+    prevBtn.style.display = set.length > 1 ? 'grid' : 'none';
+    nextBtn.style.display = set.length > 1 ? 'grid' : 'none';
+  }
+
+  function open(grupo, indice){
+    set = grupo; current = indice;
+    lastFocus = document.activeElement;
+    render();
+    light.classList.add('is-open');
+    document.documentElement.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function close(){
+    light.classList.remove('is-open');
+    document.documentElement.style.overflow = '';
+    imgEl.classList.remove('is-shown');
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function paso(delta){
+    current = (current + delta + set.length) % set.length;
+    render();
+  }
+
+  closeBtn.addEventListener('click', close);
+  prevBtn.addEventListener('click', function(){ paso(-1); });
+  nextBtn.addEventListener('click', function(){ paso(1); });
+  light.addEventListener('click', function(e){ if(e.target === light) close(); });
+  document.addEventListener('keydown', function(e){
+    if(!light.classList.contains('is-open')) return;
+    if(e.key === 'Escape') close();
+    if(e.key === 'ArrowRight') paso(1);
+    if(e.key === 'ArrowLeft') paso(-1);
+  });
+
+  // ---- conectar la marquesina "Diseñamos el Cambio" ----
+  var shiftMarquee = document.getElementById('shiftMarquee');
+  if(shiftMarquee){
+    shiftMarquee.addEventListener('click', function(e){
+      var card = e.target.closest('.shift-card');
+      if(!card || !window.shiftItems) return;
+      open(window.shiftItems, parseInt(card.dataset.idx, 10) || 0);
+    });
+    shiftMarquee.addEventListener('keydown', function(e){
+      if(e.key !== 'Enter' && e.key !== ' ') return;
+      var card = e.target.closest('.shift-card');
+      if(!card || !window.shiftItems) return;
+      e.preventDefault();
+      open(window.shiftItems, parseInt(card.dataset.idx, 10) || 0);
+    });
+  }
+})();
+</script>

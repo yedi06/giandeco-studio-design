@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog hogar — Giandeco Studio Design</title>
+<meta name="description" content="Criterio de interiorismo aplicado a la casa: altura de muebles, temperatura de luz, cómo ambientar en Navidad sin saturar y cuándo conviene mobiliario a medida.">
+<meta name="theme-color" content="#0A0A09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=7">
+<style>
+  .bl-art{ border-top:1px solid var(--line); }
+  .bl-btn{ width:100%; display:grid; gap:16px; grid-template-columns:auto 1fr auto; align-items:center; background:none; border:none; padding:clamp(22px,3vw,32px) 0; cursor:pointer; text-align:left; }
+  .bl-n{ font-family:var(--body); font-size:.64rem; letter-spacing:.2em; color:var(--accent); }
+  .bl-t{ font-family:var(--display); font-weight:400; font-size:clamp(1.9rem,2.6vw,2.2rem); color:var(--lino); line-height:1.15; transition:color .25s ease; }
+  .bl-btn:hover .bl-t{ color:var(--accent); }
+  .bl-chev{ width:18px; height:18px; stroke:var(--text-faint); fill:none; stroke-width:1.4; transition:transform .35s var(--gd-ease); flex:none; }
+  .bl-art.is-open .bl-chev{ transform:rotate(180deg); stroke:var(--accent); }
+  .bl-panel{ max-height:0; overflow:hidden; transition:max-height .5s var(--gd-ease); }
+  .bl-art.is-open .bl-panel{ max-height:900px; }
+  .bl-cuerpo{ padding-bottom:clamp(26px,3vw,40px); display:grid; gap:clamp(20px,3vw,40px); grid-template-columns:1fr; }
+  @media (min-width:900px){ .bl-cuerpo{ grid-template-columns:.8fr 1.2fr; } }
+  .bl-img{ border-radius:2px; overflow:hidden; aspect-ratio:4/3; }
+  .bl-img img{ width:100%; height:100%; object-fit:cover; }
+  .bl-cuerpo p{ margin:0 0 14px; color:var(--text-dim); font-size:.97rem; line-height:1.8; max-width:60ch; }
+  .bl-cuerpo p:last-child{ margin-bottom:0; }
+  .bl-cuerpo strong{ color:var(--lino); font-weight:400; }
+  .bl-meta{ font-family:var(--body); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--text-faint); margin-bottom:14px; display:block; }
+</style>
+</head>
+<body data-mundo="hogar" data-seccion="blog">
+
+<div id="gdHeader"></div>
+
+<section class="gd-hero is-corto">
+  <div class="gd-hero-panel">
+    <p class="gd-migas reveal-left"><a href="index.html">Inicio</a> / <a href="hogar.html">Hogar</a> / <span>Blog</span></p>
+    <p class="gd-hero-eyebrow reveal-left"><i></i>Hogar · Criterio de casa</p>
+    <h1 class="reveal-left d1">Decisiones que se <em>notan</em> al vivirlas</h1>
+    <p class="reveal-left d2">Cuatro cosas que resolvemos en cada casa y que casi nadie discute a tiempo.</p>
+  </div>
+  <div class="gd-hero-media">
+    <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/espacios/zara-sala-2.jpg" alt="Rincón de sala montado por Giandeco"></div>
+    <div class="gd-hero-cap">
+      <span><b>Rincón de sala</b><span>Producción Giandeco</span></span>
+      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+    </div>
+  </div>
+</section>
+
+<section class="gd-sec">
+  <div class="gd-in" id="blLista"></div>
+</section>
+
+<section class="gd-sec gd-claro" style="padding-block:clamp(48px,6vw,80px);">
+  <div class="gd-in" style="text-align:center;">
+    <h2 class="gd-h2 reveal" style="margin-inline:auto; max-width:22ch;">¿Conversamos su espacio?</h2>
+    <div class="reveal d1" style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:var(--sp-24);">
+      <a class="gd-btn gd-btn-primary" href="contacto.html">Agendar visita técnica
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-ghost" href="hogar-espacios.html">Ver espacios montados</a>
+    </div>
+  </div>
+</section>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=8"></script>
+<script>
+(function(){
+  var ARTS = [
+    { meta:'Distribución · 3 min', t:'Primero el recorrido, después el estilo', img:'images/work/convivir.jpg', p:[
+      'La pregunta con la que empezamos una casa no es «¿qué estilo le gusta?», sino <strong>«¿cómo se vive este espacio un martes cualquiera?»</strong>.',
+      'Dónde deja las llaves al entrar, por dónde pasa con la bandeja, dónde se sienta la visita que llega sola y dónde la que llega en grupo. Esas respuestas ordenan la distribución. El estilo se elige después, y encaja sin esfuerzo.',
+      'Cuando se hace al revés —primero la foto de referencia, después la vida real— aparecen las casas bonitas donde nadie se sienta.'
+    ]},
+    { meta:'Mobiliario · 3 min', t:'La altura del mueble no es un detalle', img:'images/mobiliario/centro-deluxe-1.webp', p:[
+      'Un mueble alto en medio de una sala corta la vista y encoge el ambiente. El mismo mueble, treinta centímetros más bajo, deja respirar la pared del fondo y la habitación parece otra.',
+      'La regla que usamos: <strong>lo que está en el centro del espacio se mantiene bajo</strong>; lo alto va contra las paredes o en las esquinas, donde no interrumpe la línea de visión.',
+      'Vale también para el fondo de un mueble: un exhibidor de 45 cm de fondo en un pasillo de 90 cm no es un mueble, es un obstáculo.'
+    ]},
+    { meta:'Iluminación · 3 min', t:'2700 K: por qué la luz cálida', img:'images/shift/casacor-detalle.jpg', p:[
+      'La temperatura de color se mide en kelvin. Cuanto más alto el número, más fría y azulada la luz. Una oficina trabaja bien a 4000 K; <strong>una casa, casi nunca</strong>.',
+      'Trabajamos entre 2700 y 3000 K en ambientes de estar y descanso: la madera se ve madera, la piel se ve bien y el espacio invita a quedarse. Sobre 4000 K la misma sala se vuelve un consultorio.',
+      'La segunda regla es no depender de una sola fuente en el techo. Tres puntos de luz baja —lámpara de mesa, pie y acento sobre un cuadro— hacen más por un ambiente que cambiar todos los muebles.'
+    ]},
+    { meta:'Temporada · 3 min', t:'Navidad en casa sin saturar', img:'images/espacios/zara-navidad-1.jpg?v=2', p:[
+      'El error más común es repartir adornos por toda la casa. El resultado es ruido: nada destaca porque todo compite.',
+      'Nosotros montamos por <strong>focos</strong>: el árbol, la mesa y el recibimiento. Tres escenas cuidadas, y el resto de la casa se deja tranquila. Cada foco con una sola paleta —dos tonos y un metal— repetida en las tres.',
+      'La mesa merece atención aparte, porque es donde la gente se sienta: mantelería, un centro bajo que no tape la conversación, y velas a una altura que no encandile.'
+    ]},
+    { meta:'Encargos · 3 min', t:'Cuándo conviene mobiliario a medida', img:'images/mobiliario/comoda-flow-1.webp', p:[
+      'A medida no siempre es mejor: es mejor cuando <strong>el catálogo no resuelve</strong>.',
+      'Conviene cuando hay una medida imposible (un nicho de 1,37 m), cuando la pieza tiene que cargar algo específico, o cuando el mueble es el protagonista del ambiente y merece un acabado que no se consigue en tienda.',
+      'No conviene cuando lo que se busca es solo ahorrar: una pieza a medida bien hecha —material especificado, herrajes buenos, acabado resistente— casi nunca sale más barata que una de catálogo. Sale mejor, que es otra cosa.'
+    ]}
+  ];
+
+  var cont = document.getElementById('blLista');
+  if(!cont) return;
+  cont.innerHTML = ARTS.map(function(a, i){
+    var n = (i + 1) < 10 ? '0' + (i + 1) : (i + 1);
+    return '<article class="bl-art">' +
+      '<button class="bl-btn" type="button" aria-expanded="false">' +
+        '<span class="bl-n">' + n + '</span><span class="bl-t">' + a.t + '</span>' +
+        '<svg class="bl-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>' +
+      '</button>' +
+      '<div class="bl-panel"><div class="bl-cuerpo">' +
+        '<div class="bl-img"><img decoding="async" src="' + a.img + '" alt="" loading="lazy"></div>' +
+        '<div><span class="bl-meta">' + a.meta + '</span>' + a.p.map(function(x){ return '<p>' + x + '</p>'; }).join('') + '</div>' +
+      '</div></div>' +
+    '</article>';
+  }).join('');
+
+  cont.addEventListener('click', function(e){
+    var b = e.target.closest('.bl-btn'); if(!b) return;
+    var art = b.parentNode;
+    var open = art.classList.toggle('is-open');
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+</body>
+</html>

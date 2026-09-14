@@ -1,0 +1,297 @@
+<title>Material Pendiente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F1EA; --surface:#FFFFFF; --line:rgba(10,9,6,.13); --line-soft:rgba(10,9,6,.07);
+    --text:#0A0A09; --text-dim:#4A4844; --text-faint:#87837c;
+    --accent:#8A6F3C; --accent-soft:rgba(138,111,60,.1);
+    --slot-bg-a:rgba(10,9,6,.045); --slot-bg-b:rgba(138,111,60,.09);
+    --done-bg:rgba(138,111,60,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0A0A09; --surface:#171613; --line:rgba(222,216,203,.14); --line-soft:rgba(222,216,203,.08);
+      --text:#DED8CB; --text-dim:#B9B3A6; --text-faint:#726d63;
+      --accent:#C9A24A; --accent-soft:rgba(201,162,74,.13);
+      --slot-bg-a:rgba(222,216,203,.035); --slot-bg-b:rgba(201,162,74,.1);
+      --done-bg:rgba(201,162,74,.08);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0A0A09; --surface:#171613; --line:rgba(222,216,203,.14); --line-soft:rgba(222,216,203,.08);
+    --text:#DED8CB; --text-dim:#B9B3A6; --text-faint:#726d63;
+    --accent:#C9A24A; --accent-soft:rgba(201,162,74,.13);
+    --slot-bg-a:rgba(222,216,203,.035); --slot-bg-b:rgba(201,162,74,.1);
+    --done-bg:rgba(201,162,74,.08);
+  }
+
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Jost', system-ui, sans-serif; font-weight:300;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:920px; margin:0 auto; padding:clamp(28px,6vw,64px) clamp(20px,5vw,32px) 100px; }
+
+  a{ color:inherit; }
+  ::selection{ background:var(--accent); color:var(--bg); }
+
+  /* ---------- cabecera ---------- */
+  .head{ border-bottom:1px solid var(--line); padding-bottom:28px; margin-bottom:36px; }
+  .eyebrow{
+    font-family:'Jost',sans-serif; font-weight:500; font-size:.68rem; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--accent); margin:0 0 14px;
+  }
+  h1{
+    font-family:'Bodoni Moda', Georgia, serif; font-weight:400; font-size:clamp(1.9rem,4.2vw,2.7rem);
+    line-height:1.08; letter-spacing:-.01em; margin:0 0 14px; text-wrap:balance;
+  }
+  .head p{ color:var(--text-dim); font-size:.98rem; line-height:1.65; max-width:62ch; margin:0 0 20px; }
+  .stats{ display:flex; flex-wrap:wrap; gap:10px 28px; }
+  .stat b{ font-family:'Bodoni Moda',serif; font-size:1.5rem; font-weight:400; color:var(--accent); display:block; line-height:1; }
+  .stat span{ font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); }
+  .stat{ display:flex; flex-direction:column; gap:4px; }
+  #pend-label{ transition:color .2s ease; }
+
+  /* ---------- reglas de foto (brandbook) ---------- */
+  .reglas{
+    background:var(--surface); border:1px solid var(--line); border-radius:3px;
+    padding:20px 24px; margin-bottom:44px;
+  }
+  .reglas summary{
+    cursor:pointer; font-family:'Jost',sans-serif; font-weight:500; font-size:.82rem;
+    letter-spacing:.03em; color:var(--text); list-style:none; display:flex; align-items:center; gap:10px;
+  }
+  .reglas summary::-webkit-details-marker{ display:none; }
+  .reglas summary::before{
+    content:'+'; font-family:'Bodoni Moda',serif; font-size:1.1rem; color:var(--accent);
+    width:18px; text-align:center; transition:transform .2s ease;
+  }
+  .reglas[open] summary::before{ content:'–'; }
+  .reglas-body{ display:grid; gap:16px; grid-template-columns:1fr; margin-top:18px; padding-top:18px; border-top:1px solid var(--line-soft); }
+  @media (min-width:700px){ .reglas-body{ grid-template-columns:repeat(3,1fr); } }
+  .reglas-body div b{ display:block; font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:6px; }
+  .reglas-body div p{ margin:0; font-size:.86rem; color:var(--text-dim); line-height:1.55; }
+  .reglas-nota{ margin:16px 0 0; font-size:.78rem; color:var(--text-faint); line-height:1.6; }
+
+  /* ---------- secciones ---------- */
+  .seccion{ margin-bottom:52px; }
+  .seccion-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:6px; }
+  .seccion-migas{ font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); }
+  .seccion h2{ font-family:'Bodoni Moda',serif; font-weight:400; font-size:1.4rem; margin:2px 0 4px; }
+  .seccion-nota{ margin:0 0 20px; font-size:.86rem; color:var(--text-dim); line-height:1.55; max-width:64ch; }
+  .seccion-count{ font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); white-space:nowrap; }
+
+  .grid{ display:grid; gap:14px; grid-template-columns:repeat(2,1fr); }
+  @media (min-width:640px){ .grid.cols-4{ grid-template-columns:repeat(4,1fr); } }
+  @media (min-width:520px) and (max-width:639px){ .grid.cols-4{ grid-template-columns:repeat(3,1fr); } }
+
+  .item{
+    border:1px solid var(--line); border-radius:3px; overflow:hidden; background:var(--surface);
+    transition:border-color .2s ease, opacity .2s ease;
+  }
+  .item.is-done{ opacity:.5; }
+  .slot{
+    position:relative; aspect-ratio: var(--ar, 4/3);
+    background:
+      repeating-linear-gradient(90deg, var(--slot-bg-a) 0 1px, transparent 1px 20px),
+      radial-gradient(120% 120% at 15% 0%, var(--slot-bg-b), transparent 65%);
+    border-bottom:1px dashed var(--line);
+    display:grid; place-items:center; text-align:center; padding:10px;
+  }
+  .item.is-done .slot{ background:var(--done-bg); }
+  .slot span{ font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); }
+  .slot .ar-tag{ position:absolute; top:8px; right:8px; font-size:.58rem; letter-spacing:.06em; color:var(--text-faint); background:var(--surface); border:1px solid var(--line); padding:2px 6px; border-radius:20px; }
+  .item-body{ padding:12px 14px 14px; }
+  .item-name{ display:block; font-family:'Jost',sans-serif; font-weight:500; font-size:.86rem; color:var(--text); line-height:1.3; margin-bottom:3px; }
+  .item.is-done .item-name{ text-decoration:line-through; text-decoration-color:var(--text-faint); }
+  .item-para{ display:block; font-size:.72rem; color:var(--text-faint); }
+  .item-check{
+    display:flex; align-items:center; gap:7px; margin-top:9px; cursor:pointer;
+    font-size:.68rem; letter-spacing:.05em; text-transform:uppercase; color:var(--text-faint); user-select:none;
+  }
+  .item-check input{ accent-color:var(--accent); width:13px; height:13px; margin:0; cursor:pointer; }
+
+  footer{ margin-top:60px; padding-top:24px; border-top:1px solid var(--line); font-size:.78rem; color:var(--text-faint); line-height:1.7; }
+  footer b{ color:var(--text-dim); font-weight:500; }
+
+  @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
+</style>
+
+<div class="wrap">
+
+  <div class="head">
+    <p class="eyebrow">Giandeco Studio Design · Producción de contenido</p>
+    <h1>Material fotográfico pendiente</h1>
+    <p>Cada espacio en blanco de la web ya tiene su lugar reservado — con fondo de marca, no con una foto reciclada de otro proyecto. En cuanto llega la foto real, se reemplaza sin tocar nada más de la página. Esta es la lista completa, ordenada por dónde vive cada una.</p>
+    <div class="stats">
+      <div class="stat"><b id="stat-total">34</b><span>Piezas y espacios</span></div>
+      <div class="stat"><b id="stat-secciones">5</b><span>Secciones de la web</span></div>
+      <div class="stat"><b id="stat-pend"><span id="pend-label">34</span></b><span>Aún pendientes</span></div>
+    </div>
+  </div>
+
+  <details class="reglas">
+    <summary>Cómo fotografiar cada pieza — regla del manual de marca</summary>
+    <div class="reglas-body">
+      <div>
+        <b>Plano general</b>
+        <p>Cámara a 150 cm de altura, líneas verticales corregidas, espacio sin gente en cuadro.</p>
+      </div>
+      <div>
+        <b>Detalle de material</b>
+        <p>Luz lateral rasante sobre latón, madera o piedra — que se note la textura y la unión.</p>
+      </div>
+      <div>
+        <b>Producto en exhibición</b>
+        <p>Encuadre a la altura del ojo del comprador, con la pieza como único sujeto del cuadro.</p>
+      </div>
+    </div>
+    <p class="reglas-nota">Iluminación cálida, 2700–3000 K, sin flash directo. Sombras densas, saturación contenida. Prohibido: gran angular deformado, HDR, personas mirando a cámara.</p>
+  </details>
+
+  <!-- ================= NAVIDAD ================= -->
+  <section class="seccion" data-nombre="Colección Navidad">
+    <div class="seccion-head">
+      <div>
+        <p class="seccion-migas">Catálogo → Navidad</p>
+        <h2>Colección 2026</h2>
+      </div>
+      <span class="seccion-count">4 fotos</span>
+    </div>
+    <p class="seccion-nota">La campaña ya está anunciada como "viva" en el catálogo — estos cuatro huecos son lo primero que se debería completar.</p>
+    <div class="grid cols-4">
+      <article class="item" data-id="nav-arboles"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Árboles</span><span class="item-para">Colección 2026, decorados y con luz</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="nav-mesa"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Mesa servida</span><span class="item-para">Mantelería, vajilla y centro de mesa</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="nav-coronas"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Coronas</span><span class="item-para">Coronas naturales y guirnaldas</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="nav-vitrina"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Vitrina de temporada</span><span class="item-para">Escaparate navideño completo</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+    </div>
+  </section>
+
+  <!-- ================= ESPACIO: SALA DORADA ================= -->
+  <section class="seccion" data-nombre="Sala de estar · paleta dorada">
+    <div class="seccion-head">
+      <div>
+        <p class="seccion-migas">Compra el espacio → Sala de estar · paleta dorada</p>
+        <h2>7 piezas de esa sala</h2>
+      </div>
+      <span class="seccion-count">7 fotos</span>
+    </div>
+    <p class="seccion-nota">Hoy los puntos sobre la foto abren la ficha con nombre y precio "Consultar", pero sin imagen propia de la pieza. Encuadre producto, fondo neutro.</p>
+    <div class="grid cols-4">
+      <article class="item" data-id="sd-lampara"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Lámpara de mesa tejida</span><span class="item-para">Iluminación</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="sd-sofa"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Sofá curvo en lino crema</span><span class="item-para">Mobiliario</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="sd-cojin"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Cojín de piel sintética</span><span class="item-para">Textiles</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="sd-mesa"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Mesa de centro en latón</span><span class="item-para">Mobiliario</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="sd-candelabro"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Candelabro y velas doradas</span><span class="item-para">Decoración</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="sd-escultura"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Escultura vegetal en latón</span><span class="item-para">Piezas únicas</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="sd-alfombra"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Alfombra de piel</span><span class="item-para">Textiles</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+    </div>
+  </section>
+
+  <!-- ================= ESPACIO: COMEDOR EXTERIOR ================= -->
+  <section class="seccion" data-nombre="Comedor de exterior">
+    <div class="seccion-head">
+      <div>
+        <p class="seccion-migas">Compra el espacio → Comedor de exterior</p>
+        <h2>6 piezas de ese comedor</h2>
+      </div>
+      <span class="seccion-count">6 fotos</span>
+    </div>
+    <div class="grid cols-4">
+      <article class="item" data-id="ce-jarron"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Jarrón de cerámica esmaltada</span><span class="item-para">Decoración</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="ce-cuenco"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Cuenco de latón martillado</span><span class="item-para">Mesa</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="ce-copa"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Copa de cristal turquesa</span><span class="item-para">Cristalería</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="ce-vajilla"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Vajilla artesanal en verde</span><span class="item-para">Mesa</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="ce-silla"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Silla rústica de anea</span><span class="item-para">Mobiliario</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="ce-mantel"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Mantelería bordada a mano</span><span class="item-para">Textiles</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+    </div>
+  </section>
+
+  <!-- ================= ESPACIO: MESA NAVIDEÑA ================= -->
+  <section class="seccion" data-nombre="Mesa servida · campaña navideña">
+    <div class="seccion-head">
+      <div>
+        <p class="seccion-migas">Compra el espacio → Mesa servida · campaña navideña</p>
+        <h2>6 piezas de esa mesa</h2>
+      </div>
+      <span class="seccion-count">6 fotos</span>
+    </div>
+    <div class="grid cols-4">
+      <article class="item" data-id="mn-arbol"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Árbol decorado en plata</span><span class="item-para">Navidad</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="mn-lampara"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Lámpara de sobremesa</span><span class="item-para">Iluminación</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="mn-corona"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Corona natural de invierno</span><span class="item-para">Navidad</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="mn-candelabro"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Candelabro alto en plata</span><span class="item-para">Decoración</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="mn-vajilla"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Vajilla y cristalería</span><span class="item-para">Mesa</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="mn-manta"><div class="slot" style="--ar:4/5"><span class="ar-tag">4:5</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Manta de piel para silla</span><span class="item-para">Textiles</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+    </div>
+  </section>
+
+  <!-- ================= CRECIMIENTO: NUEVOS ESPACIOS ================= -->
+  <section class="seccion" data-nombre="Próximos espacios">
+    <div class="seccion-head">
+      <div>
+        <p class="seccion-migas">Compra el espacio → 6 categorías · Hogar → Espacios → 5 categorías</p>
+        <h2>Espacios nuevos (crecimiento)</h2>
+      </div>
+      <span class="seccion-count">11 fotos</span>
+    </div>
+    <p class="seccion-nota">Ya están anunciadas en la web con nombre propio — cada una es un botón "Avíseme" que un visitante puede tocar, así que la que reciba más clics es la que conviene fotografiar primero. Cada espacio nuevo necesita 1 foto principal con encuadre para poner puntos, más las piezas que se quieran marcar.</p>
+    <p class="seccion-nota" style="margin-top:8px;"><b style="color:var(--accent);">Compra el espacio (Catálogo):</b></p>
+    <div class="grid cols-4">
+      <article class="item" data-id="prox-cat-vitrina"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Vitrina retail</span><span class="item-para">Escaparate montado</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="prox-cat-dorm"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Dormitorio principal</span><span class="item-para">Ambientación completa</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="prox-cat-comedor"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Comedor interior</span><span class="item-para">Mesa y vajilla de diario</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="prox-cat-balcon"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Balcón / terraza</span><span class="item-para">Exterior y lounge</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="prox-cat-oficina"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Oficina en casa</span><span class="item-para">Escritorio y estantería</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="prox-cat-recibidor"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Recibidor de entrada</span><span class="item-para">Primera impresión</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+    </div>
+    <p class="seccion-nota" style="margin-top:24px;"><b style="color:var(--accent);">Hogar → Espacios:</b></p>
+    <div class="grid cols-4">
+      <article class="item" data-id="prox-hog-dorm"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Dormitorio principal</span><span class="item-para">Cabecera, ropa de cama</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="prox-hog-bano"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Baño</span><span class="item-para">Griferías y textiles</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="prox-hog-cocina"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Cocina</span><span class="item-para">Vajilla y menaje a la vista</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="prox-hog-balcon"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Balcón / terraza</span><span class="item-para">Exterior de la casa</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+      <article class="item" data-id="prox-hog-estudio"><div class="slot" style="--ar:4/3"><span class="ar-tag">4:3</span><span>ESPACIO<br>RESERVADO</span></div><div class="item-body"><span class="item-name">Escritorio / estudio</span><span class="item-para">Zona de trabajo en casa</span><label class="item-check"><input type="checkbox"> Ya la tengo</label></div></article>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>Cómo se usa esto:</b> marque "Ya la tengo" apenas tenga la foto — queda tachada y el contador de arriba baja, solo en su navegador, como recordatorio propio. Cuando me pase el archivo lo subo a la web y ese espacio reservado desaparece para siempre, sin tocar el resto de la página.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var KEY = 'gd-material-pendiente-v1';
+  var estado = {};
+  try{ estado = JSON.parse(localStorage.getItem(KEY) || '{}'); }catch(e){ estado = {}; }
+
+  var checks = document.querySelectorAll('.item-check input');
+  var total = checks.length;
+
+  function actualizarContador(){
+    var pendientes = 0;
+    checks.forEach(function(c){ if(!c.checked) pendientes++; });
+    document.getElementById('pend-label').textContent = pendientes;
+    document.getElementById('stat-total').textContent = total;
+  }
+
+  checks.forEach(function(input){
+    var item = input.closest('.item');
+    var id = item.getAttribute('data-id');
+    if(estado[id]){ input.checked = true; item.classList.add('is-done'); }
+    input.addEventListener('change', function(){
+      estado[id] = input.checked;
+      item.classList.toggle('is-done', input.checked);
+      try{ localStorage.setItem(KEY, JSON.stringify(estado)); }catch(e){}
+      actualizarContador();
+    });
+  });
+
+  actualizarContador();
+})();
+</script>

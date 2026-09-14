@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog retail — Giandeco Studio Design</title>
+<meta name="description" content="Criterio de tienda explicado: por qué una vitrina no vende, qué es un escaparate, cuándo empezar la campaña de Navidad y cómo se lee la identidad de una marca en su local.">
+<meta name="theme-color" content="#0A0A09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=7">
+<style>
+  .bl-art{ border-top:1px solid var(--line); }
+  .bl-btn{
+    width:100%; display:grid; gap:16px; grid-template-columns:auto 1fr auto; align-items:center;
+    background:none; border:none; padding:clamp(22px,3vw,32px) 0; cursor:pointer; text-align:left;
+  }
+  .bl-n{ font-family:var(--body); font-size:.64rem; letter-spacing:.2em; color:var(--accent); }
+  .bl-t{ font-family:var(--display); font-weight:400; font-size:clamp(1.9rem,2.6vw,2.2rem); color:var(--lino); line-height:1.15; transition:color .25s ease; }
+  .bl-btn:hover .bl-t{ color:var(--accent); }
+  .bl-chev{ width:18px; height:18px; stroke:var(--text-faint); fill:none; stroke-width:1.4; transition:transform .35s var(--gd-ease); flex:none; }
+  .bl-art.is-open .bl-chev{ transform:rotate(180deg); stroke:var(--accent); }
+  .bl-panel{ max-height:0; overflow:hidden; transition:max-height .5s var(--gd-ease); }
+  .bl-art.is-open .bl-panel{ max-height:900px; }
+  .bl-cuerpo{ padding-bottom:clamp(26px,3vw,40px); display:grid; gap:clamp(20px,3vw,40px); grid-template-columns:1fr; }
+  @media (min-width:900px){ .bl-cuerpo{ grid-template-columns:.8fr 1.2fr; } }
+  .bl-img{ border-radius:2px; overflow:hidden; aspect-ratio:4/3; }
+  .bl-img img{ width:100%; height:100%; object-fit:cover; }
+  .bl-cuerpo p{ margin:0 0 14px; color:var(--text-dim); font-size:.97rem; line-height:1.8; max-width:60ch; }
+  .bl-cuerpo p:last-child{ margin-bottom:0; }
+  .bl-cuerpo strong{ color:var(--lino); font-weight:400; }
+  .bl-meta{ font-family:var(--body); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--text-faint); margin-bottom:14px; display:block; }
+</style>
+</head>
+<body data-mundo="retail" data-seccion="blog">
+
+<div id="gdHeader"></div>
+
+<section class="gd-hero is-corto">
+  <div class="gd-hero-panel">
+    <p class="gd-migas reveal-left"><a href="index.html">Inicio</a> / <a href="retail.html">Retail</a> / <span>Blog</span></p>
+    <p class="gd-hero-eyebrow reveal-left"><i></i>Retail · Criterio de tienda</p>
+    <h1 class="reveal-left d1">El criterio, <em>explicado</em></h1>
+    <p class="reveal-left d2">Lo que le decimos a un cliente en la primera reunión, escrito. Sin folleto.</p>
+  </div>
+  <div class="gd-hero-media">
+    <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/work/enchantee.jpg" alt="Vitrina de moda montada por Giandeco"></div>
+    <div class="gd-hero-cap">
+      <span><b>Vitrina de moda</b><span>Enchantée Paris</span></span>
+      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+    </div>
+  </div>
+</section>
+
+<section class="gd-sec">
+  <div class="gd-in" id="blLista"></div>
+</section>
+
+<section class="gd-sec gd-claro" style="padding-block:clamp(48px,6vw,80px);">
+  <div class="gd-in" style="text-align:center;">
+    <h2 class="gd-h2 reveal" style="margin-inline:auto; max-width:22ch;">¿Le suena su local en alguno de estos casos?</h2>
+    <div class="reveal d1" style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:var(--sp-24);">
+      <a class="gd-btn gd-btn-primary" href="contacto.html">Agendar visita técnica
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-ghost" href="https://www.instagram.com/giandeco.studio/" target="_blank" rel="noopener">Seguirnos en Instagram</a>
+    </div>
+  </div>
+</section>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=8"></script>
+<script>
+(function(){
+  var ARTS = [
+    { meta:'Vitrinismo · 4 min', t:'Por qué esta vitrina no vende', img:'images/work/walonfiguritas.jpg', p:[
+      'Una vitrina que no vende casi nunca tiene un problema de producto. Tiene un problema de <strong>guion</strong>: muestra cosas, pero no cuenta nada.',
+      'El escaparate es la venta silenciosa. Cuando alguien pasa por delante tiene entre dos y tres segundos para entender qué le está ofreciendo usted. Si en esos segundos ve seis mensajes distintos —una promoción, tres tallas, un cartel de temporada pasada y un maniquí sin terminar de vestir— el cerebro descarta y sigue caminando.',
+      'La corrección suele ser de resta, no de suma: un solo mensaje por vitrina, un punto focal a la altura del ojo, y todo lo demás construido para acompañarlo. Un outfit completo vende más que cinco prendas sueltas, porque el cliente se ve puesto en la escena.'
+    ]},
+    { meta:'Conceptos · 3 min', t:'Qué es exactamente un escaparate', img:'images/work/enchantee.jpg', p:[
+      'Escaparate es la <strong>exposición del producto</strong>: la parte de su local que muestra lo que vende, contando una historia.',
+      'Existen dos formas y en el fondo el concepto es el mismo. El <strong>escaparate de vitrina o vidriera</strong> es el que da a la calle o al pasillo del centro comercial: trabaja sobre el que todavía no entró. El <strong>escaparate interior o display</strong> vive dentro de la tienda: trabaja sobre el que ya entró y aún no decide.',
+      'La vitrina, técnicamente, es el espacio físico dividido entre la zona por donde transitan las personas y la zona de exhibición. La vidriera es esa misma idea mejorada, con acristalamiento hacia el exterior.',
+      'Los dos se diseñan igual: ángulo de lectura, styling, iluminación y una sola idea por montaje.'
+    ]},
+    { meta:'Proceso · 3 min', t:'Visita técnica: qué medimos y por qué', img:'images/shift/zonatienda.jpg', p:[
+      'La visita técnica es cuando vamos a su local y <strong>tomamos medidas</strong>. Parece un trámite y es la decisión más importante del proyecto.',
+      'Sin metrado real no hay diseño posible, solo bocetos bonitos que después no entran. Medimos anchos de circulación, altura libre, puntos de luz existentes, ubicación de la caja y la puerta, y observamos algo que ningún plano trae: por dónde camina la gente hoy.',
+      'Con esas medidas levantamos el espacio en 3D como un volumen, le sumamos mobiliario, materiales y acabados, y de ahí sale el <strong>render</strong>: una imagen fotorrealista del local terminado. Usted aprueba sobre eso, no sobre una promesa.'
+    ]},
+    { meta:'Campañas · 3 min', t:'Navidad: cuándo hay que empezar', img:'images/espacios/zara-navidad-2.jpg?v=2', p:[
+      'La respuesta corta: <strong>septiembre</strong>.',
+      'Una campaña de temporada no es colgar adornos. Es concepto, producción o compra de utilería, fabricación de estructuras si las hay, montaje y —si tiene varias tiendas— un espacio modelo que valide la zonificación antes de replicar.',
+      'Ese calendario, hecho con calma, ocupa entre seis y ocho semanas. Hecho en noviembre, ocupa lo mismo pero con sobrecosto de proveedores y sin margen para corregir.',
+      'Y hay una fecha que casi nadie agenda: <strong>el retiro</strong>. Una campaña que sigue puesta en enero comunica descuido, no fiesta.'
+    ]},
+    { meta:'Marca · 4 min', t:'Si dice papas, que haya papas', img:'images/work/corteingles.jpg', p:[
+      'Hay un error que vemos todo el tiempo y no tiene que ver con el diseño, sino con la <strong>identidad</strong>.',
+      'Alguien monta un negocio para vender papas. No le resulta como esperaba, y empieza a meter camote, cebolla, alguna otra cosa. El letrero afuera sigue diciendo papas. El cliente entra buscando papas, encuentra medio depósito de cebollas y se va confundido — no porque el producto sea malo, sino porque <strong>lo que el local dice no coincide con lo que el local ofrece</strong>.',
+      'Un punto de venta comunica antes de que nadie hable: el letrero, la vitrina, lo primero que se ve al entrar. Si eso no coincide con el negocio real, todo el dinero puesto en publicidad se gasta en llevar gente a un lugar que la va a decepcionar.',
+      'Por eso antes de diseñar preguntamos qué vende usted realmente y qué quiere que piensen al pasar por la puerta. Cuando esas dos respuestas coinciden, el espacio se diseña solo.'
+    ]},
+    { meta:'Asesoría · 3 min', t:'El ropero que nadie explicó para qué era', img:'images/mobiliario/ropero-porto-blanco-1.webp', p:[
+      'Un cliente le pide al carpintero: «hágame este ropero». El carpintero lo hace, bien hecho. Al mes el ropero no sirve: las repisas quedaron a una altura donde no entra lo que se guardaba, y la barra de colgar quedó corta.',
+      'Nadie hizo nada mal. Simplemente <strong>nadie le dijo al carpintero para qué era ese ropero</strong> ni qué iba a cargar.',
+      'Lo mismo pasa en un local: se manda a fabricar un exhibidor sin decir qué producto va a exhibir, cuántas unidades, con qué rotación. Sale un mueble correcto y un exhibidor inútil.',
+      'Parte de nuestro trabajo es esa asesoría: especificar material, medida y acabado <strong>en función de lo que hay que vender</strong>. El detalle es responsabilidad del estudio, no del carpintero.'
+    ]}
+  ];
+
+  var cont = document.getElementById('blLista');
+  if(!cont) return;
+  cont.innerHTML = ARTS.map(function(a, i){
+    var n = (i + 1) < 10 ? '0' + (i + 1) : (i + 1);
+    return '<article class="bl-art">' +
+      '<button class="bl-btn" type="button" aria-expanded="false">' +
+        '<span class="bl-n">' + n + '</span>' +
+        '<span class="bl-t">' + a.t + '</span>' +
+        '<svg class="bl-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>' +
+      '</button>' +
+      '<div class="bl-panel"><div class="bl-cuerpo">' +
+        '<div class="bl-img"><img decoding="async" src="' + a.img + '" alt="" loading="lazy"></div>' +
+        '<div><span class="bl-meta">' + a.meta + '</span>' + a.p.map(function(x){ return '<p>' + x + '</p>'; }).join('') + '</div>' +
+      '</div></div>' +
+    '</article>';
+  }).join('');
+
+  cont.addEventListener('click', function(e){
+    var b = e.target.closest('.bl-btn'); if(!b) return;
+    var art = b.parentNode;
+    var open = art.classList.toggle('is-open');
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+</body>
+</html>

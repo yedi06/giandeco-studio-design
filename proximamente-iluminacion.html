@@ -1,0 +1,48 @@
+<meta charset="UTF-8">
+<title>Iluminación — Próximamente · Giandeco Studio Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0A0A09">
+<meta name="robots" content="noindex">
+<style>
+  :root{
+    --ebano:#0A0A09; --laton:#C9A24A; --lino:#DED8CB; --text-dim:#B9B3A6;
+    --display:'Bodoni Moda', Georgia, serif; --body:'Jost', system-ui, sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; min-height:100svh; background:var(--ebano); color:var(--lino);
+    font-family:var(--body); font-weight:300; -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding: 10vh 24px;
+    background-image: radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,74,0.08), transparent);
+  }
+  .mark{ height:56px; width:auto; margin-bottom:56px; }
+  .eyebrow{
+    font-family:var(--body); font-weight:500; font-size:.7rem; letter-spacing:.24em;
+    text-transform:uppercase; color:var(--laton); margin:0 0 18px;
+  }
+  h1{
+    font-family:var(--display); font-weight:400; font-size:clamp(2.2rem,6vw,3.4rem);
+    margin:0 0 22px; letter-spacing:-.01em;
+  }
+  p{ max-width:46ch; color:var(--text-dim); font-size:1rem; line-height:1.7; margin:0 0 40px; }
+  a.back{
+    display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+    font-family:var(--body); font-size:.78rem; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--lino); padding-bottom:4px; border-bottom:1px solid rgba(222,216,203,.28);
+    transition: color .25s ease, border-color .25s ease, gap .25s ease;
+  }
+  a.back:hover{ color:var(--laton); border-color:var(--laton); gap:14px; }
+  a.back svg{ width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.5; transform:rotate(180deg); }
+</style>
+
+<img decoding="async" class="mark" src="img/logo-negativo.svg" alt="Giandeco Studio Design">
+<p class="eyebrow">Catálogo · Próximamente</p>
+<h1>Iluminación</h1>
+<p>Lámparas, apliques y soluciones de luz cálida para completar el proyecto que ya diseñamos en obra. Estamos afinando la selección antes de publicarla.</p>
+<a class="back" href="index.html#catalogo">
+  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  Volver al catálogo
+</a>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catálogo — Giandeco Studio Design</title>
+<meta name="description" content="Catálogo Giandeco: colección Navidad, mueblería a medida y ambientes completos para comprar pieza por pieza. Lo que especificamos en obra, disponible para su espacio.">
+<meta name="theme-color" content="#0A0A09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=7">
+<style>
+  /* bloque destacado — mismo tratamiento para Navidad, Mueblería y Compra el
+     espacio: banner grande + productos reales debajo. .is-flip pasa la foto
+     al lado derecho para que cada sección se distinga de la anterior. */
+  .ct-feature{ position:relative; overflow:hidden; border-radius:2px; isolation:isolate; }
+  .ct-feature-grid{ display:grid; grid-template-columns:1fr; }
+  @media (min-width:960px){ .ct-feature-grid{ grid-template-columns:1.05fr .95fr; align-items:stretch; } }
+  .ct-feature-media{ position:relative; min-height:340px; overflow:hidden; order:1; }
+  .ct-feature-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .ct-feature-body{ background:var(--bg-raised); padding:clamp(32px,4vw,56px); display:flex; flex-direction:column; justify-content:center; order:2; }
+  @media (min-width:960px){
+    .ct-feature.is-flip .ct-feature-grid{ grid-template-columns:.95fr 1.05fr; }
+    .ct-feature.is-flip .ct-feature-media{ order:2; }
+    .ct-feature.is-flip .ct-feature-body{ order:1; }
+  }
+  .ct-feature-badge{
+    display:inline-flex; align-items:center; gap:8px; align-self:flex-start; margin-bottom:18px;
+    background:rgba(201,162,74,.12); border:1px solid rgba(201,162,74,.35); color:var(--accent);
+    font-family:var(--body); font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; padding:7px 12px; border-radius:2px;
+  }
+  .ct-feature-badge.is-bronce{ background:rgba(138,111,60,.14); border-color:rgba(138,111,60,.4); color:var(--accent-2); }
+  .ct-feature-badge i{ display:none; }
+  .ct-feature-nota{ margin-top:var(--sp-16); font-size:.8rem; color:var(--text-faint); line-height:1.6; }
+  .ct-feature + .ct-feature{ margin-top:var(--sp-64); }
+
+  /* huecos reservados — se usan cuando una sección aún no tiene fotos propias */
+  .ct-slots{ display:grid; gap:var(--sp-16); grid-template-columns:repeat(2,1fr); margin-top:var(--sp-24); }
+  @media (min-width:600px){ .ct-slots{ grid-template-columns:repeat(4,1fr); } }
+
+  /* próximamente */
+  .ct-pronto{ display:grid; gap:var(--sp-16); grid-template-columns:1fr; }
+  @media (min-width:720px){ .ct-pronto{ grid-template-columns:repeat(3,1fr); } }
+
+  /* ==================== COMPRA EL ESPACIO — escaparate interactivo ====================
+     Deliberadamente distinto de Navidad/Mueblería: en vez de banner + grilla,
+     la propia experiencia de comprar-el-punto-sobre-la-foto vive aquí mismo,
+     con un selector elegante entre los tres ambientes. */
+  .ce-showcase{
+    position:relative; overflow:hidden; border-radius:3px;
+    background: radial-gradient(140% 100% at 12% 0%, rgba(201,162,74,.09), transparent 55%), var(--bg-raised);
+    border:1px solid var(--line);
+    padding: clamp(24px,4vw,44px);
+  }
+  .ce-head{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:20px 32px; margin-bottom: clamp(28px,4vw,40px); }
+  .ce-live{ display:inline-flex; align-items:center; gap:9px; font-family:var(--body); font-size:.64rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin:0 0 14px; }
+  .ce-live i{ display:none; }
+  .ce-head h2{ margin:0; font-size:clamp(2rem,3.4vw,2.7rem); }
+  .ce-head-quote{ font-family:var(--script); font-style:italic; font-weight:300; color:var(--text-faint); font-size:1.08rem; margin:10px 0 0; max-width:42ch; }
+
+  .ce-grid{ display:grid; grid-template-columns:1fr; gap: clamp(20px,3vw,28px); }
+  @media (min-width:960px){ .ce-grid{ grid-template-columns:1fr .4fr; align-items:stretch; } }
+
+  .ce-stage{ position:relative; border-radius:2px; overflow:hidden; aspect-ratio:4/3; background:#050403; }
+  .ce-panel{ position:absolute; inset:0; opacity:0; visibility:hidden; transition:opacity .55s var(--gd-ease); }
+  .ce-panel.is-active{ opacity:1; visibility:visible; z-index:2; }
+  .ce-panel .gd-shop{ position:absolute; inset:0; width:100%; height:100%; border-radius:0; }
+  .ce-panel .gd-shop-img{ width:100%; height:100%; object-fit:cover; }
+  .ce-stage-cap{
+    position:absolute; left:0; right:0; bottom:0; z-index:3; padding:clamp(16px,2.2vw,24px);
+    display:flex; align-items:flex-end; justify-content:space-between; gap:14px; pointer-events:none;
+    background:linear-gradient(to top, rgba(5,4,3,.85) 0%, transparent 55%);
+  }
+  .ce-stage-cap b{ display:block; font-family:var(--display); font-weight:400; font-size:1.15rem; color:var(--lino); }
+  .ce-stage-cap span{ font-family:var(--body); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(222,216,203,.68); }
+  .ce-stage-hint{ font-family:var(--body); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); }
+
+  .ce-tabs{ display:flex; flex-direction:row; gap:2px; overflow-x:auto; padding-bottom:2px; }
+  @media (min-width:960px){ .ce-tabs{ flex-direction:column; overflow-x:visible; } }
+  .ce-tab{
+    display:flex; align-items:center; gap:12px; padding:14px; text-align:left; flex:none; width:min(260px,82vw);
+    background:none; border:none; border-left:2px solid transparent; cursor:pointer; border-radius:2px;
+    transition:border-color .3s ease, background-color .3s ease;
+  }
+  @media (min-width:960px){ .ce-tab{ width:auto; } }
+  .ce-tab:hover{ background:rgba(201,162,74,.06); }
+  .ce-tab.is-active{ border-left-color:var(--accent); background:rgba(201,162,74,.09); }
+  .ce-tab-thumb{ width:52px; height:52px; border-radius:2px; overflow:hidden; flex:none; }
+  .ce-tab-thumb img{ width:100%; height:100%; object-fit:cover; filter:saturate(.55) brightness(.7); transition:filter .35s ease, transform .5s ease; }
+  .ce-tab.is-active .ce-tab-thumb img, .ce-tab:hover .ce-tab-thumb img{ filter:none; transform:scale(1.08); }
+  .ce-tab-num{ display:block; font-family:var(--display); font-size:.7rem; color:var(--text-faint); margin-bottom:2px; }
+  .ce-tab.is-active .ce-tab-num{ color:var(--accent); }
+  .ce-tab-name{ display:block; font-family:var(--body); font-weight:500; font-size:.9rem; color:var(--text-dim); line-height:1.28; }
+  .ce-tab.is-active .ce-tab-name{ color:var(--lino); }
+  .ce-tab-meta{ display:block; font-family:var(--body); font-size:.66rem; color:var(--text-faint); margin-top:3px; }
+
+  .ce-foot{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px; margin-top:var(--sp-24); padding-top:var(--sp-16); border-top:1px solid var(--line); }
+  .ce-foot p{ margin:0; font-size:.84rem; color:var(--text-faint); }
+</style>
+</head>
+<body data-mundo="catalogo" data-seccion="home">
+
+<div id="gdHeader"></div>
+
+<section class="gd-hero is-corto">
+  <div class="gd-hero-panel">
+    <p class="gd-migas reveal-left"><a href="index.html">Inicio</a> / <span>Catálogo</span></p>
+    <p class="gd-hero-eyebrow reveal-left"><i></i>Catálogo · Campaña viva</p>
+    <h1 class="reveal-left d1">Lo que montamos, <em>a la venta</em></h1>
+    <p class="reveal-left d2">Las mismas piezas que especificamos en obra, disponibles pieza por pieza o como ambiente completo.</p>
+    <div class="gd-hero-cta reveal-left d3">
+      <a class="gd-btn gd-btn-primary" href="catalogo-navidad.html">Colección Navidad
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-ghost" href="catalogo-muebleria.html">Ver mueblería</a>
+    </div>
+    <div class="gd-hero-pie reveal d4">
+      <span><b>Navidad</b></span>
+      <span><b>Mueblería</b></span>
+      <span><b>Compra el espacio</b></span>
+    </div>
+  </div>
+  <div class="gd-hero-media">
+    <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/espacios/zara-navidad-2.jpg?v=2" alt="Ambientación navideña producida por Giandeco"></div>
+    <div class="gd-hero-cap">
+      <span><b>Mesa de temporada</b><span>Producción Giandeco</span></span>
+      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== NAVIDAD (foto a la izquierda) ==================== -->
+<section class="gd-sec" style="padding-bottom:clamp(32px,5vw,56px);">
+  <div class="gd-in">
+    <div class="gd-filete is-left reveal"><span aria-hidden="true">◆</span></div>
+
+    <div class="ct-feature reveal-scale">
+      <div class="ct-feature-grid">
+        <div class="ct-feature-media gd-curtain">
+          <img decoding="async" class="gd-kb-img" src="images/espacios/zara-navidad-1.jpg?v=2" alt="Mesa navideña servida con candelabro de plata y árbol decorado">
+        </div>
+        <div class="ct-feature-body">
+          <span class="ct-feature-badge"><i></i> Campaña viva · 2026</span>
+          <h2 class="gd-h2" style="font-size:clamp(2rem,3.4vw,2.7rem); margin-bottom:16px;">Navidad</h2>
+          <p class="gd-body" style="margin-bottom:22px;">Árboles, mesas servidas, coronas y vitrinas de temporada — del concepto al último adorno.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:12px;">
+            <a class="gd-btn gd-btn-primary" href="catalogo-navidad.html">Ver colección Navidad
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+            <a class="gd-btn gd-btn-ghost" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20una%20campa%C3%B1a%20de%20Navidad." target="_blank" rel="noopener">Cotizar campaña</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- huecos reservados: aquí entra el material de Navidad cuando esté listo -->
+    <div class="ct-slots reveal d1">
+      <a class="gd-slot" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20av%C3%ADsenme%20cuando%20publiquen%20la%20colecci%C3%B3n%3A%20%C3%81rboles." target="_blank" rel="noopener"><span><b>Árboles</b>Colección 2026<span class="gd-slot-cta">Avíseme →</span></span></a>
+      <a class="gd-slot" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20av%C3%ADsenme%20cuando%20publiquen%20la%20colecci%C3%B3n%3A%20Mesa%20servida." target="_blank" rel="noopener"><span><b>Mesa servida</b>Colección 2026<span class="gd-slot-cta">Avíseme →</span></span></a>
+      <a class="gd-slot" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20av%C3%ADsenme%20cuando%20publiquen%20la%20colecci%C3%B3n%3A%20Coronas." target="_blank" rel="noopener"><span><b>Coronas</b>Colección 2026<span class="gd-slot-cta">Avíseme →</span></span></a>
+      <a class="gd-slot" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20av%C3%ADsenme%20cuando%20publiquen%20la%20colecci%C3%B3n%3A%20Vitrina%20de%20temporada." target="_blank" rel="noopener"><span><b>Vitrina de temporada</b>Colección 2026<span class="gd-slot-cta">Avíseme →</span></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MUEBLERÍA (foto a la derecha) ==================== -->
+<section class="gd-sec" style="padding-block:0 clamp(32px,5vw,56px);">
+  <div class="gd-in">
+    <div class="ct-feature is-flip reveal-scale">
+      <div class="ct-feature-grid">
+        <div class="ct-feature-media gd-curtain">
+          <img decoding="async" class="gd-kb-img" src="images/mobiliario/centro-deluxe-1.webp" alt="Centro de entretenimiento Deluxe Nature en madera con LED integrado">
+        </div>
+        <div class="ct-feature-body">
+          <span class="ct-feature-badge is-bronce"><i></i> Catálogo permanente</span>
+          <h2 class="gd-h2" style="font-size:clamp(2rem,3.4vw,2.7rem); margin-bottom:16px;">Mueblería</h2>
+          <p class="gd-body" style="margin-bottom:22px;">Comedores, roperos, cómodas y centros de TV — doce piezas con ficha técnica y precio.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:12px;">
+            <a class="gd-btn gd-btn-primary" href="catalogo-muebleria.html">Ver colección completa
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- piezas reales de la mueblería -->
+    <div class="gd-grid" style="margin-top:var(--sp-24);" id="mbPreview"></div>
+  </div>
+</section>
+
+<!-- ==================== COMPRA EL ESPACIO — escaparate interactivo ==================== -->
+<section class="gd-sec" style="padding-top:0;">
+  <div class="gd-in">
+    <div class="ce-showcase reveal-scale">
+
+      <div class="ce-head">
+        <div>
+          <p class="ce-live"><i></i> Pruébelo aquí mismo</p>
+          <h2 class="gd-h2">Compra el espacio</h2>
+          <p class="ce-head-quote">Elija un ambiente y toque un punto — la pieza exacta que ve es la que puede pedir.</p>
+        </div>
+        <a class="gd-link" href="catalogo-compra-el-espacio.html">Ver todos los espacios
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      </div>
+
+      <div class="ce-grid">
+        <div class="ce-stage" id="ceStage">
+
+          <!-- panel 0 · mesa navideña -->
+          <div class="ce-panel is-active" data-panel="0">
+            <div class="gd-shop">
+              <img decoding="async" class="gd-shop-img" src="images/espacios/zara-navidad-1.jpg?v=2" alt="Comedor navideño con mesa servida, árbol decorado y candelabro de plata">
+              <button class="gd-shop-dot" style="left:10%; top:33%" data-nombre="Árbol decorado en plata" data-cat="Navidad" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20el%20%C3%A1rbol%20decorado%20en%20plata."></button>
+              <button class="gd-shop-dot" style="left:36%; top:31%" data-nombre="Lámpara de sobremesa" data-cat="Iluminación" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20l%C3%A1mpara%20de%20sobremesa."></button>
+              <button class="gd-shop-dot" style="left:57%; top:38%" data-nombre="Corona natural de invierno" data-cat="Navidad" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20corona%20de%20invierno."></button>
+              <button class="gd-shop-dot" style="left:50%; top:50%" data-nombre="Candelabro alto en plata" data-cat="Decoración" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20el%20candelabro%20alto%20en%20plata."></button>
+              <button class="gd-shop-dot" style="left:63%; top:70%" data-nombre="Vajilla y cristalería" data-cat="Mesa" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20vajiller%C3%ADa%20de%20la%20mesa%20navide%C3%B1a."></button>
+              <button class="gd-shop-dot" style="left:77%; top:74%" data-nombre="Manta de piel para silla" data-cat="Textiles" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesan%20las%20mantas%20de%20piel."></button>
+            </div>
+          </div>
+
+          <!-- panel 1 · sala dorada -->
+          <div class="ce-panel" data-panel="1">
+            <div class="gd-shop">
+              <img decoding="async" class="gd-shop-img" src="images/espacios/zara-sala-1.jpg" alt="Sala con sofá curvo en lino crema, mesa de centro dorada y decoración cálida">
+              <button class="gd-shop-dot" style="left:7%;  top:44%" data-nombre="Lámpara de mesa tejida"     data-cat="Iluminación"   data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20l%C3%A1mpara%20de%20mesa%20de%20la%20sala%20dorada."></button>
+              <button class="gd-shop-dot" style="left:38%; top:58%" data-nombre="Sofá curvo en lino crema"   data-cat="Mobiliario"    data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20el%20sof%C3%A1%20curvo%20de%20la%20sala%20dorada."></button>
+              <button class="gd-shop-dot" style="left:70%; top:56%" data-nombre="Cojín de piel sintética"    data-cat="Textiles"      data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesan%20los%20cojines%20de%20la%20sala%20dorada."></button>
+              <button class="gd-shop-dot" style="left:48%; top:80%" data-nombre="Mesa de centro en latón"    data-cat="Mobiliario"    data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20mesa%20de%20centro%20en%20lat%C3%B3n."></button>
+              <button class="gd-shop-dot" style="left:56%; top:66%" data-nombre="Candelabro y velas doradas" data-cat="Decoración"   data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20el%20candelabro%20dorado."></button>
+              <button class="gd-shop-dot" style="left:86%; top:30%" data-nombre="Escultura vegetal en latón" data-cat="Piezas únicas" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20escultura%20vegetal%20en%20lat%C3%B3n."></button>
+              <button class="gd-shop-dot" style="left:24%; top:91%" data-nombre="Alfombra de piel"           data-cat="Textiles"      data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20alfombra%20de%20la%20sala%20dorada."></button>
+            </div>
+          </div>
+
+          <!-- panel 2 · comedor exterior -->
+          <div class="ce-panel" data-panel="2">
+            <div class="gd-shop">
+              <img decoding="async" class="gd-shop-img" src="images/espacios/zara-comedor-1.jpg" alt="Mesa de comedor exterior con vajilla artesanal, cristalería turquesa y sillas de anea">
+              <button class="gd-shop-dot" style="left:50%; top:30%" data-nombre="Jarrón de cerámica esmaltada" data-cat="Decoración"  data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20el%20jarr%C3%B3n%20de%20cer%C3%A1mica%20del%20comedor%20de%20exterior."></button>
+              <button class="gd-shop-dot" style="left:30%; top:45%" data-nombre="Cuenco de latón martillado"   data-cat="Mesa"        data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20el%20cuenco%20de%20lat%C3%B3n."></button>
+              <button class="gd-shop-dot" style="left:14%; top:46%" data-nombre="Copa de cristal turquesa"     data-cat="Cristalería" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20cristaler%C3%ADa%20turquesa."></button>
+              <button class="gd-shop-dot" style="left:34%; top:57%" data-nombre="Vajilla artesanal en verde"   data-cat="Mesa"        data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20vajilla%20artesanal."></button>
+              <button class="gd-shop-dot" style="left:21%; top:83%" data-nombre="Silla rústica de anea"        data-cat="Mobiliario"  data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesan%20las%20sillas%20de%20anea."></button>
+              <button class="gd-shop-dot" style="left:52%; top:89%" data-nombre="Mantelería bordada a mano"    data-cat="Textiles"    data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20manteler%C3%ADa%20bordada."></button>
+            </div>
+          </div>
+
+          <div class="ce-stage-cap">
+            <span id="ceCapNombre"><b>Mesa servida · campaña navideña</b><span>Campaña estacional · 6 piezas</span></span>
+            <span class="ce-stage-hint gd-shop-hint" style="margin:0;"><i aria-hidden="true"></i> Toque un punto</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="ce-tabs" id="ceTabs">
+            <button class="ce-tab is-active" type="button" data-tab="0">
+              <span class="ce-tab-thumb"><img decoding="async" src="images/espacios/zara-navidad-1.jpg?v=2" alt=""></span>
+              <span><span class="ce-tab-num">01</span><span class="ce-tab-name">Mesa servida navideña</span><span class="ce-tab-meta">6 piezas</span></span>
+            </button>
+            <button class="ce-tab" type="button" data-tab="1">
+              <span class="ce-tab-thumb"><img decoding="async" src="images/espacios/zara-sala-1.jpg" alt=""></span>
+              <span><span class="ce-tab-num">02</span><span class="ce-tab-name">Sala · paleta dorada</span><span class="ce-tab-meta">7 piezas</span></span>
+            </button>
+            <button class="ce-tab" type="button" data-tab="2">
+              <span class="ce-tab-thumb"><img decoding="async" src="images/espacios/zara-comedor-1.jpg" alt=""></span>
+              <span><span class="ce-tab-num">03</span><span class="ce-tab-name">Comedor de exterior</span><span class="ce-tab-meta">6 piezas</span></span>
+            </button>
+          </div>
+          <div class="ce-foot" style="border-top:none; margin-top:16px; padding-top:0;">
+            <a class="gd-btn gd-btn-primary" id="ceCotizarBtn" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20la%20mesa%20servida%20navide%C3%B1a%20completa." target="_blank" rel="noopener" style="width:100%; justify-content:center;">Cotizar este ambiente</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRÓXIMAMENTE ==================== -->
+<section class="gd-sec" style="padding-top:0;">
+  <div class="gd-in">
+    <p class="gd-eyebrow is-muted reveal">En preparación</p>
+    <div class="ct-slots reveal d1" style="margin-top:var(--sp-16);">
+      <a class="gd-slot" href="proximamente-iluminacion.html"><span><b>Iluminación</b>Próximamente<span class="gd-slot-cta">Ver más →</span></span></a>
+      <a class="gd-slot" href="proximamente-decoracion.html"><span><b>Decoración</b>Próximamente<span class="gd-slot-cta">Ver más →</span></span></a>
+      <a class="gd-slot" href="proximamente-papel-mural.html"><span><b>Papel Mural</b>Próximamente<span class="gd-slot-cta">Ver más →</span></span></a>
+    </div>
+  </div>
+</section>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=8"></script>
+<script>
+(function(){
+  var P = window.GD_PRODUCTOS || {};
+  var DESTACADOS = ['centro-deluxe', 'comoda-flow', 'comedor-city12', 'ropero-bilbao-crema'];
+  var host = document.getElementById('mbPreview');
+  if(!host) return;
+
+  host.innerHTML = DESTACADOS.filter(function(k){ return P[k]; }).map(function(k, i){
+    var p = P[k];
+    var d = i === 0 ? '' : (' d' + i);
+    return '<a class="gd-prod reveal' + d + '" href="catalogo-muebleria.html#' + k + '" data-cursor="Ver">' +
+      '<span class="gd-prod-thumb"><img decoding="async" src="' + p.img + '" alt="' + p.nombre + '" loading="lazy"></span>' +
+      '<span class="gd-prod-cat">' + p.cat + '</span>' +
+      '<span class="gd-prod-name">' + p.nombre + '</span>' +
+      '<span class="gd-prod-price">' + p.precio + '</span>' +
+    '</a>';
+  }).join('');
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+    }, { threshold:.12, rootMargin:'0px 0px -6% 0px' });
+    host.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    host.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('is-visible'); });
+  }
+})();
+
+/* ---- escaparate interactivo: cambia el ambiente sin salir de la página ---- */
+(function(){
+  var ESPACIOS = [
+    { nombre:'Mesa servida · campaña navideña', meta:'Campaña estacional · 6 piezas', wa:'Hola Giandeco, quiero cotizar la mesa servida navideña completa.' },
+    { nombre:'Sala de estar · paleta dorada',    meta:'Producción Giandeco · 7 piezas', wa:'Hola Giandeco, quiero cotizar la sala dorada completa.' },
+    { nombre:'Comedor de exterior',              meta:'Producción Giandeco · 6 piezas', wa:'Hola Giandeco, quiero cotizar el comedor de exterior completo.' }
+  ];
+  var tabs = document.querySelectorAll('#ceTabs .ce-tab');
+  var stage = document.getElementById('ceStage');
+  var cotizarBtn = document.getElementById('ceCotizarBtn');
+  var capNombre = document.getElementById('ceCapNombre');
+  if(!tabs.length || !stage) return;
+
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      var i = tab.getAttribute('data-tab');
+      tabs.forEach(function(t){ t.classList.toggle('is-active', t === tab); });
+      stage.querySelectorAll('.ce-panel').forEach(function(p){
+        p.classList.toggle('is-active', p.getAttribute('data-panel') === i);
+      });
+      var e = ESPACIOS[i];
+      if(e){
+        if(capNombre) capNombre.innerHTML = '<b>' + e.nombre + '</b><span>' + e.meta + '</span>';
+        if(cotizarBtn) cotizarBtn.href = 'https://wa.me/51920775559?text=' + encodeURIComponent(e.wa);
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

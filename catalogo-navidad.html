@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Navidad — Catálogo Giandeco Studio Design</title>
+<meta name="description" content="Campaña de Navidad Giandeco: árboles, mesas servidas, coronas y vitrinas de temporada para tiendas y casas. Montaje completo en Lima y Callao.">
+<meta name="theme-color" content="#0A0A09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=7">
+<style>
+  .nv-oferta{ display:grid; gap:var(--sp-24); grid-template-columns:1fr; }
+  @media (min-width:720px){ .nv-oferta{ grid-template-columns:1fr 1fr; } }
+  @media (min-width:1080px){ .nv-oferta{ grid-template-columns:repeat(4,1fr); } }
+  .nv-card{ border-top:1px solid var(--line); padding-top:var(--sp-24); }
+  .nv-card b{ display:block; font-family:var(--body); font-size:.64rem; letter-spacing:.2em; color:var(--accent); margin-bottom:12px; }
+  .nv-card h3{ font-family:var(--body); font-weight:500; font-size:1.05rem; color:var(--lino); margin:0 0 8px; }
+  .nv-card p{ margin:0; color:var(--text-dim); font-size:.9rem; line-height:1.6; }
+
+  .nv-slots{ display:grid; gap:var(--sp-16); grid-template-columns:repeat(2,1fr); }
+  @media (min-width:720px){ .nv-slots{ grid-template-columns:repeat(3,1fr); } }
+  .nv-slot{
+    position:relative; aspect-ratio:4/5; border-radius:2px; overflow:hidden;
+    border:1px dashed rgba(201,162,74,.35);
+    background:
+      repeating-linear-gradient(90deg, rgba(222,216,203,.05) 0 1px, transparent 1px 22px),
+      radial-gradient(130% 130% at 20% 0%, rgba(201,162,74,.16), transparent 62%),
+      linear-gradient(155deg, #1c1a16, #0A0A09);
+    display:grid; place-items:center; text-align:center; padding:18px;
+  }
+  .nv-slot span{ font-family:var(--body); font-size:.64rem; letter-spacing:.18em; text-transform:uppercase; color:var(--text-faint); line-height:1.8; }
+  .nv-slot b{ display:block; color:var(--accent); font-weight:500; font-size:.8rem; margin-bottom:8px; letter-spacing:.12em; }
+  .nv-tiempo{ display:flex; flex-wrap:wrap; gap:10px 24px; margin-top:var(--sp-24); }
+  .nv-tiempo div{ font-family:var(--body); font-size:.82rem; color:var(--text-dim); }
+  .nv-tiempo b{ color:var(--accent); font-weight:500; }
+</style>
+</head>
+<body data-mundo="catalogo" data-seccion="navidad">
+
+<div id="gdHeader"></div>
+
+<section class="gd-hero is-corto">
+  <div class="gd-hero-panel">
+    <p class="gd-migas reveal-left"><a href="index.html">Inicio</a> / <a href="catalogo.html">Catálogo</a> / <span>Navidad</span></p>
+    <p class="gd-hero-eyebrow reveal-left"><i></i>Catálogo · Navidad</p>
+    <h1 class="reveal-left d1">Navidad <em>montada</em>, no comprada</h1>
+    <p class="reveal-left d2">Del árbol a la vitrina: concepto, producción y montaje de la campaña completa. Para su tienda o para su casa.</p>
+    <div class="gd-hero-cta reveal-left d3"><a class="gd-btn gd-btn-primary" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20una%20campa%C3%B1a%20de%20Navidad." target="_blank" rel="noopener">Cotizar campaña
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-ghost" href="contacto.html">Agendar visita técnica</a></div>
+  </div>
+  <div class="gd-hero-media">
+    <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/espacios/zara-navidad-2.jpg?v=2" alt="Ambientación navideña montada por Giandeco"></div>
+    <div class="gd-hero-cap">
+      <span><b>Ambientación navideña</b><span>Campaña estacional</span></span>
+      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== QUÉ MONTAMOS ==================== -->
+<section class="gd-sec">
+  <div class="gd-in">
+    <div class="gd-filete is-left reveal"><span aria-hidden="true">◆</span></div>
+    <p class="gd-eyebrow reveal">Qué montamos</p>
+    <h2 class="gd-h2 reveal d1">Cuatro piezas de campaña</h2>
+    <p class="gd-body reveal d2">Se contratan por separado o como campaña completa. En tienda, además, formamos a su equipo para mantenerla durante toda la temporada.</p>
+
+    <div class="nv-oferta" style="margin-top:var(--sp-40);">
+      <div class="nv-card reveal"><b>01</b><h3>Árbol y decoración</h3><p>Árbol curado por paleta, esferas, estrellas y luz cálida. Se instala y se retira en fecha.</p></div>
+      <div class="nv-card reveal d1"><b>02</b><h3>Mesa servida</h3><p>Mantelería, vajilla, cristalería y centro de mesa. El montaje que se fotografía.</p></div>
+      <div class="nv-card reveal d2"><b>03</b><h3>Coronas y accesos</h3><p>Coronas naturales, guirnaldas y recibimiento de entrada para local o vivienda.</p></div>
+      <div class="nv-card reveal d3"><b>04</b><h3>Vitrina de temporada</h3><p>Escaparate navideño completo: concepto, utilería, iluminación y gráfica.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ESPACIO CON PUNTOS ==================== -->
+<section class="gd-sec" style="padding-top:0;">
+  <div class="gd-in">
+    <p class="gd-eyebrow reveal">Un montaje real</p>
+    <h2 class="gd-h2 reveal d1" style="font-size:clamp(1.9rem,3vw,2.4rem);">Mesa servida de campaña</h2>
+    <p class="gd-body reveal d2">Toque los puntos para ver cada pieza del montaje.</p>
+
+    <div class="gd-shop reveal-scale" style="margin-top:var(--sp-24);">
+      <img decoding="async" class="gd-shop-img" src="images/espacios/zara-navidad-1.jpg?v=2" alt="Comedor navideño con mesa servida, árbol decorado y candelabro de plata">
+      <button class="gd-shop-dot" style="left:10%; top:33%" data-nombre="Árbol decorado en plata" data-cat="Navidad" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20el%20%C3%A1rbol%20decorado%20en%20plata."></button>
+      <button class="gd-shop-dot" style="left:57%; top:38%" data-nombre="Corona natural de invierno" data-cat="Navidad" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20corona%20de%20invierno."></button>
+      <button class="gd-shop-dot" style="left:50%; top:50%" data-nombre="Candelabro alto en plata" data-cat="Decoración" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20el%20candelabro%20alto."></button>
+      <button class="gd-shop-dot" style="left:63%; top:70%" data-nombre="Vajilla y cristalería" data-cat="Mesa" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20vajilla%20navide%C3%B1a."></button>
+      <button class="gd-shop-dot" style="left:55%; top:90%" data-nombre="Mantelería bordada" data-cat="Textiles" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20manteler%C3%ADa%20bordada."></button>
+    </div>
+
+    <div class="nv-tiempo reveal">
+      <div><b>Reservas:</b> desde septiembre</div>
+      <div><b>Montaje en tienda:</b> octubre – noviembre</div>
+      <div><b>Retiro:</b> primera semana de enero</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== COLECCIÓN 2026 ==================== -->
+<section class="gd-sec gd-claro" style="background:var(--bg-raised); color:var(--text);">
+  <div class="gd-in">
+    <p class="gd-eyebrow reveal">Colección 2026</p>
+    <h2 class="gd-h2 reveal d1" style="color:var(--lino);">En preparación</h2>
+    <p class="gd-body reveal d2" style="color:var(--text-dim);">Estamos fotografiando la colección de este año. Estos espacios quedan reservados para el material nuevo; mientras tanto, la campaña se cotiza a medida.</p>
+
+    <div class="nv-slots reveal d2" style="margin-top:var(--sp-40);">
+      <div class="nv-slot"><span><b>Árboles</b>Colección 2026<br>en preparación</span></div>
+      <div class="nv-slot"><span><b>Mesa servida</b>Colección 2026<br>en preparación</span></div>
+      <div class="nv-slot"><span><b>Coronas y guirnaldas</b>Colección 2026<br>en preparación</span></div>
+      <div class="nv-slot"><span><b>Vitrina de tienda</b>Colección 2026<br>en preparación</span></div>
+      <div class="nv-slot"><span><b>Recibimiento</b>Colección 2026<br>en preparación</span></div>
+      <div class="nv-slot"><span><b>Piezas sueltas</b>Colección 2026<br>en preparación</span></div>
+    </div>
+
+    <div style="margin-top:var(--sp-40); display:flex; flex-wrap:wrap; gap:12px;">
+      <a class="gd-btn gd-btn-primary" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20que%20me%20avisen%20cuando%20salga%20la%20colecci%C3%B3n%20Navidad%202026." target="_blank" rel="noopener">Avísenme cuando salga
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-ghost" href="catalogo-compra-el-espacio.html">Ver otros ambientes</a>
+    </div>
+  </div>
+</section>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=8"></script>
+</body>
+</html>

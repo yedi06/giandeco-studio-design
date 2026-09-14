@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retail y visual merchandising — Giandeco Studio Design</title>
+<meta name="description" content="Visual merchandising, escaparatismo y remodelación de locales comerciales. Diseñamos y ejecutamos vitrinas, campañas y tiendas completas. El Corte Inglés, Pycca, Zara, Walon.">
+<meta name="theme-color" content="#0A0A09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=7">
+<style>
+  /* servicios en mosaico editorial */
+  .rt-serv-grid{ display:grid; gap:var(--sp-24); grid-template-columns:1fr; }
+  @media (min-width:760px){ .rt-serv-grid{ grid-template-columns:1fr 1fr; } }
+  @media (min-width:1120px){ .rt-serv-grid{ grid-template-columns:repeat(6,1fr); } }
+  .rt-serv{ position:relative; display:block; overflow:hidden; border-radius:2px; text-decoration:none; isolation:isolate; aspect-ratio:4/3; }
+  @media (min-width:1120px){
+    .rt-serv{ grid-column:span 2; }
+    .rt-serv.is-wide{ grid-column:span 3; aspect-ratio:16/9; }
+  }
+  .rt-serv img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 1.1s var(--gd-ease); filter:saturate(.92); }
+  .rt-serv::after{ content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(10,9,6,.95) 0%, rgba(10,9,6,.55) 34%, rgba(10,9,6,.1) 72%); transition:opacity .4s ease; }
+  .rt-serv:hover img{ transform:scale(1.05); }
+  .rt-serv-body{ position:absolute; left:0; right:0; bottom:0; z-index:2; padding:clamp(18px,2.4vw,28px); }
+  .rt-serv-num{ display:block; font-family:var(--body); font-size:.62rem; letter-spacing:.2em; color:var(--accent); margin-bottom:8px; }
+  .rt-serv h3{ font-family:var(--body); font-weight:500; font-size:1.1rem; color:var(--lino); margin:0 0 6px; }
+  .rt-serv p{ margin:0; color:rgba(222,216,203,.76); font-size:.86rem; line-height:1.55; max-width:40ch; }
+
+  /* ============ MÉTODO — 4 pasos numerados con foto real ============
+     Antes: 4 columnas de solo texto, sin ninguna imagen. Ahora cada paso muestra
+     material real del proceso (boceto técnico, render de color, obra terminada).
+     Se probó una línea conectora + punto animado entre los círculos y se quitó:
+     el cliente la vio "partida"/desalineada dos veces seguidas — sin línea no
+     hay nada que alinear mal, los círculos son simples numerales de apoyo. */
+  .mt-timeline{ position:relative; display:grid; grid-template-columns:1fr; gap:var(--sp-40); margin-top:clamp(48px,6vw,72px); }
+  @media (min-width:720px){ .mt-timeline{ grid-template-columns:repeat(2,1fr); } }
+  @media (min-width:1080px){ .mt-timeline{ grid-template-columns:repeat(4,1fr); } }
+  .mt-step{ position:relative; z-index:1; transition: transform .35s var(--gd-ease); }
+  .mt-step:hover{ transform: translateY(-6px); }
+  .mt-marker{
+    width:46px; height:46px; border-radius:50%; flex:none; background:var(--bronce);
+    border:1px solid var(--bronce); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--display); font-size:1.05rem; margin-bottom:20px;
+  }
+  .mt-media{
+    position:relative; border-radius:2px; overflow:hidden; aspect-ratio:4/5; margin-bottom:18px; background:var(--humo);
+    box-shadow:0 0 0 0 rgba(10,9,6,0); transition: box-shadow .35s ease;
+  }
+  .mt-step:hover .mt-media{ box-shadow:0 22px 40px -18px rgba(10,9,6,.4); }
+  .mt-media img{ width:100%; height:100%; object-fit:cover; transition:transform 1.1s var(--gd-ease); }
+  .mt-step:hover .mt-media img{ transform:scale(1.06); }
+  .mt-media.is-slot{
+    display:grid; place-items:center; text-align:center; padding:16px; border:1px dashed rgba(138,111,60,.4);
+    background:
+      repeating-linear-gradient(90deg, rgba(10,9,6,.035) 0 1px, transparent 1px 20px),
+      radial-gradient(130% 130% at 20% 0%, rgba(138,111,60,.14), transparent 62%),
+      linear-gradient(155deg, #efeadd, #ded5bd);
+  }
+  .mt-media.is-slot span{ font-family:var(--body); font-size:.64rem; letter-spacing:.1em; text-transform:uppercase; color:var(--grafito); line-height:1.7; }
+  .mt-title{ font-family:var(--body); font-weight:500; font-size:1.05rem; color:var(--ebano); margin:0 0 8px; transition: color .3s ease; }
+  .mt-step:hover .mt-title{ color: var(--bronce); }
+  .mt-desc{ margin:0; color:var(--grafito); font-size:.9rem; line-height:1.6; }
+
+  /* franja de cierre */
+  .rt-cierre{ position:relative; overflow:hidden; }
+  .rt-cierre-media{ position:absolute; inset:0; }
+  .rt-cierre-media img{ width:100%; height:100%; object-fit:cover; }
+  .rt-cierre::after{ content:''; position:absolute; inset:0; background:linear-gradient(115deg, rgba(10,9,6,.95) 0%, rgba(10,9,6,.8) 45%, rgba(10,9,6,.55) 100%); }
+  .rt-cierre .gd-in{ position:relative; z-index:2; text-align:center; }
+  .rt-cierre .gd-h2{ max-width:20ch; margin-inline:auto; }
+  .rt-cierre .gd-body{ margin-inline:auto; text-align:center; }
+  .rt-cierre-btns{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:var(--sp-24); }
+</style>
+</head>
+<body data-mundo="retail" data-seccion="home">
+
+<div id="gdHeader"></div>
+
+<!-- ==================== HERO ==================== -->
+<section class="gd-hero">
+  <div class="gd-hero-panel">
+    <p class="gd-migas reveal-left"><a href="index.html">Inicio</a> / <span>Retail</span></p>
+    <p class="gd-hero-eyebrow reveal-left"><i></i>Visual merchandising · Retail</p>
+    <h1 class="reveal-left d1">Su local puede <em>vender más</em></h1>
+    <p class="reveal-left d2">Escaparatismo, visual merchandising y remodelación comercial bajo una sola dirección. Diseñamos qué se ve primero, por dónde camina el cliente y qué se lleva.</p>
+    <div class="gd-hero-cta reveal-left d3">
+      <a class="gd-btn gd-btn-primary" href="contacto.html">Agendar visita técnica
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-ghost" href="retail-proyectos.html">Ver proyectos</a>
+    </div>
+  </div>
+
+  <div class="gd-hero-media">
+    <div class="gd-curtain">
+      <img decoding="async" class="gd-kb-img" src="images/work/corteingles.jpg" alt="Ambiente de exhibición de lujo montado por Giandeco en tienda departamental">
+    </div>
+    <div class="gd-hero-cap">
+      <span>
+        <b>Ambiente de exhibición</b>
+        <span>El Corte Inglés</span>
+      </span>
+      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MARCAS ==================== -->
+<section class="gd-sec gd-marcas">
+  <div class="gd-in">
+    <p class="gd-eyebrow is-muted reveal">Con quiénes hemos colaborado</p>
+    <h2 class="gd-h2 reveal d1">Marcas retail con las que colaboramos</h2>
+  </div>
+  <div class="gd-marcas-wall reveal d2" data-marcas="retail">
+    <div class="gd-marcas-row" id="marcasRow1"><div class="gd-marcas-track" id="marcasTrack1"></div></div>
+  </div>
+  <p class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">El Corte Inglés, Pycca, Zara, Walon, Enchantée Paris, Baby Club Chic.</p>
+</section>
+
+<!-- ==================== SERVICIOS ==================== -->
+<section class="gd-sec">
+  <div class="gd-in">
+    <div class="gd-filete is-left reveal"><span aria-hidden="true">◆</span></div>
+    <p class="gd-eyebrow reveal">Qué hacemos en retail</p>
+    <h2 class="gd-h2 reveal d1">Del escaparate a la obra completa</h2>
+    <p class="gd-body reveal d2">Casi nadie resuelve las dos mitades. Aquí el diseño del espacio y la exhibición del producto se deciden en la misma mesa, con el mismo criterio comercial.</p>
+
+    <div class="rt-serv-grid">
+      <a class="rt-serv is-wide reveal-scale" href="retail-diseno-tiendas.html" data-cursor="Ver">
+        <img decoding="async" src="images/work/walonfiguritas.jpg" alt="Vitrina de campaña con maniquíes en movimiento deportivo e iluminación LED">
+        <div class="rt-serv-body">
+          <span class="rt-serv-num">01</span>
+          <h3>Escaparatismo y vitrinas</h3>
+          <p>La venta silenciosa. Vitrina, vidriera y display interior: ángulos, styling y outfits que cuentan una historia y detienen al que pasa.</p>
+        </div>
+      </a>
+      <a class="rt-serv is-wide reveal-scale d1" href="retail-diseno-tiendas.html" data-cursor="Ver">
+        <img decoding="async" src="images/work/pycca.jpg" alt="Campaña estacional navideña montada en tienda">
+        <div class="rt-serv-body">
+          <span class="rt-serv-num">02</span>
+          <h3>Campañas y temporadas</h3>
+          <p>Concepto, paleta y montaje replicable en toda la red de tiendas. Validamos en un espacio modelo antes de salir a nivel nacional.</p>
+        </div>
+      </a>
+      <a class="rt-serv reveal-scale" href="retail-diseno-tiendas.html" data-cursor="Ver">
+        <img decoding="async" src="images/shift/zonatienda.jpg" alt="Zona de tienda en montaje">
+        <div class="rt-serv-body">
+          <span class="rt-serv-num">03</span>
+          <h3>Remodelación de locales</h3>
+          <p>Layout, circulación y ampliaciones. Reabrir a tiempo es parte del encargo.</p>
+        </div>
+      </a>
+      <a class="rt-serv reveal-scale d1" href="retail-diseno-tiendas.html" data-cursor="Ver">
+        <img decoding="async" src="images/work/babyclub.jpg" alt="Boutique infantil con nichos retroiluminados">
+        <div class="rt-serv-body">
+          <span class="rt-serv-num">04</span>
+          <h3>Visual merchandising</h3>
+          <p>Jerarquía de producto, puntos calientes y agrupación por familias de color.</p>
+        </div>
+      </a>
+      <a class="rt-serv reveal-scale d2" href="retail-diseno-tiendas.html" data-cursor="Ver">
+        <img decoding="async" src="images/shift/mural.jpg" alt="Instalación de papel mural y vinilo en obra">
+        <div class="rt-serv-body">
+          <span class="rt-serv-num">05</span>
+          <h3>Gráfica y viniles</h3>
+          <p>Tipografía en vinilo, señalética y material promocional instalado en obra.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MÉTODO ==================== -->
+<section class="gd-sec gd-claro">
+  <div class="gd-in">
+    <p class="gd-eyebrow reveal">Cómo trabajamos</p>
+    <h2 class="gd-h2 reveal d1">Cuatro pasos, sin sorpresas</h2>
+    <p class="gd-body reveal d2">Todo empieza con una visita técnica. Nada se dibuja sin medir, y nada se ejecuta sin aprobar.</p>
+
+    <div class="mt-timeline reveal d3">
+      <div class="mt-step reveal-scale">
+        <div class="mt-marker">01</div>
+        <div class="mt-media is-slot"><span>FOTO PENDIENTE<br>Visita técnica en obra</span></div>
+        <h3 class="mt-title">Visita técnica</h3>
+        <p class="mt-desc">Vamos a su local, tomamos medidas y leemos el recorrido real del cliente. Sin costo de diagnóstico.</p>
+      </div>
+      <div class="mt-step reveal-scale d1">
+        <div class="mt-marker">02</div>
+        <div class="mt-media gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proceso/zonatienda-tecnico.jpg" alt="Corte arquitectónico con metrado y materiales de una zona de tienda"></div>
+        <h3 class="mt-title">Metrado y modelado</h3>
+        <p class="mt-desc">Con las medidas levantamos el espacio en 3D: volumen, materiales, mobiliario y acabados.</p>
+      </div>
+      <div class="mt-step reveal-scale d2">
+        <div class="mt-marker">03</div>
+        <div class="mt-media gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proceso/zonatienda-boceto.jpg" alt="Render de aprobación en color de una zona de tienda"></div>
+        <h3 class="mt-title">Render de aprobación</h3>
+        <p class="mt-desc">Usted ve una imagen fotorrealista del local terminado antes de que llegue el primer carpintero.</p>
+      </div>
+      <div class="mt-step reveal-scale d3">
+        <div class="mt-marker">04</div>
+        <div class="mt-media gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proceso/zonatienda-obra.jpg" alt="Zona de tienda ya montada en obra"></div>
+        <h3 class="mt-title">Ejecución y montaje</h3>
+        <p class="mt-desc">Obra, mobiliario, iluminación, gráfica y montaje de campaña. Un solo interlocutor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PROYECTOS ==================== -->
+<section class="gd-sec">
+  <div class="gd-in">
+    <p class="gd-eyebrow reveal">Casos de trabajo</p>
+    <h2 class="gd-h2 reveal d1">Locales que ya cambiaron</h2>
+
+    <div class="gd-grid gd-grid-3" style="margin-top:var(--sp-40);">
+      <a class="gd-caso reveal-scale" href="retail-proyectos.html" data-cursor="Ver">
+        <img decoding="async" src="images/work/corteingles.jpg" alt="El Corte Inglés — ambientes de exhibición de lujo">
+        <div class="gd-caso-body">
+          <span class="gd-caso-cat">Retail departamental</span>
+          <h3 class="gd-caso-title">El Corte Inglés</h3>
+          <p class="gd-caso-desc">Escenarios e islotes comerciales que dirigieron el tráfico a las zonas de mayor conversión.</p>
+        </div>
+      </a>
+      <a class="gd-caso reveal-scale d1" href="retail-proyectos.html" data-cursor="Ver">
+        <img decoding="async" src="images/work/pycca.jpg" alt="Pycca Ecuador — campaña navideña Christmas Chalet">
+        <div class="gd-caso-body">
+          <span class="gd-caso-cat">Campaña nacional</span>
+          <h3 class="gd-caso-title">Pycca Ecuador</h3>
+          <p class="gd-caso-desc">Campaña estacional replicada en toda la red, validada primero en un espacio modelo.</p>
+        </div>
+      </a>
+      <a class="gd-caso reveal-scale d2" href="retail-proyectos.html" data-cursor="Ver">
+        <img decoding="async" src="images/proyectos/walon-puntahermosa.jpg?v=2" alt="Walon Punta Hermosa — primera tienda boutique de la marca">
+        <div class="gd-caso-body">
+          <span class="gd-caso-cat">Tienda boutique</span>
+          <h3 class="gd-caso-title">Walon Punta Hermosa</h3>
+          <p class="gd-caso-desc">De un espacio vacío al primer formato boutique de la marca.</p>
+        </div>
+      </a>
+    </div>
+
+    <div style="margin-top:var(--sp-40);">
+      <a class="gd-link reveal" href="retail-proyectos.html">Ver los nueve casos
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CIERRE ==================== -->
+<section class="gd-sec rt-cierre">
+  <div class="rt-cierre-media"><img decoding="async" src="images/cta/cta-bg.jpg?v=2" alt=""></div>
+  <div class="gd-in">
+    <p class="gd-eyebrow reveal">Siguiente paso</p>
+    <h2 class="gd-h2 reveal d1">¿Su local vende lo que podría?</h2>
+    <p class="gd-body reveal d2">Cuéntenos qué vende y en qué fecha necesita reabrir. Respondemos con un diagnóstico de espacio y un alcance claro.</p>
+    <div class="rt-cierre-btns reveal d3">
+      <a class="gd-btn gd-btn-primary" href="contacto.html">Agendar visita técnica
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-ghost" href="https://wa.me/51920775559" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=8"></script>
+</body>
+</html>

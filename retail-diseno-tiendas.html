@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diseño de tiendas y visual merchandising — Giandeco Studio Design</title>
+<meta name="description" content="Escaparatismo, visual merchandising, remodelación de locales, campañas, viniles y mobiliario comercial. Visita técnica, metrado, render y ejecución con un solo interlocutor.">
+<meta name="theme-color" content="#0A0A09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=7">
+<style>
+  .ds-bloque{ display:grid; gap:clamp(28px,4vw,64px); grid-template-columns:1fr; align-items:center; padding-block:clamp(40px,5vw,72px); border-top:1px solid var(--line); }
+  @media (min-width:900px){
+    .ds-bloque{ grid-template-columns:1fr 1fr; }
+    .ds-bloque:nth-child(even) .ds-media{ order:2; }
+  }
+  .ds-media{ border-radius:2px; overflow:hidden; aspect-ratio:4/3; }
+  .ds-media img{ width:100%; height:100%; object-fit:cover; }
+  .ds-num{ font-family:var(--body); font-size:.66rem; letter-spacing:.2em; color:var(--accent); display:block; margin-bottom:12px; }
+  .ds-bloque h2{ font-family:var(--display); font-weight:400; font-size:clamp(1.9rem,3vw,2.4rem); color:var(--lino); margin:0 0 14px; line-height:1.08; }
+  .ds-bloque p{ color:var(--text-dim); font-size:.98rem; line-height:1.75; margin:0 0 14px; max-width:54ch; }
+  .ds-lista{ list-style:none; padding:0; margin:18px 0 0; display:grid; gap:8px; }
+  .ds-lista li{ position:relative; padding-left:18px; color:var(--text-dim); font-size:.92rem; line-height:1.6; }
+  .ds-lista li::before{ content:'◆'; position:absolute; left:0; top:1px; color:var(--accent); font-size:.5rem; }
+
+  /* glosario */
+  .ds-glos{ display:grid; gap:1px; grid-template-columns:1fr; background:rgba(10,9,6,.12); border:1px solid rgba(10,9,6,.12); border-radius:2px; overflow:hidden; }
+  @media (min-width:760px){ .ds-glos{ grid-template-columns:1fr 1fr; } }
+  .ds-term{ background:var(--humo); padding:clamp(22px,2.6vw,30px); }
+  .ds-term b{ display:block; font-family:var(--display); font-weight:400; font-size:1.9rem; color:var(--ebano); margin-bottom:10px; line-height:1.1; }
+  .ds-term p{ margin:0; color:var(--grafito); font-size:.94rem; line-height:1.7; }
+</style>
+</head>
+<body data-mundo="retail" data-seccion="diseno">
+
+<div id="gdHeader"></div>
+
+<section class="gd-hero is-corto">
+  <div class="gd-hero-panel">
+    <p class="gd-migas reveal-left"><a href="index.html">Inicio</a> / <a href="retail.html">Retail</a> / <span>Diseño de tiendas</span></p>
+    <p class="gd-hero-eyebrow reveal-left"><i></i>Retail · Diseño de tiendas</p>
+    <h1 class="reveal-left d1">Todo lo que su local <em>necesita</em>, en un solo lugar</h1>
+    <p class="reveal-left d2">La queja más repetida: «esta empresa me hace la obra, pero no la campaña». Aquí se hacen las dos, con la misma dirección.</p>
+    <div class="gd-hero-cta reveal-left d3"><a class="gd-btn gd-btn-primary" href="contacto.html">Agendar visita técnica
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+  </div>
+  <div class="gd-hero-media">
+    <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/shift/expodeco-stand.jpg" alt="Montaje de stand comercial por Giandeco"></div>
+    <div class="gd-hero-cap">
+      <span><b>Montaje de stand</b><span>Expodeco 2024</span></span>
+      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+    </div>
+  </div>
+</section>
+
+<section class="gd-sec" style="padding-top:clamp(40px,5vw,64px);">
+  <div class="gd-in">
+
+    <div class="ds-bloque">
+      <div class="ds-media reveal-scale gd-curtain"><img decoding="async" src="images/work/walonfiguritas.jpg" alt="Vitrina de campaña con maniquíes e iluminación LED" loading="lazy"></div>
+      <div class="reveal d1">
+        <span class="ds-num">Servicio 01</span>
+        <h2>Escaparatismo</h2>
+        <p>El escaparate es la venta silenciosa: muestra lo que vende su marca y cuenta una historia — un outfit, una escena, una temporada. Trabajamos las dos formas: la vitrina hacia la calle y el display interior.</p>
+        <ul class="ds-lista">
+          <li>Concepto de temporada y guion visual</li>
+          <li>Styling de maniquíes: outfits, capas y accesorios</li>
+          <li>Ángulos de lectura desde el flujo peatonal</li>
+          <li>Utilería, pódiums e iluminación focalizada</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ds-bloque">
+      <div class="ds-media reveal-scale gd-curtain"><img decoding="async" src="images/work/babyclub.jpg" alt="Interior de boutique con agrupación por familias de color" loading="lazy"></div>
+      <div class="reveal d1">
+        <span class="ds-num">Servicio 02</span>
+        <h2>Visual merchandising</h2>
+        <p>Dónde va cada producto y cómo se mueve el cliente dentro. Definimos puntos calientes, jerarquía de exhibición y agrupación por familias, para que el recorrido termine en la caja y no en la puerta.</p>
+        <ul class="ds-lista">
+          <li>Zonificación y mapa de puntos calientes</li>
+          <li>Jerarquía de producto y agrupación por color</li>
+          <li>Mesas promocionales, islas y torres exhibidoras</li>
+          <li>Capacitación al equipo de tienda para mantenerlo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ds-bloque">
+      <div class="ds-media reveal-scale gd-curtain"><img decoding="async" src="images/shift/zonatienda.jpg" alt="Zona de tienda en obra" loading="lazy"></div>
+      <div class="reveal d1">
+        <span class="ds-num">Servicio 03</span>
+        <h2>Remodelación y ampliación</h2>
+        <p>Cuando el problema no es la vitrina sino el local. Layout, circulación, mobiliario a medida, iluminación y acabados. Con fecha de reapertura acordada desde el primer día.</p>
+        <ul class="ds-lista">
+          <li>Distribución y circulación del punto de venta</li>
+          <li>Mobiliario comercial diseñado a medida del producto</li>
+          <li>Iluminación comercial cálida, 2700–3000 K</li>
+          <li>Coordinación de especialidades y obra</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ds-bloque">
+      <div class="ds-media reveal-scale gd-curtain"><img decoding="async" src="images/work/pycca.jpg" alt="Campaña estacional replicada en red de tiendas" loading="lazy"></div>
+      <div class="reveal d1">
+        <span class="ds-num">Servicio 04</span>
+        <h2>Campañas y viniles</h2>
+        <p>Del concepto al último vinilo pegado. Armamos la campaña, la validamos en un espacio modelo y la replicamos en toda su red sin que pierda fuerza en el camino.</p>
+        <ul class="ds-lista">
+          <li>Concepto y paleta de campaña</li>
+          <li>Gráfica, tipografía en vinilo y señalética</li>
+          <li>Espacio modelo y manual de réplica</li>
+          <li>Montaje, mantenimiento y desmontaje</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================== GLOSARIO ==================== -->
+<section class="gd-sec gd-claro">
+  <div class="gd-in">
+    <p class="gd-eyebrow reveal">Hablemos claro</p>
+    <h2 class="gd-h2 reveal d1">Los términos que usamos en obra</h2>
+    <p class="gd-body reveal d2">Para que cuando le presentemos una propuesta, sepa exactamente qué está aprobando.</p>
+
+    <div class="ds-glos reveal d2" style="margin-top:var(--sp-40);">
+      <div class="ds-term"><b>Escaparate</b><p>La exposición del producto. Es la venta silenciosa: muestra lo que vende la tienda contando una historia. Hay dos formas — el escaparate interior (display) y el de vitrina o vidriera — pero el concepto es el mismo.</p></div>
+      <div class="ds-term"><b>Vitrina</b><p>El espacio físico dividido entre la zona por donde transita la gente y la zona de exhibición. La vidriera es su versión mejorada, con acristalamiento a la calle.</p></div>
+      <div class="ds-term"><b>Visita técnica</b><p>Vamos a su local a medir. Es el punto de partida: sin medidas reales no hay diseño posible, solo bocetos bonitos que después no entran.</p></div>
+      <div class="ds-term"><b>Metrado</b><p>La toma de medidas del espacio para poder diseñarlo. Define cuánto material se necesita y qué cabe realmente donde usted lo imagina.</p></div>
+      <div class="ds-term"><b>Modelado 3D</b><p>Con las medidas levantamos el espacio como un volumen y le vamos sumando mobiliario, materiales, texturas y acabados.</p></div>
+      <div class="ds-term"><b>Render</b><p>La imagen fotorrealista de ese espacio ya modelado. Usted ve el local terminado antes de que llegue el primer carpintero, y aprueba sobre algo real.</p></div>
+    </div>
+
+    <div style="margin-top:var(--sp-40); display:flex; flex-wrap:wrap; gap:12px;">
+      <a class="gd-btn gd-btn-primary" href="contacto.html">Agendar visita técnica
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-ghost" href="retail-proyectos.html">Ver casos reales</a>
+    </div>
+  </div>
+</section>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=8"></script>
+</body>
+</html>

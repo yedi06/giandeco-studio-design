@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contacto — Giandeco Studio Design</title>
+<meta name="description" content="Agende una visita técnica con Giandeco Studio Design. Visual merchandising y diseño de espacios comerciales en Lima y Callao. WhatsApp +51 920 775 559.">
+<meta name="theme-color" content="#0A0A09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=7">
+<style>
+  .ct-grid{ display:grid; gap:clamp(40px,6vw,80px); grid-template-columns:1fr; align-items:start; }
+  @media (min-width:960px){ .ct-grid{ grid-template-columns:1.25fr .85fr; } }
+  .ct-datos{ border-left:1px solid var(--line); padding-left:clamp(24px,3vw,40px); }
+  @media (max-width:959px){ .ct-datos{ border-left:none; border-top:1px solid var(--line); padding-left:0; padding-top:var(--sp-40); } }
+  .ct-dato{ margin-bottom:var(--sp-40); }
+  .ct-dato h3{ font-family:var(--body); font-weight:500; font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin:0 0 12px; }
+  .ct-dato a, .ct-dato p{ color:var(--text-dim); font-size:.98rem; line-height:1.65; text-decoration:none; margin:0; display:block; transition:color .2s ease; }
+  .ct-dato a:hover{ color:var(--accent); }
+  .ct-dato small{ display:block; color:var(--text-faint); font-size:.8rem; margin-top:6px; }
+  .ct-mapa{ display:block; border:1px solid var(--line); border-radius:2px; overflow:hidden; margin-top:var(--sp-16); }
+  .ct-mapa iframe{ display:block; width:100%; height:230px; border:0; filter:grayscale(1) invert(.92) contrast(.85); }
+  .ct-tipos{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .ct-tipo{ position:relative; }
+  .ct-tipo input{ position:absolute; opacity:0; width:0; height:0; }
+  .ct-tipo span{
+    display:block; text-align:center; padding:13px 8px; border:1px solid var(--line); border-radius:2px;
+    font-family:var(--body); font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-dim);
+    cursor:pointer; transition:border-color .25s ease, color .25s ease, background-color .25s ease;
+  }
+  .ct-tipo input:checked + span{ border-color:var(--accent); color:var(--accent); background:rgba(201,162,74,.08); }
+  .ct-tipo input:focus-visible + span{ outline:2px solid var(--accent); outline-offset:2px; }
+</style>
+</head>
+<body data-pagina="contacto">
+
+<div id="gdHeader"></div>
+
+<section class="gd-hero is-corto">
+  <div class="gd-hero-panel">
+    <p class="gd-migas reveal-left"><a href="index.html">Inicio</a> / <span>Contacto</span></p>
+    <p class="gd-hero-eyebrow reveal-left"><i></i>Contacto · Lima y Callao</p>
+    <h1 class="reveal-left d1">Conversemos su <em>espacio</em></h1>
+    <p class="reveal-left d2">Cuéntenos qué local es, qué vende y para cuándo lo necesita. Respondemos con un diagnóstico y un alcance claro.</p>
+  </div>
+  <div class="gd-hero-media">
+    <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/shift/expodeco-showroom.jpg" alt="Showroom montado por Giandeco"></div>
+    <div class="gd-hero-cap">
+      <span><b>Showroom montado</b><span>Expodeco 2024</span></span>
+      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+    </div>
+  </div>
+</section>
+
+<section class="gd-sec">
+  <div class="gd-in ct-grid">
+
+    <!-- FORMULARIO -->
+    <div>
+      <p class="gd-eyebrow reveal">Cuéntenos</p>
+      <h2 class="gd-h2 reveal d1" style="font-size:clamp(2rem,3vw,2.4rem);">Solicitar visita técnica</h2>
+
+      <div class="gd-form-ok" id="ctOk" role="status">
+        <strong>Listo.</strong> Abrimos WhatsApp con su mensaje armado — solo pulse enviar y le respondemos.
+        Si prefiere el correo, escríbanos a <a href="mailto:contacto@giandeco.com" style="color:var(--accent);">contacto@giandeco.com</a>.
+      </div>
+
+      <form class="gd-form reveal d2" id="ctForm" novalidate>
+        <div class="gd-field">
+          <label for="ctNombre">Nombre y apellido</label>
+          <input type="text" id="ctNombre" name="nombre" required placeholder="Su nombre completo" autocomplete="name">
+        </div>
+        <div class="gd-form gd-form-2" style="gap:var(--sp-24);">
+          <div class="gd-field">
+            <label for="ctCorreo">Correo electrónico</label>
+            <input type="email" id="ctCorreo" name="correo" required placeholder="nombre@empresa.com" autocomplete="email">
+          </div>
+          <div class="gd-field">
+            <label for="ctTel">Teléfono o WhatsApp</label>
+            <input type="tel" id="ctTel" name="telefono" required placeholder="+51 999 999 999" autocomplete="tel">
+          </div>
+        </div>
+        <div class="gd-field">
+          <label>Tipo de solicitud</label>
+          <div class="ct-tipos">
+            <label class="ct-tipo"><input type="radio" name="tipo" value="Retail" checked><span>Retail</span></label>
+            <label class="ct-tipo"><input type="radio" name="tipo" value="Hogar"><span>Hogar</span></label>
+            <label class="ct-tipo"><input type="radio" name="tipo" value="Otro"><span>Otro</span></label>
+          </div>
+        </div>
+        <div class="gd-field">
+          <label for="ctMensaje">Cuéntenos del proyecto o asunto</label>
+          <textarea id="ctMensaje" name="mensaje" required placeholder="Qué local es, qué vende, metros aproximados y en qué fecha necesita reabrir."></textarea>
+        </div>
+        <div>
+          <button class="gd-btn gd-btn-primary" type="submit">Enviar solicitud
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+        </div>
+        <p class="gd-form-nota">Al enviar se abre WhatsApp con el mensaje ya redactado. Sus datos no se almacenan en esta web.</p>
+      </form>
+    </div>
+
+    <!-- DATOS -->
+    <aside class="ct-datos reveal d1">
+      <div class="ct-dato">
+        <h3>WhatsApp y teléfono</h3>
+        <a href="https://wa.me/51920775559" target="_blank" rel="noopener">+51 920 775 559</a>
+        <small>Lunes a sábado, 9:00 – 19:00</small>
+      </div>
+      <div class="ct-dato">
+        <h3>Correo</h3>
+        <a href="mailto:contacto@giandeco.com">contacto@giandeco.com</a>
+        <small>Respondemos dentro de las 24 horas hábiles</small>
+      </div>
+      <div class="ct-dato">
+        <h3>Estudio</h3>
+        <a href="https://www.google.com/maps/search/?api=1&query=Ca.+Las+Bell%C3%ADsimas+170%2C+Urb.+Vipol%2C+Callao+07036" target="_blank" rel="noopener">
+          Ca. Las Bellísimas 170, Urb. Vipol<br>Callao 07036, Perú
+        </a>
+        <small>Visitas con cita previa</small>
+        <a class="ct-mapa" href="https://www.google.com/maps/search/?api=1&query=Ca.+Las+Bell%C3%ADsimas+170%2C+Urb.+Vipol%2C+Callao+07036" target="_blank" rel="noopener" aria-label="Abrir ubicación en Google Maps">
+          <iframe title="Ubicación del estudio Giandeco" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Las%20Bell%C3%ADsimas%20170%2C%20Callao%2007036&output=embed"></iframe>
+        </a>
+      </div>
+      <div class="ct-dato">
+        <h3>Síganos</h3>
+        <a href="https://www.instagram.com/giandeco.studio/" target="_blank" rel="noopener">Instagram — @giandeco.studio</a>
+        <a href="https://www.facebook.com/profile.php?id=61593540694016" target="_blank" rel="noopener" style="margin-top:6px;">Facebook — Giandeco Studio Design</a>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=8"></script>
+<script>
+(function(){
+  var form = document.getElementById('ctForm');
+  var ok = document.getElementById('ctOk');
+  if(!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!form.checkValidity()){ form.reportValidity(); return; }
+    var d = new FormData(form);
+    var texto =
+      'Hola Giandeco, quiero solicitar una visita técnica.\n\n' +
+      'Nombre: ' + d.get('nombre') + '\n' +
+      'Correo: ' + d.get('correo') + '\n' +
+      'Teléfono: ' + d.get('telefono') + '\n' +
+      'Tipo: ' + d.get('tipo') + '\n\n' +
+      'Proyecto: ' + d.get('mensaje');
+    ok.classList.add('is-visible');
+    ok.scrollIntoView({ behavior:'smooth', block:'center' });
+    window.open('https://wa.me/51920775559?text=' + encodeURIComponent(texto), '_blank', 'noopener');
+  });
+})();
+</script>
+</body>
+</html>
