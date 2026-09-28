@@ -11,35 +11,111 @@
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/giandeco.css?v=8">
 <style>
-  .pe-momento{ position:relative; }
-  .pe-momento + .pe-momento{ margin-top:clamp(56px,7vw,96px); }
-  .pe-momento-media{ position:relative; border-radius:2px; overflow:hidden; box-shadow:0 40px 80px -30px rgba(0,0,0,.6); }
-  .pe-momento-media img{ width:100%; height:100%; object-fit:cover; }
-  .pe-momento-cap{ display:flex; align-items:baseline; gap:16px; margin-top:20px; flex-wrap:wrap; }
-  .pe-momento-num{ font-family:var(--display); font-weight:400; font-size:clamp(1.1rem,1.6vw,1.35rem); color:var(--accent); flex:none; }
-  .pe-momento-titulo{ font-family:var(--display); font-weight:400; font-size:clamp(1.3rem,2vw,1.6rem); color:var(--lino); margin:0; }
-  .pe-momento-txt{ margin:8px 0 0; color:var(--text-dim); font-size:1rem; line-height:1.75; max-width:62ch; }
+  /* ==========================================================================
+     DOSSIER DE PROYECTO — case study editorial, distinto del patrón de
+     "momentos" usado en evento-walon35.html: acá el hilo conductor es un
+     índice fijo (px-rail) que acompaña el scroll, numerales fantasma a gran
+     escala y una ruptura de retícula en "El montaje".
+     ========================================================================== */
 
-  .pe-duo{ display:grid; grid-template-columns:1fr; gap:20px; }
-  @media (min-width:720px){ .pe-duo{ grid-template-columns:1fr 1fr; } }
-  .pe-duo .pe-momento-media{ aspect-ratio:4/5; }
-
-  .pe-ficha{ margin-top:clamp(56px,7vw,96px); padding:clamp(32px,4vw,48px); border:1px solid var(--line); border-radius:3px; background:var(--bg-raised); }
-  .pe-ficha-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:clamp(24px,3vw,32px); }
-  .pe-ficha-dim{ font-family:var(--body); font-size:.78rem; color:var(--text-faint); letter-spacing:.06em; }
-  .pe-ficha-grid{ display:grid; grid-template-columns:1fr; gap:18px 32px; }
-  @media (min-width:640px){ .pe-ficha-grid{ grid-template-columns:1fr 1fr; } }
-  @media (min-width:1000px){ .pe-ficha-grid{ grid-template-columns:1fr 1fr 1fr; } }
-  .pe-spec{ border-top:1px solid var(--line); padding-top:12px; }
-  .pe-spec b{ display:block; font-family:var(--body); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:5px; }
-  .pe-spec span{ font-family:var(--body); font-size:.9rem; color:var(--text-dim); line-height:1.5; }
-
-  .pe-cta{
-    margin-top:clamp(64px,8vw,104px); padding:clamp(40px,6vw,64px); border-radius:3px; text-align:center;
-    background: radial-gradient(120% 140% at 50% 0%, rgba(201,162,74,.1), transparent 60%), var(--bg-raised);
-    border:1px solid var(--line);
+  .px-lead{ padding-block: clamp(56px,8vw,96px) clamp(24px,4vw,40px); }
+  .px-lead p{
+    font-family: var(--display); font-weight:400; color: var(--lino);
+    font-size: clamp(1.5rem,3.1vw,2.3rem); line-height:1.35; letter-spacing:-.01em;
+    max-width:22ch; margin:0; text-wrap:balance;
   }
-  .pe-tagline{ font-family:var(--script); font-style:italic; font-weight:300; color:var(--text-faint); font-size:1.1rem; margin:0; }
+  .px-lead p em{ font-style:normal; color: var(--accent); }
+
+  .px-dossier{ padding-block: clamp(24px,4vw,40px) clamp(80px,9vw,120px); }
+  .px-layout{ display:grid; grid-template-columns:1fr; gap:56px; }
+  @media (min-width:1080px){ .px-layout{ grid-template-columns:216px 1fr; gap:72px; } }
+
+  .px-rail{ display:none; }
+  @media (min-width:1080px){
+    .px-rail{ display:block; position:sticky; top:calc(var(--h-total) + 48px); align-self:start; }
+  }
+  .px-rail ol{ list-style:none; margin:0; padding:0; border-left:1px solid var(--line); }
+  .px-rail li{ position:relative; }
+  .px-rail-btn{
+    appearance:none; background:none; border:none; width:100%; text-align:left; cursor:pointer;
+    padding:14px 0 14px 22px; margin:0;
+  }
+  .px-rail li::before{
+    content:''; position:absolute; left:-1px; top:0; bottom:0; width:1px; background: var(--accent);
+    transform: scaleY(0); transform-origin:top; transition: transform .45s var(--gd-ease);
+  }
+  .px-rail-num{ display:block; font-family: var(--body); font-size:.64rem; letter-spacing:.16em; color: var(--text-faint); margin-bottom:4px; transition: color .3s ease; }
+  .px-rail-label{ display:block; font-family: var(--body); font-size:.86rem; color: var(--text-faint); line-height:1.3; transition: color .3s ease; }
+  .px-rail li.is-active::before{ transform: scaleY(1); }
+  .px-rail li.is-active .px-rail-num{ color: var(--accent); }
+  .px-rail li.is-active .px-rail-label{ color: var(--lino); }
+  .px-rail-progress{ margin-top:28px; padding-left:22px; }
+  .px-rail-progress span{ display:block; font-family: var(--body); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color: var(--text-faint); }
+  .px-rail-bar{ margin-top:10px; height:2px; background: var(--line); border-radius:2px; overflow:hidden; }
+  .px-rail-bar i{ display:block; height:100%; width:20%; background: var(--accent); transition: width .35s var(--gd-ease); }
+
+  .px-content{ display:flex; flex-direction:column; gap: clamp(80px,10vw,132px); min-width:0; }
+  .px-block{ position:relative; }
+  .px-block-head{ display:flex; align-items:flex-end; gap:18px; margin-bottom:26px; }
+  .px-ghost{
+    font-family: var(--display); font-weight:400; line-height:.78; flex:none;
+    font-size: clamp(3.4rem,7vw,5.6rem); color:transparent;
+    -webkit-text-stroke:1px rgba(201,162,74,.4); text-stroke:1px rgba(201,162,74,.4);
+  }
+  .px-heading{ font-family: var(--display); font-weight:400; font-size: clamp(1.7rem,2.5vw,2.3rem); color: var(--lino); margin:0 0 8px; line-height:1.12; }
+  .px-body{ margin:0; color: var(--text-dim); font-size:1rem; line-height:1.8; max-width:60ch; }
+  .px-body + .px-body{ margin-top:16px; }
+
+  /* ficha técnica — cifra grande + filas de especificación, sin caja */
+  .px-dim{ margin:28px 0 40px; }
+  .px-dim b{
+    display:block; font-family: var(--display); font-weight:400; color: var(--lino);
+    font-size: clamp(2.3rem,5vw,3.5rem); line-height:1; letter-spacing:-.01em;
+  }
+  .px-dim b em{ font-style:normal; color: var(--accent); padding-inline:.3em; }
+  .px-dim span{ display:block; margin-top:14px; font-family: var(--body); font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; color: var(--text-faint); }
+  .px-specs{ border-top:1px solid var(--line); }
+  .px-spec{ display:grid; grid-template-columns:1fr; gap:6px; padding:20px 0; border-bottom:1px solid var(--line); }
+  @media (min-width:640px){ .px-spec{ grid-template-columns:190px 1fr; gap:28px; align-items:baseline; } }
+  .px-spec b{ font-family: var(--body); font-weight:500; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color: var(--accent); }
+  .px-spec span{ font-family: var(--body); font-size:.94rem; color: var(--text-dim); line-height:1.65; }
+
+  /* boceto — dúo escalonado, no simétrico */
+  .px-duo{ display:grid; grid-template-columns:1fr; gap:28px; margin-top:32px; }
+  @media (min-width:720px){ .px-duo{ grid-template-columns:1fr 1fr; align-items:start; } }
+  .px-fig{ margin:0; }
+  .px-fig .gd-curtain{ border-radius:2px; overflow:hidden; aspect-ratio:4/5; box-shadow:0 40px 80px -30px rgba(0,0,0,.6); }
+  .px-fig img{ width:100%; height:100%; object-fit:cover; }
+  .px-fig figcaption{ margin-top:16px; font-family: var(--body); font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color: var(--text-faint); }
+  @media (min-width:720px){ .px-fig.is-offset{ margin-top:64px; } }
+
+  /* montaje — rompe la columna de contenido y ocupa toda la retícula */
+  .px-full{ grid-column:1 / -1; }
+  .px-montaje-media{ border-radius:2px; overflow:hidden; aspect-ratio:16/9; box-shadow:0 50px 90px -34px rgba(0,0,0,.65); }
+  @media (min-width:900px){ .px-montaje-media{ aspect-ratio:21/8; } }
+  .px-montaje-media img{ width:100%; height:100%; object-fit:cover; }
+  .px-montaje-cap{ margin-top:32px; max-width:60ch; }
+
+  /* resultado — galería asimétrica */
+  .px-result{ display:grid; grid-template-columns:1fr; gap:20px; margin-top:32px; }
+  @media (min-width:720px){ .px-result{ grid-template-columns:1.7fr 1fr; } }
+  .px-result .gd-curtain{ border-radius:2px; overflow:hidden; box-shadow:0 40px 80px -30px rgba(0,0,0,.6); }
+  .px-result img{ width:100%; height:100%; object-fit:cover; }
+  .px-result-big .gd-curtain{ aspect-ratio:16/11; }
+  .px-result-small .gd-curtain{ aspect-ratio:4/5; }
+
+  /* cierre — panel oscuro con brillo dorado, sin caja genérica */
+  .px-cta{ position:relative; margin-top: clamp(24px,4vw,40px); padding-block: clamp(80px,10vw,132px); overflow:hidden; }
+  .px-cta::before{
+    content:''; position:absolute; inset:0; z-index:0;
+    background: radial-gradient(60% 90% at 50% 0%, rgba(201,162,74,.16), transparent 65%);
+  }
+  .px-cta-in{ position:relative; z-index:1; max-width:640px; margin-inline:auto; text-align:center; }
+  .px-cta-eyebrow{ font-family: var(--body); font-weight:500; font-size:.68rem; letter-spacing:.22em; text-transform:uppercase; color: var(--accent); margin:0 0 20px; }
+  .px-cta-quote{ font-family: var(--script); font-style:italic; font-weight:300; color: var(--text-dim); font-size: clamp(1.3rem,2.2vw,1.7rem); margin:0 0 22px; }
+  .px-cta h2{ font-family: var(--display); font-weight:400; color: var(--lino); font-size: clamp(2rem,4.2vw,3rem); line-height:1.08; margin:0 0 18px; text-wrap:balance; }
+  .px-cta p.gd-body{ margin-inline:auto; }
+  .px-cta-btns{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top: var(--sp-24); }
 </style>
 </head>
 <body data-mundo="retail" data-seccion="proyectos">
@@ -51,7 +127,7 @@
     <p class="gd-migas reveal-left"><a href="index.html">Inicio</a> / <a href="retail-diseno-tiendas.html">Diseño de tiendas</a> / <span>Expodeco 2024</span></p>
     <p class="gd-hero-eyebrow reveal-left"><i></i>Feria de decoración · Stand para Decopapel</p>
     <h1 class="reveal-left d1">Del concepto <em>a la obra</em></h1>
-    <p class="reveal-left d2">Un stand que se visita una sola vez, con el mismo nivel de detalle de un proyecto permanente. Esta es la historia completa: el encargo, la ficha técnica, el boceto, el montaje en obra y el resultado.</p>
+    <p class="reveal-left d2">Esta es la historia completa de un stand que se visita una sola vez: el encargo, la ficha técnica, el boceto, el montaje en obra y el resultado.</p>
   </div>
   <div class="gd-hero-media">
     <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proyectos/expodeco-2.jpg" alt="Detalle del stand Decopapel en Expodeco 2024, con paneles de revestimiento ondulados y consola dorada"></div>
@@ -62,74 +138,146 @@
   </div>
 </section>
 
-<section class="gd-sec">
+<section class="px-lead">
   <div class="gd-in">
+    <p class="reveal">Un stand que se visita <em>una sola vez</em>, con el mismo nivel de detalle de un proyecto permanente.</p>
+  </div>
+</section>
 
-    <div class="pe-momento reveal-scale">
-      <div class="pe-momento-cap" style="margin-top:0;"><span class="pe-momento-num">01</span><h2 class="pe-momento-titulo">El encargo</h2></div>
-      <p class="pe-momento-txt">Decopapel — marca de revestimientos y papel mural — necesitaba presentar su propuesta completa en Expodeco 2024, la feria de decoración de referencia del país. El reto no era llenar un stand de feria: era montar la propuesta completa de la marca en un espacio que se visita una sola vez, con el mismo nivel de detalle de un proyecto permanente.</p>
-    </div>
+<section class="px-dossier">
+  <div class="gd-in">
+    <div class="px-layout">
 
-    <div class="pe-ficha reveal">
-      <div class="pe-ficha-head">
-        <h2 class="gd-h2" style="font-size:clamp(1.6rem,2.4vw,2rem); margin:0;">Ficha técnica del stand</h2>
-        <span class="pe-ficha-dim">4.00 m de frente · 2.70 m de alto · Escala 1:25</span>
-      </div>
-      <div class="pe-ficha-grid">
-        <div class="pe-spec"><b>Estructura</b><span>Stand en melamina texturada, con fascia superior en acabado tipo mármol y logotipo iluminado en ambos frentes.</span></div>
-        <div class="pe-spec"><b>Cielo raso</b><span>Iluminación empotrada de fondo, más un óculo decorativo central con detalle floral y vegetación colgante.</span></div>
-        <div class="pe-spec"><b>Paneles de exhibición</b><span>Muro curvo de revestimientos y rollos de papel mural, organizados por textura y color.</span></div>
-        <div class="pe-spec"><b>Murales decorativos</b><span>Arco retroiluminado con muestras circulares de papel mural, a manera de galería.</span></div>
-        <div class="pe-spec"><b>Zona lounge</b><span>Mobiliario exhibidor y asiento curado para que el visitante experimente el material, no solo lo mire.</span></div>
-        <div class="pe-spec"><b>Piso y remates</b><span>Piso de madera tipo deck y tapete de área, para diferenciar la zona de experiencia del recorrido.</span></div>
-      </div>
-    </div>
-
-    <div class="pe-momento reveal-scale" style="margin-top:clamp(56px,7vw,96px);">
-      <div class="pe-momento-cap"><span class="pe-momento-num">02</span><h2 class="pe-momento-titulo">El boceto</h2></div>
-      <p class="pe-momento-txt">Cada proyecto se dibuja antes de levantarse. Primero en línea técnica, con cada material y cota especificado; después en acuarela, para aprobar color y ambiente antes de tocar una sola pared en obra.</p>
-      <div class="pe-duo" style="margin-top:24px;">
-        <div>
-          <div class="pe-momento-media gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proceso/expodeco-tecnico.jpg" alt="Corte técnico en línea del stand Decopapel"></div>
-          <div class="pe-momento-cap" style="margin-top:14px;"><span class="pe-momento-num" style="font-size:.85rem;">Línea</span></div>
+      <nav class="px-rail" aria-label="Progreso del caso">
+        <ol id="pxRailList">
+          <li data-target="px-01"><button class="px-rail-btn" type="button" data-target="px-01"><span class="px-rail-num">01</span><span class="px-rail-label">El encargo</span></button></li>
+          <li data-target="px-02"><button class="px-rail-btn" type="button" data-target="px-02"><span class="px-rail-num">02</span><span class="px-rail-label">Ficha técnica</span></button></li>
+          <li data-target="px-03"><button class="px-rail-btn" type="button" data-target="px-03"><span class="px-rail-num">03</span><span class="px-rail-label">El boceto</span></button></li>
+          <li data-target="px-04"><button class="px-rail-btn" type="button" data-target="px-04"><span class="px-rail-num">04</span><span class="px-rail-label">El montaje</span></button></li>
+          <li data-target="px-05"><button class="px-rail-btn" type="button" data-target="px-05"><span class="px-rail-num">05</span><span class="px-rail-label">El resultado</span></button></li>
+        </ol>
+        <div class="px-rail-progress">
+          <span>Avance del caso</span>
+          <div class="px-rail-bar"><i id="pxRailBar"></i></div>
         </div>
-        <div>
-          <div class="pe-momento-media gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proceso/expodeco-boceto.jpg" alt="Render en acuarela del stand Decopapel"></div>
-          <div class="pe-momento-cap" style="margin-top:14px;"><span class="pe-momento-num" style="font-size:.85rem;">Acuarela</span></div>
-        </div>
+      </nav>
+
+      <div class="px-content">
+
+        <article id="px-01" class="px-block reveal">
+          <div class="px-block-head"><span class="px-ghost" aria-hidden="true">01</span><h2 class="px-heading">El encargo</h2></div>
+          <p class="px-body">Decopapel — marca de revestimientos y papel mural — necesitaba presentar su propuesta completa en Expodeco 2024, la feria de decoración de referencia del país.</p>
+          <p class="px-body">El reto no era llenar un stand de feria: era montar la propuesta completa de la marca en un espacio que se visita una sola vez, con el mismo nivel de detalle de un proyecto permanente.</p>
+        </article>
+
+        <article id="px-02" class="px-block reveal">
+          <div class="px-block-head"><span class="px-ghost" aria-hidden="true">02</span><h2 class="px-heading">Ficha técnica</h2></div>
+          <div class="px-dim">
+            <b>4.00 <em>×</em> 2.70 m</b>
+            <span>Frente · alto · escala 1:25</span>
+          </div>
+          <div class="px-specs">
+            <div class="px-spec"><b>Estructura</b><span>Stand en melamina texturada, con fascia superior en acabado tipo mármol y logotipo iluminado en ambos frentes.</span></div>
+            <div class="px-spec"><b>Cielo raso</b><span>Iluminación empotrada de fondo, más un óculo decorativo central con detalle floral y vegetación colgante.</span></div>
+            <div class="px-spec"><b>Paneles de exhibición</b><span>Muro curvo de revestimientos y rollos de papel mural, organizados por textura y color.</span></div>
+            <div class="px-spec"><b>Murales decorativos</b><span>Arco retroiluminado con muestras circulares de papel mural, a manera de galería.</span></div>
+            <div class="px-spec"><b>Zona lounge</b><span>Mobiliario exhibidor y asiento curado para que el visitante experimente el material, no solo lo mire.</span></div>
+            <div class="px-spec"><b>Piso y remates</b><span>Piso de madera tipo deck y tapete de área, para diferenciar la zona de experiencia del recorrido.</span></div>
+          </div>
+        </article>
+
+        <article id="px-03" class="px-block reveal">
+          <div class="px-block-head"><span class="px-ghost" aria-hidden="true">03</span><h2 class="px-heading">El boceto</h2></div>
+          <p class="px-body">Cada proyecto se dibuja antes de levantarse. Primero en línea técnica, con cada material y cota especificado; después en acuarela, para aprobar color y ambiente antes de tocar una sola pared en obra.</p>
+          <div class="px-duo">
+            <figure class="px-fig">
+              <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proceso/expodeco-tecnico.jpg" alt="Corte técnico en línea del stand Decopapel"></div>
+              <figcaption>Línea técnica</figcaption>
+            </figure>
+            <figure class="px-fig is-offset">
+              <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proceso/expodeco-boceto.jpg" alt="Render en acuarela del stand Decopapel"></div>
+              <figcaption>Acuarela</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article id="px-04" class="px-block px-full reveal-scale">
+          <div class="gd-curtain px-montaje-media"><img decoding="async" class="gd-kb-img" src="images/proyectos/expodeco-montaje.jpg" alt="Equipo de Giandeco instalando el mural del stand Decopapel en obra, con casco y casaca de marca"></div>
+          <div class="px-montaje-cap">
+            <div class="px-block-head"><span class="px-ghost" aria-hidden="true">04</span><h2 class="px-heading">El montaje</h2></div>
+            <p class="px-body">Lo que se aprueba en papel es lo que se monta en obra. Nuestro equipo instala cada mural, cada panel y cada punto de luz en sitio, bajo la misma dirección que dibujó el proyecto — no se subcontrata la ejecución.</p>
+          </div>
+        </article>
+
+        <article id="px-05" class="px-block reveal">
+          <div class="px-block-head"><span class="px-ghost" aria-hidden="true">05</span><h2 class="px-heading">El resultado</h2></div>
+          <p class="px-body">Presencia en la feria de decoración de referencia del país, con un stand que funcionó como showroom permanente y no solo como vitrina de feria — recorrido por categoría, vegetación colgante y un arco fotográfico pensado para quedarse en las fotos de los visitantes.</p>
+          <div class="px-result">
+            <figure class="px-fig px-result-big">
+              <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/espacios/expodeco-1.png" alt="Vista general del stand Decopapel terminado en Expodeco 2024"></div>
+            </figure>
+            <figure class="px-fig px-result-small">
+              <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proyectos/expodeco-2.jpg" alt="Detalle de paneles de revestimiento y consola dorada del stand Decopapel"></div>
+            </figure>
+          </div>
+        </article>
+
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="pe-momento reveal-scale">
-      <div class="pe-momento-media gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proyectos/expodeco-montaje.jpg" alt="Equipo de Giandeco instalando el mural del stand Decopapel en obra, con casco y casaca de marca"></div>
-      <div class="pe-momento-cap"><span class="pe-momento-num">03</span><h2 class="pe-momento-titulo">El montaje</h2></div>
-      <p class="pe-momento-txt">Lo que se aprueba en papel es lo que se monta en obra. Nuestro equipo instala cada mural, cada panel y cada punto de luz en sitio, bajo la misma dirección que dibujó el proyecto — no se subcontrata la ejecución.</p>
-    </div>
-
-    <div class="pe-momento reveal-scale">
-      <div class="pe-momento-cap"><span class="pe-momento-num">04</span><h2 class="pe-momento-titulo">El resultado</h2></div>
-      <p class="pe-momento-txt">Presencia en la feria de decoración de referencia del país, con un stand que funcionó como showroom permanente y no solo como vitrina de feria — recorrido por categoría, vegetación colgante y un arco fotográfico pensado para quedarse en las fotos de los visitantes.</p>
-      <div class="pe-duo" style="margin-top:24px;">
-        <div class="pe-momento-media gd-curtain" style="aspect-ratio:4/3;"><img decoding="async" class="gd-kb-img" src="images/espacios/expodeco-1.png" alt="Vista general del stand Decopapel terminado en Expodeco 2024"></div>
-        <div class="pe-momento-media gd-curtain" style="aspect-ratio:4/3;"><img decoding="async" class="gd-kb-img" src="images/proyectos/expodeco-2.jpg" alt="Detalle de paneles de revestimiento y consola dorada del stand Decopapel"></div>
-      </div>
-    </div>
-
-    <div class="pe-cta reveal">
-      <p class="pe-tagline">"Espacios que inspiran historias."</p>
-      <h2 class="gd-h2" style="margin-inline:auto; max-width:24ch; margin-top:14px;">¿Su marca necesita un stand así?</h2>
-      <p class="gd-body" style="margin-inline:auto;">Del concepto a la obra, bajo una sola dirección: diseño, ficha técnica y montaje en sitio.</p>
-      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:var(--sp-24);">
+<section class="px-cta">
+  <div class="gd-in">
+    <div class="px-cta-in reveal">
+      <p class="px-cta-eyebrow">Diseño de tiendas · Ferias y stands</p>
+      <p class="px-cta-quote">"Espacios que inspiran historias."</p>
+      <h2>¿Su marca necesita un stand así?</h2>
+      <p class="gd-body">Del concepto a la obra, bajo una sola dirección: diseño, ficha técnica y montaje en sitio.</p>
+      <div class="px-cta-btns">
         <a class="gd-btn gd-btn-primary" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20un%20stand%20de%20feria%20como%20el%20de%20Decopapel." target="_blank" rel="noopener">Cotizar mi stand
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
         <a class="gd-btn gd-btn-ghost" href="hogar-proyectos.html#expodeco-2024">Ver el caso en Proyectos</a>
       </div>
     </div>
-
   </div>
 </section>
 
 <div id="gdFooter"></div>
 <script src="js/giandeco.js?v=9"></script>
+<script>
+(function(){
+  var items = Array.prototype.slice.call(document.querySelectorAll('#pxRailList li'));
+  if(!items.length) return;
+  var blocks = items.map(function(li){ return document.getElementById(li.getAttribute('data-target')); });
+  var bar = document.getElementById('pxRailBar');
+
+  items.forEach(function(li){
+    var btn = li.querySelector('.px-rail-btn');
+    btn.addEventListener('click', function(){
+      var target = document.getElementById(btn.getAttribute('data-target'));
+      if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  function setActive(index){
+    items.forEach(function(li,i){ li.classList.toggle('is-active', i===index); });
+    if(bar) bar.style.width = (((index+1)/items.length)*100) + '%';
+  }
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          var idx = blocks.indexOf(entry.target);
+          if(idx > -1) setActive(idx);
+        }
+      });
+    }, { rootMargin:'-40% 0px -50% 0px', threshold:0 });
+    blocks.forEach(function(el){ if(el) io.observe(el); });
+  }
+  setActive(0);
+})();
+</script>
 </body>
 </html>
