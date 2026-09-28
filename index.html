@@ -214,22 +214,24 @@
     position: relative;
     display: block;
     width: 100%;
-    height: 52px;
+    height: 64px;
     padding: 0;
     margin: 0;
     border: none;
     cursor: pointer;
     overflow: hidden;
     background-size: cover;
-    background-position: center;
-    transition: height 700ms cubic-bezier(0.16, 1, 0.3, 1);
+    background-position: center 22%;
+    transition: height 700ms cubic-bezier(0.16, 1, 0.3, 1), background-position 700ms cubic-bezier(0.16, 1, 0.3, 1);
   }
+
+  .acc-item.is-open .acc-panel{ background-position: center 30%; }
 
   .acc-panel::before{
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(8,7,5,0.7), rgba(8,7,5,0.05) 48%, rgba(8,7,5,0.25) 100%);
+    background: linear-gradient(180deg, rgba(8,7,5,0.32), rgba(8,7,5,0.02) 48%, rgba(8,7,5,0.4) 100%);
   }
 
   .acc-item.is-open .acc-panel{
@@ -302,10 +304,10 @@
     text-decoration: none;
     opacity: 0;
     transform: translateY(28px);
-    transition: opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1), background-size 1.1s var(--gd-ease, ease);
+    transition: opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1);
   }
   .g-item.is-visible{ opacity: 1; transform: translateY(0); }
-  .g-item:hover{ background-size: 106%; }
+  .g-item.is-visible:hover{ transform: translateY(0) scale(1.05); }
   .g-item::before{
     content: '';
     position: absolute; inset: 0;
@@ -979,10 +981,8 @@
 
   /* filete con rombo — recurso gráfico del manual (lámina 35), un uso por pieza */
   .gd-filete{ display:flex; align-items:center; gap:14px; margin: 0 0 var(--sp-40); }
-  .gd-filete::before, .gd-filete::after{ content:''; height:1px; background: var(--line); flex:1; }
+  .gd-filete::before, .gd-filete::after{ display:none; }
   .gd-filete span{ display:none; }
-  .gd-filete.is-left::before{ display:none; }
-  .gd-filete.is-left::after{ max-width:160px; }
 
   /* --- botones --- */
   .gd-btn{
@@ -1233,7 +1233,7 @@
   .gd-cat-grid{ display:grid; grid-template-columns: repeat(2,1fr); gap: var(--sp-24); }
   @media (min-width: 860px){ .gd-cat-grid{ grid-template-columns: repeat(4,1fr); } }
   .gd-cat-item{ text-decoration:none; display:block; }
-  .gd-cat-thumb{ position:relative; aspect-ratio:4/5; overflow:hidden; border-radius:2px; background:#fff; margin-bottom:14px; }
+  .gd-cat-thumb{ display:block; position:relative; aspect-ratio:4/5; overflow:hidden; border-radius:2px; background:#fff; margin-bottom:14px; }
   .gd-cat-thumb img{ width:100%; height:100%; object-fit:cover; transition: transform .8s var(--gd-ease); }
   .gd-cat-item:hover .gd-cat-thumb img{ transform:scale(1.04); }
   .gd-cat-cat{ font-family:var(--body); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color: var(--bronce); display:block; margin-bottom:5px; }
@@ -1245,8 +1245,12 @@
 
   /* ==================== CTA ==================== */
   .gd-cta{ text-align:center; position:relative; overflow:hidden; }
-  .gd-cta-media{ position:absolute; inset:0; z-index:0; }
-  .gd-cta-media img{ width:100%; height:100%; object-fit:cover; object-position: 68% 30%; display:block; }
+  .gd-cta-media{
+    position:absolute; inset:0; z-index:0;
+    background-image:url('images/shift/expodeco-showroom.jpg');
+    background-size:cover; background-position:68% 30%; background-attachment:fixed;
+  }
+  @media (max-width:900px){ .gd-cta-media{ background-attachment:scroll; } }
   .gd-cta::before{
     content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
     background:
@@ -1257,7 +1261,7 @@
   .gd-cta .gd-h2{ font-size: clamp(2.1rem, 5vw, 3.4rem); }
   .gd-cta .gd-body{ margin-inline:auto; }
   .gd-cta-btns{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top: var(--sp-40); }
-  .gd-cta-datos{ display:flex; flex-wrap:wrap; gap:10px 28px; justify-content:center; margin-top: var(--sp-40); padding-top: var(--sp-24); border-top:1px solid var(--line); font-family:var(--body); font-size:.8rem; color: var(--text-faint); }
+  .gd-cta-datos{ display:flex; flex-wrap:wrap; gap:10px 28px; justify-content:center; margin-top: var(--sp-40); padding-top: var(--sp-24); font-family:var(--body); font-size:.8rem; color: var(--text-faint); }
   .gd-cta-datos b{ color: var(--text-dim); font-weight:400; }
 
   /* ==================== SEO ==================== */
@@ -1437,8 +1441,8 @@
         <a href="catalogo.html">Catálogo</a>
         <a href="catalogo-navidad.html">Navidad</a>
         <a href="catalogo-muebleria.html">Mueblería</a>
+        <a href="catalogo-iluminacion.html">Iluminación</a>
         <a href="catalogo-compra-el-espacio.html">Compra el espacio</a>
-        <a href="proximamente-iluminacion.html" data-pronto title="Disponible próximamente">Iluminación</a>
         <a href="proximamente-decoracion.html" data-pronto title="Disponible próximamente">Decoración</a>
         <a href="proximamente-papel-mural.html" data-pronto title="Disponible próximamente">Papel Mural</a>
       </div>
@@ -1568,7 +1572,7 @@
     <div class="intro-col">
       <h2 class="steps-heading reveal">Nuestro Proceso</h2>
       <hr class="steps-underline reveal-underline">
-      <p class="reveal d1">Del boceto a la obra terminada, en cuatro etapas con el mismo criterio.</p>
+      <p class="reveal d1">Del boceto a la obra terminada, en tres etapas con el mismo criterio.</p>
       <a class="intro-cta reveal d2" href="#accordion">
         Ver proceso completo
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -1577,23 +1581,18 @@
 
     <div class="accordion reveal-scale" id="accordion">
       <div class="acc-item is-open" data-index="0">
-        <button class="acc-panel" style="background-image: url('images/01.jpg');">
+        <button class="acc-panel" style="background-image: url('images/proceso/zonatienda-tecnico.jpg');">
           <span class="acc-media-title">01 — Boceto</span>
         </button>
       </div>
       <div class="acc-item" data-index="1">
-        <button class="acc-panel" style="background-image: url('images/02.jpg');">
+        <button class="acc-panel" style="background-image: url('images/proceso/zonatienda-boceto.jpg');">
           <span class="acc-media-title">02 — Acuarela</span>
         </button>
       </div>
       <div class="acc-item" data-index="2">
-        <button class="acc-panel" style="background-image: url('images/03.jpg');">
+        <button class="acc-panel" style="background-image: url('images/proceso/zonatienda-obra.jpg');">
           <span class="acc-media-title">03 — Proyecto</span>
-        </button>
-      </div>
-      <div class="acc-item" data-index="3">
-        <button class="acc-panel" style="background-image: url('images/04.jpg');">
-          <span class="acc-media-title">04 — Seguimiento</span>
         </button>
       </div>
     </div>
@@ -1614,6 +1613,8 @@
           <button class="gd-ba-tab" type="button" role="tab" aria-selected="true" data-ba="0">Zona Tienda</button>
           <button class="gd-ba-tab" type="button" role="tab" aria-selected="false" data-ba="1">Lounge Bar</button>
           <button class="gd-ba-tab" type="button" role="tab" aria-selected="false" data-ba="2">Salón de Eventos</button>
+          <button class="gd-ba-tab" type="button" role="tab" aria-selected="false" data-ba="3">Feria Casacor</button>
+          <button class="gd-ba-tab" type="button" role="tab" aria-selected="false" data-ba="4">Feria Expodeco</button>
         </div>
         <span class="gd-ba-hint">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7L4 12l4 5M16 7l4 5-4 5M12 4v16"/></svg>
@@ -1788,7 +1789,7 @@
 
 <!-- ==================== CTA ==================== -->
 <section class="gd-sec gd-cta" id="contacto">
-  <div class="gd-cta-media" aria-hidden="true"><img decoding="async" src="images/cta/cta-bg.jpg?v=2" alt=""></div>
+  <div class="gd-cta-media" aria-hidden="true"></div>
   <div class="gd-in">
     <p class="gd-eyebrow reveal">Siguiente paso</p>
     <h2 class="gd-h2 reveal d1">¿Cuándo toca renovar su local?</h2>
@@ -2111,10 +2112,10 @@
       simples: [
         { label: 'Catálogo', href: 'catalogo.html' },
         { label: 'Mueblería', href: 'catalogo-muebleria.html' },
+        { label: 'Iluminación', href: 'catalogo-iluminacion.html' },
         { label: 'Compra el espacio', href: 'catalogo-compra-el-espacio.html' }
       ],
       pronto: [
-        { label: 'Iluminación', href: 'proximamente-iluminacion.html' },
         { label: 'Decoración', href: 'proximamente-decoracion.html' },
         { label: 'Papel Mural', href: 'proximamente-papel-mural.html' }
       ]
@@ -2366,6 +2367,24 @@
       ratio: '3 / 2',
       meta: 'Eventos · Lima',
       caption: 'Salón de banquetes con tela drapeada en el techo. La barra decorativa ancla el eje del espacio y las mesas se distribuyen alrededor de una pista central.'
+    },
+    {
+      a: 'images/proceso/casacor-boceto.jpg',
+      b: 'images/proceso/casacor-obra.jpg',
+      altA: 'Boceto en acuarela de la sala presentada en Casacor 2025',
+      altB: 'Sala de Casacor 2025 ya montada, con cornisa azul y galería de cuadros',
+      ratio: '1311 / 1200',
+      meta: 'Feria de diseño · Lima',
+      caption: 'Sala completa para el recorrido de Casacor 2025: cornisa con luz indirecta en azul profundo, revestimiento texturado y una curaduría de cuadros que convierte cada pared en su propia historia.'
+    },
+    {
+      a: 'images/proceso/expodeco-boceto.jpg',
+      b: 'images/proceso/expodeco-obra.jpg',
+      altA: 'Boceto en acuarela del stand presentado en Expodeco 2024',
+      altB: 'Stand de Expodeco 2024 ya montado, con muro de revestimientos y vegetación colgante',
+      ratio: '3 / 2',
+      meta: 'Feria de decoración · Lima',
+      caption: 'Stand para Decopapel en Expodeco 2024: recorrido por categoría de revestimientos, vegetación colgante y un arco fotográfico pensado para funcionar como showroom, no solo como vitrina de feria.'
     }
   ];
 

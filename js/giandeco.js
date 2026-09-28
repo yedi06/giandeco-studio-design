@@ -34,13 +34,13 @@ var SITIO = {
   catalogo: {
     label:'Catálogo', home:'catalogo.html',
     secciones:[
-      { key:'home',     label:'Catálogo',           href:'catalogo.html' },
-      { key:'navidad',  label:'Navidad',            href:'catalogo-navidad.html' },
-      { key:'muebleria',label:'Mueblería',          href:'catalogo-muebleria.html' },
-      { key:'espacio',  label:'Compra el espacio',  href:'catalogo-compra-el-espacio.html' }
+      { key:'home',       label:'Catálogo',           href:'catalogo.html' },
+      { key:'navidad',    label:'Navidad',            href:'catalogo-navidad.html' },
+      { key:'muebleria',  label:'Mueblería',          href:'catalogo-muebleria.html' },
+      { key:'iluminacion',label:'Iluminación',        href:'catalogo-iluminacion.html' },
+      { key:'espacio',    label:'Compra el espacio',  href:'catalogo-compra-el-espacio.html' }
     ],
     pronto:[
-      { label:'Iluminación', href:'proximamente-iluminacion.html' },
       { label:'Decoración',  href:'proximamente-decoracion.html' },
       { label:'Papel Mural', href:'proximamente-papel-mural.html' }
     ]
@@ -75,6 +75,55 @@ var PRODUCTOS = {
 };
 window.GD_PRODUCTOS = PRODUCTOS;
 window.GD_WA = WA_MSG;
+
+/* --------------------------------------------------------------------------
+   2b. ILUMINACIÓN  (fichas reales de 07_Luminarias)
+   -------------------------------------------------------------------------- */
+var ILUMINACION = {
+  'amaris':     { nombre:'Lámpara LED Amaris',   cat:'Colgante lineal',    precio:'S/ 550.00',   img:'images/iluminacion/amaris-1.jpg',     nota:'Home suspendido de líneas onduladas, 105 cm. Estructura ABS y silicón, 60W 220V, altura regulable, luz LED cálida.' },
+  'basilea':    { nombre:'Lámpara Basilea',      cat:'Colgante múltiple',  precio:'S/ 480.00',   img:'images/iluminacion/basilea-1.jpg',    nota:'Estructura metálica y vidrio nacarado, 6 luces con socket E27 estándar. Acabado negro mate y cobre antiguo.' },
+  'bristol':    { nombre:'Lámpara Bristol',      cat:'Colgante múltiple',  precio:'S/ 380.00',   img:'images/iluminacion/bristol-1.jpg',    nota:'Estructura metálica con brazos movibles y socket E27 estándar. Acabado negro mate y oro viejo.' },
+  'lara':       { nombre:'Lámpara Lara Black',   cat:'Colgante individual',precio:'S/ 480.00',   img:'images/iluminacion/lara-1.jpg',        nota:'Aro circular en estructura metálica y acrílico, 38W 165/265V. Altura regulable, luz cálida.' },
+  'longer':     { nombre:'Lámpara Longer',       cat:'Colgante lineal',    precio:'S/ 1,300.00', img:'images/iluminacion/longer-1.jpg',      nota:'Paneles verticales en cascada, estructura de aluminio y silicón. Luz LED tricolor, altura regulable, acabado negro mate.' },
+  'mady-white': { nombre:'Lámpara Mady White',   cat:'Colgante individual',precio:'S/ 180.00',   img:'images/iluminacion/mady-white-1.jpg', nota:'Domo en estructura metálica y capuchón de madera, socket E27 estándar. Altura regulable, color blanco bone.' },
+  'stratto':    { nombre:'Lámpara Stratto',      cat:'Colgante múltiple',  precio:'S/ 480.01',   img:'images/iluminacion/stratto-1.jpg',     nota:'Estructura metálica, 6 luces con socket E27 estándar. Incluye focos LED.' },
+  'villa':      { nombre:'Lámpara Villa',        cat:'Colgante individual',precio:'S/ 250.00',   img:'images/iluminacion/villa-1.jpg',       nota:'Farolillo en estructura metálica, incluye foco LED. Acabado negro y madera avejentada.' },
+  'spazio':     { nombre:'Lámpara Spazio',       cat:'Colgante lineal',    precio:'S/ 120.00',   img:'images/iluminacion/spazio-1.jpg',      nota:'Batería de cilindros en aluminio, 8W/220V. Altura regulable, luz LED cálida y blanca.' }
+};
+window.GD_ILUMINACION = ILUMINACION;
+
+/* --------------------------------------------------------------------------
+   2c. NAVIDAD — colección 2026  (fichas reales de 08_Navidad)
+   -------------------------------------------------------------------------- */
+var NAVIDAD = {
+  'tren-jengibre':          { nombre:'Tren de jengibre',                    cat:'Jengibre',    precio:'S/ 72.30',  img:'images/navidad/tren-jengibre-1.png',           nota:'Pieza decorativa de temporada, colección jengibre.' },
+  'casa-jengibre':          { nombre:'Casa de jengibre',                    cat:'Jengibre',    precio:'S/ 146.90', img:'images/navidad/casa-jengibre-1.png',           nota:'Casa de jengibre iluminada, con figuras y detalles glaseados.' },
+  'cascanueces-musicales':  { nombre:'Cascanueces musicales',               cat:'Cascanueces', precio:'S/ 76.00',  img:'images/navidad/cascanueces-musicales-1.png',   nota:'Se venden por unidad. Disponible en 3 modelos.' },
+  'cascanueces-mecedores':  { nombre:'Cascanueces mecedores',               cat:'Cascanueces', precio:'S/ 58.70',  img:'images/navidad/cascanueces-mecedores-1.png',   nota:'Se venden por unidad. Disponible en 3 modelos.' },
+  'perritos-cascanueces':   { nombre:'Muñecos perritos cascanueces',        cat:'Cascanueces', precio:'S/ 54.10',  img:'images/navidad/perritos-cascanueces-1.png',    nota:'Se venden por unidad. Disponible en 3 modelos.' },
+  'reno-recostado':         { nombre:'Adorno reno navideño recostado',      cat:'Adornos',     precio:'S/ 60.20',  img:'images/navidad/reno-recostado-1.png',          nota:'Material de poliresina.' },
+  'reno-de-pie':            { nombre:'Adorno reno navideño de pie',         cat:'Adornos',     precio:'S/ 75.80',  img:'images/navidad/reno-de-pie-1.png',             nota:'Material de poliresina.' },
+  'reno-recostado-plato':   { nombre:'Adorno reno recostado con plato',     cat:'Adornos',     precio:'S/ 104.20', img:'images/navidad/reno-recostado-plato-1.png',    nota:'Material de poliresina.' },
+  'reno-de-pie-plato':      { nombre:'Adorno reno de pie con plato',        cat:'Adornos',     precio:'S/ 116.30', img:'images/navidad/reno-de-pie-plato-1.png',       nota:'Material de poliresina.' },
+  'papa-noel':              { nombre:'Papá Noel',                          cat:'Figuras',     precio:'S/ 74.00',  img:'images/navidad/papa-noel-1.png',               nota:'20 cm de alto.' },
+  'bombonera-caja-regalo':  { nombre:'Bombonera navideña caja de regalo',   cat:'Bomboneras',  precio:'S/ 48.10',  img:'images/navidad/bombonera-caja-regalo-1.png',   nota:'22 cm. Se vende por unidad, disponible en 2 modelos.' },
+  'bombonera-casita':       { nombre:'Bombonera navideña casita',           cat:'Bomboneras',  precio:'S/ 57.20',  img:'images/navidad/bombonera-casita-1.png',        nota:'28 cm. Se vende por unidad, disponible en 2 modelos.' },
+  'portavela-dorado':       { nombre:'Portavela dorado',                    cat:'Portavelas',  precio:'S/ 54.00',  img:'images/navidad/portavela-dorado-1.png',        nota:'Set de 3 unidades.' },
+  'portavela-negro':        { nombre:'Portavela negro',                    cat:'Portavelas',  precio:'S/ 54.00',  img:'images/navidad/portavela-negro-1.png',         nota:'Set de 3 unidades.' },
+  'venado-mediano':         { nombre:'Venado transparente mediano',        cat:'Adornos',     precio:'S/ 16.00',  img:'images/navidad/venado-mediano-1.png',          nota:'Se vende por unidad. Material de acrílico.' },
+  'venado-pequeno':         { nombre:'Venado transparente pequeño',        cat:'Adornos',     precio:'S/ 16.00',  img:'images/navidad/venado-pequeno-1.png',          nota:'Se vende por unidad. Material de acrílico.' },
+  'casa-musical':           { nombre:'Adorno casa musical',                cat:'Figuras',     precio:'S/ 110.50', img:'images/navidad/casa-musical-1.png',            nota:'Pieza decorativa de temporada.' },
+  'taza-cascanuez-roja':    { nombre:'Taza cascanuez roja',                cat:'Mesa',        precio:'S/ 67.90',  img:'images/navidad/taza-cascanuez-roja-1.png',     nota:'Set de tres tazas.' },
+  'taza-cascanuez':         { nombre:'Taza cascanuez',                     cat:'Mesa',        precio:'S/ 67.90',  img:'images/navidad/taza-cascanuez-1.png',          nota:'Set de tres tazas.' },
+  'arbol-iluminado':        { nombre:'Árbol navideño iluminado',           cat:'Iluminados',  precio:'S/ 62.30',  img:'images/navidad/arbol-iluminado-1.png',         nota:'Material de porcelana.' },
+  'casa-iluminada-mediana': { nombre:'Casa navideña iluminada mediana',    cat:'Iluminados',  precio:'S/ 40.80',  img:'images/navidad/casa-iluminada-mediana-1.png',  nota:'Material de porcelana.' },
+  'muneco-nieve':           { nombre:'Muñeco de nieve iluminado',          cat:'Iluminados',  precio:'S/ 30.00',  img:'images/navidad/muneco-nieve-1.png',            nota:'Material de porcelana.' },
+  'casa-iluminada-pequena': { nombre:'Casa navideña iluminada pequeña',    cat:'Iluminados',  precio:'S/ 40.80',  img:'images/navidad/casa-iluminada-pequena-1.png',  nota:'Material de porcelana.' },
+  'arreglo-pino-berries':   { nombre:'Arreglo pino y berries',             cat:'Decoración',  precio:'S/ 34.00',  img:'images/navidad/arreglo-pino-berries-1.png',    nota:'Arreglo decorativo de temporada.' },
+  'farol-124':              { nombre:'Farol 1.24 m',                       cat:'Farol',       precio:'S/ 245.00', img:'images/navidad/farol-124-1.png',               nota:'1.24 m de alto.' },
+  'farol-157':              { nombre:'Farol 1.57 m',                       cat:'Farol',       precio:'S/ 260.00', img:'images/navidad/farol-157-1.png',               nota:'1.57 m de alto.' }
+};
+window.GD_NAVIDAD = NAVIDAD;
 
 /* --------------------------------------------------------------------------
    3. HEADER
@@ -271,6 +320,8 @@ Object.keys(SITIO).forEach(function(k){
 });
 PAGINAS.forEach(function(p){ INDICE.push({ label:p.label, href:p.href }); });
 Object.keys(PRODUCTOS).forEach(function(k){ INDICE.push({ label: PRODUCTOS[k].nombre + ' — ' + PRODUCTOS[k].precio, href:'catalogo-muebleria.html#' + k }); });
+Object.keys(ILUMINACION).forEach(function(k){ INDICE.push({ label: ILUMINACION[k].nombre + ' — ' + ILUMINACION[k].precio, href:'catalogo-iluminacion.html#' + k }); });
+Object.keys(NAVIDAD).forEach(function(k){ INDICE.push({ label: NAVIDAD[k].nombre + ' — ' + NAVIDAD[k].precio, href:'catalogo-navidad.html#' + k }); });
 
 var overlay = document.getElementById('shSearchOverlay');
 var input = document.getElementById('shSearchInput');

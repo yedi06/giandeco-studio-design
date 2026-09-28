@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Navidad — Catálogo Giandeco Studio Design</title>
-<meta name="description" content="Campaña de Navidad Giandeco: árboles, mesas servidas, coronas y vitrinas de temporada para tiendas y casas. Montaje completo en Lima y Callao.">
+<meta name="description" content="Campaña de Navidad Giandeco: montaje completo para tiendas y casas, más 26 piezas de la colección 2026 con ficha y precio. Entrega en Lima y Callao.">
 <meta name="theme-color" content="#0A0A09">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=7">
+<link rel="stylesheet" href="css/giandeco.css?v=8">
 <style>
   .nv-oferta{ display:grid; gap:var(--sp-24); grid-template-columns:1fr; }
   @media (min-width:720px){ .nv-oferta{ grid-template-columns:1fr 1fr; } }
@@ -35,6 +35,28 @@
   .nv-tiempo{ display:flex; flex-wrap:wrap; gap:10px 24px; margin-top:var(--sp-24); }
   .nv-tiempo div{ font-family:var(--body); font-size:.82rem; color:var(--text-dim); }
   .nv-tiempo b{ color:var(--accent); font-weight:500; }
+
+  /* ============ colección 2026 — catálogo real de piezas ============ */
+  .nv-filtros{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:var(--sp-40); }
+  .nv-filtro{
+    appearance:none; background:none; cursor:pointer; border:1px solid var(--line); border-radius:2px;
+    padding:9px 16px; font-family:var(--body); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--text-dim); transition:border-color .25s ease, color .25s ease, background-color .25s ease;
+  }
+  .nv-filtro:hover{ border-color:var(--accent); color:var(--lino); }
+  .nv-filtro.is-active{ background:var(--accent); border-color:var(--accent); color:var(--ebano); }
+  .nv-ficha{
+    display:none; grid-template-columns:1fr; gap:var(--sp-40);
+    border-top:1px solid var(--line); margin-top:var(--sp-64); padding-top:var(--sp-40);
+  }
+  .nv-ficha.is-open{ display:grid; }
+  @media (min-width:860px){ .nv-ficha.is-open{ grid-template-columns:.9fr 1.1fr; } }
+  .nv-ficha-img{ background:#050403; border-radius:2px; overflow:hidden; aspect-ratio:4/5; }
+  .nv-ficha-img img{ width:100%; height:100%; object-fit:cover; }
+  .nv-ficha h3{ font-family:var(--display); font-weight:400; font-size:clamp(1.9rem,3vw,2.3rem); color:var(--lino); margin:0 0 10px; }
+  .nv-ficha .precio{ font-family:var(--body); font-size:1.3rem; color:var(--accent); margin:0 0 20px; font-variant-numeric:tabular-nums; }
+  .nv-ficha .nota{ color:var(--text-dim); font-size:.96rem; line-height:1.7; margin:0 0 24px; max-width:52ch; }
+  .nv-vacio{ color:var(--text-dim); font-size:.92rem; }
 </style>
 </head>
 <body data-mundo="catalogo" data-seccion="navidad">
@@ -44,7 +66,7 @@
 <section class="gd-hero is-corto">
   <div class="gd-hero-panel">
     <p class="gd-migas reveal-left"><a href="index.html">Inicio</a> / <a href="catalogo.html">Catálogo</a> / <span>Navidad</span></p>
-    <p class="gd-hero-eyebrow reveal-left"><i></i>Catálogo · Navidad</p>
+    <p class="gd-hero-eyebrow reveal-left"><i></i>Temporada con fecha de entrega</p>
     <h1 class="reveal-left d1">Navidad <em>montada</em>, no comprada</h1>
     <p class="reveal-left d2">Del árbol a la vitrina: concepto, producción y montaje de la campaña completa. Para su tienda o para su casa.</p>
     <div class="gd-hero-cta reveal-left d3"><a class="gd-btn gd-btn-primary" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20una%20campa%C3%B1a%20de%20Navidad." target="_blank" rel="noopener">Cotizar campaña
@@ -101,24 +123,34 @@
   </div>
 </section>
 
-<!-- ==================== COLECCIÓN 2026 ==================== -->
-<section class="gd-sec gd-claro" style="background:var(--bg-raised); color:var(--text);">
+<!-- ==================== COLECCIÓN 2026 — PIEZAS CON PRECIO ==================== -->
+<section class="gd-sec" style="background:var(--bg-raised); color:var(--text);">
   <div class="gd-in">
     <p class="gd-eyebrow reveal">Colección 2026</p>
-    <h2 class="gd-h2 reveal d1" style="color:var(--lino);">En preparación</h2>
-    <p class="gd-body reveal d2" style="color:var(--text-dim);">Estamos fotografiando la colección de este año. Estos espacios quedan reservados para el material nuevo; mientras tanto, la campaña se cotiza a medida.</p>
+    <h2 class="gd-h2 reveal d1" style="color:var(--lino);">Veintiséis piezas, precio y ficha</h2>
+    <p class="gd-body reveal d2" style="color:var(--text-dim);">Del árbol de jengibre a la bombonera de la mesa. Se piden sueltas o como campaña completa.</p>
 
-    <div class="nv-slots reveal d2" style="margin-top:var(--sp-40);">
-      <div class="nv-slot"><span><b>Árboles</b>Colección 2026<br>en preparación</span></div>
-      <div class="nv-slot"><span><b>Mesa servida</b>Colección 2026<br>en preparación</span></div>
-      <div class="nv-slot"><span><b>Coronas y guirnaldas</b>Colección 2026<br>en preparación</span></div>
-      <div class="nv-slot"><span><b>Vitrina de tienda</b>Colección 2026<br>en preparación</span></div>
-      <div class="nv-slot"><span><b>Recibimiento</b>Colección 2026<br>en preparación</span></div>
-      <div class="nv-slot"><span><b>Piezas sueltas</b>Colección 2026<br>en preparación</span></div>
+    <div class="nv-filtros reveal d2" id="nvFiltros" style="margin-top:var(--sp-40);"></div>
+    <div class="gd-grid" id="nvGrid"></div>
+
+    <!-- ficha ampliada -->
+    <div class="nv-ficha" id="nvFicha">
+      <div class="nv-ficha-img"><img decoding="async" id="nvFichaImg" src="" alt=""></div>
+      <div>
+        <p class="gd-eyebrow" id="nvFichaCat"></p>
+        <h3 id="nvFichaNombre"></h3>
+        <p class="precio" id="nvFichaPrecio"></p>
+        <p class="nota" id="nvFichaNota"></p>
+        <div style="display:flex; flex-wrap:wrap; gap:12px;">
+          <a class="gd-btn gd-btn-primary" id="nvFichaWa" href="#" target="_blank" rel="noopener">Pedir por WhatsApp
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+          <a class="gd-btn gd-btn-ghost" href="contacto.html">Consultar al estudio</a>
+        </div>
+      </div>
     </div>
 
-    <div style="margin-top:var(--sp-40); display:flex; flex-wrap:wrap; gap:12px;">
-      <a class="gd-btn gd-btn-primary" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20que%20me%20avisen%20cuando%20salga%20la%20colecci%C3%B3n%20Navidad%202026." target="_blank" rel="noopener">Avísenme cuando salga
+    <div style="margin-top:var(--sp-64); padding-top:var(--sp-40); border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:12px;">
+      <a class="gd-btn gd-btn-primary" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20la%20colecci%C3%B3n%20Navidad%202026%20completa." target="_blank" rel="noopener">Cotizar la colección completa
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
       <a class="gd-btn gd-btn-ghost" href="catalogo-compra-el-espacio.html">Ver otros ambientes</a>
     </div>
@@ -126,6 +158,70 @@
 </section>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=8"></script>
+<script src="js/giandeco.js?v=9"></script>
+<script>
+(function(){
+  var P = window.GD_NAVIDAD || {};
+  var keys = Object.keys(P);
+  var grid = document.getElementById('nvGrid');
+  var filtros = document.getElementById('nvFiltros');
+  var ficha = document.getElementById('nvFicha');
+  if(!grid) return;
+
+  var cats = ['Todo'];
+  keys.forEach(function(k){ if(cats.indexOf(P[k].cat) === -1) cats.push(P[k].cat); });
+
+  filtros.innerHTML = cats.map(function(c, i){
+    return '<button type="button" class="nv-filtro' + (i === 0 ? ' is-active' : '') + '" data-cat="' + c + '">' + c + '</button>';
+  }).join('');
+
+  function pintar(cat){
+    var lista = keys.filter(function(k){ return cat === 'Todo' || P[k].cat === cat; });
+    grid.innerHTML = lista.length ? lista.map(function(k, i){
+      var p = P[k];
+      var d = i < 4 ? '' : (i < 8 ? ' d1' : ' d2');
+      return '<a class="gd-prod reveal' + d + '" href="#' + k + '" data-key="' + k + '" data-cursor="Ver">' +
+        '<span class="gd-prod-thumb"><img decoding="async" src="' + p.img + '" alt="' + p.nombre + '" loading="lazy"></span>' +
+        '<span class="gd-prod-cat">' + p.cat + '</span>' +
+        '<span class="gd-prod-name">' + p.nombre + '</span>' +
+        '<span class="gd-prod-price">' + p.precio + '</span>' +
+      '</a>';
+    }).join('') : '<p class="nv-vacio">Sin piezas en esta categoría por ahora.</p>';
+    grid.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  filtros.addEventListener('click', function(e){
+    var b = e.target.closest('.nv-filtro'); if(!b) return;
+    filtros.querySelectorAll('.nv-filtro').forEach(function(x){ x.classList.remove('is-active'); });
+    b.classList.add('is-active');
+    pintar(b.dataset.cat);
+  });
+
+  function abrirFicha(key){
+    var p = P[key]; if(!p) return;
+    document.getElementById('nvFichaImg').src = p.img;
+    document.getElementById('nvFichaImg').alt = p.nombre;
+    document.getElementById('nvFichaCat').textContent = p.cat;
+    document.getElementById('nvFichaNombre').textContent = p.nombre;
+    document.getElementById('nvFichaPrecio').textContent = p.precio;
+    document.getElementById('nvFichaNota').textContent = p.nota;
+    document.getElementById('nvFichaWa').href =
+      'https://wa.me/51920775559?text=' + encodeURIComponent('Hola Giandeco, me interesa la pieza de Navidad: ' + p.nombre + ' (' + p.precio + ').');
+    ficha.classList.add('is-open');
+    ficha.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  grid.addEventListener('click', function(e){
+    var a = e.target.closest('.gd-prod'); if(!a) return;
+    e.preventDefault();
+    history.replaceState(null, '', '#' + a.dataset.key);
+    abrirFicha(a.dataset.key);
+  });
+
+  pintar('Todo');
+  var hash = (location.hash || '').replace('#','');
+  if(hash && P[hash]) abrirFicha(hash);
+})();
+</script>
 </body>
 </html>
