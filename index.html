@@ -1388,7 +1388,7 @@
 </style>
 
 <!-- intro de marca: se decide antes de pintar, para que nunca haya un parpadeo del telón -->
-<script>(function(){try{if(sessionStorage.getItem('gdIntro')==='1')return;if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(window.scrollY>40)return;document.documentElement.classList.add('gd-intro-on');}catch(e){}})();</script>
+<script>(function(){try{var f=/[?&]intro\b/.test(location.search);if(!f&&sessionStorage.getItem('gdIntro')==='1')return;if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(window.scrollY>40)return;document.documentElement.classList.add('gd-intro-on');}catch(e){}})();</script>
 <div class="gd-intro" id="heroIntro" aria-hidden="true"><img src="img/logo-dorado.svg" alt="" width="300" height="268" decoding="async"></div>
 
 <div class="scroll-progress" id="scrollProgress"></div>
