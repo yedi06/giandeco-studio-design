@@ -36,28 +36,41 @@
   + '.gdc.is-drag{transform:scale(1.07);transition:transform .25s ' + EASE + '}'
   /* asa de arrastre: rejilla de 2 x 3 puntos, siempre visible */
   + '.gdc-grip{flex:none;display:grid;grid-template-columns:repeat(2,3.5px);gap:4px 4.5px;align-content:center;justify-content:center;'
-  +   'width:24px;height:46px;cursor:grab;opacity:.7;transition:opacity .3s ease}'
-  + '.gdc-grip i{width:3.5px;height:3.5px;border-radius:50%;background:var(--li);box-shadow:0 0 0 1px rgba(10,10,9,.35);transition:background-color .3s ease}'
+  +   'width:24px;height:50px;cursor:grab;opacity:.75;transition:opacity .3s ease}'
+  + '.gdc-grip i{width:3.5px;height:3.5px;border-radius:50%;background:var(--l);box-shadow:0 0 0 1px rgba(10,10,9,.45);transition:background-color .3s ease}'
   + '.gdc:hover .gdc-grip,.gdc.is-drag .gdc-grip{opacity:1}'
-  + '.gdc.is-drag .gdc-grip i{background:var(--l)}'
+  + '.gdc.is-drag .gdc-grip i{background:#f8e7bd}'
   + '.gdc.is-drag,.gdc.is-drag .gdc-grip,.gdc.is-drag .gdc-btn{cursor:grabbing}'
   + '.gdc-btn{display:block;padding:0;margin:0;border:none;background:none;cursor:pointer;font:inherit;border-radius:50%}'
   + '.gdc-btn:focus-visible{outline:2px solid var(--l);outline-offset:3px}'
-  + '.gdc-seal{position:relative;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;color:var(--l);'
-  +   'background:rgba(44,40,33,.9);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);'
-  +   'box-shadow:0 8px 26px rgba(0,0,0,.34);transition:background-color .45s ease,color .45s ease,box-shadow .45s ease,transform .5s ' + EASE + '}'
-  + '.gdc:hover .gdc-seal,.gdc.is-open .gdc-seal,.gdc.is-drag .gdc-seal{background:var(--l);color:var(--e);box-shadow:0 12px 32px rgba(0,0,0,.42)}'
+  + '.gdc-seal{position:relative;display:grid;place-items:center;width:50px;height:50px;border-radius:50%;color:var(--l);'
+  +   'background:radial-gradient(130% 130% at 30% 18%,#1d1a14 0%,#0A0A09 64%);box-shadow:0 10px 30px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,74,.34);'
+  +   'transition:color .45s ease,box-shadow .45s ease,transform .5s ' + EASE + '}'
+  /* anillo de luz: un destello de latón que recorre el borde del sello */
+  + '.gdc-seal::before{content:"";position:absolute;inset:-1px;border-radius:50%;'
+  +   'background:conic-gradient(from 0deg,transparent 0 52%,rgba(201,162,74,.5) 74%,#f8e7bd 92%,transparent 100%);'
+  +   '-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 1.8px),#000 calc(100% - 1.8px));mask:radial-gradient(farthest-side,transparent calc(100% - 1.8px),#000 calc(100% - 1.8px));'
+  +   'animation:gdcSpin 4s linear infinite;transition:opacity .4s ease}'
+  /* halo tenue que acompaña al destello */
+  + '.gdc-seal::after{content:"";position:absolute;inset:-7px;border-radius:50%;pointer-events:none;'
+  +   'background:radial-gradient(closest-side,rgba(201,162,74,.2),transparent 72%);opacity:.55;animation:gdcGlow 4s ease-in-out infinite;transition:opacity .4s ease}'
+  + '@keyframes gdcSpin{to{transform:rotate(360deg)}}'
+  + '@keyframes gdcGlow{0%,100%{opacity:.35}50%{opacity:.8}}'
+  + '.gdc:hover .gdc-seal::before{animation-duration:1.6s}'
+  + '.gdc:hover .gdc-seal,.gdc.is-drag .gdc-seal{box-shadow:0 14px 36px rgba(0,0,0,.55),inset 0 0 0 1px rgba(201,162,74,.7)}'
+  + '.gdc.is-open .gdc-seal{box-shadow:0 14px 36px rgba(0,0,0,.55),inset 0 0 0 1px var(--l)}'
   + '.gdc-g,.gdc-x{position:absolute;transition:opacity .3s ease,transform .5s ' + EASE + '}'
-  + '.gdc-g{font-family:var(--display,"Bodoni Moda",Georgia,serif);font-weight:400;font-size:1.5rem;line-height:1;transform:translateY(-1px)}'
+  + '.gdc-g{font-family:var(--display,"Bodoni Moda",Georgia,serif);font-weight:400;font-size:1.62rem;line-height:1;transform:translateY(-1px)}'
   + '.gdc-x{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.3;stroke-linecap:round;opacity:0;transform:rotate(-90deg) scale(.6)}'
   + '.gdc.is-open .gdc-g{opacity:0;transform:translateY(-1px) rotate(90deg) scale(.6)}'
   + '.gdc.is-open .gdc-x{opacity:1;transform:none}'
   /* aviso numerado, como un mensaje sin leer */
-  + '.gdc-badge{position:absolute;top:-5px;right:-5px;min-width:19px;height:19px;padding:0 5px;border-radius:10px;display:grid;place-items:center;'
-  +   'background:var(--l);color:var(--e);font-size:11px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;box-shadow:0 2px 8px rgba(0,0,0,.4);'
+  + '.gdc-badge{position:absolute;z-index:2;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;display:grid;place-items:center;'
+  +   'background:var(--l);color:var(--e);font-size:11px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;box-shadow:0 0 0 2.5px #0A0A09;'
   +   'transition:transform .45s cubic-bezier(.2,1.4,.3,1),opacity .3s ease}'
-  + '.gdc:hover .gdc-badge,.gdc.is-drag .gdc-badge{background:var(--li)}'
-  + '.gdc.is-seen .gdc-badge{transform:scale(0);opacity:0}'
+  + '.gdc-badge::after{content:"";position:absolute;inset:0;border-radius:10px;border:1px solid var(--l);animation:gdcPing 2.8s ' + EASE + ' 1s infinite}'
+  + '@keyframes gdcPing{0%{transform:scale(1);opacity:.8}65%,100%{transform:scale(2.1);opacity:0}}'
+  + '.gdc.is-open .gdc-badge{transform:scale(0);opacity:0}'
 
   /* ---------- tarjeta ---------- */
   + '.gdc-panel{position:fixed;z-index:73;width:392px;max-width:calc(100vw - 24px);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);overflow-y:auto;'
@@ -117,8 +130,8 @@
   + '@media (max-width:560px){'
   +   '.gdc-panel{left:8px!important;right:8px!important;top:auto!important;bottom:8px!important;width:auto;max-width:none;max-height:calc(100dvh - 16px);padding:30px 24px 22px}'
   +   '.gdc-title{font-size:1.9rem}'
-  +   '.gdc-seal{width:44px;height:44px}.gdc-g{font-size:1.42rem}}'
-  + '@media (prefers-reduced-motion:reduce){.gdc,.gdc-panel,.gdc-panel .gdc-s,.gdc-row *,.gdc-row::before,.gdc-form::after,.gdc-g,.gdc-x,.gdc-close{transition:none!important}'
+  +   '.gdc-seal{width:46px;height:46px}.gdc-g{font-size:1.5rem}}'
+  + '@media (prefers-reduced-motion:reduce){.gdc-seal::before,.gdc-seal::after,.gdc-badge::after{animation:none!important}.gdc,.gdc-panel,.gdc-panel .gdc-s,.gdc-row *,.gdc-row::before,.gdc-form::after,.gdc-g,.gdc-x,.gdc-close{transition:none!important}'
   +   '.gdc.is-snap{transition:none!important}.gdc-panel .gdc-s{opacity:1;transform:none}}'
   + '@media print{.gdc,.gdc-panel{display:none!important}}';
 
@@ -193,12 +206,12 @@
 
   function place(){
     var w = root.offsetWidth, h = root.offsetHeight, vw = window.innerWidth, vh = window.innerHeight;
-    var left = pos.h === 'r' ? vw - w - pos.x : pos.x;
-    var top  = pos.v === 'b' ? vh - h - pos.y : pos.y;
-    left = Math.max(M, Math.min(left, vw - w - M));
-    top  = Math.max(M, Math.min(top,  vh - h - M));
-    root.style.left = left + 'px';
-    root.style.top = top + 'px';
+    var x = Math.max(M, Math.min(pos.x, vw - w - M)) + 'px';
+    var y = Math.max(M, Math.min(pos.y, vh - h - M)) + 'px';
+    root.style.left   = pos.h === 'l' ? x : 'auto';
+    root.style.right  = pos.h === 'r' ? x : 'auto';
+    root.style.top    = pos.v === 't' ? y : 'auto';
+    root.style.bottom = pos.v === 'b' ? y : 'auto';
     if(isOpen) placePanel();
   }
   // al soltar, el sello se acomoda solo contra el borde más cercano
@@ -215,7 +228,7 @@
     var t0 = Date.now();
     (function follow(){ if(isOpen) placePanel(); if(Date.now() - t0 < 700) requestAnimationFrame(follow); })();
     clearTimeout(snap.t);
-    snap.t = setTimeout(function(){ root.classList.remove('is-snap'); if(isOpen) placePanel(); }, 720);
+    snap.t = setTimeout(function(){ root.classList.remove('is-snap'); place(); }, 720);
   }
   function remember(){
     var r = root.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight;
@@ -257,6 +270,7 @@
     if(!drag.on){
       if(Math.abs(e.clientX - drag.sx) + Math.abs(e.clientY - drag.sy) < 6) return;
       drag.on = true;
+      root.style.right = 'auto'; root.style.bottom = 'auto';
       root.classList.add('is-drag');
       try{ root.setPointerCapture(drag.id); }catch(err){}
     }
@@ -309,8 +323,7 @@
   // ---------- abrir / cerrar ----------
   function open(){
     if(isOpen) return; isOpen = true;
-    root.classList.add('is-open', 'is-seen');
-    try{ sessionStorage.setItem('gdChatSeen', '1'); }catch(e){}
+    root.classList.add('is-open');
     btn.setAttribute('aria-expanded', 'true');
     btn.setAttribute('aria-label', 'Cerrar atención al cliente');
     placePanel();
@@ -333,7 +346,6 @@
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && isOpen) close(true); });
 
   // ---------- entrada ----------
-  try{ if(sessionStorage.getItem('gdChatSeen') === '1') root.classList.add('is-seen'); }catch(e){}
   place();
   // no compite con el hero: el sello entra cuando el visitante ya empezó a bajar
   function visible(){
