@@ -29,7 +29,7 @@
   + '.gdc *,.gdc-panel *{box-sizing:border-box}'
 
   /* ---------- sello lanzador: un solo círculo, sin contornos ---------- */
-  + '.gdc{position:fixed;z-index:72;display:flex;align-items:center;gap:2px;touch-action:none;-webkit-user-select:none;user-select:none;'
+  + '.gdc{position:fixed;z-index:72;display:flex;align-items:center;gap:2px;margin:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) 0;touch-action:none;-webkit-user-select:none;user-select:none;'
   +   'opacity:0;transform:translateY(14px) scale(.94);pointer-events:none;transition:opacity .7s ease,transform .7s ' + EASE + '}'
   + '.gdc.is-in{opacity:1;transform:none;pointer-events:auto}'
   + '.gdc.is-snap{transition:left .62s cubic-bezier(.2,1.25,.32,1),top .62s cubic-bezier(.2,1.25,.32,1),transform .5s ' + EASE + '}'
@@ -128,7 +128,7 @@
   + '.gdc-panel.is-open .gdc-s{opacity:1;transform:none;transition:opacity .6s ease,transform .8s ' + EASE + ';transition-delay:calc(80ms + var(--i,0) * 55ms)}'
 
   + '@media (max-width:560px){'
-  +   '.gdc-panel{left:8px!important;right:8px!important;top:auto!important;bottom:8px!important;width:auto;max-width:none;max-height:calc(100dvh - 16px);padding:30px 24px 22px}'
+  +   '.gdc-panel{left:8px!important;right:8px!important;top:auto!important;bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;width:auto;max-width:none;max-height:calc(100dvh - 16px - env(safe-area-inset-bottom,0px));padding:28px 22px calc(20px + env(safe-area-inset-bottom,0px))}.gdc-input{font-size:16px}.gdc-row{padding:18px 2px}.gdc-t{font-size:1rem}.gdc-foot{flex-direction:column;gap:8px}.gdc-close{top:12px;right:12px;width:40px;height:40px}'
   +   '.gdc-title{font-size:1.9rem}'
   +   '.gdc-seal{width:46px;height:46px}.gdc-g{font-size:1.5rem}}'
   + '@media (prefers-reduced-motion:reduce){.gdc-seal::before,.gdc-seal::after,.gdc-badge::after{animation:none!important}.gdc,.gdc-panel,.gdc-panel .gdc-s,.gdc-row *,.gdc-row::before,.gdc-form::after,.gdc-g,.gdc-x,.gdc-close{transition:none!important}'
@@ -206,8 +206,9 @@
 
   function place(){
     var w = root.offsetWidth, h = root.offsetHeight, vw = window.innerWidth, vh = window.innerHeight;
-    var x = Math.max(M, Math.min(pos.x, vw - w - M)) + 'px';
-    var y = Math.max(M, Math.min(pos.y, vh - h - M)) + 'px';
+    var cap = vw <= 560 ? 16 : 9999;                                 // en móvil, más cerca de la esquina
+    var x = Math.max(M, Math.min(pos.x, cap, vw - w - M)) + 'px';
+    var y = Math.max(M, Math.min(pos.v === 'b' ? Math.min(pos.y, cap) : pos.y, vh - h - M)) + 'px';
     root.style.left   = pos.h === 'l' ? x : 'auto';
     root.style.right  = pos.h === 'r' ? x : 'auto';
     root.style.top    = pos.v === 't' ? y : 'auto';
