@@ -1,4 +1,7 @@
+<!DOCTYPE html>
+<html lang="es">
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Giandeco Studio Design</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1520,14 +1523,14 @@
     <div class="gd-curtain" id="heroCurtain">
       <!-- HERO VIDEO HOME: poster = primer fotograma (LCP inmediato); el video se carga después y aparece con fundido -->
       <picture>
-        <source media="(max-width: 899px) and (max-aspect-ratio: 3/4)" type="image/webp" srcset="images/hero/hero-home-poster-desktop.webp">
-        <source media="(max-width: 899px) and (max-aspect-ratio: 3/4)" srcset="images/hero/hero-home-poster-desktop.jpg">
+        <source media="(max-width: 899px) and (max-aspect-ratio: 3/4)" type="image/webp" srcset="images/hero/hero-home-poster-mobile.webp">
+        <source media="(max-width: 899px) and (max-aspect-ratio: 3/4)" srcset="images/hero/hero-home-poster-mobile.jpg">
         <source type="image/webp" srcset="images/hero/hero-home-poster-desktop.webp">
         <img class="gd-hero-poster" src="images/hero/hero-home-poster-desktop.jpg" width="1920" height="1080" fetchpriority="high" decoding="async" alt="Gian Jiménez y el propietario recorren una tienda departamental antes de su rediseño">
       </picture>
       <video class="gd-hero-video" id="heroVideo" muted loop playsinline preload="none" disablepictureinpicture aria-hidden="true" tabindex="-1"
         data-desktop-webm="images/hero/hero-home-desktop.webm" data-desktop-mp4="images/hero/hero-home-desktop.mp4"
-        data-mobile-webm="images/hero/hero-home-desktop.webm" data-mobile-mp4="images/hero/hero-home-desktop.mp4"></video>
+        data-mobile-webm="images/hero/hero-home-mobile.webm" data-mobile-mp4="images/hero/hero-home-mobile.mp4"></video>
     </div>
   </div>
 </section>
@@ -2661,7 +2664,7 @@
     [['webm','video/webm'],['mp4','video/mp4']].forEach(function(p){
       var s = document.createElement('source'); s.src = v.dataset[f + p[0].charAt(0).toUpperCase() + p[0].slice(1)]; s.type = p[1]; v.appendChild(s);
     });
-    v.poster = 'images/hero/hero-home-poster-desktop.jpg'; // la versión 9:16 se integra en la siguiente entrega
+    v.poster = 'images/hero/hero-home-poster-' + f + '.jpg';   // 16:9 en escritorio · 9:16 encuadrado plano a plano en móvil
     v.load();
     var pr = v.play(); if(pr && pr.catch) pr.catch(function(){});
   }
@@ -2687,3 +2690,4 @@
   document.addEventListener('visibilitychange', function(){ if(document.hidden) v.pause(); else if(loadedFor){ var p = v.play(); if(p && p.catch) p.catch(function(){}); } });
 })();
 </script>
+<script src="js/gd-chat.js?v=1" defer></script>
