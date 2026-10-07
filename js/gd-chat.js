@@ -24,70 +24,47 @@
   var ARROW = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
 
   var css = ''
-  + '.gdc,.gdc-panel,.gdc-scrim{--e:#0A0A09;--l:#C9A24A;--li:#DED8CB;--dim:#B9B3A6;--faint:#8a8375;--hair:rgba(222,216,203,.11);'
+  + '.gdc,.gdc-panel{--e:#0A0A09;--l:#C9A24A;--li:#DED8CB;--dim:#B9B3A6;--faint:#8a8375;--hair:rgba(222,216,203,.11);'
   +   'font-family:var(--body,"Jost",system-ui,sans-serif);font-weight:300;-webkit-font-smoothing:antialiased;box-sizing:border-box}'
   + '.gdc *,.gdc-panel *{box-sizing:border-box}'
 
-  /* ---------- sello lanzador: cápsula de cristal, anillo de luz y aviso numerado ---------- */
-  + '.gdc{position:fixed;z-index:72;display:flex;align-items:center;height:60px;padding:0 6px 0 0;border-radius:30px;'
-  +   'background:rgba(20,19,17,.62);border:1px solid rgba(222,216,203,.13);'
-  +   'box-shadow:0 18px 50px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07);'
-  +   '-webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);'
-  +   'touch-action:none;-webkit-user-select:none;user-select:none;opacity:0;transform:translateY(14px) scale(.94);'
-  +   'transition:opacity .8s ease,transform .8s ' + EASE + ',border-color .35s ease,box-shadow .35s ease}'
-  + '.gdc.is-in{opacity:1;transform:none}'
-  + '.gdc.is-snap{transition:left .62s cubic-bezier(.2,1.25,.32,1),top .62s cubic-bezier(.2,1.25,.32,1),transform .5s ' + EASE + ',border-color .35s ease,box-shadow .35s ease}'
-  + '.gdc:hover,.gdc.is-open{border-color:rgba(201,162,74,.38)}'
-  + '.gdc.is-drag{transform:scale(1.06);border-color:rgba(201,162,74,.55);'
-  +   'box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 6px rgba(201,162,74,.07),inset 0 1px 0 rgba(255,255,255,.1);transition:transform .25s ' + EASE + ',box-shadow .25s ease}'
-  /* asa de arrastre: dos trazos finos que se separan y se encienden */
-  + '.gdc-grip{position:relative;flex:none;width:24px;height:100%;cursor:grab}'
-  + '.gdc-grip::before,.gdc-grip::after{content:"";position:absolute;top:50%;left:50%;width:1.5px;height:16px;margin:-8px 0 0 -.75px;border-radius:2px;'
-  +   'background:var(--li);opacity:.34;transition:transform .45s ' + EASE + ',opacity .3s ease,background-color .3s ease,height .45s ' + EASE + ',margin .45s ' + EASE + '}'
-  + '.gdc-grip::before{transform:translateX(-2.5px)}.gdc-grip::after{transform:translateX(2.5px)}'
-  + '.gdc:hover .gdc-grip::before,.gdc.is-drag .gdc-grip::before{transform:translateX(-3.5px);opacity:1;background:var(--l);height:20px;margin-top:-10px}'
-  + '.gdc:hover .gdc-grip::after,.gdc.is-drag .gdc-grip::after{transform:translateX(3.5px);opacity:1;background:var(--l);height:20px;margin-top:-10px}'
+  /* ---------- sello lanzador: un solo círculo, sin contornos ---------- */
+  + '.gdc{position:fixed;z-index:72;display:flex;align-items:center;gap:2px;touch-action:none;-webkit-user-select:none;user-select:none;'
+  +   'opacity:0;transform:translateY(14px) scale(.94);pointer-events:none;transition:opacity .7s ease,transform .7s ' + EASE + '}'
+  + '.gdc.is-in{opacity:1;transform:none;pointer-events:auto}'
+  + '.gdc.is-snap{transition:left .62s cubic-bezier(.2,1.25,.32,1),top .62s cubic-bezier(.2,1.25,.32,1),transform .5s ' + EASE + '}'
+  + '.gdc.is-drag{transform:scale(1.07);transition:transform .25s ' + EASE + '}'
+  /* asa de arrastre: rejilla de 2 x 3 puntos, siempre visible */
+  + '.gdc-grip{flex:none;display:grid;grid-template-columns:repeat(2,3.5px);gap:4px 4.5px;align-content:center;justify-content:center;'
+  +   'width:24px;height:46px;cursor:grab;opacity:.7;transition:opacity .3s ease}'
+  + '.gdc-grip i{width:3.5px;height:3.5px;border-radius:50%;background:var(--li);box-shadow:0 0 0 1px rgba(10,10,9,.35);transition:background-color .3s ease}'
+  + '.gdc:hover .gdc-grip,.gdc.is-drag .gdc-grip{opacity:1}'
+  + '.gdc.is-drag .gdc-grip i{background:var(--l)}'
   + '.gdc.is-drag,.gdc.is-drag .gdc-grip,.gdc.is-drag .gdc-btn{cursor:grabbing}'
-  + '.gdc-btn{display:block;padding:0;margin:0;border:none;background:none;cursor:pointer;color:var(--li);font:inherit;border-radius:50%}'
-  + '.gdc-btn:focus-visible{outline:none}'
-  + '.gdc-btn:focus-visible .gdc-seal{box-shadow:0 0 0 3px rgba(201,162,74,.4)}'
-  + '.gdc-seal{position:relative;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;color:var(--l);'
-  +   'background:radial-gradient(120% 120% at 30% 20%,rgba(201,162,74,.16),rgba(10,10,9,.9) 62%);box-shadow:inset 0 0 0 1px rgba(201,162,74,.28);'
-  +   'transition:background-color .4s ease,color .4s ease,box-shadow .4s ease}'
-  /* anillo de luz: un destello de latón que recorre el borde */
-  + '.gdc-seal::before{content:"";position:absolute;inset:-1px;border-radius:50%;'
-  +   'background:conic-gradient(from 0deg,transparent 0 58%,rgba(201,162,74,.55) 78%,#f6e3b4 92%,transparent 100%);'
-  +   '-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 1.6px),#000 calc(100% - 1.6px));mask:radial-gradient(farthest-side,transparent calc(100% - 1.6px),#000 calc(100% - 1.6px));'
-  +   'animation:gdcSpin 4.5s linear infinite;transition:opacity .4s ease}'
-  + '@keyframes gdcSpin{to{transform:rotate(360deg)}}'
-  + '.gdc:hover .gdc-seal::before{animation-duration:1.8s}'
-  + '.gdc.is-open .gdc-seal{background:var(--l);color:var(--e);box-shadow:inset 0 0 0 1px var(--l)}'
-  + '.gdc.is-open .gdc-seal::before{opacity:0}'
+  + '.gdc-btn{display:block;padding:0;margin:0;border:none;background:none;cursor:pointer;font:inherit;border-radius:50%}'
+  + '.gdc-btn:focus-visible{outline:2px solid var(--l);outline-offset:3px}'
+  + '.gdc-seal{position:relative;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;color:var(--l);'
+  +   'background:rgba(44,40,33,.9);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);'
+  +   'box-shadow:0 8px 26px rgba(0,0,0,.34);transition:background-color .45s ease,color .45s ease,box-shadow .45s ease,transform .5s ' + EASE + '}'
+  + '.gdc:hover .gdc-seal,.gdc.is-open .gdc-seal,.gdc.is-drag .gdc-seal{background:var(--l);color:var(--e);box-shadow:0 12px 32px rgba(0,0,0,.42)}'
   + '.gdc-g,.gdc-x{position:absolute;transition:opacity .3s ease,transform .5s ' + EASE + '}'
-  + '.gdc-g{font-family:var(--display,"Bodoni Moda",Georgia,serif);font-weight:400;font-size:1.62rem;line-height:1;transform:translateY(-1px)}'
-  + '.gdc:hover:not(.is-open) .gdc-g{transform:translateY(-1px) scale(1.08)}'
-  + '.gdc-x{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.3;stroke-linecap:round;opacity:0;transform:rotate(-90deg) scale(.6)}'
+  + '.gdc-g{font-family:var(--display,"Bodoni Moda",Georgia,serif);font-weight:400;font-size:1.5rem;line-height:1;transform:translateY(-1px)}'
+  + '.gdc-x{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.3;stroke-linecap:round;opacity:0;transform:rotate(-90deg) scale(.6)}'
   + '.gdc.is-open .gdc-g{opacity:0;transform:translateY(-1px) rotate(90deg) scale(.6)}'
   + '.gdc.is-open .gdc-x{opacity:1;transform:none}'
   /* aviso numerado, como un mensaje sin leer */
-  + '.gdc-badge{position:absolute;top:-5px;right:-5px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;display:grid;place-items:center;'
-  +   'background:var(--l);color:var(--e);font-size:11px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;'
-  +   'box-shadow:0 0 0 2.5px #131210,0 4px 12px rgba(0,0,0,.45);transition:transform .45s cubic-bezier(.2,1.4,.3,1),opacity .3s ease}'
-  + '.gdc-badge::after{content:"";position:absolute;inset:0;border-radius:10px;border:1px solid var(--l);animation:gdcPing 2.6s ' + EASE + ' 1.6s infinite}'
-  + '@keyframes gdcPing{0%{transform:scale(1);opacity:.75}65%,100%{transform:scale(2.1);opacity:0}}'
+  + '.gdc-badge{position:absolute;top:-5px;right:-5px;min-width:19px;height:19px;padding:0 5px;border-radius:10px;display:grid;place-items:center;'
+  +   'background:var(--l);color:var(--e);font-size:11px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;box-shadow:0 2px 8px rgba(0,0,0,.4);'
+  +   'transition:transform .45s cubic-bezier(.2,1.4,.3,1),opacity .3s ease}'
+  + '.gdc:hover .gdc-badge,.gdc.is-drag .gdc-badge{background:var(--li)}'
   + '.gdc.is-seen .gdc-badge{transform:scale(0);opacity:0}'
-
-  /* ---------- velo ---------- */
-  + '.gdc-scrim{position:fixed;inset:0;z-index:71;background:rgba(6,6,5,.46);opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s linear .5s}'
-  + '.gdc-scrim.is-open{opacity:1;visibility:visible;transition:opacity .5s ease}'
 
   /* ---------- tarjeta ---------- */
   + '.gdc-panel{position:fixed;z-index:73;width:392px;max-width:calc(100vw - 24px);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);overflow-y:auto;'
-  +   'background:#0d0c0b;color:var(--li);border:1px solid rgba(201,162,74,.2);border-radius:2px;box-shadow:0 40px 100px rgba(0,0,0,.65);'
+  +   'background:#0d0c0b;color:var(--li);border:none;border-radius:2px;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(0,0,0,.4);'
   +   'padding:34px 34px 26px;scrollbar-width:none;opacity:0;visibility:hidden;transform:translateY(14px);'
   +   'transition:opacity .35s ease,transform .5s ' + EASE + ',visibility 0s linear .5s}'
   + '.gdc-panel::-webkit-scrollbar{display:none}'
-  + '.gdc-panel::before{content:"";position:absolute;top:-1px;left:34px;width:44px;height:1px;background:var(--l)}'
   + '.gdc-panel.is-open{opacity:1;visibility:visible;transform:none;transition:opacity .35s ease,transform .5s ' + EASE + '}'
   + '.gdc-close{position:absolute;top:18px;right:18px;width:32px;height:32px;border:none;border-radius:50%;background:none;color:var(--faint);cursor:pointer;display:grid;place-items:center;transition:color .25s ease,transform .45s ' + EASE + '}'
   + '.gdc-close:hover{color:var(--l);transform:rotate(90deg)}'
@@ -97,7 +74,7 @@
   + '.gdc-title{margin:0;font-family:var(--display,"Bodoni Moda",Georgia,serif);font-weight:400;font-size:2.05rem;line-height:1.08;letter-spacing:-.015em;color:var(--li);text-wrap:balance}'
   + '.gdc-title em{font-style:normal;color:var(--l)}'
   + '.gdc-lead{margin:16px 0 0;font-size:.88rem;line-height:1.65;color:var(--faint);max-width:30ch}'
-  + '.gdc-list{list-style:none;margin:28px 0 0;padding:0;border-bottom:1px solid var(--hair)}'
+  + '.gdc-list{list-style:none;margin:28px 0 0;padding:0}'
   + '.gdc-row{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:6px;padding:17px 2px;border-top:1px solid var(--hair);position:relative;'
   +   'text-decoration:none;color:var(--li);transition:color .3s ease}'
   + '.gdc-row::before{content:"";position:absolute;left:0;top:-1px;width:100%;height:1px;background:var(--l);transform:scaleX(0);transform-origin:left;transition:transform .6s ' + EASE + '}'
@@ -139,13 +116,11 @@
 
   + '@media (max-width:560px){'
   +   '.gdc-panel{left:8px!important;right:8px!important;top:auto!important;bottom:8px!important;width:auto;max-width:none;max-height:calc(100dvh - 16px);padding:30px 24px 22px}'
-  +   '.gdc-panel::before{left:24px}.gdc-title{font-size:1.9rem}'
-  +   '.gdc{height:56px}.gdc-seal{width:44px;height:44px}.gdc-g{font-size:1.5rem}}'
-  + '@media (prefers-reduced-motion:reduce){.gdc,.gdc-panel,.gdc-scrim,.gdc-panel .gdc-s,.gdc-row *,.gdc-row::before,.gdc-form::after,.gdc-g,.gdc-x,.gdc-close{transition:none!important}'
-  +   '.gdc-badge::after,.gdc-seal::before{animation:none}.gdc.is-snap{transition:none!important}.gdc-panel .gdc-s{opacity:1;transform:none}}'
-  /* el indicador "Desplace" del hero vive en la misma esquina: se corre para no quedar debajo del sello */
-  + '@media (min-width:900px){.gd-hero-cap{padding-right:104px!important}}'
-  + '@media print{.gdc,.gdc-panel,.gdc-scrim{display:none!important}}';
+  +   '.gdc-title{font-size:1.9rem}'
+  +   '.gdc-seal{width:44px;height:44px}.gdc-g{font-size:1.42rem}}'
+  + '@media (prefers-reduced-motion:reduce){.gdc,.gdc-panel,.gdc-panel .gdc-s,.gdc-row *,.gdc-row::before,.gdc-form::after,.gdc-g,.gdc-x,.gdc-close{transition:none!important}'
+  +   '.gdc.is-snap{transition:none!important}.gdc-panel .gdc-s{opacity:1;transform:none}}'
+  + '@media print{.gdc,.gdc-panel{display:none!important}}';
 
   var st = document.createElement('style');
   st.textContent = css;
@@ -161,7 +136,7 @@
   var root = document.createElement('div');
   root.className = 'gdc';
   root.innerHTML =
-      '<span class="gdc-grip" aria-hidden="true" title="Arrastre para mover"></span>'
+      '<span class="gdc-grip" aria-hidden="true" title="Arrastre para mover"><i></i><i></i><i></i><i></i><i></i><i></i></span>'
     + '<button class="gdc-btn" type="button" aria-label="Abrir atención al cliente, 1 mensaje" aria-expanded="false" aria-controls="gdcPanel">'
     +   '<span class="gdc-seal" aria-hidden="true"><span class="gdc-g">G</span>'
     +     '<svg class="gdc-x" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg><span class="gdc-badge">1</span></span>'
@@ -200,10 +175,6 @@
     +   '<button class="gdc-back" type="button">Hacer otra consulta</button></div>'
     + '</div>';
 
-  var scrim = document.createElement('div');
-  scrim.className = 'gdc-scrim';
-
-  document.body.appendChild(scrim);
   document.body.appendChild(panel);
   document.body.appendChild(root);
 
@@ -218,7 +189,7 @@
   // ---------- posición (anclada al borde más cercano, sobrevive a cambios de tamaño) ----------
   var pos = null;
   try{ pos = JSON.parse(store('gdChatPos') || 'null'); }catch(e){ pos = null; }
-  if(!pos || typeof pos.x !== 'number' || typeof pos.y !== 'number') pos = { h: 'r', x: 22, v: 'b', y: 22 };
+  if(!pos || typeof pos.x !== 'number' || typeof pos.y !== 'number') pos = { h: 'r', x: 24, v: 'b', y: 24 };
 
   function place(){
     var w = root.offsetWidth, h = root.offsetHeight, vw = window.innerWidth, vh = window.innerHeight;
@@ -232,7 +203,7 @@
   }
   // al soltar, el sello se acomoda solo contra el borde más cercano
   function snap(){
-    var r = root.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight, E = 22;
+    var r = root.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight, E = 24;
     var toLeft = r.left + r.width / 2 < vw / 2;
     var top = Math.max(E, Math.min(r.top, vh - r.height - E));
     root.classList.add('is-snap');
@@ -339,18 +310,16 @@
   function open(){
     if(isOpen) return; isOpen = true;
     root.classList.add('is-open', 'is-seen');
-    store('gdChatSeen', '1');
+    try{ sessionStorage.setItem('gdChatSeen', '1'); }catch(e){}
     btn.setAttribute('aria-expanded', 'true');
     btn.setAttribute('aria-label', 'Cerrar atención al cliente');
     placePanel();
     panel.classList.add('is-open');
-    scrim.classList.add('is-open');
   }
   function close(refocus){
     if(!isOpen) return; isOpen = false;
     root.classList.remove('is-open');
     panel.classList.remove('is-open');
-    scrim.classList.remove('is-open');
     btn.setAttribute('aria-expanded', 'false');
     btn.setAttribute('aria-label', 'Abrir atención al cliente');
     setTimeout(function(){ if(!isOpen) panel.classList.remove('is-done'); }, 500);
@@ -358,11 +327,22 @@
   }
   btn.addEventListener('click', function(){ if(justDragged) return; isOpen ? close() : open(); });
   panel.querySelector('.gdc-close').addEventListener('click', function(){ close(true); });
-  scrim.addEventListener('click', function(){ close(); });
+  document.addEventListener('pointerdown', function(e){
+    if(isOpen && !panel.contains(e.target) && !root.contains(e.target)) close();
+  });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && isOpen) close(true); });
 
   // ---------- entrada ----------
-  if(store('gdChatSeen') === '1') root.classList.add('is-seen');
+  try{ if(sessionStorage.getItem('gdChatSeen') === '1') root.classList.add('is-seen'); }catch(e){}
   place();
-  setTimeout(function(){ place(); root.classList.add('is-in'); }, 900);
+  // no compite con el hero: el sello entra cuando el visitante ya empezó a bajar
+  function visible(){
+    var th = window.innerHeight * 0.55;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var show = isOpen || window.scrollY > th || max < th;
+    if(show !== root.classList.contains('is-in')){ if(show) place(); root.classList.toggle('is-in', show); }
+  }
+  window.addEventListener('scroll', visible, { passive: true });
+  window.addEventListener('resize', visible);
+  setTimeout(visible, 600);
 })();
