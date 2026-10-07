@@ -28,37 +28,54 @@
   +   'font-family:var(--body,"Jost",system-ui,sans-serif);font-weight:300;-webkit-font-smoothing:antialiased;box-sizing:border-box}'
   + '.gdc *,.gdc-panel *{box-sizing:border-box}'
 
-  /* ---------- sello lanzador ---------- */
-  + '.gdc{position:fixed;z-index:72;display:flex;align-items:center;height:54px;padding:0 5px 0 0;border-radius:27px;'
-  +   'background:rgba(12,11,10,.9);border:1px solid rgba(201,162,74,.26);box-shadow:0 18px 44px rgba(0,0,0,.4);'
-  +   '-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);touch-action:none;-webkit-user-select:none;user-select:none;'
-  +   'opacity:0;transform:translateY(12px);transition:opacity .8s ease,transform .8s ' + EASE + ',border-color .35s ease,box-shadow .35s ease}'
+  /* ---------- sello lanzador: cápsula de cristal, anillo de luz y aviso numerado ---------- */
+  + '.gdc{position:fixed;z-index:72;display:flex;align-items:center;height:60px;padding:0 6px 0 0;border-radius:30px;'
+  +   'background:rgba(20,19,17,.62);border:1px solid rgba(222,216,203,.13);'
+  +   'box-shadow:0 18px 50px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07);'
+  +   '-webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);'
+  +   'touch-action:none;-webkit-user-select:none;user-select:none;opacity:0;transform:translateY(14px) scale(.94);'
+  +   'transition:opacity .8s ease,transform .8s ' + EASE + ',border-color .35s ease,box-shadow .35s ease}'
   + '.gdc.is-in{opacity:1;transform:none}'
-  + '.gdc:hover,.gdc.is-open,.gdc.is-drag{border-color:rgba(201,162,74,.6)}'
-  + '.gdc.is-drag{box-shadow:0 26px 60px rgba(0,0,0,.55);transition:none}'
-  + '.gdc-grip{flex:none;width:26px;height:100%;cursor:grab;opacity:.32;transition:opacity .3s ease;'
-  +   'background:radial-gradient(circle,var(--li) .9px,transparent 1.25px) center/5px 5px;background-repeat:repeat;'
-  +   '-webkit-mask:linear-gradient(#000,#000) center/10px 15px no-repeat;mask:linear-gradient(#000,#000) center/10px 15px no-repeat}'
-  + '.gdc:hover .gdc-grip,.gdc.is-drag .gdc-grip{opacity:.8}'
+  + '.gdc.is-snap{transition:left .62s cubic-bezier(.2,1.25,.32,1),top .62s cubic-bezier(.2,1.25,.32,1),transform .5s ' + EASE + ',border-color .35s ease,box-shadow .35s ease}'
+  + '.gdc:hover,.gdc.is-open{border-color:rgba(201,162,74,.38)}'
+  + '.gdc.is-drag{transform:scale(1.06);border-color:rgba(201,162,74,.55);'
+  +   'box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 6px rgba(201,162,74,.07),inset 0 1px 0 rgba(255,255,255,.1);transition:transform .25s ' + EASE + ',box-shadow .25s ease}'
+  /* asa de arrastre: dos trazos finos que se separan y se encienden */
+  + '.gdc-grip{position:relative;flex:none;width:24px;height:100%;cursor:grab}'
+  + '.gdc-grip::before,.gdc-grip::after{content:"";position:absolute;top:50%;left:50%;width:1.5px;height:16px;margin:-8px 0 0 -.75px;border-radius:2px;'
+  +   'background:var(--li);opacity:.34;transition:transform .45s ' + EASE + ',opacity .3s ease,background-color .3s ease,height .45s ' + EASE + ',margin .45s ' + EASE + '}'
+  + '.gdc-grip::before{transform:translateX(-2.5px)}.gdc-grip::after{transform:translateX(2.5px)}'
+  + '.gdc:hover .gdc-grip::before,.gdc.is-drag .gdc-grip::before{transform:translateX(-3.5px);opacity:1;background:var(--l);height:20px;margin-top:-10px}'
+  + '.gdc:hover .gdc-grip::after,.gdc.is-drag .gdc-grip::after{transform:translateX(3.5px);opacity:1;background:var(--l);height:20px;margin-top:-10px}'
   + '.gdc.is-drag,.gdc.is-drag .gdc-grip,.gdc.is-drag .gdc-btn{cursor:grabbing}'
-  + '.gdc-btn{display:flex;align-items:center;gap:14px;height:100%;padding:0;margin:0;border:none;background:none;cursor:pointer;color:var(--li);font:inherit}'
+  + '.gdc-btn{display:block;padding:0;margin:0;border:none;background:none;cursor:pointer;color:var(--li);font:inherit;border-radius:50%}'
   + '.gdc-btn:focus-visible{outline:none}'
-  + '.gdc-btn:focus-visible .gdc-seal{box-shadow:0 0 0 3px rgba(201,162,74,.35)}'
-  + '.gdc-label{font-size:.62rem;font-weight:400;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);padding-left:2px;transition:color .3s ease}'
-  + '.gdc:hover .gdc-label,.gdc.is-open .gdc-label{color:var(--li)}'
-  + '.gdc-seal{position:relative;flex:none;width:42px;height:42px;border-radius:50%;border:1px solid rgba(201,162,74,.6);display:grid;place-items:center;'
-  +   'color:var(--l);transition:background-color .4s ease,color .4s ease,border-color .4s ease,box-shadow .3s ease}'
-  + '.gdc:hover .gdc-seal,.gdc.is-open .gdc-seal{background:var(--l);border-color:var(--l);color:var(--e)}'
-  + '.gdc-g,.gdc-x{position:absolute;transition:opacity .3s ease,transform .45s ' + EASE + '}'
-  + '.gdc-g{font-family:var(--display,"Bodoni Moda",Georgia,serif);font-weight:400;font-size:1.42rem;line-height:1;transform:translateY(-1px)}'
-  + '.gdc-x{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.2;stroke-linecap:round;opacity:0;transform:rotate(-90deg) scale(.6)}'
+  + '.gdc-btn:focus-visible .gdc-seal{box-shadow:0 0 0 3px rgba(201,162,74,.4)}'
+  + '.gdc-seal{position:relative;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;color:var(--l);'
+  +   'background:radial-gradient(120% 120% at 30% 20%,rgba(201,162,74,.16),rgba(10,10,9,.9) 62%);box-shadow:inset 0 0 0 1px rgba(201,162,74,.28);'
+  +   'transition:background-color .4s ease,color .4s ease,box-shadow .4s ease}'
+  /* anillo de luz: un destello de latón que recorre el borde */
+  + '.gdc-seal::before{content:"";position:absolute;inset:-1px;border-radius:50%;'
+  +   'background:conic-gradient(from 0deg,transparent 0 58%,rgba(201,162,74,.55) 78%,#f6e3b4 92%,transparent 100%);'
+  +   '-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 1.6px),#000 calc(100% - 1.6px));mask:radial-gradient(farthest-side,transparent calc(100% - 1.6px),#000 calc(100% - 1.6px));'
+  +   'animation:gdcSpin 4.5s linear infinite;transition:opacity .4s ease}'
+  + '@keyframes gdcSpin{to{transform:rotate(360deg)}}'
+  + '.gdc:hover .gdc-seal::before{animation-duration:1.8s}'
+  + '.gdc.is-open .gdc-seal{background:var(--l);color:var(--e);box-shadow:inset 0 0 0 1px var(--l)}'
+  + '.gdc.is-open .gdc-seal::before{opacity:0}'
+  + '.gdc-g,.gdc-x{position:absolute;transition:opacity .3s ease,transform .5s ' + EASE + '}'
+  + '.gdc-g{font-family:var(--display,"Bodoni Moda",Georgia,serif);font-weight:400;font-size:1.62rem;line-height:1;transform:translateY(-1px)}'
+  + '.gdc:hover:not(.is-open) .gdc-g{transform:translateY(-1px) scale(1.08)}'
+  + '.gdc-x{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.3;stroke-linecap:round;opacity:0;transform:rotate(-90deg) scale(.6)}'
   + '.gdc.is-open .gdc-g{opacity:0;transform:translateY(-1px) rotate(90deg) scale(.6)}'
   + '.gdc.is-open .gdc-x{opacity:1;transform:none}'
-  + '.gdc-dot{position:absolute;top:1px;right:1px;width:8px;height:8px;border-radius:50%;background:var(--li);box-shadow:0 0 0 2px #0c0b0a;'
-  +   'transition:transform .4s ' + EASE + ',opacity .3s ease}'
-  + '.gdc-dot::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid var(--li);animation:gdcPing 2.8s ' + EASE + ' 1.4s 3}'
-  + '@keyframes gdcPing{0%{transform:scale(1);opacity:.8}70%,100%{transform:scale(2.6);opacity:0}}'
-  + '.gdc.is-seen .gdc-dot{transform:scale(0);opacity:0}'
+  /* aviso numerado, como un mensaje sin leer */
+  + '.gdc-badge{position:absolute;top:-5px;right:-5px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;display:grid;place-items:center;'
+  +   'background:var(--l);color:var(--e);font-size:11px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;'
+  +   'box-shadow:0 0 0 2.5px #131210,0 4px 12px rgba(0,0,0,.45);transition:transform .45s cubic-bezier(.2,1.4,.3,1),opacity .3s ease}'
+  + '.gdc-badge::after{content:"";position:absolute;inset:0;border-radius:10px;border:1px solid var(--l);animation:gdcPing 2.6s ' + EASE + ' 1.6s infinite}'
+  + '@keyframes gdcPing{0%{transform:scale(1);opacity:.75}65%,100%{transform:scale(2.1);opacity:0}}'
+  + '.gdc.is-seen .gdc-badge{transform:scale(0);opacity:0}'
 
   /* ---------- velo ---------- */
   + '.gdc-scrim{position:fixed;inset:0;z-index:71;background:rgba(6,6,5,.46);opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s linear .5s}'
@@ -123,9 +140,11 @@
   + '@media (max-width:560px){'
   +   '.gdc-panel{left:8px!important;right:8px!important;top:auto!important;bottom:8px!important;width:auto;max-width:none;max-height:calc(100dvh - 16px);padding:30px 24px 22px}'
   +   '.gdc-panel::before{left:24px}.gdc-title{font-size:1.9rem}'
-  +   '.gdc{height:50px}.gdc-seal{width:38px;height:38px}.gdc-g{font-size:1.28rem}.gdc-label{letter-spacing:.2em}}'
+  +   '.gdc{height:56px}.gdc-seal{width:44px;height:44px}.gdc-g{font-size:1.5rem}}'
   + '@media (prefers-reduced-motion:reduce){.gdc,.gdc-panel,.gdc-scrim,.gdc-panel .gdc-s,.gdc-row *,.gdc-row::before,.gdc-form::after,.gdc-g,.gdc-x,.gdc-close{transition:none!important}'
-  +   '.gdc-dot::after{animation:none}.gdc-panel .gdc-s{opacity:1;transform:none}}'
+  +   '.gdc-badge::after,.gdc-seal::before{animation:none}.gdc.is-snap{transition:none!important}.gdc-panel .gdc-s{opacity:1;transform:none}}'
+  /* el indicador "Desplace" del hero vive en la misma esquina: se corre para no quedar debajo del sello */
+  + '@media (min-width:900px){.gd-hero-cap{padding-right:104px!important}}'
   + '@media print{.gdc,.gdc-panel,.gdc-scrim{display:none!important}}';
 
   var st = document.createElement('style');
@@ -143,10 +162,9 @@
   root.className = 'gdc';
   root.innerHTML =
       '<span class="gdc-grip" aria-hidden="true" title="Arrastre para mover"></span>'
-    + '<button class="gdc-btn" type="button" aria-label="Abrir atención al cliente" aria-expanded="false" aria-controls="gdcPanel">'
-    +   '<span class="gdc-label" aria-hidden="true">Atención</span>'
+    + '<button class="gdc-btn" type="button" aria-label="Abrir atención al cliente, 1 mensaje" aria-expanded="false" aria-controls="gdcPanel">'
     +   '<span class="gdc-seal" aria-hidden="true"><span class="gdc-g">G</span>'
-    +     '<svg class="gdc-x" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg><span class="gdc-dot"></span></span>'
+    +     '<svg class="gdc-x" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg><span class="gdc-badge">1</span></span>'
     + '</button>';
 
   var filas = '';
@@ -212,6 +230,22 @@
     root.style.top = top + 'px';
     if(isOpen) placePanel();
   }
+  // al soltar, el sello se acomoda solo contra el borde más cercano
+  function snap(){
+    var r = root.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight, E = 22;
+    var toLeft = r.left + r.width / 2 < vw / 2;
+    var top = Math.max(E, Math.min(r.top, vh - r.height - E));
+    root.classList.add('is-snap');
+    root.style.left = (toLeft ? E : vw - r.width - E) + 'px';
+    root.style.top = top + 'px';
+    pos = { h: toLeft ? 'l' : 'r', x: E, v: (top + r.height / 2 > vh / 2) ? 'b' : 't' };
+    pos.y = Math.round(pos.v === 'b' ? vh - top - r.height : top);
+    store('gdChatPos', JSON.stringify(pos));
+    var t0 = Date.now();
+    (function follow(){ if(isOpen) placePanel(); if(Date.now() - t0 < 700) requestAnimationFrame(follow); })();
+    clearTimeout(snap.t);
+    snap.t = setTimeout(function(){ root.classList.remove('is-snap'); if(isOpen) placePanel(); }, 720);
+  }
   function remember(){
     var r = root.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight;
     pos = {
@@ -267,7 +301,7 @@
     if(drag.on){
       root.classList.remove('is-drag');
       try{ root.releasePointerCapture(drag.id); }catch(err){}
-      remember();
+      snap();
       justDragged = true;
       setTimeout(function(){ justDragged = false; }, 60);
     }
