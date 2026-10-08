@@ -218,6 +218,8 @@ img{ max-width:100%; display:block; }
 .sh-burger.is-open span:nth-child(2){ opacity:0; }
 .sh-burger.is-open span:nth-child(3){ top:9px; transform:rotate(-45deg); }
 .site-header:not(.is-solid) .sh-burger span{ box-shadow:0 1px 4px rgba(0,0,0,.55); }
+/* el icono mide 26x20: se amplía la zona táctil sin cambiar el dibujo */
+.sh-burger::after{ content:''; position:absolute; inset:-13px -10px; }
 @media (min-width:1180px){ .sh-burger{ display:none; } }
 
 .sh-mundos{ display:none; align-items:center; gap: clamp(1rem,2vw,2rem); }
@@ -485,7 +487,7 @@ img{ max-width:100%; display:block; }
 @media (prefers-reduced-motion: reduce){ .gd-scroll-cue i{ animation:none; } }
 
 /* miga de pan — vive dentro del panel del hero */
-.gd-migas{ display:flex; align-items:center; gap:8px; font-family: var(--body); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color: var(--text-faint); margin:0 0 20px; }
+.gd-migas{ display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; font-family: var(--body); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color: var(--text-faint); margin:0 0 20px; }
 .gd-migas a{ color: var(--text-faint); text-decoration:none; transition: color .2s ease; }
 .gd-migas a:hover{ color: var(--accent); }
 .gd-migas span{ color: var(--text-dim); }
@@ -569,6 +571,10 @@ img{ max-width:100%; display:block; }
    TARJETAS DE PRODUCTO / PROYECTO / SERVICIO
    ========================================================================== */
 .gd-grid{ display:grid; gap: var(--sp-24); grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); }
+/* móvil: las piezas van de dos en dos, como en cualquier tienda; a una por fila las páginas de catálogo eran interminables */
+@media (max-width:560px){
+  .gd-grid:not(.gd-grid-2):not(.gd-grid-3){ grid-template-columns: repeat(2, minmax(0,1fr)); gap: 22px 14px; }
+}
 .gd-grid-2{ grid-template-columns:1fr; }
 @media (min-width:860px){ .gd-grid-2{ grid-template-columns:1fr 1fr; } }
 .gd-grid-3{ grid-template-columns:1fr; }
@@ -623,6 +629,9 @@ img{ max-width:100%; display:block; }
 .gd-claro .gd-serv{ border-top-color: rgba(10,9,6,.12); }
 .gd-claro .gd-serv h3{ color: var(--ebano); }
 .gd-claro .gd-serv p{ color: var(--grafito); }
+/* el botón secundario es claro sobre oscuro: en láminas claras quedaba casi invisible */
+.gd-claro .gd-btn-ghost{ border-color: rgba(10,9,6,.32); color: var(--ebano); }
+.gd-claro .gd-btn-ghost:hover{ border-color: var(--bronce); color: var(--bronce); }
 
 /* ==========================================================================
    ESPACIOS — modelo de dos niveles: un índice de tarjetas y, dentro de cada

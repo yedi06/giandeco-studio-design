@@ -646,6 +646,7 @@
   .sh-burger.is-open span:nth-child(2){ opacity: 0; }
   .sh-burger.is-open span:nth-child(3){ top: 9px; transform: rotate(-45deg); }
   .site-header:not(.is-solid) .sh-burger span{ box-shadow: 0 1px 4px rgba(0,0,0,.55); }
+  .sh-burger::after{ content:''; position:absolute; inset:-13px -10px; }
   @media (min-width: 1180px){ .sh-burger{ display: none; } }
 
   .sh-mundos{ display: none; align-items: center; gap: clamp(1rem, 2vw, 2rem); }
@@ -1127,7 +1128,10 @@
   .gd-univ-grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap: var(--sp-24); }
   .gd-univ{ position:relative; display:block; text-decoration:none; overflow:hidden; border-radius:2px; isolation:isolate; }
   .gd-univ--main{ grid-column: span 12; aspect-ratio: 4/5; }
-  .gd-univ--sub{ grid-column: span 12; aspect-ratio: 16/10; }
+  .gd-univ--sub{ grid-column: span 12; aspect-ratio: 5/4; }
+  /* en móvil la columna de Hogar/Catálogo ocupa todo el ancho; sin esto quedaba en 1 de 12 columnas y las tarjetas no se veían */
+  .gd-univ-col{ grid-column: span 12; display:grid; grid-template-columns: 1fr; gap: var(--sp-24); }
+  .gd-univ-col .gd-univ--sub{ grid-column: auto; }
   @media (min-width: 860px){
     .gd-univ--main{ grid-column: span 7; aspect-ratio: 4/4.6; }
     /* la columna derecha se estira a la altura de la lámina principal y la parte en dos */

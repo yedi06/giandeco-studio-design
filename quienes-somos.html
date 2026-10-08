@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=8">
+<link rel="stylesheet" href="css/giandeco.css?v=9">
 <style>
   .qs-historia{ display:grid; gap:clamp(36px,5vw,72px); grid-template-columns:1fr; align-items:start; }
   @media (min-width:960px){ .qs-historia{ grid-template-columns:.85fr 1.15fr; } }
@@ -36,6 +36,11 @@
   .qs-persona h3{ font-family:var(--display); font-weight:400; font-size:clamp(1.9rem,2.4vw,2.1rem); color:var(--lino); margin:0 0 6px; }
   .qs-persona b{ display:block; font-family:var(--body); font-weight:500; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
   .qs-persona p{ margin:0; color:var(--text-dim); font-size:.94rem; line-height:1.7; }
+  /* esta sección va sobre lámina clara: los colores del tema oscuro la dejaban ilegible */
+  .gd-claro .qs-persona{ border-top-color: rgba(10,9,6,.16); }
+  .gd-claro .qs-persona h3{ color: var(--ebano); }
+  .gd-claro .qs-persona b{ color: var(--bronce); }
+  .gd-claro .qs-persona p{ color: var(--grafito); }
 
   /* misión / visión */
   .qs-mv{ display:grid; gap:var(--sp-40); grid-template-columns:1fr; }

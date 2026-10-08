@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=8">
+<link rel="stylesheet" href="css/giandeco.css?v=9">
 <style>
   /* bloque destacado — mismo tratamiento para Navidad, Mueblería y Compra el
      espacio: banner grande + productos reales debajo. .is-flip pasa la foto
@@ -59,7 +59,9 @@
   .ce-head h2{ margin:0; font-size:clamp(2rem,3.4vw,2.7rem); }
   .ce-head-quote{ font-family:var(--script); font-style:italic; font-weight:300; color:var(--text-faint); font-size:1.08rem; margin:10px 0 0; max-width:42ch; }
 
-  .ce-grid{ display:grid; grid-template-columns:1fr; gap: clamp(20px,3vw,28px); }
+  .ce-grid{ display:grid; grid-template-columns:minmax(0,1fr); gap: clamp(20px,3vw,28px); }
+  /* sin esto, la fila de pestañas (que hace scroll) ensancha toda la columna y corta el título y el botón en móvil */
+  .ce-grid > *{ min-width:0; }
   @media (min-width:960px){ .ce-grid{ grid-template-columns:1fr .4fr; align-items:stretch; } }
 
   .ce-stage{ position:relative; border-radius:2px; overflow:hidden; aspect-ratio:4/3; background:#050403; }
@@ -97,6 +99,14 @@
 
   .ce-foot{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px; margin-top:var(--sp-24); padding-top:var(--sp-16); border-top:1px solid var(--line); }
   .ce-foot p{ margin:0; font-size:.84rem; color:var(--text-faint); }
+  /* móvil: la foto con puntos necesita altura para que los puntos no se amontonen */
+  @media (max-width:560px){
+    .ce-showcase{ padding-inline:14px; }
+    .ce-stage{ aspect-ratio:4/5; }
+    .ce-stage-cap{ flex-direction:column; align-items:flex-start; gap:8px; padding:14px; }
+    .ce-stage-cap b{ font-size:1.02rem; line-height:1.2; }
+    .ce-foot .gd-btn{ width:100%; justify-content:center; }
+  }
 </style>
 </head>
 <body data-mundo="catalogo" data-seccion="home">
