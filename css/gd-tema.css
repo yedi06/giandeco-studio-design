@@ -1,0 +1,165 @@
+/* ==========================================================================
+   GIANDECO — TEMA CLARO
+   Construido sobre el BRANDBOOK Edición 01 · 2026:
+   · Lámina 25, fondos permitidos: ébano o HUMO (#F4F1EA). No hay blanco puro.
+   · Lámina 29: sobre fondo claro el latón no contrasta; etiquetas y texto de
+     apoyo van en BRONCE (#8A6F3C). El latón queda para piezas pequeñas (≤10%).
+   · Lámina 30: ébano para texto sobre claro; GRAFITO (#4A4844) para texto
+     secundario; LINO (#DED8CB) para bloques de fondo.
+   · Lámina 24: sobre claro el logotipo va a una tinta, en ébano.
+   · Lámina 29: ébano es el color de las portadas.
+
+   De ahí sale la idea del tema: funciona como un libro. La portada (hero) y el
+   pie siguen en ébano; las páginas interiores pasan a humo.
+
+   Cómo está hecho: se redefinen las variables del sistema bajo
+   :root[data-tema="claro"], y las zonas que deben seguir oscuras (portada,
+   pie, fotografía con texto encima) recuperan las variables oscuras con el
+   bloque "islas". Así no se reescribe ningún componente.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VARIABLES DEL TEMA CLARO
+   -------------------------------------------------------------------------- */
+:root[data-tema="claro"]{
+  --bg:#F4F1EA;            /* humo */
+  --bg-raised:#EDE8DD;
+  --panel:#E8E2D6;
+  --panel-2:#DED8CB;       /* lino: bloques de fondo */
+  --line:#D9D2C4;
+  --text:#171613;
+  --text-dim:#4A4844;      /* grafito */
+  --text-faint:#6F6A63;
+  --accent:#8A6F3C;        /* bronce: donde el latón no contrasta */
+  --accent-2:#6E5830;
+  --accent-soft:rgba(138,111,60,.14);
+  --lino:#0A0A09;          /* el "color de título" del sistema: sobre claro es ébano */
+  --bg-header-solid:#F4F1EA;
+  color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+   2. ISLAS OSCURAS — portada, pie y todo lo que lleva texto sobre fotografía
+   -------------------------------------------------------------------------- */
+:root[data-tema="claro"] :is(
+  .gd-hero, .site-header:not(.is-solid), .gd-footer, .gd-intro,
+  .gd-caso, .gd-univ, .gd-shop, .gd-shop-card, .gd-slot, .gd-pieza-thumb.is-slot, .gd-prod-badge,
+  .sh-search-overlay, .gd-cta, .gd-light, .gd-ba, .acc-panel, .g-item, .shift-card,
+  .gd-manifiesto-media, .ce-stage, .ce-showcase, .pr-media, .hp-media, .px-cta,
+  .rt-serv, .gd-ba-frame, .qs-foto,
+  .gd-oscuro
+){
+  --bg:#0A0A09; --bg-raised:#171613; --panel:#1c1a16; --panel-2:#262319; --line:#2a2621;
+  --text:#DED8CB; --text-dim:#B9B3A6; --text-faint:#8a8375;
+  --accent:#C9A24A; --accent-2:#8A6F3C; --accent-soft:rgba(201,162,74,.16);
+  --lino:#DED8CB;
+  color: var(--text);
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+   3. BASE DE PÁGINA
+   -------------------------------------------------------------------------- */
+:root[data-tema="claro"] body{
+  background: var(--bg);
+  /* trama de plano (lámina 35): líneas verticales de 1 px cada 22 px, ahora en ébano */
+  background-image:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(138,111,60,.07), transparent),
+    repeating-linear-gradient(90deg, rgba(10,10,9,.035) 0, rgba(10,10,9,.035) 1px, transparent 1px, transparent 22px);
+  color: var(--text);
+}
+/* la cortina que abre cada foto toma el color de la página, no un bloque negro */
+:root[data-tema="claro"] .gd-curtain::after{ background: var(--bg); border-right-color:#8A6F3C; }
+:root[data-tema="claro"] .gd-hero .gd-curtain::after{ background:#0A0A09; border-right-color:#C9A24A; }
+
+/* láminas alternas: en oscuro eran "claras"; en claro son un tono más de lino */
+:root[data-tema="claro"] .gd-claro{ background:#EAE4D8; }
+
+/* --------------------------------------------------------------------------
+   4. ENCABEZADO
+   Sobre la portada sigue transparente y claro (isla). Al bajar: humo, texto en
+   ébano y logotipo a una tinta.
+   -------------------------------------------------------------------------- */
+:root[data-tema="claro"] .site-header.is-solid{
+  background: var(--bg);
+  border-bottom-color: rgba(10,10,9,.1);
+  box-shadow: 0 8px 24px rgba(10,10,9,.06);
+}
+:root[data-tema="claro"] .site-header.is-solid .sh-categorias{ border-top-color: rgba(10,10,9,.08); }
+:root[data-tema="claro"] .site-header.is-solid .sh-cat-right{ border-left-color: rgba(10,10,9,.12); }
+:root[data-tema="claro"] .site-header.is-solid .sh-brand-mini{ filter: brightness(0); }
+:root[data-tema="claro"] .sh-burger span{ background: currentColor; }
+:root[data-tema="claro"] .site-header.is-solid .sh-burger{ color:#0A0A09; }
+:root[data-tema="claro"] .site-header:not(.is-solid) .sh-burger{ color:#DED8CB; }
+@media (max-width:1179px){
+  :root[data-tema="claro"] .site-header.is-solid{
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    border-bottom-color: rgba(10,10,9,.08); box-shadow:none;
+  }
+}
+/* menú móvil, mega menú y buscador */
+:root[data-tema="claro"] .sh-scrim{ background: rgba(10,10,9,.34); }
+:root[data-tema="claro"] .sh-mobile{ background: var(--bg); box-shadow: 24px 0 60px rgba(10,10,9,.12); }
+:root[data-tema="claro"] .sh-mega{ background: var(--bg); border-color: rgba(10,10,9,.1); box-shadow: 0 24px 50px rgba(10,10,9,.08); }
+
+/* --------------------------------------------------------------------------
+   5. COMPONENTES QUE TRAEN COLOR FIJO DEL TEMA OSCURO
+   -------------------------------------------------------------------------- */
+/* botón secundario */
+:root[data-tema="claro"] .gd-btn-ghost{ border-color: rgba(10,10,9,.3); color:#0A0A09; }
+:root[data-tema="claro"] .gd-btn-ghost:hover{ border-color:#8A6F3C; color:#8A6F3C; }
+/* el botón principal conserva latón con ébano (lámina 25: permitido en piezas pequeñas) */
+:root[data-tema="claro"] .gd-btn-primary{ background:#C9A24A; color:#0A0A09; }
+:root[data-tema="claro"] .gd-btn-primary:hover{ background:#b8913c; }
+:root[data-tema="claro"] ::selection{ background:#C9A24A; color:#0A0A09; }
+
+/* formularios */
+:root[data-tema="claro"] .gd-field input,
+:root[data-tema="claro"] .gd-field select,
+:root[data-tema="claro"] .gd-field textarea{ background: rgba(255,255,255,.5); border-color:#CFC8B9; color:#171613; }
+:root[data-tema="claro"] .gd-field input:focus,
+:root[data-tema="claro"] .gd-field select:focus,
+:root[data-tema="claro"] .gd-field textarea:focus{ border-color:#8A6F3C; background:#fff; }
+:root[data-tema="claro"] .gd-field select option{ background:#F4F1EA; color:#171613; }
+:root[data-tema="claro"] .gd-form-ok{ background: rgba(138,111,60,.1); border-color:#8A6F3C; }
+
+/* marcas: los logos iban en blanco; sobre claro, a una tinta en ébano */
+:root[data-tema="claro"] .gd-marcas-logo img{ filter: grayscale(1) brightness(0); opacity:.62; }
+:root[data-tema="claro"] .gd-marcas-item:hover .gd-marcas-logo img{ opacity:1; }
+:root[data-tema="claro"] .gd-marcas-logo img.is-nativo{ filter:none; opacity:.9; }
+:root[data-tema="claro"] .qs-marca-logo img{ filter: grayscale(1) brightness(0); opacity:.66; }
+:root[data-tema="claro"] .qs-marca-logo img.is-nativo{ filter:none; opacity:.9; }
+/* el mapa iba en negativo para el tema oscuro; en claro, solo en grises */
+:root[data-tema="claro"] .ct-mapa iframe{ filter: grayscale(1) contrast(.95); }
+
+/* numerales de contorno y sombras de foto: pensados para ébano, se aligeran sobre humo */
+:root[data-tema="claro"] .px-ghost{ -webkit-text-stroke-color: rgba(138,111,60,.6); }
+:root[data-tema="claro"] :is(.pr-media, .hp-media, .px-fig .gd-curtain, .px-montaje-media, .px-result .gd-curtain, .ev-momento-media, .pe-momento-media){
+  box-shadow: 0 30px 60px -32px rgba(10,10,9,.34);
+}
+
+/* --------------------------------------------------------------------------
+   6. BOTÓN DE TEMA EN EL MENÚ MÓVIL (lo crea js/gd-tema.js)
+   -------------------------------------------------------------------------- */
+.gd-tema-fila{
+  display:flex; align-items:center; justify-content:space-between; width:100%;
+  background:none; border:none; border-bottom:1px solid var(--line); padding:16px 0; margin:0; cursor:pointer;
+  font-family: var(--body, 'Jost', system-ui, sans-serif); font-size:.92rem; font-weight:300; color: var(--text-dim); text-align:left;
+}
+.gd-tema-fila:hover{ color: var(--text); }
+.gd-tema-ico{ position:relative; width:20px; height:20px; flex:none; color: var(--accent); }
+.gd-tema-ico svg{ position:absolute; inset:0; width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:1.3; transition: opacity .3s ease, transform .5s cubic-bezier(.16,1,.3,1); }
+.gd-tema-ico .ico-luna{ opacity:0; transform: scale(.6) rotate(-30deg); }
+:root[data-tema="claro"] .gd-tema-ico .ico-sol{ opacity:0; transform: scale(.6) rotate(30deg); }
+:root[data-tema="claro"] .gd-tema-ico .ico-luna{ opacity:1; transform:none; }
+@media (min-width:900px){ .gd-tema-fila{ display:none; } }
+
+/* --------------------------------------------------------------------------
+   7. CAMBIO DE TEMA: fundido breve, solo mientras se cambia
+   -------------------------------------------------------------------------- */
+html.gd-tema-anim, html.gd-tema-anim body, html.gd-tema-anim *:not(video):not(img){
+  transition: background-color .45s ease, color .45s ease, border-color .45s ease, fill .45s ease, stroke .45s ease !important;
+}
+@media (prefers-reduced-motion:reduce){
+  html.gd-tema-anim, html.gd-tema-anim body, html.gd-tema-anim *{ transition:none !important; }
+}
