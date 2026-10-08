@@ -1396,6 +1396,7 @@
   input, textarea, select{ cursor: text; }
   input[type="checkbox"], input[type="radio"]{ cursor: default; }
 </style>
+<link rel="stylesheet" href="css/gd-movil.css?v=1">
 
 <!-- intro de marca: se decide antes de pintar, para que nunca haya un parpadeo del telón -->
 <script>(function(){try{var f=/[?&]intro\b/.test(location.search);if(!f&&sessionStorage.getItem('gdIntro')==='1')return;if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(window.scrollY>40)return;document.documentElement.classList.add('gd-intro-on');}catch(e){}})();</script>
@@ -2697,4 +2698,5 @@
   document.addEventListener('visibilitychange', function(){ if(document.hidden) v.pause(); else if(loadedFor){ var p = v.play(); if(p && p.catch) p.catch(function(){}); } });
 })();
 </script>
+<script src="js/gd-movil.js?v=1" defer></script>
 <script src="js/gd-chat.js?v=6" defer></script>
