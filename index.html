@@ -3,6 +3,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Giandeco Studio Design</title>
+<!-- la portada del hero es el LCP: se pide ya, solo la que corresponde a la pantalla -->
+<link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-mobile.webp" media="(orientation: portrait) and (max-width: 1024px)" fetchpriority="high">
+<link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-desktop.webp" media="(orientation: landscape), (min-width: 1025px)" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
@@ -1527,8 +1530,8 @@
     <div class="gd-curtain" id="heroCurtain">
       <!-- HERO VIDEO HOME: poster = primer fotograma (LCP inmediato); el video se carga después y aparece con fundido -->
       <picture>
-        <source media="(max-width: 899px) and (max-aspect-ratio: 3/4)" type="image/webp" srcset="images/hero/hero-home-poster-mobile.webp">
-        <source media="(max-width: 899px) and (max-aspect-ratio: 3/4)" srcset="images/hero/hero-home-poster-mobile.jpg">
+        <source media="(orientation: portrait) and (max-width: 1024px)" type="image/webp" srcset="images/hero/hero-home-poster-mobile.webp">
+        <source media="(orientation: portrait) and (max-width: 1024px)" srcset="images/hero/hero-home-poster-mobile.jpg">
         <source type="image/webp" srcset="images/hero/hero-home-poster-desktop.webp">
         <img class="gd-hero-poster" src="images/hero/hero-home-poster-desktop.jpg" width="1920" height="1080" fetchpriority="high" decoding="async" alt="Gian Jiménez y el propietario recorren una tienda departamental antes de su rediseño">
       </picture>
@@ -2658,7 +2661,8 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var c = navigator.connection || {};
   if(reduce || c.saveData || /(^|-)2g$/.test(c.effectiveType || '')) return; // se queda el poster
-  var portrait = window.matchMedia('(max-width: 899px) and (max-aspect-ratio: 3/4)');
+  // vertical (9:16) en teléfonos y tablets en vertical; horizontal (16:9) en el resto. Misma regla que <picture>.
+  var portrait = window.matchMedia('(orientation: portrait) and (max-width: 1024px)');
   var loadedFor = null;
   function load(){
     var f = portrait.matches ? 'mobile' : 'desktop';
@@ -2668,7 +2672,6 @@
     [['webm','video/webm'],['mp4','video/mp4']].forEach(function(p){
       var s = document.createElement('source'); s.src = v.dataset[f + p[0].charAt(0).toUpperCase() + p[0].slice(1)]; s.type = p[1]; v.appendChild(s);
     });
-    v.poster = 'images/hero/hero-home-poster-' + f + '.jpg';   // 16:9 en escritorio · 9:16 encuadrado plano a plano en móvil
     v.load();
     var pr = v.play(); if(pr && pr.catch) pr.catch(function(){});
   }
