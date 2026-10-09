@@ -19,6 +19,10 @@ var NO_INDEXAR = ['producto.html', 'checkout.html', 'cuenta.html', 'seguimiento.
 function leer(f){ return fs.readFileSync(f, 'utf8'); }
 function esc(s){ return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 function abs(ruta){ return DOMINIO + '/' + ruta.replace(/\?.*$/, '').split('/').map(encodeURIComponent).join('/'); }
+/* dirección pública de una página: sin .html */
+function pub(archivo){ return DOMINIO + '/' + archivo.replace(/\.html$/, ''); }
+/* misma regla que GD_URL en js/giandeco.js */
+function ruta(nombre){ return nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
 function num(precio){ var n = parseFloat(String(precio).replace(/[^0-9.]/g, '')); return isNaN(n) ? null : n; }
 
 /* ---- catálogo: los tres objetos de js/giandeco.js ---- */
@@ -59,19 +63,24 @@ function dato(html, re){ var m = html.match(re); return m ? m[1].trim() : ''; }
 /* ---- 1. una página por pieza ---- */
 var plantilla = leer('producto.html');
 var productos = [];
-fs.readdirSync('.').filter(function(f){ return /^producto-.+\.html$/.test(f); }).forEach(function(f){ fs.unlinkSync(f); });
+// las páginas generadas se reconocen por data-p; se rehacen todas en cada pasada
+function esGenerada(f){ return / data-p="/.test(leer(f)); }
+var fijas = fs.readdirSync('.').filter(function(f){ return /\.html$/.test(f); });
+fijas.filter(esGenerada).forEach(function(f){ fs.unlinkSync(f); });
+fijas = fijas.filter(function(f){ return fs.existsSync(f); });
 
 LINEAS.forEach(function(L){
   Object.keys(L.datos).forEach(function(k){
-    var p = L.datos[k], archivo = 'producto-' + k + '.html', url = abs(archivo), valor = num(p.precio);
+    var p = L.datos[k], archivo = ruta(p.nombre) + '.html', url = pub(archivo), valor = num(p.precio);
+    if(fijas.indexOf(archivo) !== -1 || productos.indexOf(archivo) !== -1) throw new Error('La ruta ' + archivo + ' ya existe: cambie el nombre de la pieza ' + k);
     var titulo = p.nombre + ' — ' + L.label + ' · Giandeco Studio Design';
     var desc = p.nombre + ' · ' + p.cat + ' · ' + p.precio + '. ' + p.nota + ' Entrega en Lima y Callao.';
     var ld = { '@context':'https://schema.org', '@type':'Product', name:p.nombre, sku:k, category:p.cat, description:p.nota,
                image:[abs(p.img)], brand:{ '@type':'Brand', name:'Giandeco' } };
     if(valor !== null) ld.offers = { '@type':'Offer', priceCurrency:'PEN', price:valor.toFixed(2), url:url, seller:{ '@type':'Organization', name:'Giandeco Studio Design' } };
     var migas = { '@context':'https://schema.org', '@type':'BreadcrumbList', itemListElement:[
-      { '@type':'ListItem', position:1, name:'Catálogo', item:abs('catalogo.html') },
-      { '@type':'ListItem', position:2, name:L.label, item:abs(L.href) },
+      { '@type':'ListItem', position:1, name:'Catálogo', item:pub('catalogo.html') },
+      { '@type':'ListItem', position:2, name:L.label, item:pub(L.href) },
       { '@type':'ListItem', position:3, name:p.nombre, item:url }] };
 
     var html = plantilla
@@ -81,7 +90,7 @@ LINEAS.forEach(function(L){
       .replace('<body data-mundo="catalogo" data-seccion="producto">', '<body data-mundo="catalogo" data-seccion="producto" data-p="' + k + '">')
       // contenido legible sin JavaScript; la ficha completa lo reemplaza al cargar
       .replace('<main id="pdp"></main>', '<main id="pdp"><section class="pdp-top"><div class="gd-in">' +
-        '<p class="gd-migas"><a href="catalogo.html">Catálogo</a> / <a href="' + L.href + '">' + L.label + '</a> / <span>' + esc(p.cat) + '</span></p>' +
+        '<p class="gd-migas"><a href="catalogo">Catálogo</a> / <a href="' + L.href.replace('.html', '') + '">' + L.label + '</a> / <span>' + esc(p.cat) + '</span></p>' +
         '<h1 class="gd-h1">' + esc(p.nombre) + '</h1><p class="gd-body">' + esc(p.precio) + '</p><p class="gd-body">' + esc(p.nota) + '</p>' +
         '<img src="' + p.img + '" alt="' + esc(p.nombre) + '" width="600"></div></section></main>');
     html = ponerBloque(html, bloque({ url:url, titulo:titulo, desc:desc, img:abs(p.img), tipo:'product', ld:[ld, migas] }));
@@ -101,10 +110,10 @@ var ORG = { '@context':'https://schema.org', '@type':'HomeAndConstructionBusines
 var SITIO = { '@context':'https://schema.org', '@type':'WebSite', name:'Giandeco Studio Design', url:DOMINIO + '/', inLanguage:'es-PE' };
 
 var paginas = [];
-fs.readdirSync('.').filter(function(f){ return /\.html$/.test(f) && !/^producto-/.test(f) && !/\.bak/.test(f); }).forEach(function(f){
+fijas.forEach(function(f){
   var html = leer(f);
   if(NO_INDEXAR.indexOf(f) !== -1 || /<meta name="robots" content="noindex/.test(html)) return;
-  var esHome = f === 'index.html', url = esHome ? DOMINIO + '/' : abs(f);
+  var esHome = f === 'index.html', url = esHome ? DOMINIO + '/' : pub(f);
   var img = dato(html, /class="gd-kb-img" src="([^"?]+)/) || OG_POR_DEFECTO;
   html = ponerBloque(html, bloque({ url:url, titulo:dato(html, /<title>([\s\S]*?)<\/title>/), desc:dato(html, /<meta name="description" content="([^"]*)"/),
                                     img:abs(img), ld: esHome ? [ORG, SITIO] : [] }));
@@ -115,8 +124,8 @@ fs.readdirSync('.').filter(function(f){ return /\.html$/.test(f) && !/^producto-
 /* ---- 3. sitemap y robots ---- */
 var hoy = new Date().toISOString().slice(0, 10);
 var urls = paginas.map(function(p){ return '  <url><loc>' + p.url + '</loc><lastmod>' + hoy + '</lastmod><priority>' + p.prio + '</priority></url>'; })
-  .concat(productos.map(function(f){ return '  <url><loc>' + abs(f) + '</loc><lastmod>' + hoy + '</lastmod><priority>0.7</priority></url>'; }));
+  .concat(productos.map(function(f){ return '  <url><loc>' + pub(f) + '</loc><lastmod>' + hoy + '</lastmod><priority>0.7</priority></url>'; }));
 fs.writeFileSync('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls.join('\n') + '\n</urlset>\n');
-fs.writeFileSync('robots.txt', 'User-agent: *\nAllow: /\n' + NO_INDEXAR.map(function(f){ return 'Disallow: /' + f; }).join('\n') + '\n\nSitemap: ' + DOMINIO + '/sitemap.xml\n');
+fs.writeFileSync('robots.txt', 'User-agent: *\nAllow: /\n' + NO_INDEXAR.map(function(f){ return 'Disallow: /' + f.replace(/\.html$/, ''); }).join('\n') + '\n\nSitemap: ' + DOMINIO + '/sitemap.xml\n');
 
 console.log(productos.length + ' páginas de producto · ' + paginas.length + ' páginas con canónica · sitemap con ' + urls.length + ' direcciones');

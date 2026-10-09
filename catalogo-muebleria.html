@@ -7,13 +7,13 @@
 <meta name="description" content="Mueblería Giandeco: comedores, roperos, cómodas y centros de TV con ficha técnica y precio. Entrega en Lima y Callao.">
 <meta name="theme-color" content="#0A0A09">
 <!-- seo -->
-<link rel="canonical" href="https://giandeco.com/catalogo-muebleria.html">
+<link rel="canonical" href="https://giandeco.com/catalogo-muebleria">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Giandeco Studio Design">
 <meta property="og:locale" content="es_PE">
 <meta property="og:title" content="Mueblería — Catálogo Giandeco Studio Design">
 <meta property="og:description" content="Mueblería Giandeco: comedores, roperos, cómodas y centros de TV con ficha técnica y precio. Entrega en Lima y Callao.">
-<meta property="og:url" content="https://giandeco.com/catalogo-muebleria.html">
+<meta property="og:url" content="https://giandeco.com/catalogo-muebleria">
 <meta property="og:image" content="https://giandeco.com/images/espacios/zara-comedor-1.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <!-- /seo -->
@@ -42,7 +42,7 @@
 
 <section class="gd-hero is-corto">
   <div class="gd-hero-panel">
-    <p class="gd-migas reveal-left"><a href="index.html">Inicio</a> / <a href="catalogo.html">Catálogo</a> / <span>Mueblería</span></p>
+    <p class="gd-migas reveal-left"><a href="./">Inicio</a> / <a href="catalogo">Catálogo</a> / <span>Mueblería</span></p>
     <p class="gd-hero-eyebrow reveal-left"><i></i>Especificado, no improvisado</p>
     <h1 class="reveal-left d1">Mueblería</h1>
     <p class="reveal-left d2">Doce piezas con ficha técnica y precio. Las mismas que especificamos cuando el catálogo del mercado no exhibe bien el producto.</p>
@@ -64,7 +64,7 @@
 </section>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=12"></script>
+<script src="js/giandeco.js?v=13"></script>
 <script>
 (function(){
   var P = window.GD_PRODUCTOS || {};
@@ -85,7 +85,7 @@
     grid.innerHTML = lista.length ? lista.map(function(k, i){
       var p = P[k];
       var d = i < 4 ? '' : (i < 8 ? ' d1' : ' d2');
-      return '<a class="gd-prod reveal' + d + '" href="producto-' + k + '.html" data-cursor="Ver">' +
+      return '<a class="gd-prod reveal' + d + '" href="' + GD_URL(k) + '" data-cursor="Ver">' +
         '<span class="gd-prod-thumb">' +
           (p.precio === 'Consultar' ? '<span class="gd-prod-badge">A consultar</span>' : '') +
           '<img decoding="async" src="' + p.img + '" alt="' + p.nombre + '" loading="lazy">' +
@@ -108,10 +108,10 @@
 
   pintar('Todo');
   var hash = (location.hash || '').replace('#','');
-  if(hash && P[hash]) location.replace('producto-' + hash + '.html');
+  if(hash && P[hash]) location.replace(GD_URL(hash));
 })();
 </script>
-<script src="js/gd-tienda.js?v=3" defer></script>
+<script src="js/gd-tienda.js?v=4" defer></script>
 <script src="js/gd-movil.js?v=1" defer></script>
 <script src="js/gd-chat.js?v=6" defer></script>
 </body>

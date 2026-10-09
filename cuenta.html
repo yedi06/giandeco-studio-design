@@ -22,8 +22,8 @@
 <main class="cu-top"><div class="gd-in" id="cu"></div></main>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=12"></script>
-<script src="js/gd-tienda.js?v=3"></script>
+<script src="js/giandeco.js?v=13"></script>
+<script src="js/gd-tienda.js?v=4"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc;
@@ -93,13 +93,13 @@
         '<div class="cu-kpis"><a class="cu-kpi" href="#pedidos"><b>' + ped.length + '</b><span>Pedidos</span></a>' +
           '<a class="cu-kpi" href="#favoritos"><b>' + fav.length + '</b><span>Guardados</span></a>' +
           '<a class="cu-kpi" href="#proyectos"><b>0</b><span>Proyectos</span></a></div>' +
-        (ped.length ? pedidoHTML(ped[0]) : '<div class="cu-vacio"><p>Todavía no tiene pedidos. Lo que compre o cotice aparecerá aquí con su estado.</p><a class="gd-btn gd-btn-primary" href="catalogo.html">Ver el catálogo' + T.FLECHA + '</a></div>') +
+        (ped.length ? pedidoHTML(ped[0]) : '<div class="cu-vacio"><p>Todavía no tiene pedidos. Lo que compre o cotice aparecerá aquí con su estado.</p><a class="gd-btn gd-btn-primary" href="catalogo">Ver el catálogo' + T.FLECHA + '</a></div>') +
         (vis.length ? '<div class="cu-bloque"><h3>Vistas hace poco</h3><p>Retome donde lo dejó.</p><div class="gd-grid">' + vis.map(function(k){ return T.card(k); }).join('') + '</div></div>' : '');
     },
     pedidos: function(){
       var ped = T.pedidos.lista();
       return '<h2>Pedidos</h2><p>El estudio confirma cada pedido por WhatsApp. Desde aquí puede reenviarlo, consultar su estado y, cuando lo reciba, dejar su opinión.</p>' +
-        (ped.length ? ped.map(pedidoHTML).join('') : '<div class="cu-vacio"><p>Todavía no tiene pedidos.</p><a class="gd-btn gd-btn-primary" href="catalogo.html">Ver el catálogo' + T.FLECHA + '</a></div>');
+        (ped.length ? ped.map(pedidoHTML).join('') : '<div class="cu-vacio"><p>Todavía no tiene pedidos.</p><a class="gd-btn gd-btn-primary" href="catalogo">Ver el catálogo' + T.FLECHA + '</a></div>');
     },
     proyectos: function(s){
       var n = ''; for(var i = 0; i <= 10; i++) n += '<input type="radio" name="tsNps" id="tsNps' + i + '" value="' + i + '"><label for="tsNps' + i + '">' + i + '</label>';
@@ -107,7 +107,7 @@
         '<ol class="cu-etapas">' + ETAPAS.map(function(e){ return '<li><b>' + e[0] + '</b>' + e[1] + '</li>'; }).join('') + '</ol>' +
         '<div class="cu-vacio"><p>Aún no hay un proyecto vinculado a esta cuenta. Si ya trabaja con el estudio, pídanos vincularlo; si quiere empezar, agende la visita técnica.</p>' +
           '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="' + T.wa('Hola Giandeco, soy ' + s.nombre + ' y quiero vincular mi proyecto a mi cuenta de la web (' + s.email + ').') + '" target="_blank" rel="noopener">Vincular mi proyecto' + T.FLECHA + '</a>' +
-          '<a class="gd-btn gd-btn-ghost" href="contacto.html">Agendar visita técnica</a></div></div>' +
+          '<a class="gd-btn gd-btn-ghost" href="contacto">Agendar visita técnica</a></div></div>' +
         '<div class="cu-bloque"><h3>Su testimonio del proyecto</h3>' +
           '<p>Un proyecto no se califica con estrellas. Al entregarlo, le pedimos tres respuestas cortas; con su permiso, acompañan el caso publicado.</p>' +
           '<form class="gd-form" id="tsForm" novalidate>' +
@@ -125,7 +125,7 @@
       var fav = T.favs.lista().filter(function(k){ return T.CAT[k]; });
       return '<h2>Guardados</h2><p>Las piezas que marcó para decidir después.</p>' +
         (fav.length ? '<div class="gd-grid">' + fav.map(function(k){ return T.card(k); }).join('') + '</div>'
-                    : '<div class="cu-vacio"><p>Aún no guardó ninguna pieza. En cada ficha de producto encontrará el botón Guardar.</p><a class="gd-btn gd-btn-primary" href="catalogo.html">Ver el catálogo' + T.FLECHA + '</a></div>');
+                    : '<div class="cu-vacio"><p>Aún no guardó ninguna pieza. En cada ficha de producto encontrará el botón Guardar.</p><a class="gd-btn gd-btn-primary" href="catalogo">Ver el catálogo' + T.FLECHA + '</a></div>');
     },
     datos: function(s){
       var d = T.db('datos') || {};
@@ -167,7 +167,7 @@
     if(e.target.id === 'cuSalir'){ T.sesion.salir(); location.hash = ''; pintar(); }
     if(e.target.id === 'cuBorrar' && window.confirm('Se borrarán su cuenta, pedidos, guardados y selección de este dispositivo. ¿Continuar?')){
       ['sesion','pedidos','favs','vistos','datos','opiniones','carrito','reclamos','preguntas','testimonios'].forEach(function(k){ T.db(k, null); });
-      location.href = 'cuenta.html';
+      location.href = 'cuenta';
     }
   });
 

@@ -56,7 +56,7 @@ var CFG = {
   LEGAL_VALIDADO: false,
   CAMBIO_DIAS: null,
   GOOGLE_RESENAS: '',
-  LEGAL: { terminos:'terminos-y-condiciones.html', privacidad:'politica-de-privacidad.html', libro:'libro-de-reclamaciones.html' },
+  LEGAL: { terminos:'terminos-y-condiciones', privacidad:'politica-de-privacidad', libro:'libro-de-reclamaciones' },
   /* Opiniones aprobadas por el estudio. Solo entran aquí las de compras
      reales:  { producto:'comoda-flow', autor:'María', lugar:'Surco',
      fecha:'2026-11-02', notas:{pieza:5,foto:5,entrega:4,atencion:5},
@@ -64,14 +64,14 @@ var CFG = {
   OPINIONES: [],
   /* Testimonios de proyecto autorizados por el cliente:
      { autor:'…', rol:'Gerente de tienda · Marca', proyecto:'…',
-       href:'retail-proyectos.html', antes:'…', despues:'…' } */
+       href:'retail-proyectos', antes:'…', despues:'…' } */
   TESTIMONIOS: [],
   /* Preguntas respondidas por el estudio:
      { producto:'comoda-flow', p:'¿…?', r:'…', fecha:'2026-11-02' } */
   PREGUNTAS: []
 };
 
-/* Lo que el estudio cambió desde admin.html pisa los valores de arriba. */
+/* Lo que el estudio cambió desde admin pisa los valores de arriba. */
 (function(o){
   if(!o) return;
   if(o.EMPRESA) Object.keys(o.EMPRESA).forEach(function(k){ if(o.EMPRESA[k]) CFG.EMPRESA[k] = o.EMPRESA[k]; });
@@ -103,9 +103,9 @@ var FLECHA = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4
    -------------------------------------------------------------------------- */
 var COND = 'Los precios no incluyen instalación ni envío. Entrega en Lima y Callao; coordinamos provincia bajo cotización.';
 var LINEAS = {
-  muebleria:   { label:'Mueblería',   href:'catalogo-muebleria.html',   src:'GD_PRODUCTOS' },
-  iluminacion: { label:'Iluminación', href:'catalogo-iluminacion.html', src:'GD_ILUMINACION' },
-  navidad:     { label:'Navidad',     href:'catalogo-navidad.html',     src:'GD_NAVIDAD' }
+  muebleria:   { label:'Mueblería',   href:'catalogo-muebleria',   src:'GD_PRODUCTOS' },
+  iluminacion: { label:'Iluminación', href:'catalogo-iluminacion', src:'GD_ILUMINACION' },
+  navidad:     { label:'Navidad',     href:'catalogo-navidad',     src:'GD_NAVIDAD' }
 };
 
 /* lo que la ficha corta no dice: segunda foto, familia de variantes y el
@@ -150,8 +150,7 @@ Object.keys(LINEAS).forEach(function(l){
     };
   });
 });
-/* las piezas añadidas desde el panel aún no tienen página generada */
-function url(key){ return (window.GD_NUEVOS || []).indexOf(key) !== -1 ? 'producto.html?p=' + encodeURIComponent(key) : 'producto-' + key + '.html'; }
+function url(key){ return window.GD_URL ? window.GD_URL(key) : 'producto?p=' + encodeURIComponent(key); }
 function familia(key){
   var p = CAT[key]; if(!p || !p.fam) return [];
   return Object.keys(CAT).filter(function(k){ return CAT[k].fam === p.fam; });
@@ -221,11 +220,11 @@ function recomendados(max){
 
 /* espacios montados por el estudio, como inspiración por línea */
 var ESPACIOS = [
-  { nombre:'Sala de estar · paleta dorada', meta:'Producción Giandeco', img:'images/espacios/zara-sala-1.jpg',        href:'espacio-sala-dorada.html',      lineas:['muebleria','iluminacion'] },
-  { nombre:'Comedor de exterior',           meta:'Producción Giandeco', img:'images/espacios/zara-comedor-1.jpg',     href:'espacio-comedor-exterior.html', lineas:['muebleria'] },
-  { nombre:'Sala Casacor 2025',             meta:'Feria Casacor 2025',  img:'images/proyectos/casacor-3.jpg',         href:'espacio-casacor.html',          lineas:['iluminacion','muebleria'] },
-  { nombre:'Mesa servida · campaña navideña', meta:'Campaña estacional', img:'images/espacios/zara-navidad-1.jpg?v=2', href:'espacio-mesa-navidena.html',   lineas:['navidad'] },
-  { nombre:'Lounge Mássimo Café',           meta:'Gastronomía',         img:'images/work/massimo.jpg',                href:'espacio-massimo.html',          lineas:['iluminacion','navidad'] }
+  { nombre:'Sala de estar · paleta dorada', meta:'Producción Giandeco', img:'images/espacios/zara-sala-1.jpg',        href:'espacio-sala-dorada',      lineas:['muebleria','iluminacion'] },
+  { nombre:'Comedor de exterior',           meta:'Producción Giandeco', img:'images/espacios/zara-comedor-1.jpg',     href:'espacio-comedor-exterior', lineas:['muebleria'] },
+  { nombre:'Sala Casacor 2025',             meta:'Feria Casacor 2025',  img:'images/proyectos/casacor-3.jpg',         href:'espacio-casacor',          lineas:['iluminacion','muebleria'] },
+  { nombre:'Mesa servida · campaña navideña', meta:'Campaña estacional', img:'images/espacios/zara-navidad-1.jpg?v=2', href:'espacio-mesa-navidena',   lineas:['navidad'] },
+  { nombre:'Lounge Mássimo Café',           meta:'Gastronomía',         img:'images/work/massimo.jpg',                href:'espacio-massimo',          lineas:['iluminacion','navidad'] }
 ];
 function espaciosDe(key){
   var p = CAT[key]; if(!p) return [];
@@ -402,8 +401,8 @@ function pintarCajon(){
   if(!l.length){
     cuerpo.innerHTML = '<div class="gdt-vacio"><p class="gdt-vacio-t">Su selección está vacía</p>' +
       '<p>Añada piezas del catálogo o toque un punto sobre la foto de un espacio.</p>' +
-      '<a class="gd-btn gd-btn-primary" href="catalogo.html">Ver el catálogo' + FLECHA + '</a>' +
-      '<a class="gd-link" href="catalogo-compra-el-espacio.html">Compra el espacio' + FLECHA + '</a></div>';
+      '<a class="gd-btn gd-btn-primary" href="catalogo">Ver el catálogo' + FLECHA + '</a>' +
+      '<a class="gd-link" href="catalogo-compra-el-espacio">Compra el espacio' + FLECHA + '</a></div>';
     pie.innerHTML = ''; return;
   }
   // una sugerencia, la de la última pieza añadida, y solo si no está ya dentro
@@ -424,7 +423,7 @@ function pintarCajon(){
     '<div class="gdt-tot"><span>Subtotal</span><b>' + (soloCot ? 'A cotizar' : fmt(t.subtotal)) + '</b></div>' +
     (t.cotizar && !soloCot ? '<p class="gdt-tot-nota">+ ' + t.cotizar + (t.cotizar === 1 ? ' pieza' : ' piezas') + ' a cotizar por el estudio.</p>' : '') +
     '<p class="gdt-tot-nota">Envío y armado se confirman en el siguiente paso.</p>' +
-    '<a class="gd-btn gd-btn-primary" href="checkout.html">' + (soloCot ? 'Solicitar cotización' : 'Finalizar pedido') + FLECHA + '</a>' +
+    '<a class="gd-btn gd-btn-primary" href="checkout">' + (soloCot ? 'Solicitar cotización' : 'Finalizar pedido') + FLECHA + '</a>' +
     '<button type="button" class="gdt-seguir" data-gdt-cerrar>Seguir viendo</button>';
 }
 
@@ -466,12 +465,12 @@ function montar(){
     b.insertAdjacentHTML('beforeend', '<span class="gdt-badge" hidden></span>');
     b.addEventListener('click', abrir);
     b.insertAdjacentHTML('beforebegin',
-      '<a class="sh-icon-btn gdt-cuenta" href="cuenta.html" aria-label="Mi cuenta">' +
+      '<a class="sh-icon-btn gdt-cuenta" href="cuenta" aria-label="Mi cuenta">' +
       '<svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.5 20c1.2-3.6 4-5.4 7.5-5.4s6.3 1.8 7.5 5.4"/></svg></a>');
   });
   // en móvil la barra solo lleva buscar y selección (css/gd-movil.css): la cuenta entra al menú
   document.querySelectorAll('.sh-mobile-paginas').forEach(function(nav){
-    if(!nav.querySelector('a[href="cuenta.html"]')) nav.insertAdjacentHTML('beforeend', '<a href="cuenta.html">Mi cuenta</a>');
+    if(!nav.querySelector('a[href="cuenta"]')) nav.insertAdjacentHTML('beforeend', '<a href="cuenta">Mi cuenta</a>');
   });
 
   document.addEventListener('click', function(e){

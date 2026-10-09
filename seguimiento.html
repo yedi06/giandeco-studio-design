@@ -22,7 +22,7 @@
   <h1>Seguir mi pedido</h1>
   <p class="lg-lead">Escriba su número de pedido. Lo encuentra en la pantalla de confirmación y en el mensaje que envió al estudio.</p>
   <div class="cu-grid">
-    <nav class="cu-nav" aria-label="Centro de ayuda"><a href="compra-segura.html">Compra segura</a><a href="envios-y-entregas.html">Envíos y entregas</a><a href="cambios-y-garantia.html">Cambios y garantía</a><a href="preguntas-frecuentes.html">Preguntas frecuentes</a><a href="seguimiento.html" class="is-active" aria-current="page">Seguir mi pedido</a><a href="opiniones.html">Opiniones de clientes</a><a href="terminos-y-condiciones.html">Términos y condiciones</a><a href="politica-de-privacidad.html">Privacidad</a><a href="libro-de-reclamaciones.html">Libro de reclamaciones</a></nav>
+    <nav class="cu-nav" aria-label="Centro de ayuda"><a href="compra-segura">Compra segura</a><a href="envios-y-entregas">Envíos y entregas</a><a href="cambios-y-garantia">Cambios y garantía</a><a href="preguntas-frecuentes">Preguntas frecuentes</a><a href="seguimiento" class="is-active" aria-current="page">Seguir mi pedido</a><a href="opiniones">Opiniones de clientes</a><a href="terminos-y-condiciones">Términos y condiciones</a><a href="politica-de-privacidad">Privacidad</a><a href="libro-de-reclamaciones">Libro de reclamaciones</a></nav>
     <article class="lg-prosa">
       <form class="gd-form" id="sgForm" novalidate style="max-width:520px;">
         <div class="gd-field"><label for="sgN">Número de pedido</label><input id="sgN" type="text" placeholder="GD-000000-0000" autocomplete="off"><span class="gdt-err">Escriba el número completo, por ejemplo GD-261007-1234.</span></div>
@@ -42,8 +42,8 @@
 </div></main>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=12"></script>
-<script src="js/gd-tienda.js?v=3"></script>
+<script src="js/giandeco.js?v=13"></script>
+<script src="js/gd-tienda.js?v=4"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, out = document.getElementById('sgOut'), inp = document.getElementById('sgN');
@@ -58,7 +58,7 @@
       out.innerHTML = '<article class="cu-ped"><div class="cu-ped-top"><b>' + T.esc(p.n) + '</b><span>' + (p.subtotal ? T.fmt(p.subtotal) : 'Cotización') + '</span></div><div class="cu-ped-body">' +
         '<ol class="cu-linea">' + T.ESTADOS.map(function(e, i){ return '<li' + (i <= p.estado ? ' class="is-hecho"' : '') + '>' + e + '</li>'; }).join('') + '</ol>' +
         '<p class="gd-form-nota" style="margin-top:16px;">' + T.esc(p.entrega.resumen) + '</p>' +
-        '<div class="cu-ped-acc"><a class="gd-link" href="' + waEstado + '" target="_blank" rel="noopener">Consultar al estudio' + T.FLECHA + '</a><a class="gd-link" href="cuenta.html#pedidos">Ver en mi cuenta' + T.FLECHA + '</a></div></div></article>';
+        '<div class="cu-ped-acc"><a class="gd-link" href="' + waEstado + '" target="_blank" rel="noopener">Consultar al estudio' + T.FLECHA + '</a><a class="gd-link" href="cuenta#pedidos">Ver en mi cuenta' + T.FLECHA + '</a></div></div></article>';
     } else {
       out.innerHTML = '<div class="cu-vacio"><p>Ese pedido no está guardado en este dispositivo. El estudio le confirma el estado por WhatsApp con el número ' + T.esc(n) + '.</p>' +
         '<a class="gd-btn gd-btn-primary" href="' + waEstado + '" target="_blank" rel="noopener">Consultar por WhatsApp' + T.FLECHA + '</a></div>';

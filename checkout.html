@@ -19,8 +19,8 @@
 <main class="co-top"><div class="gd-in" id="co"></div></main>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=12"></script>
-<script src="js/gd-tienda.js?v=3"></script>
+<script src="js/giandeco.js?v=13"></script>
+<script src="js/gd-tienda.js?v=4"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc, C = T.CFG;
@@ -30,7 +30,7 @@
   /* ==================== PEDIDO REGISTRADO ==================== */
   if(ok){
     var ped = T.pedidos.get(ok);
-    if(!ped){ location.replace('cuenta.html#pedidos'); return; }
+    if(!ped){ location.replace('cuenta#pedidos'); return; }
     var cot = !ped.subtotal;
     root.innerHTML = '<div class="co-ok">' +
       '<p class="gd-eyebrow">' + (cot ? 'Cotización registrada' : 'Pedido registrado') + '</p>' +
@@ -45,8 +45,8 @@
              : '<li><b>Usted paga</b>' + esc(ped.pago) + '. El estudio le envía las indicaciones por el mismo chat y el comprobante electrónico a su correo.</li>') +
         '<li><b>' + (ped.entrega.tipo === 'recojo' ? 'Recoge en el estudio' : 'Recibe en su dirección') + '</b>' + esc(ped.entrega.resumen) + '</li>' +
       '</ol>' +
-      '<div class="co-ok-acc"><a class="gd-btn gd-btn-ghost" href="cuenta.html#pedidos">Ver mis pedidos</a>' +
-        '<a class="gd-link" href="compra-segura.html" style="align-self:center;">Cómo sigue su compra' + T.FLECHA + '</a></div></div>' +
+      '<div class="co-ok-acc"><a class="gd-btn gd-btn-ghost" href="cuenta#pedidos">Ver mis pedidos</a>' +
+        '<a class="gd-link" href="compra-segura" style="align-self:center;">Cómo sigue su compra' + T.FLECHA + '</a></div></div>' +
       '<section class="gdt-sec" style="margin-top:var(--sp-64);"><div class="gdt-sec-head"><div><p class="gd-eyebrow">Selección del estudio</p><h2 class="gd-h2">Para seguir armando el ambiente</h2></div></div>' +
         '<div class="gd-grid">' + T.recomendados(4).map(function(k){ return T.card(k); }).join('') + '</div></section>';
     return;
@@ -57,8 +57,8 @@
   if(!lineas.length){
     root.innerHTML = '<p class="gd-eyebrow">Finalizar pedido</p><h1>Su selección está vacía</h1>' +
       '<p class="co-lead">Añada piezas del catálogo o toque un punto sobre la foto de un espacio para empezar.</p>' +
-      '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="catalogo.html">Ver el catálogo' + T.FLECHA + '</a>' +
-      '<a class="gd-btn gd-btn-ghost" href="catalogo-compra-el-espacio.html">Compra el espacio</a></div>' +
+      '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="catalogo">Ver el catálogo' + T.FLECHA + '</a>' +
+      '<a class="gd-btn gd-btn-ghost" href="catalogo-compra-el-espacio">Compra el espacio</a></div>' +
       '<section class="gdt-sec" style="margin-top:var(--sp-64);"><div class="gdt-sec-head"><div><p class="gd-eyebrow">Selección del estudio</p><h2 class="gd-h2">Por dónde empezar</h2></div></div>' +
         '<div class="gd-grid">' + T.recomendados(4).map(function(k){ return T.card(k); }).join('') + '</div></section>';
     return;
@@ -84,7 +84,7 @@
   var hayCupones = Object.keys(C.CUPONES || {}).length > 0;
 
   root.innerHTML =
-    '<p class="gd-migas"><a href="catalogo.html">Catálogo</a> / <span>' + (soloCot ? 'Solicitar cotización' : 'Finalizar pedido') + '</span></p>' +
+    '<p class="gd-migas"><a href="catalogo">Catálogo</a> / <span>' + (soloCot ? 'Solicitar cotización' : 'Finalizar pedido') + '</span></p>' +
     '<h1>' + (soloCot ? 'Solicitar cotización' : 'Finalizar pedido') + '</h1>' +
     '<p class="co-lead">' + (soloCot ? 'Estas piezas se cotizan una a una. Déjenos sus datos y el estudio le responde con el detalle.'
                                      : 'Un solo paso. El estudio confirma disponibilidad y envío antes de que usted pague.') + '</p>' +
@@ -173,9 +173,9 @@
         '<ul class="co-conf">' +
           '<li>Sin cobro hasta que el estudio confirme.</li>' +
           '<li>Boleta o factura electrónica a su correo.</li>' +
-          '<li>Cambios y garantía según <a href="cambios-y-garantia.html" target="_blank">nuestra política</a>.</li>' +
+          '<li>Cambios y garantía según <a href="cambios-y-garantia" target="_blank">nuestra política</a>.</li>' +
         '</ul>' +
-        '<p class="co-legal"><a href="compra-segura.html" target="_blank">Compra segura</a><a href="envios-y-entregas.html" target="_blank">Envíos</a><a href="' + C.LEGAL.libro + '" target="_blank">Libro de reclamaciones</a></p>' +
+        '<p class="co-legal"><a href="compra-segura" target="_blank">Compra segura</a><a href="envios-y-entregas" target="_blank">Envíos</a><a href="' + C.LEGAL.libro + '" target="_blank">Libro de reclamaciones</a></p>' +
       '</div>' +
     '</aside>' +
     '</form>';
@@ -312,7 +312,7 @@
     enviando = true;
     T.carrito.vaciar();
     window.open(T.wa(T.pedidos.mensaje(ped)), '_blank', 'noopener');
-    location.href = 'checkout.html?ok=' + encodeURIComponent(ped.n);
+    location.href = 'checkout?ok=' + encodeURIComponent(ped.n);
   });
 })();
 </script>

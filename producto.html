@@ -23,8 +23,8 @@
 <main id="pdp"></main>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=12"></script>
-<script src="js/gd-tienda.js?v=3"></script>
+<script src="js/giandeco.js?v=13"></script>
+<script src="js/gd-tienda.js?v=4"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc;
@@ -36,7 +36,7 @@
     root.innerHTML = '<section class="pdp-top"><div class="gd-in"><p class="gd-eyebrow">Catálogo</p>' +
       '<h1 class="gd-h1">No encontramos esa pieza</h1>' +
       '<p class="gd-body">Puede que haya salido del catálogo o que el enlace esté incompleto.</p>' +
-      '<a class="gd-btn gd-btn-primary" href="catalogo.html">Ver el catálogo' + T.FLECHA + '</a></div></section>';
+      '<a class="gd-btn gd-btn-primary" href="catalogo">Ver el catálogo' + T.FLECHA + '</a></div></section>';
     return;
   }
 
@@ -117,7 +117,7 @@
       '<div class="pdp-plate" id="pdpPlate"><img id="pdpImg" src="' + p.img + '" alt="' + esc(p.nombre) + '" fetchpriority="high"></div>' +
     '</div>' +
     '<div class="pdp-buy">' +
-      '<p class="gd-migas"><a href="catalogo.html">Catálogo</a> / <a href="' + L.href + '">' + L.label + '</a> / <span>' + esc(p.cat) + '</span></p>' +
+      '<p class="gd-migas"><a href="catalogo">Catálogo</a> / <a href="' + L.href + '">' + L.label + '</a> / <span>' + esc(p.cat) + '</span></p>' +
       '<h1>' + esc(p.nombre) + '</h1>' +
       '<p class="pdp-precio"><b>' + esc(consulta ? 'Precio a consultar' : p.precio) + '</b>' +
         (consulta ? '' : '<span>' + (T.CFG.PRECIOS_CON_IGV ? 'Incluye IGV · ' : '') + 'No incluye envío ni instalación</span>') + '</p>' +
@@ -138,7 +138,7 @@
         '<li>' + I.regla + '<span><b>Armado e instalación</b>Opcional, a cargo del estudio. Se cotiza según la pieza.</span></li>' +
         '<li>' + I.chat + '<span><b>Un diseñador le responde</b>Dudas de medida, acabado o combinación, por WhatsApp.</span></li>' +
       '</ul>' +
-      '<p class="pdp-conf"><a href="compra-segura.html">Compra segura</a><a href="compra-segura.html#pagos">Medios de pago</a><a href="envios-y-entregas.html">Envíos</a><a href="cambios-y-garantia.html">Cambios y garantía</a></p>' +
+      '<p class="pdp-conf"><a href="compra-segura">Compra segura</a><a href="compra-segura#pagos">Medios de pago</a><a href="envios-y-entregas">Envíos</a><a href="cambios-y-garantia">Cambios y garantía</a></p>' +
       '<p class="pdp-pagos">Yape · Plin · Visa · Mastercard · Amex · Diners · Transferencia · PagoEfectivo · Contra entrega</p>' +
     '</div>' +
   '</div></div></section>';
@@ -186,15 +186,15 @@
   var esp = T.espaciosDe(key);
   var estudio = '<section class="gdt-sec">' +
     '<div class="gdt-sec-head"><div><p class="gd-eyebrow">Montado por Giandeco</p><h2 class="gd-h2">Así trabaja el estudio</h2></div>' +
-      '<a class="gd-link" href="catalogo-compra-el-espacio.html">Ver todos los espacios' + T.FLECHA + '</a></div>' +
+      '<a class="gd-link" href="catalogo-compra-el-espacio">Ver todos los espacios' + T.FLECHA + '</a></div>' +
     '<div class="pdp-estudio">' + esp.map(function(e){
       return '<a class="gd-esp-card" href="' + e.href + '" data-cursor="Ver"><span class="gd-esp-thumb"><img decoding="async" loading="lazy" src="' + e.img + '" alt="' + esc(e.nombre) + '"></span>' +
         '<span class="gd-esp-cat">' + esc(e.meta) + '</span><h3 class="gd-esp-nombre">' + esc(e.nombre) + '</h3></a>';
     }).join('') +
       '<div class="pdp-estudio-cta"><p class="gd-eyebrow">Del producto al proyecto</p><h3>¿Y si lo resolvemos completo?</h3>' +
         '<p>Si esta pieza es parte de un ambiente que todavía no está resuelto, el estudio lo diseña, lo produce y lo monta bajo una sola dirección.</p>' +
-        '<a class="gd-btn" href="contacto.html">Agendar visita técnica' + T.FLECHA + '</a>' +
-        '<a class="gd-link" href="hogar-diseno-interiores.html">Diseño de interiores' + T.FLECHA + '</a></div>' +
+        '<a class="gd-btn" href="contacto">Agendar visita técnica' + T.FLECHA + '</a>' +
+        '<a class="gd-link" href="hogar-diseno-interiores">Diseño de interiores' + T.FLECHA + '</a></div>' +
     '</div></section>';
 
   /* ==================== 6. OPINIONES ==================== */
@@ -233,7 +233,7 @@
         '</div></form>';
     } else {
       caja = '<div class="op-caja"><p class="pdp-h3">¿Ya la tiene en casa?</p><p>Las opiniones se habilitan después de la compra, desde el pedido en su cuenta.</p>' +
-        '<a class="gd-link" href="cuenta.html#pedidos">Ir a mis pedidos' + T.FLECHA + '</a></div>';
+        '<a class="gd-link" href="cuenta#pedidos">Ir a mis pedidos' + T.FLECHA + '</a></div>';
     }
     return '<div class="op-grid"><div><p class="gd-eyebrow">Opiniones verificadas</p><h2 class="gd-h2" style="font-size:clamp(1.9rem,3vw,2.4rem);">Solo opina quien compró</h2>' +
         '<ul class="op-regla"><li>Cada opinión está vinculada a un número de pedido.</li><li>Se califica lo que importa en una pieza para su espacio: acabado, fidelidad a la foto, entrega y atención.</li><li>El estudio la revisa antes de publicarla y no edita su contenido.</li></ul></div>' +
@@ -303,7 +303,7 @@
     });
   });
   var ya = document.getElementById('pdpYa');
-  if(ya) ya.addEventListener('click', function(){ T.carrito.addKey(key, qty); location.href = 'checkout.html'; });
+  if(ya) ya.addEventListener('click', function(){ T.carrito.addKey(key, qty); location.href = 'checkout'; });
   var setBtn = document.getElementById('pdpSet');
   if(setBtn) setBtn.addEventListener('click', function(){ conjunto.forEach(function(k){ T.carrito.addKey(k, 1); }); T.abrir(); });
 

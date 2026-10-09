@@ -13,43 +13,43 @@
    -------------------------------------------------------------------------- */
 var SITIO = {
   retail: {
-    label:'Retail', home:'retail.html',
+    label:'Retail', home:'retail',
     secciones:[
-      { key:'home',      label:'Retail',              href:'retail.html' },
-      { key:'diseno',    label:'Diseño de tiendas',   href:'retail-diseno-tiendas.html' },
-      { key:'proyectos', label:'Proyectos',           href:'retail-proyectos.html' },
-      { key:'blog',      label:'Blog',                href:'retail-blog.html' }
+      { key:'home',      label:'Retail',              href:'retail' },
+      { key:'diseno',    label:'Diseño de tiendas',   href:'retail-diseno-tiendas' },
+      { key:'proyectos', label:'Proyectos',           href:'retail-proyectos' },
+      { key:'blog',      label:'Blog',                href:'retail-blog' }
     ]
   },
   hogar: {
-    label:'Hogar', home:'hogar.html',
+    label:'Hogar', home:'hogar',
     secciones:[
-      { key:'home',      label:'Hogar',                 href:'hogar.html' },
-      { key:'diseno',    label:'Diseño de interiores',  href:'hogar-diseno-interiores.html' },
-      { key:'espacios',  label:'Espacios',              href:'hogar-espacios.html' },
-      { key:'proyectos', label:'Proyectos',             href:'hogar-proyectos.html' },
-      { key:'blog',      label:'Blog',                  href:'hogar-blog.html' }
+      { key:'home',      label:'Hogar',                 href:'hogar' },
+      { key:'diseno',    label:'Diseño de interiores',  href:'hogar-diseno-interiores' },
+      { key:'espacios',  label:'Espacios',              href:'hogar-espacios' },
+      { key:'proyectos', label:'Proyectos',             href:'hogar-proyectos' },
+      { key:'blog',      label:'Blog',                  href:'hogar-blog' }
     ]
   },
   catalogo: {
-    label:'Catálogo', home:'catalogo.html',
+    label:'Catálogo', home:'catalogo',
     secciones:[
-      { key:'home',       label:'Catálogo',           href:'catalogo.html' },
-      { key:'navidad',    label:'Navidad',            href:'catalogo-navidad.html' },
-      { key:'muebleria',  label:'Mueblería',          href:'catalogo-muebleria.html' },
-      { key:'iluminacion',label:'Iluminación',        href:'catalogo-iluminacion.html' },
-      { key:'espacio',    label:'Compra el espacio',  href:'catalogo-compra-el-espacio.html' }
+      { key:'home',       label:'Catálogo',           href:'catalogo' },
+      { key:'navidad',    label:'Navidad',            href:'catalogo-navidad' },
+      { key:'muebleria',  label:'Mueblería',          href:'catalogo-muebleria' },
+      { key:'iluminacion',label:'Iluminación',        href:'catalogo-iluminacion' },
+      { key:'espacio',    label:'Compra el espacio',  href:'catalogo-compra-el-espacio' }
     ],
     pronto:[
-      { label:'Decoración',  href:'proximamente-decoracion.html' },
-      { label:'Papel Mural', href:'proximamente-papel-mural.html' }
+      { label:'Decoración',  href:'proximamente-decoracion' },
+      { label:'Papel Mural', href:'proximamente-papel-mural' }
     ]
   }
 };
 
 var PAGINAS = [
-  { key:'nosotros', label:'Quiénes somos', href:'quienes-somos.html' },
-  { key:'contacto', label:'Contacto',      href:'contacto.html' }
+  { key:'nosotros', label:'Quiénes somos', href:'quienes-somos' },
+  { key:'contacto', label:'Contacto',      href:'contacto' }
 ];
 
 var WA = 'https://wa.me/51920775559';
@@ -127,7 +127,7 @@ window.GD_NAVIDAD = NAVIDAD;
 
 /* --------------------------------------------------------------------------
    2d. AJUSTES DEL PANEL DE ADMINISTRACIÓN
-   Precio, visibilidad y piezas nuevas definidas en admin.html. GD_BASE
+   Precio, visibilidad y piezas nuevas definidas en admin. GD_BASE
    conserva el catálogo completo para que el panel pueda mostrar también lo
    que está oculto en la tienda.
    -------------------------------------------------------------------------- */
@@ -150,6 +150,22 @@ window.GD_NAVIDAD = NAVIDAD;
     });
   });
 })();
+
+/* --------------------------------------------------------------------------
+   2e. RUTAS DE PRODUCTO
+   Cada pieza vive en una dirección con su nombre: /lampara-led-amaris.
+   hacer-seo.js genera esas páginas con la misma regla. Las piezas añadidas
+   desde el panel, que aún no tienen página, usan la ficha genérica.
+   -------------------------------------------------------------------------- */
+var RUTAS = {};
+[PRODUCTOS, ILUMINACION, NAVIDAD].forEach(function(c){
+  Object.keys(c).forEach(function(k){
+    RUTAS[k] = c[k].nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  });
+});
+window.GD_URL = function(k){
+  return (!RUTAS[k] || window.GD_NUEVOS.indexOf(k) !== -1) ? 'producto?p=' + encodeURIComponent(k) : RUTAS[k];
+};
 
 /* --------------------------------------------------------------------------
    3. HEADER
@@ -211,7 +227,7 @@ function headerHTML(){
         '<button class="sh-burger" id="shBurger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="shMobile"><span></span><span></span><span></span></button>' +
         '<nav class="sh-mundos" aria-label="Mundos">' + mundos + '</nav>' +
       '</div>' +
-      '<a class="sh-brand" href="index.html" aria-label="Inicio">' +
+      '<a class="sh-brand" href="./" aria-label="Inicio">' +
         '<img class="sh-brand-big" src="img/logo-negativo.svg" alt="Giandeco Studio Design">' +
         '<img class="sh-brand-mini" src="img/logo-positivo.svg" alt="Giandeco Studio Design">' +
       '</a>' +
@@ -240,7 +256,7 @@ function headerHTML(){
       '<div class="sh-mobile-paginas">' + PAGINAS.map(function(p){ return '<a href="' + p.href + '">' + p.label + '</a>'; }).join('') + '</div>' +
       '<div class="sh-mobile-cta">' +
         '<a class="gd-btn gd-btn-primary" href="' + WA_MSG + '" target="_blank" rel="noopener">Escribir por WhatsApp</a>' +
-        '<a class="gd-btn gd-btn-ghost" href="contacto.html">Agendar visita técnica</a>' +
+        '<a class="gd-btn gd-btn-ghost" href="contacto">Agendar visita técnica</a>' +
       '</div>' +
     '</div>' +
   '</nav>' +
@@ -290,10 +306,10 @@ function footerHTML(){
       '</div>' +
     '</div>' +
     '<nav class="gd-footer-ayuda" aria-label="Ayuda y condiciones">' +
-      [['compra-segura.html','Compra segura'], ['envios-y-entregas.html','Envíos y entregas'], ['cambios-y-garantia.html','Cambios y garantía'],
-       ['preguntas-frecuentes.html','Preguntas frecuentes'], ['opiniones.html','Opiniones de clientes'], ['terminos-y-condiciones.html','Términos y condiciones'],
-       ['politica-de-privacidad.html','Privacidad']].map(function(l){ return '<a href="' + l[0] + '">' + l[1] + '</a>'; }).join('') +
-      '<a class="gd-footer-libro" href="libro-de-reclamaciones.html">' +
+      [['compra-segura','Compra segura'], ['envios-y-entregas','Envíos y entregas'], ['cambios-y-garantia','Cambios y garantía'],
+       ['preguntas-frecuentes','Preguntas frecuentes'], ['opiniones','Opiniones de clientes'], ['terminos-y-condiciones','Términos y condiciones'],
+       ['politica-de-privacidad','Privacidad']].map(function(l){ return '<a href="' + l[0] + '">' + l[1] + '</a>'; }).join('') +
+      '<a class="gd-footer-libro" href="libro-de-reclamaciones">' +
         '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6"/></svg>Libro de reclamaciones</a>' +
     '</nav>' +
     '<div class="gd-footer-bar">' +
@@ -352,9 +368,9 @@ Object.keys(SITIO).forEach(function(k){
   (SITIO[k].pronto || []).forEach(function(p){ INDICE.push({ label: p.label + ' (próximamente)', href:p.href }); });
 });
 PAGINAS.forEach(function(p){ INDICE.push({ label:p.label, href:p.href }); });
-Object.keys(PRODUCTOS).forEach(function(k){ INDICE.push({ label: PRODUCTOS[k].nombre + ' — ' + PRODUCTOS[k].precio, href:'producto-' + k + '.html' }); });
-Object.keys(ILUMINACION).forEach(function(k){ INDICE.push({ label: ILUMINACION[k].nombre + ' — ' + ILUMINACION[k].precio, href:'producto-' + k + '.html' }); });
-Object.keys(NAVIDAD).forEach(function(k){ INDICE.push({ label: NAVIDAD[k].nombre + ' — ' + NAVIDAD[k].precio, href:'producto-' + k + '.html' }); });
+Object.keys(PRODUCTOS).forEach(function(k){ INDICE.push({ label: PRODUCTOS[k].nombre + ' — ' + PRODUCTOS[k].precio, href:window.GD_URL(k) }); });
+Object.keys(ILUMINACION).forEach(function(k){ INDICE.push({ label: ILUMINACION[k].nombre + ' — ' + ILUMINACION[k].precio, href:window.GD_URL(k) }); });
+Object.keys(NAVIDAD).forEach(function(k){ INDICE.push({ label: NAVIDAD[k].nombre + ' — ' + NAVIDAD[k].precio, href:window.GD_URL(k) }); });
 
 var overlay = document.getElementById('shSearchOverlay');
 var input = document.getElementById('shSearchInput');
@@ -458,7 +474,7 @@ function montarPuntos(){
       var cat    = p ? p.cat    : (dot.getAttribute('data-cat') || 'Giandeco');
       var precio = p ? p.precio : (dot.getAttribute('data-precio') || 'Consultar');
       var img    = p ? p.img    : (dot.getAttribute('data-img') || '');
-      var href   = p ? 'producto-' + key + '.html' : (dot.getAttribute('data-href') || WA_MSG);
+      var href   = p ? window.GD_URL(key) : (dot.getAttribute('data-href') || WA_MSG);
       // con la capa de tienda cargada, el punto también suma la pieza a la selección
       var sumar  = !window.GD_TIENDA ? '' : (p
         ? '<button class="gd-shop-card-add" type="button" data-gdt-add="' + key + '">Añadir a mi selección</button>'
@@ -521,7 +537,7 @@ montarPuntos();
        <div class="gd-marcas-row gd-marcas-row--rev" id="marcasRow2"><div class="gd-marcas-track" id="marcasTrack2"></div></div>
      </div>
    </section>
-   Markup para un mundo específico (ej. retail.html: solo marcas retail,
+   Markup para un mundo específico (ej. retail: solo marcas retail,
    una sola fila) — agregar data-marcas="retail" al wall y omitir la
    segunda fila:
    <div class="gd-marcas-wall" data-marcas="retail">
