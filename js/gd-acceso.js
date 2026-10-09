@@ -1,8 +1,8 @@
 /* ==========================================================================
    GIANDECO — ACCESO EN MANTENIMIENTO
-   Mientras EN_MANTENIMIENTO sea true, en el dominio de producción solo ve el
-   sitio quien inició sesión en /admin; el resto va a /mantenimiento.
-   Staging y la vista previa local no se tocan.
+   Mientras EN_MANTENIMIENTO sea true, solo ve el sitio quien inició sesión
+   en /admin; el resto va a /mantenimiento. Rige en producción y en staging;
+   la vista previa en este equipo no se toca.
 
    Para abrir el sitio al público: EN_MANTENIMIENTO = false y publicar.
 
@@ -12,10 +12,10 @@
    ========================================================================== */
 (function(){
   var EN_MANTENIMIENTO = true;
-  var PRODUCCION = ['giandeco.com', 'www.giandeco.com'];
+  var LOCAL = ['127.0.0.1', 'localhost', ''];
   var SESION = 'sb-vsivmdfmecqxeumepyea-auth-token';   // la que deja el acceso de /admin
 
-  if(!EN_MANTENIMIENTO || PRODUCCION.indexOf(location.hostname) === -1) return;
+  if(!EN_MANTENIMIENTO || LOCAL.indexOf(location.hostname) !== -1) return;
   var pagina = location.pathname.replace(/\/$/, '').split('/').pop().replace(/\.html$/, '');
   if(pagina === 'admin' || pagina === 'mantenimiento') return;
 
