@@ -6,6 +6,17 @@
 <title>Catálogo — Giandeco Studio Design</title>
 <meta name="description" content="Catálogo Giandeco: colección Navidad, mueblería a medida, iluminación y ambientes completos para comprar pieza por pieza. Lo que especificamos en obra, disponible para su espacio.">
 <meta name="theme-color" content="#0A0A09">
+<!-- seo -->
+<link rel="canonical" href="https://giandeco.com/catalogo.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Giandeco Studio Design">
+<meta property="og:locale" content="es_PE">
+<meta property="og:title" content="Catálogo — Giandeco Studio Design">
+<meta property="og:description" content="Catálogo Giandeco: colección Navidad, mueblería a medida, iluminación y ambientes completos para comprar pieza por pieza. Lo que especificamos en obra, disponible para su espacio.">
+<meta property="og:url" content="https://giandeco.com/catalogo.html">
+<meta property="og:image" content="https://giandeco.com/images/espacios/zara-navidad-2.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<!-- /seo -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
@@ -322,7 +333,7 @@
 </section>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=9"></script>
+<script src="js/giandeco.js?v=12"></script>
 <script>
 (function(){
   var P = window.GD_NAVIDAD || {};
@@ -333,7 +344,7 @@
   host.innerHTML = DESTACADOS.filter(function(k){ return P[k]; }).map(function(k, i){
     var p = P[k];
     var d = i === 0 ? '' : (' d' + i);
-    return '<a class="gd-prod reveal' + d + '" href="catalogo-navidad.html#' + k + '" data-cursor="Ver">' +
+    return '<a class="gd-prod reveal' + d + '" href="producto-' + k + '.html" data-cursor="Ver">' +
       '<span class="gd-prod-thumb"><img decoding="async" src="' + p.img + '" alt="' + p.nombre + '" loading="lazy"></span>' +
       '<span class="gd-prod-cat">' + p.cat + '</span>' +
       '<span class="gd-prod-name">' + p.nombre + '</span>' +
@@ -360,7 +371,7 @@
   host.innerHTML = DESTACADOS.filter(function(k){ return P[k]; }).map(function(k, i){
     var p = P[k];
     var d = i === 0 ? '' : (' d' + i);
-    return '<a class="gd-prod reveal' + d + '" href="catalogo-muebleria.html#' + k + '" data-cursor="Ver">' +
+    return '<a class="gd-prod reveal' + d + '" href="producto-' + k + '.html" data-cursor="Ver">' +
       '<span class="gd-prod-thumb"><img decoding="async" src="' + p.img + '" alt="' + p.nombre + '" loading="lazy"></span>' +
       '<span class="gd-prod-cat">' + p.cat + '</span>' +
       '<span class="gd-prod-name">' + p.nombre + '</span>' +
@@ -387,7 +398,7 @@
   host.innerHTML = DESTACADOS.filter(function(k){ return IL[k]; }).map(function(k, i){
     var p = IL[k];
     var d = i === 0 ? '' : (' d' + i);
-    return '<a class="gd-prod reveal' + d + '" href="catalogo-iluminacion.html#' + k + '" data-cursor="Ver">' +
+    return '<a class="gd-prod reveal' + d + '" href="producto-' + k + '.html" data-cursor="Ver">' +
       '<span class="gd-prod-thumb"><img decoding="async" src="' + p.img + '" alt="' + p.nombre + '" loading="lazy"></span>' +
       '<span class="gd-prod-cat">' + p.cat + '</span>' +
       '<span class="gd-prod-name">' + p.nombre + '</span>' +
@@ -434,6 +445,7 @@
   });
 })();
 </script>
+<script src="js/gd-tienda.js?v=3" defer></script>
 <script src="js/gd-movil.js?v=1" defer></script>
 <script src="js/gd-chat.js?v=6" defer></script>
 </body>

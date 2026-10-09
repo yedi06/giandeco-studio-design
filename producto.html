@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pieza — Catálogo Giandeco Studio Design</title>
+<meta name="description" content="Ficha de producto del catálogo Giandeco: precio, características, guía del estudio y piezas que completan el ambiente.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0A0A09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=9">
+<link rel="stylesheet" href="css/gd-movil.css?v=1">
+<link rel="stylesheet" href="css/gd-tema.css?v=1">
+<script src="js/gd-tema.js?v=1"></script>
+<link rel="stylesheet" href="css/gd-tienda.css?v=3">
+</head>
+<body data-mundo="catalogo" data-seccion="producto">
+
+<div id="gdHeader"></div>
+
+<main id="pdp"></main>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=12"></script>
+<script src="js/gd-tienda.js?v=3"></script>
+<script>
+(function(){
+  var T = window.GD_TIENDA, esc = T.esc;
+  var key = document.body.getAttribute('data-p') || new URLSearchParams(location.search).get('p');
+  var p = T.CAT[key];
+  var root = document.getElementById('pdp');
+
+  if(!p){
+    root.innerHTML = '<section class="pdp-top"><div class="gd-in"><p class="gd-eyebrow">Catálogo</p>' +
+      '<h1 class="gd-h1">No encontramos esa pieza</h1>' +
+      '<p class="gd-body">Puede que haya salido del catálogo o que el enlace esté incompleto.</p>' +
+      '<a class="gd-btn gd-btn-primary" href="catalogo.html">Ver el catálogo' + T.FLECHA + '</a></div></section>';
+    return;
+  }
+
+  var L = T.LINEAS[p.linea];
+  var consulta = p.valor === null;
+  var waPieza = T.wa('Hola Giandeco, tengo una consulta sobre la pieza: ' + p.nombre + ' (' + p.precio + ').');
+
+  /* ---- cabecera del documento ---- */
+  document.title = p.nombre + ' — ' + L.label + ' · Giandeco Studio Design';
+  var md = document.querySelector('meta[name="description"]');
+  if(md) md.setAttribute('content', p.nombre + ' · ' + p.cat + ' · ' + p.precio + '. ' + p.nota);
+  var activo = document.querySelector('.sh-cat-link[href="' + L.href + '"]');
+  if(activo) activo.classList.add('is-active');
+
+  // las páginas generadas por hacer-seo.js ya traen sus datos estructurados
+  var ld = { '@context':'https://schema.org', '@type':'Product', name:p.nombre, sku:key, category:p.cat, description:p.nota,
+             image:p.gal.map(function(g){ return new URL(g, location.href).href; }) };
+  if(!consulta) ld.offers = { '@type':'Offer', priceCurrency:'PEN', price:p.valor.toFixed(2), url:location.href };
+  var s = document.createElement('script'); s.type = 'application/ld+json'; s.textContent = JSON.stringify(ld);
+  if(!document.querySelector('script[type="application/ld+json"]')) document.head.appendChild(s);
+
+  /* ---- guía del estudio: criterio de diseño por tipo de pieza ---- */
+  var GUIA = {
+    'Comedor': { cita:'Una mesa se elige por el aire que deja alrededor, no por el que ocupa.', calc:'mesa', tips:[
+      'Reserve 90 cm libres entre el borde de la mesa y el muro o mueble más cercano: es lo que necesita una silla para salir.',
+      'Calcule 60 cm de frente por comensal.',
+      'La lámpara se centra con la mesa, no con la habitación.' ] },
+    'Colgante lineal': { cita:'La lámpara del comedor se mide contra la mesa, nunca contra el techo.', calc:'mesa', tips:[
+      'Sobre una mesa, el ancho de la lámpara va entre la mitad y dos tercios del largo del tablero.',
+      'Suspendida entre 75 y 90 cm sobre el tablero ilumina sin tapar la mirada entre comensales.',
+      'Luz cálida para comer; la blanca se reserva para zonas de trabajo.' ] },
+    'Colgante múltiple': { cita:'La lámpara del comedor se mide contra la mesa, nunca contra el techo.', calc:'mesa', tips:[
+      'Sobre una mesa, el ancho de la lámpara va entre la mitad y dos tercios del largo del tablero.',
+      'Suspendida entre 75 y 90 cm sobre el tablero ilumina sin tapar la mirada entre comensales.',
+      'En zonas de paso, deje 2.10 m libres bajo la pieza.' ] },
+    'Colgante individual': { cita:'Una sola luz bien puesta ordena todo el ambiente.', tips:[
+      'Sobre mesa de noche o barra, la base de la pantalla va entre 50 y 60 cm sobre la superficie.',
+      'En zonas de paso, deje 2.10 m libres bajo la pieza.',
+      'En serie de dos o tres, separe las piezas la misma distancia que su diámetro y medio.' ] },
+    'Centro de TV': { cita:'La pantalla se ubica desde el sofá: primero dónde se sienta, después dónde se cuelga.', calc:'tv', tips:[
+      'El centro de la pantalla queda a la altura de los ojos sentado: entre 100 y 110 cm del piso.',
+      'Evite una ventana frente a la pantalla; al costado, la luz no rebota.',
+      'El mueble debe sobresalir del ancho del televisor por ambos lados.' ] },
+    'Dormitorio': { cita:'En un dormitorio, lo que se guarda bien es lo que deja descansar.', tips:[
+      'Frente a un ropero de puertas batientes reserve 90 cm libres; con puertas corredizas bastan 60 cm.',
+      'Mantenga 60 cm de paso a cada lado de la cama.',
+      'Un mismo tono de madera en ropero y cómoda hace que el ambiente se lea más amplio.' ] },
+    'navidad': { cita:'Una campaña se monta en tres alturas y un solo material que se repite.', tips:[
+      'Agrupe las piezas en número impar y a tres alturas distintas.',
+      'Repita un mismo material al menos tres veces en el ambiente para que se lea como colección.',
+      'Use luz cálida y pareja: una sola temperatura de color en todo el montaje.' ] }
+  };
+  var G = GUIA[p.cat] || GUIA[p.linea];
+
+  /* ---- iconos de línea fina ---- */
+  var I = {
+    camion:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>',
+    regla:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16 16 3l5 5L8 21z"/><path d="M7 12l2 2M10 9l2 2M13 6l2 2"/></svg>',
+    chat:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12z"/></svg>',
+    cora:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20z"/></svg>'
+  };
+
+  /* ==================== 1. GALERÍA + COMPRA ==================== */
+  var fam = T.familia(key);
+  var thumbs = p.gal.length > 1 ? '<div class="pdp-thumbs">' + p.gal.map(function(g, i){
+    return '<button type="button" class="pdp-thumb' + (i === 0 ? ' is-active' : '') + '" data-src="' + g + '" aria-label="Ver foto ' + (i + 1) + '"><img decoding="async" src="' + g + '" alt=""></button>';
+  }).join('') + '</div>' : '';
+
+  var variantes = fam.length > 1 ? '<div class="pdp-var"><span class="pdp-var-t">' + esc(p.fam) + ' · <b>' + esc(p.v) + '</b></span><div class="pdp-var-row">' +
+    fam.map(function(k){
+      var q = T.CAT[k];
+      return '<a class="pdp-chip' + (k === key ? ' is-active' : '') + '" href="' + T.url(k) + '"' + (k === key ? ' aria-current="true"' : '') + '>' +
+        '<img decoding="async" src="' + q.img + '" alt="">' + esc(q.v) + '</a>';
+    }).join('') + '</div></div>' : '';
+
+  var top = '<section class="pdp-top"><div class="gd-in"><div class="pdp-grid">' +
+    '<div class="pdp-gal' + (thumbs ? ' con-thumbs' : '') + '">' + thumbs +
+      '<div class="pdp-plate" id="pdpPlate"><img id="pdpImg" src="' + p.img + '" alt="' + esc(p.nombre) + '" fetchpriority="high"></div>' +
+    '</div>' +
+    '<div class="pdp-buy">' +
+      '<p class="gd-migas"><a href="catalogo.html">Catálogo</a> / <a href="' + L.href + '">' + L.label + '</a> / <span>' + esc(p.cat) + '</span></p>' +
+      '<h1>' + esc(p.nombre) + '</h1>' +
+      '<p class="pdp-precio"><b>' + esc(consulta ? 'Precio a consultar' : p.precio) + '</b>' +
+        (consulta ? '' : '<span>' + (T.CFG.PRECIOS_CON_IGV ? 'Incluye IGV · ' : '') + 'No incluye envío ni instalación</span>') + '</p>' +
+      '<p class="pdp-nota">' + esc(p.nota) + '</p>' +
+      variantes +
+      '<div class="pdp-acc" id="pdpAcc">' +
+        '<span class="gdt-qty" role="group" aria-label="Cantidad"><button type="button" data-pdp-qty="-1" aria-label="Quitar una">−</button><b id="pdpQty">1</b><button type="button" data-pdp-qty="1" aria-label="Añadir una">+</button></span>' +
+        '<button type="button" class="gd-btn gd-btn-primary" id="pdpAdd" data-gdt-add="' + key + '" data-qty="1">' + (consulta ? 'Añadir para cotizar' : 'Añadir a mi selección') + T.FLECHA + '</button>' +
+        (consulta ? '<a class="gd-btn gd-btn-ghost" href="' + waPieza + '" target="_blank" rel="noopener">Consultar por WhatsApp</a>'
+                  : '<button type="button" class="gd-btn gd-btn-ghost" id="pdpYa">Comprar ahora</button>') +
+      '</div>' +
+      '<div class="pdp-sub">' +
+        '<button type="button" data-gdt-fav="' + key + '" class="' + (T.favs.es(key) ? 'is-on' : '') + '" aria-pressed="' + (T.favs.es(key) ? 'true' : 'false') + '">' + I.cora + 'Guardar</button>' +
+        (consulta ? '' : '<a href="' + waPieza + '" target="_blank" rel="noopener">' + I.chat + 'Hablar con un diseñador</a>') +
+      '</div>' +
+      '<ul class="pdp-seg">' +
+        '<li>' + I.camion + '<span><b>Entrega en Lima y Callao</b>Provincia se coordina bajo cotización. El costo de envío se confirma antes de pagar.</span></li>' +
+        '<li>' + I.regla + '<span><b>Armado e instalación</b>Opcional, a cargo del estudio. Se cotiza según la pieza.</span></li>' +
+        '<li>' + I.chat + '<span><b>Un diseñador le responde</b>Dudas de medida, acabado o combinación, por WhatsApp.</span></li>' +
+      '</ul>' +
+      '<p class="pdp-conf"><a href="compra-segura.html">Compra segura</a><a href="compra-segura.html#pagos">Medios de pago</a><a href="envios-y-entregas.html">Envíos</a><a href="cambios-y-garantia.html">Cambios y garantía</a></p>' +
+      '<p class="pdp-pagos">Yape · Plin · Visa · Mastercard · Amex · Diners · Transferencia · PagoEfectivo · Contra entrega</p>' +
+    '</div>' +
+  '</div></div></section>';
+
+  /* ==================== 2. FICHA ==================== */
+  var rasgos = p.nota.split(/\.\s+/).map(function(x){ return x.replace(/\.$/, '').trim(); }).filter(Boolean);
+  var filas = [['Línea', '<a href="' + L.href + '">' + L.label + '</a>'], ['Categoría', esc(p.cat)]];
+  if(p.v) filas.push(['Variante', esc(p.v)]);
+  filas.push(['Referencia', esc(key.toUpperCase())]);
+  filas.push(['Entrega', esc(T.COND)]);
+  var ficha = '<section class="gdt-sec"><div class="pdp-ficha">' +
+    '<div><h2 class="pdp-h3">Características</h2><ul class="pdp-lista">' + rasgos.map(function(r){ return '<li>' + esc(r) + '</li>'; }).join('') + '</ul></div>' +
+    '<div><h2 class="pdp-h3">Ficha</h2><dl class="pdp-tabla">' + filas.map(function(f){ return '<div><dt>' + f[0] + '</dt><dd>' + f[1] + '</dd></div>'; }).join('') + '</dl></div>' +
+  '</div></section>';
+
+  /* ==================== 3. GUÍA DEL ESTUDIO ==================== */
+  var calc = '';
+  if(G && G.calc === 'mesa'){
+    calc = '<div class="pdp-calc"><label for="pdpCalc">Largo de su mesa</label>' +
+      '<div class="pdp-calc-in"><input id="pdpCalc" type="number" inputmode="numeric" min="60" max="400" value="' + (p.linea === 'muebleria' && p.largo ? p.largo : 160) + '"><span>cm</span></div>' +
+      '<p class="pdp-calc-out" id="pdpCalcOut" aria-live="polite"></p></div>';
+  } else if(G && G.calc === 'tv'){
+    calc = '<div class="pdp-calc"><label for="pdpCalc">Tamaño de su televisor</label>' +
+      '<div class="pdp-calc-in"><input id="pdpCalc" type="number" inputmode="numeric" min="24" max="100" value="' + (p.tv || 55) + '"><span>pulgadas</span></div>' +
+      '<p class="pdp-calc-out" id="pdpCalcOut" aria-live="polite"></p></div>';
+  }
+  var guia = G ? '<section class="gdt-sec"><div class="pdp-guia' + (calc ? ' con-calc' : '') + '">' +
+    '<div><p class="gd-eyebrow">Guía del estudio</p><p class="gd-quote">' + esc(G.cita) + '</p>' +
+      '<ul class="pdp-lista">' + G.tips.map(function(t){ return '<li>' + esc(t) + '</li>'; }).join('') + '</ul></div>' + calc +
+  '</div></section>' : '';
+
+  /* ==================== 4. COMPLETE EL AMBIENTE ==================== */
+  var comp = T.complementos(key, 3);
+  var conjunto = [key].concat(comp.map(function(c){ return c.key; }));
+  var totalSet = conjunto.reduce(function(a, k){ return a + (T.CAT[k].valor || 0); }, 0);
+  var set = comp.length ? '<section class="gdt-sec">' +
+    '<div class="gdt-sec-head"><div><p class="gd-eyebrow">Selección del estudio</p><h2 class="gd-h2">Complete el ambiente</h2></div></div>' +
+    '<div class="pdp-set"><div class="is-esta">' + T.card(key, { sinBoton:true, porque:'Esta pieza' }) + '</div>' +
+      comp.map(function(c){ return T.card(c.key, { porque:c.porque }); }).join('') + '</div>' +
+    '<div class="pdp-set-bar"><p>Las ' + conjunto.length + ' piezas juntas<b>' + T.fmt(totalSet) + '</b></p>' +
+      '<button type="button" class="gd-btn gd-btn-primary" id="pdpSet">Añadir el conjunto' + T.FLECHA + '</button></div>' +
+  '</section>' : '';
+
+  /* ==================== 5. DEL PRODUCTO AL PROYECTO ==================== */
+  var esp = T.espaciosDe(key);
+  var estudio = '<section class="gdt-sec">' +
+    '<div class="gdt-sec-head"><div><p class="gd-eyebrow">Montado por Giandeco</p><h2 class="gd-h2">Así trabaja el estudio</h2></div>' +
+      '<a class="gd-link" href="catalogo-compra-el-espacio.html">Ver todos los espacios' + T.FLECHA + '</a></div>' +
+    '<div class="pdp-estudio">' + esp.map(function(e){
+      return '<a class="gd-esp-card" href="' + e.href + '" data-cursor="Ver"><span class="gd-esp-thumb"><img decoding="async" loading="lazy" src="' + e.img + '" alt="' + esc(e.nombre) + '"></span>' +
+        '<span class="gd-esp-cat">' + esc(e.meta) + '</span><h3 class="gd-esp-nombre">' + esc(e.nombre) + '</h3></a>';
+    }).join('') +
+      '<div class="pdp-estudio-cta"><p class="gd-eyebrow">Del producto al proyecto</p><h3>¿Y si lo resolvemos completo?</h3>' +
+        '<p>Si esta pieza es parte de un ambiente que todavía no está resuelto, el estudio lo diseña, lo produce y lo monta bajo una sola dirección.</p>' +
+        '<a class="gd-btn" href="contacto.html">Agendar visita técnica' + T.FLECHA + '</a>' +
+        '<a class="gd-link" href="hogar-diseno-interiores.html">Diseño de interiores' + T.FLECHA + '</a></div>' +
+    '</div></section>';
+
+  /* ==================== 6. OPINIONES ==================== */
+  function opinionesHTML(){
+    var pub = T.opiniones.publicadas(key), mia = T.opiniones.mia(key), ped = T.pedidos.conProducto(key), ses = T.sesion.get() || {};
+    var res = '';
+    if(pub.length){
+      res = '<div class="op-res">' + T.CRITERIOS.map(function(c){
+        var m = pub.reduce(function(a, o){ return a + (o.notas[c.k] || 0); }, 0) / pub.length;
+        return '<div><span>' + c.t + '</span><i style="--w:' + (m * 20) + '%"></i><b>' + m.toFixed(1) + '</b></div>';
+      }).join('') + '</div>' + pub.map(function(o){
+        return '<article class="op-item"><div class="op-item-top"><b>' + esc(o.autor) + (o.lugar ? ' · ' + esc(o.lugar) : '') + '</b>' +
+          '<span>' + T.opiniones.promedio(o).toFixed(1) + ' / 5' + (o.ambiente ? ' · ' + esc(o.ambiente) : '') + '</span></div>' +
+          '<p>' + esc(o.texto) + '</p><span class="op-sello">Compra verificada</span></article>';
+      }).join('');
+    }
+    var caja;
+    if(mia){
+      caja = '<div class="op-caja"><p class="pdp-h3">Su opinión</p><p>Recibimos su opinión y está en revisión del estudio. Gracias por tomarse el tiempo.</p>' +
+        '<a class="gd-link" href="' + T.wa(T.opiniones.mensaje(mia)) + '" target="_blank" rel="noopener">Reenviar por WhatsApp' + T.FLECHA + '</a></div>';
+    } else if(ped){
+      caja = '<form class="op-caja" id="opForm" novalidate><p class="pdp-h3">Opine sobre esta pieza</p><p>Pedido ' + esc(ped.n) + '. Califique del 1 al 5 cada punto.</p>' +
+        '<div class="op-crit">' + T.CRITERIOS.map(function(c){
+          var r = ''; for(var i = 1; i <= 5; i++) r += '<input type="radio" name="op-' + c.k + '" id="op-' + c.k + i + '" value="' + i + '" required><label for="op-' + c.k + i + '">' + i + '</label>';
+          return '<fieldset><legend>' + c.t + '<small>' + c.d + '</small></legend><div class="op-nota">' + r + '</div></fieldset>';
+        }).join('') + '</div>' +
+        '<div class="gd-form">' +
+          '<div class="gd-field"><label for="opTexto">Cuéntenos cómo quedó</label><textarea id="opTexto" minlength="20" required placeholder="Qué esperaba, qué recibió y cómo se ve en su espacio."></textarea><span class="gdt-err">Escriba al menos un par de líneas.</span></div>' +
+          '<div class="gd-form gd-form-2">' +
+            '<div class="gd-field"><label for="opAmb">¿Dónde la colocó?</label><select id="opAmb"><option value="">Prefiero no decirlo</option><option>Sala</option><option>Comedor</option><option>Dormitorio</option><option>Terraza</option><option>Oficina</option><option>Tienda o local</option></select></div>' +
+            '<div class="gd-field"><label for="opAutor">Su nombre</label><input id="opAutor" type="text" required value="' + esc((ses.nombre || ped.cliente.nombre || '').split(' ')[0]) + '"><span class="gdt-err">Indique su nombre.</span></div>' +
+          '</div>' +
+          '<label class="gdt-check"><input type="checkbox" id="opPub" checked><span>Autorizo que se publique con mi nombre de pila y mi distrito.</span></label>' +
+          '<button type="submit" class="gd-btn gd-btn-primary" style="justify-self:start;">Enviar opinión' + T.FLECHA + '</button>' +
+          '<p class="gd-form-nota">Al enviar se abre WhatsApp con su opinión ya redactada para que llegue al estudio.</p>' +
+        '</div></form>';
+    } else {
+      caja = '<div class="op-caja"><p class="pdp-h3">¿Ya la tiene en casa?</p><p>Las opiniones se habilitan después de la compra, desde el pedido en su cuenta.</p>' +
+        '<a class="gd-link" href="cuenta.html#pedidos">Ir a mis pedidos' + T.FLECHA + '</a></div>';
+    }
+    return '<div class="op-grid"><div><p class="gd-eyebrow">Opiniones verificadas</p><h2 class="gd-h2" style="font-size:clamp(1.9rem,3vw,2.4rem);">Solo opina quien compró</h2>' +
+        '<ul class="op-regla"><li>Cada opinión está vinculada a un número de pedido.</li><li>Se califica lo que importa en una pieza para su espacio: acabado, fidelidad a la foto, entrega y atención.</li><li>El estudio la revisa antes de publicarla y no edita su contenido.</li></ul></div>' +
+      '<div>' + (res || '<p class="gd-body">Esta pieza todavía no tiene opiniones publicadas.</p>') + caja + '</div></div>';
+  }
+
+  /* ==================== 6b. PREGUNTAS AL ESTUDIO ==================== */
+  var preg = T.CFG.PREGUNTAS.filter(function(q){ return q.producto === key; });
+  var pregHTML = '<section class="gdt-sec" id="preguntas"><div class="op-grid"><div><p class="gd-eyebrow">Preguntas sobre esta pieza</p>' +
+      '<h2 class="gd-h2" style="font-size:clamp(1.9rem,3vw,2.4rem);">Pregúntele a un diseñador</h2>' +
+      '<p class="gd-body">Medidas, acabados, si combina con lo que ya tiene. Responde una persona del estudio, no un robot.</p></div>' +
+    '<div>' + (preg.length ? preg.map(function(q){
+        return '<article class="op-item"><p style="color:var(--lino);font-weight:500;margin-bottom:8px;">' + esc(q.p) + '</p><p>' + esc(q.r) + '</p><span class="op-sello">Responde el estudio</span></article>';
+      }).join('') : '') +
+      '<form class="op-caja gd-form" id="pgForm" novalidate>' +
+        '<div class="gd-field"><label for="pgTexto">Su pregunta</label><textarea id="pgTexto" style="min-height:96px;" placeholder="¿Entra en un ambiente de 3 × 4 m? ¿Viene en otro acabado?"></textarea><span class="gdt-err">Escriba su pregunta.</span></div>' +
+        '<button type="submit" class="gd-btn gd-btn-primary" style="justify-self:start;">Enviar pregunta' + T.FLECHA + '</button>' +
+        '<p class="gd-form-nota">Se abre WhatsApp con su pregunta y el nombre de la pieza ya escritos.</p>' +
+      '</form></div></div></section>';
+
+  /* ==================== 7. SIMILARES Y VISTOS ==================== */
+  var sim = T.similares(key, 4);
+  var simHTML = sim.length ? '<section class="gdt-sec"><div class="gdt-sec-head"><div><p class="gd-eyebrow">' + L.label + '</p><h2 class="gd-h2">También en esta línea</h2></div>' +
+    '<a class="gd-link" href="' + L.href + '">Ver la colección' + T.FLECHA + '</a></div>' +
+    '<div class="gd-grid">' + sim.map(function(k){ return T.card(k); }).join('') + '</div></section>' : '';
+
+  var vis = T.vistos.lista().filter(function(k){ return k !== key && sim.indexOf(k) === -1; }).slice(0, 4);
+  var visHTML = vis.length ? '<section class="gdt-sec"><div class="gdt-sec-head"><div><p class="gd-eyebrow is-muted">Su recorrido</p><h2 class="gd-h2">Vistas hace poco</h2></div></div>' +
+    '<div class="gd-grid">' + vis.map(function(k){ return T.card(k, { sinBoton:true }); }).join('') + '</div></section>' : '';
+  T.vistos.marcar(key);
+
+  root.innerHTML = top + '<div class="gd-in">' + ficha + guia + set + estudio +
+    pregHTML + '<section class="gdt-sec" id="opiniones">' + opinionesHTML() + '</section>' + simHTML + visHTML + '</div>' +
+    '<div class="pdp-bar" id="pdpBar"><span><b>' + esc(p.nombre) + '</b><i>' + esc(p.precio) + '</i></span>' +
+      '<button type="button" class="gd-btn gd-btn-primary" data-gdt-add="' + key + '">' + (consulta ? 'Cotizar' : 'Añadir') + '</button></div>';
+
+  /* ==================== COMPORTAMIENTO ==================== */
+  var plate = document.getElementById('pdpPlate'), img = document.getElementById('pdpImg');
+  var fino = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  function ajustar(){
+    var w = img.naturalWidth, h = img.naturalHeight; if(!w) return;
+    plate.style.aspectRatio = String(Math.max(.8, Math.min(1, w / h)));
+    var chica = w < 500;
+    plate.classList.toggle('is-chica', chica);
+    img.style.width = chica ? Math.min(w * 2, 520) + 'px' : '';
+    img.style.maxWidth = chica ? '86%' : '';
+    plate.classList.toggle('is-zoom', fino && w >= 800);
+  }
+  img.addEventListener('load', ajustar); if(img.complete) ajustar();
+  plate.addEventListener('mousemove', function(e){
+    if(!plate.classList.contains('is-zoom')) return;
+    var r = plate.getBoundingClientRect();
+    img.style.transformOrigin = ((e.clientX - r.left) / r.width * 100) + '% ' + ((e.clientY - r.top) / r.height * 100) + '%';
+  });
+  root.querySelectorAll('.pdp-thumb').forEach(function(b){
+    b.addEventListener('click', function(){
+      root.querySelectorAll('.pdp-thumb').forEach(function(x){ x.classList.toggle('is-active', x === b); });
+      img.src = b.getAttribute('data-src');
+    });
+  });
+
+  var qty = 1, add = document.getElementById('pdpAdd'), qtyEl = document.getElementById('pdpQty');
+  root.querySelectorAll('[data-pdp-qty]').forEach(function(b){
+    b.addEventListener('click', function(){
+      qty = Math.max(1, Math.min(99, qty + parseInt(b.getAttribute('data-pdp-qty'), 10)));
+      qtyEl.textContent = qty; add.setAttribute('data-qty', qty);
+    });
+  });
+  var ya = document.getElementById('pdpYa');
+  if(ya) ya.addEventListener('click', function(){ T.carrito.addKey(key, qty); location.href = 'checkout.html'; });
+  var setBtn = document.getElementById('pdpSet');
+  if(setBtn) setBtn.addEventListener('click', function(){ conjunto.forEach(function(k){ T.carrito.addKey(k, 1); }); T.abrir(); });
+
+  /* calculadora de proporción */
+  var cIn = document.getElementById('pdpCalc'), cOut = document.getElementById('pdpCalcOut');
+  function calcular(){
+    var v = parseFloat(cIn.value);
+    if(!v){ cOut.textContent = ''; return; }
+    if(G.calc === 'mesa'){
+      var a = Math.round(v / 2 / 5) * 5, b = Math.round(v * 2 / 3 / 5) * 5;
+      var h = 'Para una mesa de ' + v + ' cm: lámpara de <b>' + a + ' a ' + b + ' cm</b> de ancho, suspendida entre <b>75 y 90 cm</b> sobre el tablero.';
+      if(p.linea === 'iluminacion' && p.largo){
+        h += '<em>Esta pieza mide ' + p.largo + ' cm: ' + (p.largo < a ? 'queda corta para esa mesa.' : p.largo > b ? 'queda larga para esa mesa.' : 'está en proporción.') + '</em>';
+      } else if(p.linea === 'muebleria'){
+        var ok = Object.keys(T.CAT).filter(function(k){ var q = T.CAT[k]; return q.linea === 'iluminacion' && q.largo >= a && q.largo <= b; })[0];
+        if(ok) h += '<em><a href="' + T.url(ok) + '" style="color:inherit;">' + esc(T.CAT[ok].nombre) + ' (' + T.CAT[ok].largo + ' cm)</a> entra en esa proporción.</em>';
+      }
+      cOut.innerHTML = h;
+    } else {
+      var d1 = (v * 2.54 * 1.2 / 100).toFixed(1), d2 = (v * 2.54 * 1.6 / 100).toFixed(1);
+      cOut.innerHTML = 'Con una pantalla de ' + v + '": siéntese entre <b>' + d1 + ' y ' + d2 + ' m</b> de distancia.' +
+        (p.tv ? '<em>' + (v > p.tv ? 'Este centro admite hasta ' + p.tv + '": su televisor no entra.' : 'Este centro admite hasta ' + p.tv + '": su televisor entra.') + '</em>' : '');
+    }
+  }
+  if(cIn){ cIn.addEventListener('input', calcular); calcular(); }
+
+  /* opiniones */
+  root.addEventListener('submit', function(e){
+    if(e.target.id === 'pgForm'){
+      e.preventDefault();
+      var t = e.target.querySelector('#pgTexto');
+      t.parentNode.classList.toggle('is-mal', t.value.trim().length < 8);
+      if(t.value.trim().length < 8){ t.focus(); return; }
+      var pgs = T.db('preguntas') || []; pgs.unshift({ producto:key, p:t.value.trim(), fecha:new Date().toISOString() }); T.db('preguntas', pgs);
+      window.open(T.wa('Hola Giandeco, tengo una pregunta sobre ' + p.nombre + ' (' + p.precio + '):\n\n' + t.value.trim()), '_blank', 'noopener');
+      return;
+    }
+    if(e.target.id !== 'opForm') return;
+    e.preventDefault();
+    var f = e.target, notas = {}, falta = false;
+    T.CRITERIOS.forEach(function(c){ var r = f.querySelector('input[name="op-' + c.k + '"]:checked'); if(r) notas[c.k] = +r.value; else falta = true; });
+    var texto = f.querySelector('#opTexto'), autor = f.querySelector('#opAutor');
+    texto.parentNode.classList.toggle('is-mal', texto.value.trim().length < 20);
+    autor.parentNode.classList.toggle('is-mal', !autor.value.trim());
+    if(falta){ f.querySelector('.op-crit input:not(:checked)').focus(); return; }
+    if(f.querySelector('.is-mal')){ f.querySelector('.is-mal input, .is-mal textarea').focus(); return; }
+    var ped = T.pedidos.conProducto(key);
+    var o = { producto:key, pedido:ped.n, notas:notas, texto:texto.value.trim(), ambiente:f.querySelector('#opAmb').value,
+              autor:autor.value.trim(), lugar:(ped.entrega && ped.entrega.distrito) || '', publicar:f.querySelector('#opPub').checked };
+    T.opiniones.guardar(o);
+    window.open(T.wa(T.opiniones.mensaje(o)), '_blank', 'noopener');
+    document.getElementById('opiniones').innerHTML = opinionesHTML();
+  });
+
+  /* barra fija en móvil: aparece cuando el botón principal sale de pantalla */
+  var bar = document.getElementById('pdpBar');
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(en){ bar.classList.toggle('is-in', !en[0].isIntersecting && en[0].boundingClientRect.top < 0); })
+      .observe(document.getElementById('pdpAcc'));
+  }
+  if(location.hash === '#opiniones') document.getElementById('opiniones').scrollIntoView();
+})();
+</script>
+<script src="js/gd-movil.js?v=1" defer></script>
+<script src="js/gd-chat.js?v=5" defer></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi cuenta — Giandeco Studio Design</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0A0A09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=9">
+<link rel="stylesheet" href="css/gd-movil.css?v=1">
+<link rel="stylesheet" href="css/gd-tema.css?v=1">
+<script src="js/gd-tema.js?v=1"></script>
+<link rel="stylesheet" href="css/gd-tienda.css?v=3">
+</head>
+<body data-pagina="cuenta">
+
+<div id="gdHeader"></div>
+
+<main class="cu-top"><div class="gd-in" id="cu"></div></main>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=12"></script>
+<script src="js/gd-tienda.js?v=3"></script>
+<script>
+(function(){
+  var T = window.GD_TIENDA, esc = T.esc;
+  var root = document.getElementById('cu');
+  var TABS = [['resumen','Resumen'], ['pedidos','Pedidos'], ['proyectos','Mis proyectos'], ['favoritos','Guardados'], ['datos','Mis datos']];
+  /* las mismas cuatro etapas que el sitio explica en Diseño de interiores */
+  var ETAPAS = [
+    ['Visita y metrado', 'Medimos el espacio real y escuchamos cómo se usa.'],
+    ['Propuesta y render', 'Distribución, paleta y una imagen antes de decidir.'],
+    ['Mobiliario y compras', 'Cada pieza especificada, con precio y plazo cerrados.'],
+    ['Montaje', 'Instalamos, ambientamos y entregamos el espacio listo.']
+  ];
+  function fecha(iso){ return new Date(iso).toLocaleDateString('es-PE', { day:'numeric', month:'long', year:'numeric' }); }
+  function campo(id, label, attrs, err, val){
+    return '<div class="gd-field"><label for="' + id + '">' + label + '</label><input id="' + id + '" ' + attrs + ' value="' + esc(val || '') + '"><span class="gdt-err">' + err + '</span></div>';
+  }
+  function validar(f){
+    var n = f.querySelector('[data-c="nombre"]'), c = f.querySelector('[data-c="cel"]'), m = f.querySelector('[data-c="email"]');
+    var r = [[n, n.value.trim().length > 2], [c, /^9\d{8}$/.test(c.value.trim())], [m, /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m.value.trim())]];
+    r.forEach(function(x){ x[0].closest('.gd-field').classList.toggle('is-mal', !x[1]); });
+    var mal = r.filter(function(x){ return !x[1]; })[0];
+    if(mal){ mal[0].focus(); return null; }
+    return { nombre:n.value.trim(), cel:c.value.trim(), email:m.value.trim() };
+  }
+  function camposCuenta(s){
+    return campo('cuNombre', 'Nombre y apellido', 'type="text" autocomplete="name" data-c="nombre"', 'Indique su nombre.', s.nombre) +
+      '<div class="gd-form gd-form-2">' +
+        campo('cuCel', 'Celular', 'type="tel" inputmode="numeric" maxlength="9" autocomplete="tel-national" data-c="cel"', 'Celular de 9 dígitos que empiece en 9.', s.cel) +
+        campo('cuEmail', 'Correo', 'type="email" autocomplete="email" data-c="email"', 'Revise el correo.', s.email) +
+      '</div>';
+  }
+
+  /* ==================== ACCESO ==================== */
+  function acceso(){
+    root.innerHTML = '<div class="cu-acceso"><div>' +
+      '<p class="gd-eyebrow">Mi cuenta</p><h1>Su espacio en el estudio</h1>' +
+      '<p class="gd-body">Un solo lugar para seguir lo que compra y lo que el estudio diseña para usted.</p>' +
+      '<ul class="op-regla"><li>Sus pedidos y cotizaciones, con el estado de cada uno.</li><li>Las etapas de su proyecto de diseño.</li><li>Las piezas que guardó y los datos de entrega para no repetirlos.</li><li>Sus opiniones, que solo se habilitan después de comprar.</li></ul></div>' +
+      '<form class="op-caja gd-form" id="cuAcceso" novalidate><p class="pdp-h3" style="margin:0;">Entrar o crear cuenta</p>' + camposCuenta({}) +
+        '<button type="submit" class="gd-btn gd-btn-primary" style="justify-self:start;">Entrar' + T.FLECHA + '</button>' +
+        '<p class="gd-form-nota">Sus datos se guardan en este dispositivo. Si ya hizo un pedido aquí, su cuenta ya existe.</p></form></div>';
+    document.getElementById('cuAcceso').addEventListener('submit', function(e){
+      e.preventDefault(); var d = validar(e.target); if(d){ T.sesion.set(d); pintar(); }
+    });
+  }
+
+  /* ==================== PANELES ==================== */
+  function pedidoHTML(p){
+    return '<article class="cu-ped"><div class="cu-ped-top"><b>' + esc(p.n) + '</b><span>' + fecha(p.fecha) + ' · ' + (p.subtotal ? T.fmt(p.subtotal) : 'Cotización') + '</span></div>' +
+      '<div class="cu-ped-body">' + p.items.map(function(x){
+        var op = x.key ? (T.opiniones.mia(x.key) ? 'Opinión en revisión' : '<a href="' + T.url(x.key) + '#opiniones">Opinar sobre esta pieza</a>') : '';
+        return '<div class="cu-ped-item"><span>' + x.qty + ' × ' + (x.key ? '<a href="' + T.url(x.key) + '">' + esc(x.nombre) + '</a>' : esc(x.nombre)) + '</span>' +
+          '<span>' + (x.valor === null ? 'A cotizar' : T.fmt(x.valor * x.qty)) + '</span>' + (op ? '<small>' + op + '</small>' : '') + '</div>';
+      }).join('') +
+      '<ol class="cu-linea">' + T.ESTADOS.map(function(e, i){ return '<li' + (i <= p.estado ? ' class="is-hecho"' : '') + '>' + e + '</li>'; }).join('') + '</ol>' +
+      '<p class="gd-form-nota" style="margin-top:16px;">' + esc(p.entrega.resumen) + (p.pago ? ' · Pago: ' + esc(p.pago) : '') + '</p>' +
+      '<div class="cu-ped-acc"><a class="gd-link" href="' + T.wa(T.pedidos.mensaje(p)) + '" target="_blank" rel="noopener">Enviar al estudio' + T.FLECHA + '</a>' +
+        '<a class="gd-link" href="' + T.wa('Hola Giandeco, quiero saber el estado de mi pedido ' + p.n + '.') + '" target="_blank" rel="noopener">Consultar estado' + T.FLECHA + '</a>' +
+        '<button type="button" class="gdt-quick" style="margin:0;" data-repetir="' + esc(p.n) + '">Repetir pedido</button></div>' +
+      '</div></article>';
+  }
+
+  var PANEL = {
+    resumen: function(s){
+      var ped = T.pedidos.lista(), fav = T.favs.lista(), vis = T.vistos.lista().slice(0, 4);
+      return '<h2>Resumen</h2><p>Lo último de su cuenta.</p>' +
+        '<div class="cu-kpis"><a class="cu-kpi" href="#pedidos"><b>' + ped.length + '</b><span>Pedidos</span></a>' +
+          '<a class="cu-kpi" href="#favoritos"><b>' + fav.length + '</b><span>Guardados</span></a>' +
+          '<a class="cu-kpi" href="#proyectos"><b>0</b><span>Proyectos</span></a></div>' +
+        (ped.length ? pedidoHTML(ped[0]) : '<div class="cu-vacio"><p>Todavía no tiene pedidos. Lo que compre o cotice aparecerá aquí con su estado.</p><a class="gd-btn gd-btn-primary" href="catalogo.html">Ver el catálogo' + T.FLECHA + '</a></div>') +
+        (vis.length ? '<div class="cu-bloque"><h3>Vistas hace poco</h3><p>Retome donde lo dejó.</p><div class="gd-grid">' + vis.map(function(k){ return T.card(k); }).join('') + '</div></div>' : '');
+    },
+    pedidos: function(){
+      var ped = T.pedidos.lista();
+      return '<h2>Pedidos</h2><p>El estudio confirma cada pedido por WhatsApp. Desde aquí puede reenviarlo, consultar su estado y, cuando lo reciba, dejar su opinión.</p>' +
+        (ped.length ? ped.map(pedidoHTML).join('') : '<div class="cu-vacio"><p>Todavía no tiene pedidos.</p><a class="gd-btn gd-btn-primary" href="catalogo.html">Ver el catálogo' + T.FLECHA + '</a></div>');
+    },
+    proyectos: function(s){
+      var n = ''; for(var i = 0; i <= 10; i++) n += '<input type="radio" name="tsNps" id="tsNps' + i + '" value="' + i + '"><label for="tsNps' + i + '">' + i + '</label>';
+      return '<h2>Mis proyectos</h2><p>Si el estudio está diseñando su tienda o su casa, aquí sigue el avance por etapas.</p>' +
+        '<ol class="cu-etapas">' + ETAPAS.map(function(e){ return '<li><b>' + e[0] + '</b>' + e[1] + '</li>'; }).join('') + '</ol>' +
+        '<div class="cu-vacio"><p>Aún no hay un proyecto vinculado a esta cuenta. Si ya trabaja con el estudio, pídanos vincularlo; si quiere empezar, agende la visita técnica.</p>' +
+          '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="' + T.wa('Hola Giandeco, soy ' + s.nombre + ' y quiero vincular mi proyecto a mi cuenta de la web (' + s.email + ').') + '" target="_blank" rel="noopener">Vincular mi proyecto' + T.FLECHA + '</a>' +
+          '<a class="gd-btn gd-btn-ghost" href="contacto.html">Agendar visita técnica</a></div></div>' +
+        '<div class="cu-bloque"><h3>Su testimonio del proyecto</h3>' +
+          '<p>Un proyecto no se califica con estrellas. Al entregarlo, le pedimos tres respuestas cortas; con su permiso, acompañan el caso publicado.</p>' +
+          '<form class="gd-form" id="tsForm" novalidate>' +
+            '<div class="gd-form gd-form-2">' + campo('tsProy', 'Proyecto', 'type="text" placeholder="Tienda, departamento, stand…"', 'Indique qué proyecto fue.', '') +
+              campo('tsRol', 'Su cargo y empresa (opcional)', 'type="text"', '', '') + '</div>' +
+            '<div class="gd-field"><label for="tsAntes">¿Qué necesitaba resolver?</label><textarea id="tsAntes" style="min-height:90px;"></textarea><span class="gdt-err">Cuéntenos en una o dos líneas.</span></div>' +
+            '<div class="gd-field"><label for="tsDespues">¿Qué cambió después de la entrega?</label><textarea id="tsDespues" style="min-height:90px;"></textarea><span class="gdt-err">Cuéntenos en una o dos líneas.</span></div>' +
+            '<div class="gd-field"><label>¿Recomendaría al estudio? De 0 a 10</label><div class="cu-nps op-nota">' + n + '</div><span class="gdt-err">Elija un número.</span></div>' +
+            '<label class="gdt-check"><input type="checkbox" id="tsPub"><span>Autorizo publicar mi testimonio con mi nombre y el de mi marca o proyecto.</span></label>' +
+            '<button type="submit" class="gd-btn gd-btn-primary" style="justify-self:start;">Enviar testimonio' + T.FLECHA + '</button>' +
+            '<p class="gd-form-nota">Al enviar se abre WhatsApp con el testimonio ya redactado.</p>' +
+          '</form></div>';
+    },
+    favoritos: function(){
+      var fav = T.favs.lista().filter(function(k){ return T.CAT[k]; });
+      return '<h2>Guardados</h2><p>Las piezas que marcó para decidir después.</p>' +
+        (fav.length ? '<div class="gd-grid">' + fav.map(function(k){ return T.card(k); }).join('') + '</div>'
+                    : '<div class="cu-vacio"><p>Aún no guardó ninguna pieza. En cada ficha de producto encontrará el botón Guardar.</p><a class="gd-btn gd-btn-primary" href="catalogo.html">Ver el catálogo' + T.FLECHA + '</a></div>');
+    },
+    datos: function(s){
+      var d = T.db('datos') || {};
+      return '<h2>Mis datos</h2><p>Con estos datos se completa el pedido para que no los escriba de nuevo.</p>' +
+        '<form class="gd-form" id="cuDatos" novalidate style="max-width:640px;">' + camposCuenta(s) +
+          '<button type="submit" class="gd-btn gd-btn-primary" style="justify-self:start;">Guardar cambios</button>' +
+          '<div class="gd-form-ok" id="cuOk" role="status">Datos actualizados.</div></form>' +
+        '<div class="cu-bloque"><h3>Entrega y comprobante</h3><p>' +
+          (d.dir ? esc(d.dir) + ', ' + esc(d.distrito) + (d.ref ? ' · Ref.: ' + esc(d.ref) : '') : 'Sin dirección guardada.') + '<br>' +
+          (d.comp === 'factura' ? 'Factura · RUC ' + esc(d.ruc) + ' · ' + esc(d.razon) : d.doc ? 'Boleta · ' + esc(d.tdoc) + ' ' + esc(d.doc) : 'Sin comprobante guardado.') +
+          '<br>Se actualizan con su próximo pedido.</p></div>' +
+        '<div class="cu-bloque"><h3>Este dispositivo</h3><p>Su cuenta, sus pedidos y su selección se guardan solo en este navegador.</p>' +
+          '<div class="co-ok-acc"><button type="button" class="gd-btn gd-btn-ghost" id="cuSalir">Cerrar sesión</button>' +
+          '<button type="button" class="gdt-quick" style="margin:0;align-self:center;" id="cuBorrar">Borrar todos mis datos de este dispositivo</button></div></div>';
+    }
+  };
+
+  function pintar(){
+    var s = T.sesion.get();
+    if(!s){ acceso(); return; }
+    var tab = (location.hash || '').slice(1); if(!PANEL[tab]) tab = 'resumen';
+    var cuenta = { pedidos:T.pedidos.lista().length, favoritos:T.favs.lista().length };
+    root.innerHTML = '<p class="gd-eyebrow">Mi cuenta</p><h1>Hola, ' + esc(s.nombre.split(' ')[0]) + '</h1>' +
+      '<div class="cu-grid"><nav class="cu-nav" aria-label="Secciones de la cuenta">' + TABS.map(function(t){
+        return '<a href="#' + t[0] + '"' + (t[0] === tab ? ' class="is-active" aria-current="page"' : '') + '>' + t[1] + (cuenta[t[0]] ? '<i>' + cuenta[t[0]] + '</i>' : '') + '</a>';
+      }).join('') + '</nav><section class="cu-panel">' + PANEL[tab](s) + '</section></div>';
+  }
+
+  window.addEventListener('hashchange', function(){ pintar(); window.scrollTo(0, 0); });
+  document.addEventListener('gd:favs', function(){ if(location.hash === '#favoritos') pintar(); });
+
+  root.addEventListener('click', function(e){
+    var r = e.target.closest('[data-repetir]');
+    if(r){
+      var p = T.pedidos.get(r.getAttribute('data-repetir'));
+      p.items.forEach(function(x){ if(x.key) T.carrito.addKey(x.key, x.qty); else T.carrito.addEspacio(x.nombre, x.cat, x.origen); });
+      T.abrir(); return;
+    }
+    if(e.target.id === 'cuSalir'){ T.sesion.salir(); location.hash = ''; pintar(); }
+    if(e.target.id === 'cuBorrar' && window.confirm('Se borrarán su cuenta, pedidos, guardados y selección de este dispositivo. ¿Continuar?')){
+      ['sesion','pedidos','favs','vistos','datos','opiniones','carrito','reclamos','preguntas','testimonios'].forEach(function(k){ T.db(k, null); });
+      location.href = 'cuenta.html';
+    }
+  });
+
+  root.addEventListener('submit', function(e){
+    e.preventDefault();
+    var f = e.target;
+    if(f.id === 'cuDatos'){
+      var d = validar(f); if(!d) return;
+      T.sesion.set(d); document.getElementById('cuOk').classList.add('is-visible');
+    }
+    if(f.id === 'tsForm'){
+      var g = function(id){ return f.querySelector('#' + id); }, nps = f.querySelector('input[name="tsNps"]:checked');
+      var r = [[g('tsProy'), g('tsProy').value.trim().length > 2], [g('tsAntes'), g('tsAntes').value.trim().length > 10], [g('tsDespues'), g('tsDespues').value.trim().length > 10]];
+      r.forEach(function(x){ x[0].closest('.gd-field').classList.toggle('is-mal', !x[1]); });
+      f.querySelector('.cu-nps').closest('.gd-field').classList.toggle('is-mal', !nps);
+      var mal = f.querySelector('.is-mal input, .is-mal textarea'); if(mal){ mal.focus(); return; }
+      var s = T.sesion.get(), rol = g('tsRol').value.trim();
+      var tss = T.db('testimonios') || []; tss.unshift({ autor:s.nombre, rol:rol, proyecto:g('tsProy').value.trim(), antes:g('tsAntes').value.trim(), despues:g('tsDespues').value.trim(), nps:+nps.value, publicar:g('tsPub').checked, fecha:new Date().toISOString() }); T.db('testimonios', tss);
+      window.open(T.wa('Hola Giandeco, dejo mi testimonio del proyecto ' + g('tsProy').value.trim() + '.\n\n' +
+        'Qué necesitaba resolver: ' + g('tsAntes').value.trim() + '\n\n' +
+        'Qué cambió después: ' + g('tsDespues').value.trim() + '\n\n' +
+        'Recomendación: ' + nps.value + '/10\n' +
+        s.nombre + (rol ? ' · ' + rol : '') + '\n' +
+        (g('tsPub').checked ? 'Autorizo publicarlo con mi nombre y el de mi marca o proyecto.' : 'Prefiero que no se publique.')), '_blank', 'noopener');
+    }
+  });
+
+  pintar();
+})();
+</script>
+<script src="js/gd-movil.js?v=1" defer></script>
+<script src="js/gd-chat.js?v=5" defer></script>
+</body>
+</html>

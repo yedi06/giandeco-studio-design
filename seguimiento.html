@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seguir mi pedido — Giandeco Studio Design</title>
+<meta name="description" content="Consulte el estado de su pedido de Giandeco con su número de pedido.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0A0A09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=9">
+<link rel="stylesheet" href="css/gd-tienda.css?v=3">
+</head>
+<body data-pagina="ayuda">
+
+<div id="gdHeader"></div>
+
+<main class="cu-top"><div class="gd-in">
+  <p class="gd-eyebrow">Centro de ayuda</p>
+  <h1>Seguir mi pedido</h1>
+  <p class="lg-lead">Escriba su número de pedido. Lo encuentra en la pantalla de confirmación y en el mensaje que envió al estudio.</p>
+  <div class="cu-grid">
+    <nav class="cu-nav" aria-label="Centro de ayuda"><a href="compra-segura.html">Compra segura</a><a href="envios-y-entregas.html">Envíos y entregas</a><a href="cambios-y-garantia.html">Cambios y garantía</a><a href="preguntas-frecuentes.html">Preguntas frecuentes</a><a href="seguimiento.html" class="is-active" aria-current="page">Seguir mi pedido</a><a href="opiniones.html">Opiniones de clientes</a><a href="terminos-y-condiciones.html">Términos y condiciones</a><a href="politica-de-privacidad.html">Privacidad</a><a href="libro-de-reclamaciones.html">Libro de reclamaciones</a></nav>
+    <article class="lg-prosa">
+      <form class="gd-form" id="sgForm" novalidate style="max-width:520px;">
+        <div class="gd-field"><label for="sgN">Número de pedido</label><input id="sgN" type="text" placeholder="GD-000000-0000" autocomplete="off"><span class="gdt-err">Escriba el número completo, por ejemplo GD-261007-1234.</span></div>
+        <button type="submit" class="gd-btn gd-btn-primary" style="justify-self:start;">Consultar<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+      </form>
+      <div id="sgOut" aria-live="polite" style="margin-top:var(--sp-40);"></div>
+      <h2>Cómo avanza un pedido</h2>
+      <ol>
+        <li><b>Registrado:</b> usted lo creó y lo envió al estudio.</li>
+        <li><b>Confirmado por el estudio:</b> disponibilidad, envío y fecha acordados.</li>
+        <li><b>En preparación:</b> pago recibido; se alista o se fabrica la pieza.</li>
+        <li><b>En camino:</b> salió a reparto o está listo para recoger.</li>
+        <li><b>Entregado.</b></li>
+      </ol>
+    </article>
+  </div>
+</div></main>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=12"></script>
+<script src="js/gd-tienda.js?v=3"></script>
+<script>
+(function(){
+  var T = window.GD_TIENDA, out = document.getElementById('sgOut'), inp = document.getElementById('sgN');
+  var q = new URLSearchParams(location.search).get('n'); if(q) inp.value = q;
+  function consultar(){
+    var n = inp.value.trim().toUpperCase(), bien = /^GD-\d{6}-\d{4}$/.test(n);
+    inp.closest('.gd-field').classList.toggle('is-mal', !bien);
+    if(!bien){ out.innerHTML = ''; return; }
+    var p = T.pedidos.get(n);
+    var waEstado = T.wa('Hola Giandeco, quiero saber el estado de mi pedido ' + n + '.');
+    if(p){
+      out.innerHTML = '<article class="cu-ped"><div class="cu-ped-top"><b>' + T.esc(p.n) + '</b><span>' + (p.subtotal ? T.fmt(p.subtotal) : 'Cotización') + '</span></div><div class="cu-ped-body">' +
+        '<ol class="cu-linea">' + T.ESTADOS.map(function(e, i){ return '<li' + (i <= p.estado ? ' class="is-hecho"' : '') + '>' + e + '</li>'; }).join('') + '</ol>' +
+        '<p class="gd-form-nota" style="margin-top:16px;">' + T.esc(p.entrega.resumen) + '</p>' +
+        '<div class="cu-ped-acc"><a class="gd-link" href="' + waEstado + '" target="_blank" rel="noopener">Consultar al estudio' + T.FLECHA + '</a><a class="gd-link" href="cuenta.html#pedidos">Ver en mi cuenta' + T.FLECHA + '</a></div></div></article>';
+    } else {
+      out.innerHTML = '<div class="cu-vacio"><p>Ese pedido no está guardado en este dispositivo. El estudio le confirma el estado por WhatsApp con el número ' + T.esc(n) + '.</p>' +
+        '<a class="gd-btn gd-btn-primary" href="' + waEstado + '" target="_blank" rel="noopener">Consultar por WhatsApp' + T.FLECHA + '</a></div>';
+    }
+  }
+  document.getElementById('sgForm').addEventListener('submit', function(e){ e.preventDefault(); consultar(); });
+  if(q) consultar();
+})();
+</script>
+<script src="js/gd-chat.js?v=5" defer></script>
+</body>
+</html>

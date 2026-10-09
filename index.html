@@ -10,6 +10,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#0A0A09" id="metaThemeColor">
+<!-- seo -->
+<link rel="canonical" href="https://giandeco.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Giandeco Studio Design">
+<meta property="og:locale" content="es_PE">
+<meta property="og:title" content="Giandeco Studio Design">
+<meta property="og:description" content="">
+<meta property="og:url" content="https://giandeco.com/">
+<meta property="og:image" content="https://giandeco.com/images/posicionamiento/manifiesto.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","@id":"https://giandeco.com/#estudio","name":"Giandeco Studio Design","url":"https://giandeco.com/","logo":"https://giandeco.com/img/logo-positivo.svg","image":"https://giandeco.com/images/espacios/zara-sala-1.jpg","description":"Estudio de visual merchandising, diseño de espacios comerciales e interiorismo. Diseño, producción y montaje bajo una sola dirección.","telephone":"+51920775559","email":"contacto@giandeco.com","address":{"@type":"PostalAddress","streetAddress":"Ca. Las Bellísimas 170, Urb. Vipol","addressLocality":"Callao","postalCode":"07036","addressCountry":"PE"},"areaServed":{"@type":"Country","name":"Perú"},"sameAs":["https://www.instagram.com/giandeco.studio/","https://www.facebook.com/profile.php?id=61593540694016"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Giandeco Studio Design","url":"https://giandeco.com/","inLanguage":"es-PE"}</script>
+<!-- /seo -->
 <style>
   :root{
     /* Paleta oficial GIANDECO — BRANDBOOK, Edición 01 · 2026 (slide 30, "Especificación de color") */
@@ -1342,6 +1355,20 @@
   .gd-footer-social a:hover{ color: var(--ebano); background: var(--accent); border-color: var(--accent); }
   .gd-footer-social svg{ width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.5; }
 
+  .gd-footer-ayuda{
+    margin-top: clamp(40px,5vw,64px); padding-top:22px; border-top:1px solid var(--line);
+    display:flex; flex-wrap:wrap; align-items:center; gap:10px 26px;
+  }
+  .gd-footer-ayuda a{ font-family: var(--body); font-size:.8rem; color: var(--text-dim); text-decoration:none; transition: color .2s ease; }
+  .gd-footer-ayuda a:hover{ color: var(--accent); }
+  .gd-footer-libro{
+    display:inline-flex; align-items:center; gap:8px; margin-left:auto; padding:8px 14px;
+    border:1px solid var(--line); border-radius:2px; color: var(--text) !important;
+  }
+  .gd-footer-libro:hover{ border-color: var(--accent); }
+  .gd-footer-libro svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.4; }
+  @media (max-width:720px){ .gd-footer-libro{ margin-left:0; } }
+  .gd-footer-ayuda + .gd-footer-bar{ margin-top:22px; }
   .gd-footer-bar{
     margin-top: clamp(40px,5vw,64px); padding-block: 22px; border-top:1px solid var(--line);
     display:flex; flex-wrap:wrap; gap:10px 24px; justify-content:space-between;
@@ -1918,6 +1945,16 @@
         </div>
       </div>
     </div>
+    <nav class="gd-footer-ayuda" aria-label="Ayuda y condiciones">
+      <a href="compra-segura.html">Compra segura</a>
+      <a href="envios-y-entregas.html">Envíos y entregas</a>
+      <a href="cambios-y-garantia.html">Cambios y garantía</a>
+      <a href="preguntas-frecuentes.html">Preguntas frecuentes</a>
+      <a href="opiniones.html">Opiniones de clientes</a>
+      <a href="terminos-y-condiciones.html">Términos y condiciones</a>
+      <a href="politica-de-privacidad.html">Privacidad</a>
+      <a class="gd-footer-libro" href="libro-de-reclamaciones.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6"/></svg>Libro de reclamaciones</a>
+    </nav>
     <div class="gd-footer-bar">
       <span>© 2026 Giandeco Studio Design. Todos los derechos reservados.</span>
       <em>Espacios que saben vender</em>
@@ -2700,5 +2737,6 @@
   document.addEventListener('visibilitychange', function(){ if(document.hidden) v.pause(); else if(loadedFor){ var p = v.play(); if(p && p.catch) p.catch(function(){}); } });
 })();
 </script>
+<script src="js/gd-tienda.js?v=3" defer></script>
 <script src="js/gd-movil.js?v=1" defer></script>
 <script src="js/gd-chat.js?v=6" defer></script>

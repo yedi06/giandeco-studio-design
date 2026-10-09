@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /producto.html
+Disallow: /checkout.html
+Disallow: /cuenta.html
+Disallow: /seguimiento.html
+Disallow: /404.html
+Disallow: /material-pendiente.html
+Disallow: /admin.html
+
+Sitemap: https://giandeco.com/sitemap.xml

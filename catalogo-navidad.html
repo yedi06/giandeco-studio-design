@@ -6,6 +6,17 @@
 <title>Navidad — Catálogo Giandeco Studio Design</title>
 <meta name="description" content="Campaña de Navidad Giandeco: montaje completo para tiendas y casas, más 26 piezas de la colección 2026 con ficha y precio. Entrega en Lima y Callao.">
 <meta name="theme-color" content="#0A0A09">
+<!-- seo -->
+<link rel="canonical" href="https://giandeco.com/catalogo-navidad.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Giandeco Studio Design">
+<meta property="og:locale" content="es_PE">
+<meta property="og:title" content="Navidad — Catálogo Giandeco Studio Design">
+<meta property="og:description" content="Campaña de Navidad Giandeco: montaje completo para tiendas y casas, más 26 piezas de la colección 2026 con ficha y precio. Entrega en Lima y Callao.">
+<meta property="og:url" content="https://giandeco.com/catalogo-navidad.html">
+<meta property="og:image" content="https://giandeco.com/images/espacios/zara-navidad-2.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<!-- /seo -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
@@ -48,17 +59,6 @@
   }
   .nv-filtro:hover{ border-color:var(--accent); color:var(--lino); }
   .nv-filtro.is-active{ background:var(--accent); border-color:var(--accent); color:var(--ebano); }
-  .nv-ficha{
-    display:none; grid-template-columns:1fr; gap:var(--sp-40);
-    border-top:1px solid var(--line); margin-top:var(--sp-64); padding-top:var(--sp-40);
-  }
-  .nv-ficha.is-open{ display:grid; }
-  @media (min-width:860px){ .nv-ficha.is-open{ grid-template-columns:.9fr 1.1fr; } }
-  .nv-ficha-img{ background:#050403; border-radius:2px; overflow:hidden; aspect-ratio:4/5; }
-  .nv-ficha-img img{ width:100%; height:100%; object-fit:cover; }
-  .nv-ficha h3{ font-family:var(--display); font-weight:400; font-size:clamp(1.9rem,3vw,2.3rem); color:var(--lino); margin:0 0 10px; }
-  .nv-ficha .precio{ font-family:var(--body); font-size:1.3rem; color:var(--accent); margin:0 0 20px; font-variant-numeric:tabular-nums; }
-  .nv-ficha .nota{ color:var(--text-dim); font-size:.96rem; line-height:1.7; margin:0 0 24px; max-width:52ch; }
   .nv-vacio{ color:var(--text-dim); font-size:.92rem; }
 </style>
 </head>
@@ -105,17 +105,21 @@
 <!-- ==================== ESPACIO CON PUNTOS ==================== -->
 <section class="gd-sec" style="padding-top:0;">
   <div class="gd-in">
-    <p class="gd-eyebrow reveal">Un montaje real</p>
+    <p class="gd-eyebrow reveal">La colección 2026, servida</p>
     <h2 class="gd-h2 reveal d1" style="font-size:clamp(1.9rem,3vw,2.4rem);">Mesa servida de campaña</h2>
-    <p class="gd-body reveal d2">Toque los puntos para ver cada pieza del montaje.</p>
+    <p class="gd-body reveal d2">Toque los puntos para ver cada pieza de la colección y su precio.</p>
 
     <div class="gd-shop reveal-scale" style="margin-top:var(--sp-24);">
-      <img decoding="async" class="gd-shop-img" src="images/espacios/zara-navidad-1.jpg?v=2" alt="Comedor navideño con mesa servida, árbol decorado y candelabro de plata">
-      <button class="gd-shop-dot" style="left:10%; top:33%" data-nombre="Árbol decorado en plata" data-cat="Navidad" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20el%20%C3%A1rbol%20decorado%20en%20plata."></button>
-      <button class="gd-shop-dot" style="left:57%; top:38%" data-nombre="Corona natural de invierno" data-cat="Navidad" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20corona%20de%20invierno."></button>
-      <button class="gd-shop-dot" style="left:50%; top:50%" data-nombre="Candelabro alto en plata" data-cat="Decoración" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20el%20candelabro%20alto."></button>
-      <button class="gd-shop-dot" style="left:63%; top:70%" data-nombre="Vajilla y cristalería" data-cat="Mesa" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20vajilla%20navide%C3%B1a."></button>
-      <button class="gd-shop-dot" style="left:55%; top:90%" data-nombre="Mantelería bordada" data-cat="Textiles" data-precio="Consultar" data-href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20me%20interesa%20la%20manteler%C3%ADa%20bordada."></button>
+      <img decoding="async" class="gd-shop-img" src="images/espacios/mesa-servida-navidad.jpg?v=1" width="1600" height="1205" alt="Comedor navideño con mesa servida: arreglo de pino y berries, portavelas dorados, bomboneras caja de regalo, taza cascanuez, reno dorado con plato, cascanueces musicales, casa de jengibre, venados transparentes y farol de la colección Navidad 2026 de Giandeco">
+      <button class="gd-shop-dot" style="left:10%; top:13%" data-prod="farol-157"></button>
+      <button class="gd-shop-dot" style="left:20%; top:60%" data-prod="portavela-dorado"></button>
+      <button class="gd-shop-dot" style="left:40%; top:50%" data-prod="arreglo-pino-berries"></button>
+      <button class="gd-shop-dot" style="left:53%; top:27%" data-prod="cascanueces-musicales"></button>
+      <button class="gd-shop-dot" style="left:50%; top:73%" data-prod="bombonera-caja-regalo"></button>
+      <button class="gd-shop-dot" style="left:61%; top:68%" data-prod="taza-cascanuez-roja"></button>
+      <button class="gd-shop-dot" style="left:71%; top:26%" data-prod="casa-jengibre"></button>
+      <button class="gd-shop-dot" style="left:86%; top:63%" data-prod="reno-de-pie-plato"></button>
+      <button class="gd-shop-dot" style="left:90%; top:31%" data-prod="venado-mediano"></button>
     </div>
 
     <div class="nv-tiempo reveal">
@@ -136,22 +140,6 @@
     <div class="nv-filtros reveal d2" id="nvFiltros" style="margin-top:var(--sp-40);"></div>
     <div class="gd-grid" id="nvGrid"></div>
 
-    <!-- ficha ampliada -->
-    <div class="nv-ficha" id="nvFicha">
-      <div class="nv-ficha-img"><img decoding="async" id="nvFichaImg" src="" alt=""></div>
-      <div>
-        <p class="gd-eyebrow" id="nvFichaCat"></p>
-        <h3 id="nvFichaNombre"></h3>
-        <p class="precio" id="nvFichaPrecio"></p>
-        <p class="nota" id="nvFichaNota"></p>
-        <div style="display:flex; flex-wrap:wrap; gap:12px;">
-          <a class="gd-btn gd-btn-primary" id="nvFichaWa" href="#" target="_blank" rel="noopener">Pedir por WhatsApp
-            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-          <a class="gd-btn gd-btn-ghost" href="contacto.html">Consultar al estudio</a>
-        </div>
-      </div>
-    </div>
-
     <div style="margin-top:var(--sp-64); padding-top:var(--sp-40); border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:12px;">
       <a class="gd-btn gd-btn-primary" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20la%20colecci%C3%B3n%20Navidad%202026%20completa." target="_blank" rel="noopener">Cotizar la colección completa
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
@@ -161,14 +149,13 @@
 </section>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=9"></script>
+<script src="js/giandeco.js?v=13"></script>
 <script>
 (function(){
   var P = window.GD_NAVIDAD || {};
   var keys = Object.keys(P);
   var grid = document.getElementById('nvGrid');
   var filtros = document.getElementById('nvFiltros');
-  var ficha = document.getElementById('nvFicha');
   if(!grid) return;
 
   var cats = ['Todo'];
@@ -183,7 +170,7 @@
     grid.innerHTML = lista.length ? lista.map(function(k, i){
       var p = P[k];
       var d = i < 4 ? '' : (i < 8 ? ' d1' : ' d2');
-      return '<a class="gd-prod reveal' + d + '" href="#' + k + '" data-key="' + k + '" data-cursor="Ver">' +
+      return '<a class="gd-prod reveal' + d + '" href="producto-' + k + '.html" data-cursor="Ver">' +
         '<span class="gd-prod-thumb"><img decoding="async" src="' + p.img + '" alt="' + p.nombre + '" loading="lazy"></span>' +
         '<span class="gd-prod-cat">' + p.cat + '</span>' +
         '<span class="gd-prod-name">' + p.nombre + '</span>' +
@@ -200,32 +187,13 @@
     pintar(b.dataset.cat);
   });
 
-  function abrirFicha(key){
-    var p = P[key]; if(!p) return;
-    document.getElementById('nvFichaImg').src = p.img;
-    document.getElementById('nvFichaImg').alt = p.nombre;
-    document.getElementById('nvFichaCat').textContent = p.cat;
-    document.getElementById('nvFichaNombre').textContent = p.nombre;
-    document.getElementById('nvFichaPrecio').textContent = p.precio;
-    document.getElementById('nvFichaNota').textContent = p.nota;
-    document.getElementById('nvFichaWa').href =
-      'https://wa.me/51920775559?text=' + encodeURIComponent('Hola Giandeco, me interesa la pieza de Navidad: ' + p.nombre + ' (' + p.precio + ').');
-    ficha.classList.add('is-open');
-    ficha.scrollIntoView({ behavior:'smooth', block:'start' });
-  }
-
-  grid.addEventListener('click', function(e){
-    var a = e.target.closest('.gd-prod'); if(!a) return;
-    e.preventDefault();
-    history.replaceState(null, '', '#' + a.dataset.key);
-    abrirFicha(a.dataset.key);
-  });
 
   pintar('Todo');
   var hash = (location.hash || '').replace('#','');
-  if(hash && P[hash]) abrirFicha(hash);
+  if(hash && P[hash]) location.replace('producto-' + hash + '.html');
 })();
 </script>
+<script src="js/gd-tienda.js?v=3" defer></script>
 <script src="js/gd-movil.js?v=1" defer></script>
 <script src="js/gd-chat.js?v=6" defer></script>
 </body>

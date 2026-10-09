@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opiniones de clientes — Giandeco Studio Design</title>
+<meta name="description" content="Opiniones verificadas de compras y testimonios de proyectos de Giandeco Studio Design. Solo opina quien compró o contrató.">
+<meta name="theme-color" content="#0A0A09">
+<!-- seo -->
+<link rel="canonical" href="https://giandeco.com/opiniones.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Giandeco Studio Design">
+<meta property="og:locale" content="es_PE">
+<meta property="og:title" content="Opiniones de clientes — Giandeco Studio Design">
+<meta property="og:description" content="Opiniones verificadas de compras y testimonios de proyectos de Giandeco Studio Design. Solo opina quien compró o contrató.">
+<meta property="og:url" content="https://giandeco.com/opiniones.html">
+<meta property="og:image" content="https://giandeco.com/images/espacios/zara-sala-1.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<!-- /seo -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=9">
+<link rel="stylesheet" href="css/gd-tienda.css?v=3">
+</head>
+<body data-pagina="ayuda">
+
+<div id="gdHeader"></div>
+
+<main class="cu-top"><div class="gd-in">
+  <p class="gd-eyebrow">Confianza</p>
+  <h1>Lo que dicen quienes ya compraron</h1>
+  <p class="lg-lead">Aquí no hay reseñas anónimas. Cada opinión corresponde a un pedido y cada testimonio a un proyecto entregado.</p>
+  <div class="cu-grid">
+    <nav class="cu-nav" aria-label="Centro de ayuda"><a href="compra-segura.html">Compra segura</a><a href="envios-y-entregas.html">Envíos y entregas</a><a href="cambios-y-garantia.html">Cambios y garantía</a><a href="preguntas-frecuentes.html">Preguntas frecuentes</a><a href="seguimiento.html">Seguir mi pedido</a><a href="opiniones.html" class="is-active" aria-current="page">Opiniones de clientes</a><a href="terminos-y-condiciones.html">Términos y condiciones</a><a href="politica-de-privacidad.html">Privacidad</a><a href="libro-de-reclamaciones.html">Libro de reclamaciones</a></nav>
+    <article class="lg-prosa">
+      <div class="lg-tiles is-3">
+        <div><b>01</b><h3>Compra verificada</h3><p>La opinión de una pieza solo se habilita desde el pedido de quien la compró.</p></div>
+        <div><b>02</b><h3>Criterios del rubro</h3><p>Se califica el acabado, la fidelidad a la foto, la entrega y el armado, y la atención del estudio.</p></div>
+        <div><b>03</b><h3>Proyectos sin estrellas</h3><p>Un proyecto se cuenta con un antes y un después, firmado por el cliente y con su autorización.</p></div>
+      </div>
+
+      <h2>Opiniones de piezas</h2>
+      <div id="opLista"></div>
+
+      <h2>Testimonios de proyectos</h2>
+      <div id="tsLista"></div>
+
+      <h2>Deje la suya</h2>
+      <div class="lg-tiles is-2">
+        <div><h3>Compré una pieza</h3><p>Entre a su pedido y elija «Opinar sobre esta pieza».</p><a class="gd-link" href="cuenta.html#pedidos">Ir a mis pedidos<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+        <div><h3>El estudio hizo mi proyecto</h3><p>Tres respuestas cortas sobre el antes y el después.</p><a class="gd-link" href="cuenta.html#proyectos">Dejar mi testimonio<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+      </div>
+      <p id="opGoogle" hidden></p>
+    </article>
+  </div>
+</div>
+
+<section class="gd-sec gd-marcas" style="margin-top:var(--sp-64);">
+  <div class="gd-in"><p class="gd-eyebrow is-muted">Trayectoria</p><h2 class="gd-h2">Marcas que han trabajado con el estudio</h2></div>
+  <div class="gd-marcas-wall">
+    <div class="gd-marcas-row" id="marcasRow1"><div class="gd-marcas-track" id="marcasTrack1"></div></div>
+    <div class="gd-marcas-row gd-marcas-row--rev" id="marcasRow2"><div class="gd-marcas-track" id="marcasTrack2"></div></div>
+  </div>
+</section>
+
+<div class="gd-in" style="padding-top:var(--sp-64);">
+  <div class="gdt-sec-head"><div><p class="gd-eyebrow">Selección del estudio</p><h2 class="gd-h2">Piezas para empezar</h2></div><a class="gd-link" href="catalogo.html">Ver el catálogo<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+  <div class="gd-grid" data-recomendados="4"></div>
+  <div hidden><article>
+    </article>
+  </div>
+</div></main>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=12"></script>
+<script src="js/gd-tienda.js?v=3"></script>
+<script>
+(function(){
+  var T = window.GD_TIENDA, esc = T.esc, C = T.CFG;
+  var ops = C.OPINIONES.slice().sort(function(a, b){ return a.fecha < b.fecha ? 1 : -1; });
+  document.getElementById('opLista').innerHTML = ops.length ? ops.map(function(o){
+    var p = T.CAT[o.producto];
+    return '<article class="op-item"><div class="op-item-top"><b>' + esc(o.autor) + (o.lugar ? ' · ' + esc(o.lugar) : '') + '</b>' +
+      '<span>' + T.opiniones.promedio(o).toFixed(1) + ' / 5</span></div><p>' + esc(o.texto) + '</p>' +
+      '<span class="op-sello">Compra verificada' + (p ? ' · <a href="' + T.url(o.producto) + '#opiniones" style="color:inherit;">' + esc(p.nombre) + '</a>' : '') + '</span></article>';
+  }).join('') : '<div class="cu-vacio"><p>La tienda acaba de abrir y todavía no hay opiniones publicadas. Preferimos este espacio vacío antes que llenarlo con reseñas que no vienen de una compra real.</p></div>';
+
+  document.getElementById('tsLista').innerHTML = C.TESTIMONIOS.length ? C.TESTIMONIOS.map(function(t){
+    return '<article class="op-item"><p class="gd-quote" style="margin-bottom:16px;">' + esc(t.despues) + '</p>' +
+      (t.antes ? '<p><b style="color:var(--lino);font-weight:500;">Lo que necesitaba resolver:</b> ' + esc(t.antes) + '</p>' : '') +
+      '<div class="op-item-top" style="margin:16px 0 0;"><b>' + esc(t.autor) + (t.rol ? ' · ' + esc(t.rol) : '') + '</b>' +
+      (t.href ? '<a class="gd-link" href="' + esc(t.href) + '">' + esc(t.proyecto || 'Ver el proyecto') + T.FLECHA + '</a>' : '<span>' + esc(t.proyecto || '') + '</span>') + '</div></article>';
+  }).join('') : '<div class="cu-vacio"><p>Los testimonios se publican con la autorización de cada cliente, junto al caso. Mientras llegan los primeros, el trabajo habla por el estudio.</p>' +
+    '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="retail-proyectos.html">Proyectos de retail' + T.FLECHA + '</a><a class="gd-btn gd-btn-ghost" href="hogar-proyectos.html">Proyectos de hogar</a></div></div>';
+
+  if(C.GOOGLE_RESENAS){
+    var g = document.getElementById('opGoogle'); g.hidden = false;
+    g.innerHTML = '<a class="gd-link" href="' + esc(C.GOOGLE_RESENAS) + '" target="_blank" rel="noopener">Ver también nuestras reseñas en Google' + T.FLECHA + '</a>';
+  }
+})();
+</script>
+<script src="js/gd-chat.js?v=5" defer></script>
+</body>
+</html>

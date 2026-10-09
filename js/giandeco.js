@@ -126,6 +126,32 @@ var NAVIDAD = {
 window.GD_NAVIDAD = NAVIDAD;
 
 /* --------------------------------------------------------------------------
+   2d. AJUSTES DEL PANEL DE ADMINISTRACIÓN
+   Precio, visibilidad y piezas nuevas definidas en admin.html. GD_BASE
+   conserva el catálogo completo para que el panel pueda mostrar también lo
+   que está oculto en la tienda.
+   -------------------------------------------------------------------------- */
+(function(){
+  var aj = null;
+  try{ aj = JSON.parse(localStorage.getItem('gd.prod') || 'null'); }catch(e){}
+  var L = { muebleria:PRODUCTOS, iluminacion:ILUMINACION, navidad:NAVIDAD };
+  window.GD_NUEVOS = [];
+  if(aj && aj.nuevos) Object.keys(aj.nuevos).forEach(function(k){
+    var n = aj.nuevos[k];
+    if(L[n.linea] && !L[n.linea][k]){ L[n.linea][k] = { nombre:n.nombre, cat:n.cat, precio:n.precio, img:n.img, nota:n.nota }; window.GD_NUEVOS.push(k); }
+  });
+  window.GD_BASE = JSON.parse(JSON.stringify(L));
+  if(aj && aj.over) Object.keys(aj.over).forEach(function(k){
+    var o = aj.over[k];
+    Object.keys(L).forEach(function(l){
+      if(!L[l][k]) return;
+      if(o.activo === false){ delete L[l][k]; return; }
+      if(o.precio != null) L[l][k].precio = 'S/ ' + Number(o.precio).toLocaleString('en-US', { minimumFractionDigits:2, maximumFractionDigits:2 });
+    });
+  });
+})();
+
+/* --------------------------------------------------------------------------
    3. HEADER
    -------------------------------------------------------------------------- */
 var body = document.body;
@@ -263,6 +289,13 @@ function footerHTML(){
         '</div>' +
       '</div>' +
     '</div>' +
+    '<nav class="gd-footer-ayuda" aria-label="Ayuda y condiciones">' +
+      [['compra-segura.html','Compra segura'], ['envios-y-entregas.html','Envíos y entregas'], ['cambios-y-garantia.html','Cambios y garantía'],
+       ['preguntas-frecuentes.html','Preguntas frecuentes'], ['opiniones.html','Opiniones de clientes'], ['terminos-y-condiciones.html','Términos y condiciones'],
+       ['politica-de-privacidad.html','Privacidad']].map(function(l){ return '<a href="' + l[0] + '">' + l[1] + '</a>'; }).join('') +
+      '<a class="gd-footer-libro" href="libro-de-reclamaciones.html">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6"/></svg>Libro de reclamaciones</a>' +
+    '</nav>' +
     '<div class="gd-footer-bar">' +
       '<span>© 2026 Giandeco Studio Design. Todos los derechos reservados.</span>' +
       '<em>Espacios que saben vender</em>' +
@@ -319,9 +352,9 @@ Object.keys(SITIO).forEach(function(k){
   (SITIO[k].pronto || []).forEach(function(p){ INDICE.push({ label: p.label + ' (próximamente)', href:p.href }); });
 });
 PAGINAS.forEach(function(p){ INDICE.push({ label:p.label, href:p.href }); });
-Object.keys(PRODUCTOS).forEach(function(k){ INDICE.push({ label: PRODUCTOS[k].nombre + ' — ' + PRODUCTOS[k].precio, href:'catalogo-muebleria.html#' + k }); });
-Object.keys(ILUMINACION).forEach(function(k){ INDICE.push({ label: ILUMINACION[k].nombre + ' — ' + ILUMINACION[k].precio, href:'catalogo-iluminacion.html#' + k }); });
-Object.keys(NAVIDAD).forEach(function(k){ INDICE.push({ label: NAVIDAD[k].nombre + ' — ' + NAVIDAD[k].precio, href:'catalogo-navidad.html#' + k }); });
+Object.keys(PRODUCTOS).forEach(function(k){ INDICE.push({ label: PRODUCTOS[k].nombre + ' — ' + PRODUCTOS[k].precio, href:'producto-' + k + '.html' }); });
+Object.keys(ILUMINACION).forEach(function(k){ INDICE.push({ label: ILUMINACION[k].nombre + ' — ' + ILUMINACION[k].precio, href:'producto-' + k + '.html' }); });
+Object.keys(NAVIDAD).forEach(function(k){ INDICE.push({ label: NAVIDAD[k].nombre + ' — ' + NAVIDAD[k].precio, href:'producto-' + k + '.html' }); });
 
 var overlay = document.getElementById('shSearchOverlay');
 var input = document.getElementById('shSearchInput');
@@ -402,7 +435,7 @@ function montarPuntos(){
     dots.forEach(function(dot){
       dot.innerHTML = '<b aria-hidden="true"></b><i aria-hidden="true"></i>';
       var key = dot.getAttribute('data-prod');
-      var p = PRODUCTOS[key];
+      var p = PRODUCTOS[key] || NAVIDAD[key];
       var nombre = p ? p.nombre : (dot.getAttribute('data-nombre') || 'Pieza');
       dot.setAttribute('aria-label', 'Ver ' + nombre);
       dot.setAttribute('type', 'button');
@@ -420,12 +453,16 @@ function montarPuntos(){
 
     function abrir(dot){
       var key = dot.getAttribute('data-prod');
-      var p = PRODUCTOS[key];
+      var p = PRODUCTOS[key] || NAVIDAD[key];
       var nombre = p ? p.nombre : (dot.getAttribute('data-nombre') || 'Pieza del espacio');
       var cat    = p ? p.cat    : (dot.getAttribute('data-cat') || 'Giandeco');
       var precio = p ? p.precio : (dot.getAttribute('data-precio') || 'Consultar');
       var img    = p ? p.img    : (dot.getAttribute('data-img') || '');
-      var href   = dot.getAttribute('data-href') || (p ? 'catalogo-muebleria.html#' + key : WA_MSG);
+      var href   = p ? 'producto-' + key + '.html' : (dot.getAttribute('data-href') || WA_MSG);
+      // con la capa de tienda cargada, el punto también suma la pieza a la selección
+      var sumar  = !window.GD_TIENDA ? '' : (p
+        ? '<button class="gd-shop-card-add" type="button" data-gdt-add="' + key + '">Añadir a mi selección</button>'
+        : '<button class="gd-shop-card-add" type="button" data-gdt-add-esp="' + nombre + '" data-cat="' + cat + '">Añadir para cotizar</button>');
 
       card.innerHTML =
         '<button class="gd-shop-card-close" type="button" aria-label="Cerrar">&times;</button>' +
@@ -434,7 +471,8 @@ function montarPuntos(){
           '<span class="gd-shop-card-cat">' + cat + '</span>' +
           '<span class="gd-shop-card-name">' + nombre + '</span>' +
           '<span class="gd-shop-card-price">' + precio + '</span>' +
-          '<a class="gd-shop-card-cta" href="' + href + '">Ver la pieza' +
+          sumar +
+          '<a class="gd-shop-card-cta" href="' + href + '"' + (p ? '' : ' target="_blank" rel="noopener"') + '>' + (p ? 'Ver la pieza' : 'Consultar esta pieza') +
             '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>' +
         '</div>';
 

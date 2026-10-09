@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finalizar pedido — Giandeco Studio Design</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0A0A09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=9">
+<link rel="stylesheet" href="css/gd-tienda.css?v=3">
+</head>
+<body data-mundo="catalogo" data-seccion="checkout">
+
+<div id="gdHeader"></div>
+
+<main class="co-top"><div class="gd-in" id="co"></div></main>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=12"></script>
+<script src="js/gd-tienda.js?v=3"></script>
+<script>
+(function(){
+  var T = window.GD_TIENDA, esc = T.esc, C = T.CFG;
+  var root = document.getElementById('co');
+  var ok = new URLSearchParams(location.search).get('ok');
+
+  /* ==================== PEDIDO REGISTRADO ==================== */
+  if(ok){
+    var ped = T.pedidos.get(ok);
+    if(!ped){ location.replace('cuenta.html#pedidos'); return; }
+    var cot = !ped.subtotal;
+    root.innerHTML = '<div class="co-ok">' +
+      '<p class="gd-eyebrow">' + (cot ? 'Cotización registrada' : 'Pedido registrado') + '</p>' +
+      '<h1>Falta un paso: enviarlo al estudio</h1>' +
+      '<p class="co-ok-n">' + esc(ped.n) + '</p>' +
+      '<p class="co-lead">Su ' + (cot ? 'solicitud' : 'pedido') + ' quedó guardado. Envíelo por WhatsApp para que el estudio lo reciba y le confirme disponibilidad, envío y fecha.</p>' +
+      '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="' + T.wa(T.pedidos.mensaje(ped)) + '" target="_blank" rel="noopener">Enviar por WhatsApp' + T.FLECHA + '</a></div>' +
+      '<ol class="co-pasos">' +
+        '<li><b>Usted envía el pedido</b>El mensaje ya está redactado con las piezas, la entrega y sus datos.</li>' +
+        '<li><b>El estudio confirma</b>Disponibilidad, costo de envío' + (ped.entrega.armado ? ', armado' : '') + ' y fecha de entrega.</li>' +
+        (cot ? '<li><b>Recibe la cotización</b>Con el detalle por pieza y las condiciones.</li>'
+             : '<li><b>Usted paga</b>' + esc(ped.pago) + '. El estudio le envía las indicaciones por el mismo chat y el comprobante electrónico a su correo.</li>') +
+        '<li><b>' + (ped.entrega.tipo === 'recojo' ? 'Recoge en el estudio' : 'Recibe en su dirección') + '</b>' + esc(ped.entrega.resumen) + '</li>' +
+      '</ol>' +
+      '<div class="co-ok-acc"><a class="gd-btn gd-btn-ghost" href="cuenta.html#pedidos">Ver mis pedidos</a>' +
+        '<a class="gd-link" href="compra-segura.html" style="align-self:center;">Cómo sigue su compra' + T.FLECHA + '</a></div></div>' +
+      '<section class="gdt-sec" style="margin-top:var(--sp-64);"><div class="gdt-sec-head"><div><p class="gd-eyebrow">Selección del estudio</p><h2 class="gd-h2">Para seguir armando el ambiente</h2></div></div>' +
+        '<div class="gd-grid">' + T.recomendados(4).map(function(k){ return T.card(k); }).join('') + '</div></section>';
+    return;
+  }
+
+  /* ==================== SELECCIÓN VACÍA ==================== */
+  var lineas = T.carrito.lineas();
+  if(!lineas.length){
+    root.innerHTML = '<p class="gd-eyebrow">Finalizar pedido</p><h1>Su selección está vacía</h1>' +
+      '<p class="co-lead">Añada piezas del catálogo o toque un punto sobre la foto de un espacio para empezar.</p>' +
+      '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="catalogo.html">Ver el catálogo' + T.FLECHA + '</a>' +
+      '<a class="gd-btn gd-btn-ghost" href="catalogo-compra-el-espacio.html">Compra el espacio</a></div>' +
+      '<section class="gdt-sec" style="margin-top:var(--sp-64);"><div class="gdt-sec-head"><div><p class="gd-eyebrow">Selección del estudio</p><h2 class="gd-h2">Por dónde empezar</h2></div></div>' +
+        '<div class="gd-grid">' + T.recomendados(4).map(function(k){ return T.card(k); }).join('') + '</div></section>';
+    return;
+  }
+
+  /* ==================== FORMULARIO ==================== */
+  var tot = T.carrito.total(lineas), soloCot = !tot.subtotal;
+  var ses = T.sesion.get() || {}, datos = T.db('datos') || {};
+  var DEPS = 'Amazonas|Áncash|Apurímac|Arequipa|Ayacucho|Cajamarca|Callao|Cusco|Huancavelica|Huánuco|Ica|Junín|La Libertad|Lambayeque|Lima|Loreto|Madre de Dios|Moquegua|Pasco|Piura|Puno|San Martín|Tacna|Tumbes|Ucayali'.split('|');
+  var DISTRITOS = 'Ancón|Ate|Barranco|Breña|Carabayllo|Chaclacayo|Chorrillos|Cieneguilla|Comas|El Agustino|Independencia|Jesús María|La Molina|La Victoria|Lima|Lince|Los Olivos|Lurigancho|Lurín|Magdalena del Mar|Miraflores|Pachacámac|Pucusana|Pueblo Libre|Puente Piedra|Punta Hermosa|Punta Negra|Rímac|San Bartolo|San Borja|San Isidro|San Juan de Lurigancho|San Juan de Miraflores|San Luis|San Martín de Porres|San Miguel|Santa Anita|Santa María del Mar|Santa Rosa|Santiago de Surco|Surquillo|Villa El Salvador|Villa María del Triunfo|Bellavista|Callao|Carmen de la Legua|La Perla|La Punta|Mi Perú|Ventanilla'.split('|');
+  function v(x){ return esc(x || ''); }
+  function campo(id, label, attrs, err, val){
+    return '<div class="gd-field"><label for="' + id + '">' + label + '</label><input id="' + id + '" ' + attrs + ' value="' + v(val) + '"><span class="gdt-err">' + err + '</span></div>';
+  }
+  function lista(id, label, ops, val){
+    return '<div class="gd-field"><label for="' + id + '">' + label + '</label><select id="' + id + '">' +
+      ops.map(function(o){ return '<option' + (o === val ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></div>';
+  }
+  function opcion(name, value, titulo, nota, on, marcas){
+    return '<label class="gdt-op"><input type="radio" name="' + name + '" value="' + value + '"' + (on ? ' checked' : '') + '><span><b>' + titulo + '</b>' +
+      (marcas ? '<em>' + marcas + '</em>' : '') + (nota ? '<small>' + nota + '</small>' : '') + '</span></label>';
+  }
+  var hayCupones = Object.keys(C.CUPONES || {}).length > 0;
+
+  root.innerHTML =
+    '<p class="gd-migas"><a href="catalogo.html">Catálogo</a> / <span>' + (soloCot ? 'Solicitar cotización' : 'Finalizar pedido') + '</span></p>' +
+    '<h1>' + (soloCot ? 'Solicitar cotización' : 'Finalizar pedido') + '</h1>' +
+    '<p class="co-lead">' + (soloCot ? 'Estas piezas se cotizan una a una. Déjenos sus datos y el estudio le responde con el detalle.'
+                                     : 'Un solo paso. El estudio confirma disponibilidad y envío antes de que usted pague.') + '</p>' +
+    '<form class="co-grid" id="coForm" novalidate>' +
+    '<div>' +
+      /* ---------- 01 ---------- */
+      '<section class="co-paso"><h2 class="co-paso-t"><i>01</i>Sus datos</h2><div class="gd-form">' +
+        campo('coNombre', 'Nombres y apellidos', 'type="text" autocomplete="name" required', 'Indique nombres y apellidos.', ses.nombre) +
+        '<div class="gd-form gd-form-2">' +
+          campo('coCel', 'Celular', 'type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="9" placeholder="9XX XXX XXX" required', 'Celular de 9 dígitos que empiece en 9.', ses.cel) +
+          campo('coEmail', 'Correo', 'type="email" autocomplete="email" required', 'Revise el correo.', ses.email) +
+        '</div>' +
+        '<p class="co-ayuda">Al correo le llega el comprobante electrónico; al celular, la coordinación de la entrega.</p>' +
+        '<p class="co-etq">Comprobante de pago</p>' +
+        '<div class="gdt-ops en-fila">' + opcion('comp', 'boleta', 'Boleta', 'Persona natural', datos.comp !== 'factura') + opcion('comp', 'factura', 'Factura', 'Empresa o negocio con RUC', datos.comp === 'factura') + '</div>' +
+        '<div class="co-sub gd-form gd-form-2" data-si="comp=boleta">' +
+          lista('coTdoc', 'Tipo de documento', ['DNI', 'Carné de extranjería', 'Pasaporte'], datos.tdoc) +
+          campo('coDoc', 'Número de documento', 'type="text" maxlength="12" autocomplete="off"', 'Revise el número: el DNI tiene 8 dígitos.', datos.doc) +
+        '</div>' +
+        '<div class="co-sub gd-form" data-si="comp=factura">' +
+          '<div class="gd-form gd-form-2">' +
+            campo('coRuc', 'RUC', 'type="text" inputmode="numeric" maxlength="11"', 'El RUC tiene 11 dígitos y empieza en 10 o 20.', datos.ruc) +
+            campo('coRazon', 'Razón social', 'type="text" autocomplete="organization"', 'Indique la razón social.', datos.razon) +
+          '</div>' +
+          campo('coFiscal', 'Dirección fiscal', 'type="text"', 'Indique la dirección fiscal.', datos.fiscal) +
+        '</div>' +
+      '</div></section>' +
+
+      /* ---------- 02 ---------- */
+      '<section class="co-paso"><h2 class="co-paso-t"><i>02</i>Entrega</h2><div class="gd-form">' +
+        '<div class="gdt-ops">' +
+          opcion('ent', 'envio', 'Envío a domicilio', 'Lima y Callao. Otros departamentos se coordinan bajo cotización.', datos.ent !== 'recojo' || !C.RECOJO.activo) +
+          (C.RECOJO.activo ? opcion('ent', 'recojo', 'Recojo en ' + esc(C.RECOJO.lugar), esc(C.RECOJO.dir) + ' · sin costo.', datos.ent === 'recojo') : '') +
+        '</div>' +
+        '<div class="co-sub gd-form" data-si="ent=envio">' +
+          '<div class="gd-form co-3">' +
+            lista('coDep', 'Departamento', DEPS, datos.dep || 'Lima') +
+            campo('coProv', 'Provincia', 'type="text" autocomplete="address-level1"', 'Indique la provincia.', datos.prov || 'Lima') +
+            '<div class="gd-field"><label for="coDist">Distrito</label><input id="coDist" type="text" list="coDistritos" autocomplete="address-level2" value="' + v(datos.distrito) + '"><span class="gdt-err">Indique el distrito.</span>' +
+              '<datalist id="coDistritos">' + DISTRITOS.map(function(d){ return '<option value="' + d + '">'; }).join('') + '</datalist></div>' +
+          '</div>' +
+          campo('coDir', 'Dirección', 'type="text" autocomplete="street-address" placeholder="Avenida, calle o jirón, número, dpto. o interior"', 'Indique la dirección de entrega.', datos.dir) +
+          campo('coRef', 'Referencia', 'type="text" placeholder="Frente al parque, a una cuadra de…, color de la fachada"', 'Una referencia ayuda a que el reparto llegue.', datos.ref) +
+          '<div class="gd-form co-3">' +
+            lista('coInm', 'Tipo de inmueble', ['Casa', 'Departamento', 'Oficina', 'Local comercial'], datos.inmueble) +
+            lista('coAcc', 'Acceso', ['Primer piso', 'Piso alto con ascensor', 'Piso alto solo con escaleras'], datos.acceso) +
+            lista('coHora', 'Horario preferido', ['Sin preferencia', 'Por la mañana', 'Por la tarde'], '') +
+          '</div>' +
+          '<p class="co-ayuda">El acceso importa en muebles: con escaleras o ascensor pequeño, el estudio lo considera al cotizar el envío.</p>' +
+        '</div>' +
+        '<label class="gdt-check"><input type="checkbox" id="coOtro"><span id="coOtroT">Recibirá el pedido otra persona.</span></label>' +
+        '<div class="co-sub gd-form gd-form-2" id="coOtroBox" hidden>' +
+          campo('coOtroN', 'Nombre de quien recibe', 'type="text"', 'Indique el nombre.', '') +
+          campo('coOtroD', 'Su documento (DNI o CE)', 'type="text" maxlength="12"', 'Indique el documento.', '') +
+        '</div>' +
+        '<label class="gdt-check"><input type="checkbox" id="coArmado"><span>Quiero que el estudio cotice el <b style="font-weight:500;color:var(--lino);">armado o la instalación</b> de las piezas.</span></label>' +
+      '</div></section>' +
+
+      /* ---------- 03 ---------- */
+      (soloCot ? '' :
+      '<section class="co-paso"><h2 class="co-paso-t"><i>03</i>Medio de pago</h2>' +
+        '<div id="coPago"></div>' +
+        '<p class="co-ayuda" style="margin-top:16px;">Hoy no se le cobra nada. El pago se realiza después de que el estudio confirme disponibilidad, envío y fecha. Esta web no solicita ni almacena datos de tarjeta.</p>' +
+      '</section>') +
+
+      /* ---------- 04 ---------- */
+      '<section class="co-paso"><h2 class="co-paso-t"><i>' + (soloCot ? '03' : '04') + '</i>Algo que debamos saber</h2>' +
+        '<div class="gd-field"><label for="coNota">Nota para el estudio (opcional)</label><textarea id="coNota" style="min-height:96px;" placeholder="Fecha en que lo necesita, medidas del ambiente, si es un regalo…"></textarea></div>' +
+      '</section>' +
+    '</div>' +
+
+    '<aside class="co-res" aria-label="Resumen">' +
+      '<h2>Su selección</h2><ul class="gdt-lines">' + lineas.map(function(x){
+        return '<li class="gdt-line">' + (x.img ? '<span class="gdt-line-img"><img decoding="async" src="' + esc(x.img) + '" alt=""></span>' : '<span class="gdt-line-img is-vacia" aria-hidden="true">G</span>') +
+          '<div class="gdt-line-body"><span class="gdt-line-cat">' + esc(x.cat) + '</span><span class="gdt-line-name">' + esc(x.nombre) + '</span>' +
+          '<div class="gdt-line-row"><span class="gdt-qty"><b>' + x.qty + '</b></span><span class="gdt-line-price">' + (x.valor === null ? 'A cotizar' : T.fmt(x.valor * x.qty)) + '</span></div></div></li>';
+      }).join('') + '</ul>' +
+      (hayCupones && !soloCot ? '<div class="co-cupon"><input id="coCupon" type="text" placeholder="Código de descuento" aria-label="Código de descuento" autocomplete="off"><button type="button" id="coCuponBtn">Aplicar</button></div><p class="gdt-err" id="coCuponMsg" style="margin:0 0 8px;"></p>' : '') +
+      '<dl class="co-tot" id="coTot"></dl>' +
+      '<p class="co-res-nota"><a href="#" data-gdt-abrir style="color:var(--text-dim);">Editar la selección</a></p>' +
+      '<div class="co-enviar">' +
+        '<label class="gdt-check"><input type="checkbox" id="coAcepto"><span>He leído y acepto los <a href="' + C.LEGAL.terminos + '" target="_blank">términos y condiciones</a> y la <a href="' + C.LEGAL.privacidad + '" target="_blank">política de privacidad</a>.</span></label>' +
+        '<span class="gdt-err" id="coAceptoErr">Marque la casilla para continuar.</span>' +
+        '<label class="gdt-check"><input type="checkbox" id="coPromo"><span>Quiero recibir novedades y campañas del estudio (opcional).</span></label>' +
+        '<button type="submit" class="gd-btn gd-btn-primary">' + (soloCot ? 'Enviar solicitud' : 'Registrar pedido') + T.FLECHA + '</button>' +
+        '<ul class="co-conf">' +
+          '<li>Sin cobro hasta que el estudio confirme.</li>' +
+          '<li>Boleta o factura electrónica a su correo.</li>' +
+          '<li>Cambios y garantía según <a href="cambios-y-garantia.html" target="_blank">nuestra política</a>.</li>' +
+        '</ul>' +
+        '<p class="co-legal"><a href="compra-segura.html" target="_blank">Compra segura</a><a href="envios-y-entregas.html" target="_blank">Envíos</a><a href="' + C.LEGAL.libro + '" target="_blank">Libro de reclamaciones</a></p>' +
+      '</div>' +
+    '</aside>' +
+    '</form>';
+
+  var form = document.getElementById('coForm');
+  function $(id){ return document.getElementById(id); }
+  function g(id){ var el = $(id); return el ? el.value.trim() : ''; }
+  function radio(n){ var r = form.querySelector('input[name="' + n + '"]:checked'); return r ? r.value : ''; }
+  function plano(s){ return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+
+  function zonaKey(){
+    var dep = g('coDep');
+    if(dep === 'Callao') return 'callao';
+    if(dep === 'Lima' && plano(g('coProv')) === 'lima') return 'lima';
+    return 'provincia';
+  }
+  function zona(){ var k = zonaKey(); return C.ENVIO.filter(function(z){ return z.key === k; })[0]; }
+
+  /* medios de pago: se filtran según entrega, zona y comprobante */
+  function pintarPago(){
+    var host = $('coPago'); if(!host) return;
+    var ent = radio('ent'), comp = radio('comp'), zk = zonaKey(), antes = radio('pago') || datos.pago;
+    var ops = C.PAGO.filter(function(m){
+      if(!m.activo) return false;
+      if(m.soloRecojo) return ent === 'recojo';
+      if(m.soloFactura) return comp === 'factura';
+      if(m.solo) return ent === 'envio' && m.solo.indexOf(zk) !== -1;
+      return true;
+    });
+    var elegido = ops.some(function(m){ return m.key === antes; }) ? antes : ops[0].key;
+    var grupos = [];
+    ops.forEach(function(m){ if(grupos.indexOf(m.grupo) === -1) grupos.push(m.grupo); });
+    host.innerHTML = grupos.map(function(gr){
+      return '<p class="co-etq">' + gr + '</p><div class="gdt-ops">' +
+        ops.filter(function(m){ return m.grupo === gr; }).map(function(m){ return opcion('pago', m.key, m.label, m.nota, m.key === elegido, m.marcas); }).join('') + '</div>';
+    }).join('');
+  }
+
+  var cupon = null;
+  function descuento(){
+    if(!cupon) return 0;
+    var c = C.CUPONES[cupon];
+    return Math.min(tot.subtotal, c.pct ? tot.subtotal * c.pct / 100 : (c.monto || 0));
+  }
+  function totales(){
+    var ent = radio('ent'), z = zona();
+    var envio = ent === 'recojo' ? 0 : z.tarifa, pend = envio === null, desc = descuento();
+    var h = '<div><dt>Subtotal</dt><dd>' + (soloCot ? 'A cotizar' : T.fmt(tot.subtotal)) + '</dd></div>';
+    if(desc) h += '<div><dt>Cupón ' + esc(cupon) + '</dt><dd>− ' + T.fmt(desc) + '</dd></div>';
+    if(tot.cotizar && !soloCot) h += '<div><dt>' + tot.cotizar + (tot.cotizar === 1 ? ' pieza' : ' piezas') + ' a cotizar</dt><dd>Por confirmar</dd></div>';
+    h += '<div><dt>' + (ent === 'recojo' ? 'Recojo en estudio' : 'Envío · ' + z.label) + '</dt><dd>' + (pend ? 'Por confirmar' : envio ? T.fmt(envio) : 'Sin costo') + '</dd></div>';
+    if($('coArmado').checked) h += '<div><dt>Armado / instalación</dt><dd>Por cotizar</dd></div>';
+    if(!soloCot){
+      var total = tot.subtotal - desc + (envio || 0);
+      h += '<div class="es-total"><dt>' + (pend || tot.cotizar || $('coArmado').checked ? 'Total parcial' : 'Total') + '</dt><dd>' + T.fmt(total) + '</dd></div>';
+      if(C.PRECIOS_CON_IGV) h += '<div class="es-igv"><dt>Incluye IGV (18 %)</dt><dd>' + T.fmt(total * 18 / 118) + '</dd></div>';
+    }
+    $('coTot').innerHTML = h;
+  }
+  function condicionales(){
+    form.querySelectorAll('[data-si]').forEach(function(el){
+      var c = el.getAttribute('data-si').split('=');
+      el.hidden = radio(c[0]) !== c[1];
+    });
+    $('coOtroT').textContent = radio('ent') === 'recojo' ? 'Recogerá el pedido otra persona.' : 'Recibirá el pedido otra persona.';
+    $('coOtroBox').hidden = !$('coOtro').checked;
+    pintarPago(); totales();
+  }
+  form.addEventListener('change', function(e){
+    if(e.target.id === 'coDep'){
+      var d = e.target.value;
+      $('coProv').value = d === 'Lima' ? 'Lima' : d === 'Callao' ? 'Callao' : '';
+    }
+    if(e.target.name === 'pago') return;
+    condicionales();
+  });
+  $('coCel').addEventListener('input', function(){ this.value = this.value.replace(/\D/g, ''); });
+  var cBtn = $('coCuponBtn');
+  if(cBtn) cBtn.addEventListener('click', function(){
+    var k = g('coCupon').toUpperCase(), msg = $('coCuponMsg');
+    cupon = C.CUPONES[k] ? k : null;
+    msg.style.display = 'block'; msg.style.color = cupon ? 'var(--accent)' : '';
+    msg.textContent = cupon ? 'Código aplicado.' : 'Ese código no es válido.';
+    totales();
+  });
+  condicionales();
+
+  // si la selección cambia desde el cajón, el resumen se rehace entero
+  var enviando = false;
+  document.addEventListener('gd:carrito', function(){ if(!enviando) location.reload(); });
+
+  function revisar(id, bien){ var f = $(id).closest('.gd-field'); f.classList.toggle('is-mal', !bien); return bien; }
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    form.querySelectorAll('.is-mal').forEach(function(f){ f.classList.remove('is-mal'); });
+    var comp = radio('comp'), ent = radio('ent'), tdoc = g('coTdoc'), doc = g('coDoc');
+    var docOk = tdoc === 'DNI' ? /^\d{8}$/.test(doc) : /^[A-Za-z0-9]{6,12}$/.test(doc);
+    var r = [
+      revisar('coNombre', g('coNombre').split(/\s+/).length >= 2),
+      revisar('coCel', /^9\d{8}$/.test(g('coCel'))),
+      revisar('coEmail', /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(g('coEmail')))
+    ];
+    if(comp === 'boleta') r.push(revisar('coDoc', docOk));
+    else r.push(revisar('coRuc', /^(10|20)\d{9}$/.test(g('coRuc'))), revisar('coRazon', g('coRazon').length > 2), revisar('coFiscal', g('coFiscal').length > 5));
+    if(ent === 'envio') r.push(revisar('coProv', g('coProv').length > 1), revisar('coDist', g('coDist').length > 1), revisar('coDir', g('coDir').length > 5), revisar('coRef', g('coRef').length > 3));
+    if($('coOtro').checked) r.push(revisar('coOtroN', g('coOtroN').length > 4), revisar('coOtroD', /^[A-Za-z0-9]{6,12}$/.test(g('coOtroD'))));
+    var acepto = $('coAcepto').checked;
+    $('coAceptoErr').style.display = acepto ? '' : 'block';
+    if(!r.every(Boolean)){ var m = form.querySelector('.is-mal input'); if(m) m.focus(); return; }
+    if(!acepto){ $('coAcepto').focus(); return; }
+
+    var z = zona(), pagoKey = radio('pago'), pago = C.PAGO.filter(function(m){ return m.key === pagoKey; })[0];
+    var entrega = ent === 'recojo'
+      ? { tipo:'recojo', resumen:'Recojo en ' + C.RECOJO.lugar + ' — ' + C.RECOJO.dir }
+      : { tipo:'envio', zona:z.key, distrito:g('coDist'), dir:g('coDir'), ref:g('coRef'),
+          horario: g('coHora') === 'Sin preferencia' ? '' : g('coHora'),
+          resumen:'Envío a ' + g('coDir') + ', ' + g('coDist') + ', ' + g('coProv') + ', ' + g('coDep') + ' · Ref.: ' + g('coRef') + ' · ' + g('coInm') + ', ' + g('coAcc').toLowerCase() };
+    entrega.armado = $('coArmado').checked;
+    if($('coOtro').checked) entrega.recibe = g('coOtroN') + ' (doc. ' + g('coOtroD') + ')';
+
+    var desc = descuento();
+    var ped = T.pedidos.crear({
+      items: lineas, subtotal: tot.subtotal, cotizar: tot.cotizar, entrega: entrega,
+      pago: pago ? pago.label : '', nota: g('coNota'), cupon: cupon || '', descuento: desc,
+      promo: $('coPromo').checked,
+      comprobante: comp === 'boleta' ? { tipo:'boleta', resumen:'Boleta · ' + tdoc + ' ' + doc }
+                                     : { tipo:'factura', resumen:'Factura · RUC ' + g('coRuc') + ' · ' + g('coRazon') + ' · ' + g('coFiscal') },
+      cliente: { nombre:g('coNombre'), cel:g('coCel'), email:g('coEmail') }
+    });
+    // la cuenta nace con el primer pedido: nadie se registra antes de comprar
+    T.sesion.set({ nombre:g('coNombre'), cel:g('coCel'), email:g('coEmail') });
+    T.db('datos', { comp:comp, tdoc:tdoc, doc:doc, ruc:g('coRuc'), razon:g('coRazon'), fiscal:g('coFiscal'), ent:ent,
+                    dep:g('coDep'), prov:g('coProv'), distrito:g('coDist'), dir:g('coDir'), ref:g('coRef'), inmueble:g('coInm'), acceso:g('coAcc'), pago:pagoKey });
+    enviando = true;
+    T.carrito.vaciar();
+    window.open(T.wa(T.pedidos.mensaje(ped)), '_blank', 'noopener');
+    location.href = 'checkout.html?ok=' + encodeURIComponent(ped.n);
+  });
+})();
+</script>
+<script src="js/gd-chat.js?v=5" defer></script>
+</body>
+</html>
