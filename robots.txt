@@ -7,5 +7,6 @@ Disallow: /seguimiento
 Disallow: /404
 Disallow: /material-pendiente
 Disallow: /admin
+Disallow: /mantenimiento
 
 Sitemap: https://giandeco.com/sitemap.xml

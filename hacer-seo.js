@@ -14,7 +14,7 @@ var fs = require('fs');
 
 var DOMINIO = 'https://giandeco.com';
 var OG_POR_DEFECTO = 'images/espacios/zara-sala-1.jpg';
-var NO_INDEXAR = ['producto.html', 'checkout.html', 'cuenta.html', 'seguimiento.html', '404.html', 'material-pendiente.html', 'admin.html'];
+var NO_INDEXAR = ['producto.html', 'checkout.html', 'cuenta.html', 'seguimiento.html', '404.html', 'material-pendiente.html', 'admin.html', 'mantenimiento.html'];
 
 function leer(f){ return fs.readFileSync(f, 'utf8'); }
 function esc(s){ return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
