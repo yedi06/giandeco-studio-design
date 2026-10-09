@@ -165,7 +165,8 @@ Object.keys(LINEAS).forEach(function(l){
     CAT[k] = {
       key:k, linea:l, nombre:p.nombre, cat:p.cat, precio:p.precio, valor:num(p.precio),
       img:p.img, nota:p.nota || '', gal:[p.img].concat(x.gal || []),
-      fam:x.fam || '', v:x.v || '', largo:x.largo || 0, tv:x.tv || 0
+      fam:x.fam || '', v:x.v || '', largo:x.largo || 0, tv:x.tv || 0,
+      stock: p.stock == null ? 1 : p.stock
     };
   });
 });
@@ -260,19 +261,20 @@ var carrito = {
   guardar: function(l){ db('carrito', l); pintarCajon(); emitir('carrito'); },
   add: function(item, qty){
     var l = carrito.lineas(), q = Math.max(1, qty || 1), i;
-    for(i = 0; i < l.length; i++){ if(l[i].id === item.id){ l[i].qty = Math.min(99, l[i].qty + q); carrito.guardar(l); return; } }
-    item.qty = q; l.push(item); carrito.guardar(l);
+    var tope = item.max || 99;
+    for(i = 0; i < l.length; i++){ if(l[i].id === item.id){ l[i].max = tope; l[i].qty = Math.min(tope, l[i].qty + q); carrito.guardar(l); return; } }
+    item.qty = Math.min(tope, q); l.push(item); carrito.guardar(l);
   },
   addKey: function(key, qty){
-    var p = CAT[key]; if(!p) return false;
-    carrito.add({ id:key, key:key, nombre:p.nombre, cat:p.cat, precio:p.precio, valor:p.valor, img:p.img, href:url(key) }, qty);
+    var p = CAT[key]; if(!p || p.stock <= 0) return false;
+    carrito.add({ id:key, key:key, nombre:p.nombre, cat:p.cat, precio:p.precio, valor:p.valor, img:p.img, href:url(key), max:p.stock }, qty);
     return true;
   },
   addEspacio: function(nombre, cat, origen){
     carrito.add({ id:'esp:' + slug(nombre), nombre:nombre, cat:cat || 'Pieza de espacio', precio:'A cotizar', valor:null, img:'', href:origen || '', origen:origen || '' }, 1);
   },
   qty: function(id, q){
-    var l = carrito.lineas().map(function(x){ if(x.id === id) x.qty = Math.max(1, Math.min(99, q)); return x; });
+    var l = carrito.lineas().map(function(x){ if(x.id === id) x.qty = Math.max(1, Math.min(x.max || 99, q)); return x; });
     carrito.guardar(l);
   },
   quitar: function(id){ carrito.guardar(carrito.lineas().filter(function(x){ return x.id !== id; })); },
@@ -391,14 +393,14 @@ function card(key, o){
   return '<article class="gdt-card">' +
     '<a class="gd-prod" href="' + url(key) + '" data-cursor="Ver">' +
       '<span class="gd-prod-thumb">' +
-        (p.valor === null ? '<span class="gd-prod-badge">A consultar</span>' : '') +
+        (p.stock <= 0 ? '<span class="gd-prod-badge">Agotado</span>' : p.valor === null ? '<span class="gd-prod-badge">A consultar</span>' : '') +
         '<img decoding="async" loading="lazy" src="' + p.img + '" alt="' + esc(p.nombre) + '"></span>' +
       '<span class="gd-prod-cat">' + esc(p.cat) + '</span>' +
       '<span class="gd-prod-name">' + esc(p.nombre) + '</span>' +
       '<span class="gd-prod-price">' + esc(p.precio) + '</span>' +
     '</a>' +
     (o.porque ? '<p class="gdt-card-why">' + esc(o.porque) + '</p>' : '') +
-    (o.sinBoton ? '' : '<button type="button" class="gdt-quick" data-gdt-add="' + key + '">' + (p.valor === null ? 'Añadir para cotizar' : 'Añadir a mi selección') + '</button>') +
+    (o.sinBoton ? '' : p.stock <= 0 ? '<span class="gdt-quick es-agotado">Agotado</span>' : '<button type="button" class="gdt-quick" data-gdt-add="' + key + '">' + (p.valor === null ? 'Añadir para cotizar' : 'Añadir a mi selección') + '</button>') +
   '</article>';
 }
 
@@ -480,7 +482,7 @@ function cerrar(){
 
 function montar(){
   if(!document.querySelector('link[href*="gd-tienda.css"]')){
-    var lk = document.createElement('link'); lk.rel = 'stylesheet'; lk.href = 'css/gd-tienda.css?v=3';
+    var lk = document.createElement('link'); lk.rel = 'stylesheet'; lk.href = 'css/gd-tienda.css?v=5';
     document.head.appendChild(lk);
   }
   document.body.insertAdjacentHTML('beforeend',

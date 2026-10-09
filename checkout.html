@@ -11,17 +11,31 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/giandeco.css?v=9">
-<link rel="stylesheet" href="css/gd-tienda.css?v=3">
+<link rel="stylesheet" href="css/gd-tienda.css?v=5">
 </head>
-<body data-mundo="catalogo" data-seccion="checkout">
+<!-- data-home: el checkout no lleva el menú del sitio. Tiene su propia cabecera,
+     sin nada que distraiga de terminar la compra. -->
+<body data-home="true" class="co-body">
 
-<div id="gdHeader"></div>
+<header class="co-head">
+  <a class="co-head-volver" href="catalogo"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg>Seguir viendo</a>
+  <a class="co-head-logo" href="./" aria-label="Giandeco Studio Design"><img src="img/logo-negativo.svg" alt="Giandeco Studio Design"></a>
+  <span class="co-head-seguro"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Compra segura</span>
+</header>
 
 <main class="co-top"><div class="gd-in" id="co"></div></main>
 
-<div id="gdFooter"></div>
-<script src="js/giandeco.js?v=13"></script>
-<script src="js/gd-tienda.js?v=5"></script>
+<footer class="co-foot">
+  <a href="compra-segura" target="_blank">Compra segura</a>
+  <a href="envios-y-entregas" target="_blank">Envíos</a>
+  <a href="cambios-y-garantia" target="_blank">Cambios y garantía</a>
+  <a href="terminos-y-condiciones" target="_blank">Términos</a>
+  <a href="politica-de-privacidad" target="_blank">Privacidad</a>
+  <a href="libro-de-reclamaciones" target="_blank">Libro de reclamaciones</a>
+</footer>
+
+<script src="js/giandeco.js?v=14"></script>
+<script src="js/gd-tienda.js?v=6"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc, C = T.CFG;
@@ -35,19 +49,19 @@
     var cot = !ped.subtotal;
     root.innerHTML = '<div class="co-ok">' +
       '<p class="gd-eyebrow">' + (cot ? 'Cotización registrada' : 'Pedido registrado') + '</p>' +
-      '<h1>Falta un paso: enviarlo al estudio</h1>' +
+      '<h1>Gracias, ' + esc(ped.cliente.nombre.split(' ')[0]) + '</h1>' +
       '<p class="co-ok-n">' + esc(ped.n) + '</p>' +
-      '<p class="co-lead">Su ' + (cot ? 'solicitud' : 'pedido') + ' quedó guardado. Envíelo por WhatsApp para que el estudio lo reciba y le confirme disponibilidad, envío y fecha.</p>' +
-      '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="' + T.wa(T.pedidos.mensaje(ped)) + '" target="_blank" rel="noopener">Enviar por WhatsApp' + T.FLECHA + '</a></div>' +
+      '<p class="co-lead">Su ' + (cot ? 'solicitud' : 'pedido') + ' quedó registrado. Confírmelo con el estudio por WhatsApp: el mensaje ya está redactado con las piezas, la entrega y sus datos.</p>' +
+      '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="' + T.wa(T.pedidos.mensaje(ped)) + '" target="_blank" rel="noopener">Confirmar por WhatsApp' + T.FLECHA + '</a></div>' +
       '<ol class="co-pasos">' +
-        '<li><b>Usted envía el pedido</b>El mensaje ya está redactado con las piezas, la entrega y sus datos.</li>' +
-        '<li><b>El estudio confirma</b>Disponibilidad, costo de envío' + (ped.entrega.armado ? ', armado' : '') + ' y fecha de entrega.</li>' +
+        '<li><b>Usted confirma el pedido</b>Con un mensaje al WhatsApp oficial del estudio.</li>' +
+        '<li><b>El estudio responde</b>Disponibilidad, costo de envío' + (ped.entrega.armado ? ', armado' : '') + ' y fecha de entrega.</li>' +
         (cot ? '<li><b>Recibe la cotización</b>Con el detalle por pieza y las condiciones.</li>'
-             : '<li><b>Usted paga</b>' + esc(ped.pago) + '. El estudio le envía las indicaciones por el mismo chat y el comprobante electrónico a su correo.</li>') +
+             : '<li><b>Usted paga</b>' + esc(ped.pago) + '. Recibe su comprobante electrónico en ' + esc(ped.cliente.email) + '.</li>') +
         '<li><b>' + (ped.entrega.tipo === 'recojo' ? 'Recoge en el estudio' : 'Recibe en su dirección') + '</b>' + esc(ped.entrega.resumen) + '</li>' +
       '</ol>' +
       '<div class="co-ok-acc"><a class="gd-btn gd-btn-ghost" href="cuenta#pedidos">Ver mis pedidos</a>' +
-        '<a class="gd-link" href="compra-segura" style="align-self:center;">Cómo sigue su compra' + T.FLECHA + '</a></div></div>' +
+        '<a class="gd-link" href="seguimiento?n=' + encodeURIComponent(ped.n) + '" style="align-self:center;">Seguir este pedido' + T.FLECHA + '</a></div></div>' +
       '<section class="gdt-sec" style="margin-top:var(--sp-64);"><div class="gdt-sec-head"><div><p class="gd-eyebrow">Selección del estudio</p><h2 class="gd-h2">Para seguir armando el ambiente</h2></div></div>' +
         '<div class="gd-grid">' + T.recomendados(4).map(function(k){ return T.card(k); }).join('') + '</div></section>';
     return;
@@ -56,7 +70,7 @@
   /* ==================== SELECCIÓN VACÍA ==================== */
   var lineas = T.carrito.lineas();
   if(!lineas.length){
-    root.innerHTML = '<p class="gd-eyebrow">Finalizar pedido</p><h1>Su selección está vacía</h1>' +
+    root.innerHTML = '<h1>Su selección está vacía</h1>' +
       '<p class="co-lead">Añada piezas del catálogo o toque un punto sobre la foto de un espacio para empezar.</p>' +
       '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="catalogo">Ver el catálogo' + T.FLECHA + '</a>' +
       '<a class="gd-btn gd-btn-ghost" href="catalogo-compra-el-espacio">Compra el espacio</a></div>' +
@@ -65,9 +79,11 @@
     return;
   }
 
-  /* ==================== FORMULARIO ==================== */
+  /* ==================== COMPRA POR PASOS ==================== */
   var tot = T.carrito.total(lineas), soloCot = !tot.subtotal;
   var ses = T.sesion.get() || {}, datos = T.db('datos') || {};
+  var PASOS = soloCot ? ['Sus datos', 'Entrega', 'Confirmar'] : ['Sus datos', 'Entrega', 'Pago', 'Confirmar'];
+  var ULT = PASOS.length - 1, P_PAGO = soloCot ? -1 : 2;
   var DEPS = 'Amazonas|Áncash|Apurímac|Arequipa|Ayacucho|Cajamarca|Callao|Cusco|Huancavelica|Huánuco|Ica|Junín|La Libertad|Lambayeque|Lima|Loreto|Madre de Dios|Moquegua|Pasco|Piura|Puno|San Martín|Tacna|Tumbes|Ucayali'.split('|');
   var DISTRITOS = 'Ancón|Ate|Barranco|Breña|Carabayllo|Chaclacayo|Chorrillos|Cieneguilla|Comas|El Agustino|Independencia|Jesús María|La Molina|La Victoria|Lima|Lince|Los Olivos|Lurigancho|Lurín|Magdalena del Mar|Miraflores|Pachacámac|Pucusana|Pueblo Libre|Puente Piedra|Punta Hermosa|Punta Negra|Rímac|San Bartolo|San Borja|San Isidro|San Juan de Lurigancho|San Juan de Miraflores|San Luis|San Martín de Porres|San Miguel|Santa Anita|Santa María del Mar|Santa Rosa|Santiago de Surco|Surquillo|Villa El Salvador|Villa María del Triunfo|Bellavista|Callao|Carmen de la Legua|La Perla|La Punta|Mi Perú|Ventanilla'.split('|');
   function v(x){ return esc(x || ''); }
@@ -82,81 +98,82 @@
     return '<label class="gdt-op"><input type="radio" name="' + name + '" value="' + value + '"' + (on ? ' checked' : '') + '><span><b>' + titulo + '</b>' +
       (marcas ? '<em>' + marcas + '</em>' : '') + (nota ? '<small>' + nota + '</small>' : '') + '</span></label>';
   }
+  function pie(i){
+    return '<div class="co-nav">' + (i ? '<button type="button" class="co-atras" data-ir="' + (i - 1) + '">Volver</button>' : '<span></span>') +
+      (i < ULT ? '<button type="button" class="gd-btn gd-btn-primary" data-sigue>Continuar' + T.FLECHA + '</button>'
+               : '<button type="submit" class="gd-btn gd-btn-primary">' + (soloCot ? 'Enviar solicitud' : 'Registrar pedido') + T.FLECHA + '</button>') + '</div>';
+  }
   var hayCupones = Object.keys(C.CUPONES || {}).length > 0;
 
-  root.innerHTML =
-    '<p class="gd-migas"><a href="catalogo">Catálogo</a> / <span>' + (soloCot ? 'Solicitar cotización' : 'Finalizar pedido') + '</span></p>' +
-    '<h1>' + (soloCot ? 'Solicitar cotización' : 'Finalizar pedido') + '</h1>' +
-    '<p class="co-lead">' + (soloCot ? 'Estas piezas se cotizan una a una. Déjenos sus datos y el estudio le responde con el detalle.'
-                                     : 'Un solo paso. El estudio confirma disponibilidad y envío antes de que usted pague.') + '</p>' +
-    '<form class="co-grid" id="coForm" novalidate>' +
-    '<div>' +
-      /* ---------- 01 ---------- */
-      '<section class="co-paso"><h2 class="co-paso-t"><i>01</i>Sus datos</h2><div class="gd-form">' +
-        campo('coNombre', 'Nombres y apellidos', 'type="text" autocomplete="name" required', 'Indique nombres y apellidos.', ses.nombre) +
+  var pasoDatos =
+    '<section class="co-paso" data-paso="0"><h2 class="co-paso-t">¿A nombre de quién va el pedido?</h2><div class="gd-form">' +
+      campo('coNombre', 'Nombres y apellidos', 'type="text" autocomplete="name" required', 'Indique nombres y apellidos.', ses.nombre) +
+      '<div class="gd-form gd-form-2">' +
+        campo('coCel', 'Celular', 'type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="9" placeholder="9XX XXX XXX" required', 'Celular de 9 dígitos que empiece en 9.', ses.cel) +
+        campo('coEmail', 'Correo', 'type="email" autocomplete="email" required', 'Revise el correo.', ses.email) +
+      '</div>' +
+      '<p class="co-etq">Comprobante de pago</p>' +
+      '<div class="gdt-ops en-fila">' + opcion('comp', 'boleta', 'Boleta', 'Persona natural', datos.comp !== 'factura') + opcion('comp', 'factura', 'Factura', 'Empresa con RUC', datos.comp === 'factura') + '</div>' +
+      '<div class="co-sub gd-form gd-form-2" data-si="comp=boleta">' +
+        lista('coTdoc', 'Tipo de documento', ['DNI', 'Carné de extranjería', 'Pasaporte'], datos.tdoc) +
+        campo('coDoc', 'Número de documento', 'type="text" maxlength="12" autocomplete="off"', 'Revise el número: el DNI tiene 8 dígitos.', datos.doc) +
+      '</div>' +
+      '<div class="co-sub gd-form" data-si="comp=factura">' +
         '<div class="gd-form gd-form-2">' +
-          campo('coCel', 'Celular', 'type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="9" placeholder="9XX XXX XXX" required', 'Celular de 9 dígitos que empiece en 9.', ses.cel) +
-          campo('coEmail', 'Correo', 'type="email" autocomplete="email" required', 'Revise el correo.', ses.email) +
+          campo('coRuc', 'RUC', 'type="text" inputmode="numeric" maxlength="11"', 'El RUC tiene 11 dígitos y empieza en 10 o 20.', datos.ruc) +
+          campo('coRazon', 'Razón social', 'type="text" autocomplete="organization"', 'Indique la razón social.', datos.razon) +
         '</div>' +
-        '<p class="co-ayuda">Al correo le llega el comprobante electrónico; al celular, la coordinación de la entrega.</p>' +
-        '<p class="co-etq">Comprobante de pago</p>' +
-        '<div class="gdt-ops en-fila">' + opcion('comp', 'boleta', 'Boleta', 'Persona natural', datos.comp !== 'factura') + opcion('comp', 'factura', 'Factura', 'Empresa o negocio con RUC', datos.comp === 'factura') + '</div>' +
-        '<div class="co-sub gd-form gd-form-2" data-si="comp=boleta">' +
-          lista('coTdoc', 'Tipo de documento', ['DNI', 'Carné de extranjería', 'Pasaporte'], datos.tdoc) +
-          campo('coDoc', 'Número de documento', 'type="text" maxlength="12" autocomplete="off"', 'Revise el número: el DNI tiene 8 dígitos.', datos.doc) +
-        '</div>' +
-        '<div class="co-sub gd-form" data-si="comp=factura">' +
-          '<div class="gd-form gd-form-2">' +
-            campo('coRuc', 'RUC', 'type="text" inputmode="numeric" maxlength="11"', 'El RUC tiene 11 dígitos y empieza en 10 o 20.', datos.ruc) +
-            campo('coRazon', 'Razón social', 'type="text" autocomplete="organization"', 'Indique la razón social.', datos.razon) +
-          '</div>' +
-          campo('coFiscal', 'Dirección fiscal', 'type="text"', 'Indique la dirección fiscal.', datos.fiscal) +
-        '</div>' +
-      '</div></section>' +
+        campo('coFiscal', 'Dirección fiscal', 'type="text"', 'Indique la dirección fiscal.', datos.fiscal) +
+      '</div>' +
+    '</div>' + pie(0) + '</section>';
 
-      /* ---------- 02 ---------- */
-      '<section class="co-paso"><h2 class="co-paso-t"><i>02</i>Entrega</h2><div class="gd-form">' +
-        '<div class="gdt-ops">' +
-          opcion('ent', 'envio', 'Envío a domicilio', 'Lima y Callao. Otros departamentos se coordinan bajo cotización.', datos.ent !== 'recojo' || !C.RECOJO.activo) +
-          (C.RECOJO.activo ? opcion('ent', 'recojo', 'Recojo en ' + esc(C.RECOJO.lugar), esc(C.RECOJO.dir) + ' · sin costo.', datos.ent === 'recojo') : '') +
+  var pasoEntrega =
+    '<section class="co-paso" data-paso="1" hidden><h2 class="co-paso-t">¿Cómo lo recibe?</h2><div class="gd-form">' +
+      '<div class="gdt-ops">' +
+        opcion('ent', 'envio', 'Envío a domicilio', 'Lima y Callao. Otros departamentos, bajo cotización.', datos.ent !== 'recojo' || !C.RECOJO.activo) +
+        (C.RECOJO.activo ? opcion('ent', 'recojo', 'Recojo en ' + esc(C.RECOJO.lugar), esc(C.RECOJO.dir) + ' · sin costo.', datos.ent === 'recojo') : '') +
+      '</div>' +
+      '<div class="co-sub gd-form" data-si="ent=envio">' +
+        '<div class="gd-form co-3">' +
+          lista('coDep', 'Departamento', DEPS, datos.dep || 'Lima') +
+          campo('coProv', 'Provincia', 'type="text" autocomplete="address-level1"', 'Indique la provincia.', datos.prov || 'Lima') +
+          '<div class="gd-field"><label for="coDist">Distrito</label><input id="coDist" type="text" list="coDistritos" autocomplete="address-level2" value="' + v(datos.distrito) + '"><span class="gdt-err">Indique el distrito.</span>' +
+            '<datalist id="coDistritos">' + DISTRITOS.map(function(d){ return '<option value="' + d + '">'; }).join('') + '</datalist></div>' +
         '</div>' +
-        '<div class="co-sub gd-form" data-si="ent=envio">' +
-          '<div class="gd-form co-3">' +
-            lista('coDep', 'Departamento', DEPS, datos.dep || 'Lima') +
-            campo('coProv', 'Provincia', 'type="text" autocomplete="address-level1"', 'Indique la provincia.', datos.prov || 'Lima') +
-            '<div class="gd-field"><label for="coDist">Distrito</label><input id="coDist" type="text" list="coDistritos" autocomplete="address-level2" value="' + v(datos.distrito) + '"><span class="gdt-err">Indique el distrito.</span>' +
-              '<datalist id="coDistritos">' + DISTRITOS.map(function(d){ return '<option value="' + d + '">'; }).join('') + '</datalist></div>' +
-          '</div>' +
-          campo('coDir', 'Dirección', 'type="text" autocomplete="street-address" placeholder="Avenida, calle o jirón, número, dpto. o interior"', 'Indique la dirección de entrega.', datos.dir) +
-          campo('coRef', 'Referencia', 'type="text" placeholder="Frente al parque, a una cuadra de…, color de la fachada"', 'Una referencia ayuda a que el reparto llegue.', datos.ref) +
-          '<div class="gd-form co-3">' +
-            lista('coInm', 'Tipo de inmueble', ['Casa', 'Departamento', 'Oficina', 'Local comercial'], datos.inmueble) +
-            lista('coAcc', 'Acceso', ['Primer piso', 'Piso alto con ascensor', 'Piso alto solo con escaleras'], datos.acceso) +
-            lista('coHora', 'Horario preferido', ['Sin preferencia', 'Por la mañana', 'Por la tarde'], '') +
-          '</div>' +
-          '<p class="co-ayuda">El acceso importa en muebles: con escaleras o ascensor pequeño, el estudio lo considera al cotizar el envío.</p>' +
+        campo('coDir', 'Dirección', 'type="text" autocomplete="street-address" placeholder="Avenida, calle o jirón, número, dpto. o interior"', 'Indique la dirección de entrega.', datos.dir) +
+        campo('coRef', 'Referencia', 'type="text" placeholder="Frente al parque, a una cuadra de…"', 'Una referencia ayuda a que el reparto llegue.', datos.ref) +
+        '<div class="gd-form co-3">' +
+          lista('coInm', 'Tipo de inmueble', ['Casa', 'Departamento', 'Oficina', 'Local comercial'], datos.inmueble) +
+          lista('coAcc', 'Acceso', ['Primer piso', 'Piso alto con ascensor', 'Piso alto solo con escaleras'], datos.acceso) +
+          lista('coHora', 'Horario preferido', ['Sin preferencia', 'Por la mañana', 'Por la tarde'], '') +
         '</div>' +
-        '<label class="gdt-check"><input type="checkbox" id="coOtro"><span id="coOtroT">Recibirá el pedido otra persona.</span></label>' +
-        '<div class="co-sub gd-form gd-form-2" id="coOtroBox" hidden>' +
-          campo('coOtroN', 'Nombre de quien recibe', 'type="text"', 'Indique el nombre.', '') +
-          campo('coOtroD', 'Su documento (DNI o CE)', 'type="text" maxlength="12"', 'Indique el documento.', '') +
-        '</div>' +
-        '<label class="gdt-check"><input type="checkbox" id="coArmado"><span>Quiero que el estudio cotice el <b style="font-weight:500;color:var(--lino);">armado o la instalación</b> de las piezas.</span></label>' +
-      '</div></section>' +
+      '</div>' +
+      '<label class="gdt-check"><input type="checkbox" id="coOtro"><span id="coOtroT">Recibirá el pedido otra persona.</span></label>' +
+      '<div class="co-sub gd-form gd-form-2" id="coOtroBox" hidden>' +
+        campo('coOtroN', 'Nombre de quien recibe', 'type="text"', 'Indique el nombre.', '') +
+        campo('coOtroD', 'Su documento (DNI o CE)', 'type="text" maxlength="12"', 'Indique el documento.', '') +
+      '</div>' +
+      '<label class="gdt-check"><input type="checkbox" id="coArmado"><span>Quiero que el estudio cotice el armado o la instalación.</span></label>' +
+    '</div>' + pie(1) + '</section>';
 
-      /* ---------- 03 ---------- */
-      (soloCot ? '' :
-      '<section class="co-paso"><h2 class="co-paso-t"><i>03</i>Medio de pago</h2>' +
-        '<div id="coPago"></div>' +
-        '<p class="co-ayuda" style="margin-top:16px;">Hoy no se le cobra nada. El pago se realiza después de que el estudio confirme disponibilidad, envío y fecha. Esta web no solicita ni almacena datos de tarjeta.</p>' +
-      '</section>') +
+  var pasoPago = soloCot ? '' :
+    '<section class="co-paso" data-paso="2" hidden><h2 class="co-paso-t">¿Cómo prefiere pagar?</h2>' +
+      '<p class="co-ayuda" style="margin-bottom:20px;">El pago se realiza después de que el estudio confirme su pedido. Esta web no solicita datos de tarjeta.</p>' +
+      '<div id="coPago"></div>' + pie(2) + '</section>';
 
-      /* ---------- 04 ---------- */
-      '<section class="co-paso"><h2 class="co-paso-t"><i>' + (soloCot ? '03' : '04') + '</i>Algo que debamos saber</h2>' +
-        '<div class="gd-field"><label for="coNota">Nota para el estudio (opcional)</label><textarea id="coNota" style="min-height:96px;" placeholder="Fecha en que lo necesita, medidas del ambiente, si es un regalo…"></textarea></div>' +
-      '</section>' +
-    '</div>' +
+  var pasoFinal =
+    '<section class="co-paso" data-paso="' + ULT + '" hidden><h2 class="co-paso-t">Revise y confirme</h2>' +
+      '<dl class="co-rev" id="coRev"></dl>' +
+      '<div class="gd-field" style="margin:24px 0;"><label for="coNota">Nota para el estudio (opcional)</label><textarea id="coNota" style="min-height:88px;" placeholder="Fecha en que lo necesita, si es un regalo…"></textarea></div>' +
+      '<label class="gdt-check"><input type="checkbox" id="coAcepto"><span>He leído y acepto los <a href="' + C.LEGAL.terminos + '" target="_blank">términos y condiciones</a> y la <a href="' + C.LEGAL.privacidad + '" target="_blank">política de privacidad</a>.</span></label>' +
+      '<span class="gdt-err" id="coAceptoErr">Marque la casilla para continuar.</span>' +
+      '<label class="gdt-check" style="margin-top:12px;"><input type="checkbox" id="coPromo"><span>Quiero recibir novedades y campañas del estudio (opcional).</span></label>' +
+      pie(ULT) + '</section>';
 
+  root.innerHTML =
+    '<ol class="co-ruta" id="coRuta">' + PASOS.map(function(p, i){ return '<li data-ir="' + i + '"><i>' + (i + 1) + '</i><span>' + p + '</span></li>'; }).join('') + '</ol>' +
+    '<form class="co-grid" id="coForm" novalidate>' +
+    '<div>' + pasoDatos + pasoEntrega + pasoPago + pasoFinal + '</div>' +
     '<aside class="co-res" aria-label="Resumen">' +
       '<h2>Su selección</h2><ul class="gdt-lines">' + lineas.map(function(x){
         return '<li class="gdt-line">' + (x.img ? '<span class="gdt-line-img"><img decoding="async" src="' + esc(x.img) + '" alt=""></span>' : '<span class="gdt-line-img is-vacia" aria-hidden="true">G</span>') +
@@ -166,18 +183,11 @@
       (hayCupones && !soloCot ? '<div class="co-cupon"><input id="coCupon" type="text" placeholder="Código de descuento" aria-label="Código de descuento" autocomplete="off"><button type="button" id="coCuponBtn">Aplicar</button></div><p class="gdt-err" id="coCuponMsg" style="margin:0 0 8px;"></p>' : '') +
       '<dl class="co-tot" id="coTot"></dl>' +
       '<p class="co-res-nota"><a href="#" data-gdt-abrir style="color:var(--text-dim);">Editar la selección</a></p>' +
-      '<div class="co-enviar">' +
-        '<label class="gdt-check"><input type="checkbox" id="coAcepto"><span>He leído y acepto los <a href="' + C.LEGAL.terminos + '" target="_blank">términos y condiciones</a> y la <a href="' + C.LEGAL.privacidad + '" target="_blank">política de privacidad</a>.</span></label>' +
-        '<span class="gdt-err" id="coAceptoErr">Marque la casilla para continuar.</span>' +
-        '<label class="gdt-check"><input type="checkbox" id="coPromo"><span>Quiero recibir novedades y campañas del estudio (opcional).</span></label>' +
-        '<button type="submit" class="gd-btn gd-btn-primary">' + (soloCot ? 'Enviar solicitud' : 'Registrar pedido') + T.FLECHA + '</button>' +
-        '<ul class="co-conf">' +
-          '<li>Sin cobro hasta que el estudio confirme.</li>' +
-          '<li>Boleta o factura electrónica a su correo.</li>' +
-          '<li>Cambios y garantía según <a href="cambios-y-garantia" target="_blank">nuestra política</a>.</li>' +
-        '</ul>' +
-        '<p class="co-legal"><a href="compra-segura" target="_blank">Compra segura</a><a href="envios-y-entregas" target="_blank">Envíos</a><a href="' + C.LEGAL.libro + '" target="_blank">Libro de reclamaciones</a></p>' +
-      '</div>' +
+      '<ul class="co-conf">' +
+        '<li>Sin cobro hasta que el estudio confirme.</li>' +
+        '<li>Boleta o factura electrónica a su correo.</li>' +
+        '<li>Atención directa del estudio por WhatsApp.</li>' +
+      '</ul>' +
     '</aside>' +
     '</form>';
 
@@ -214,6 +224,7 @@
         ops.filter(function(m){ return m.grupo === gr; }).map(function(m){ return opcion('pago', m.key, m.label, m.nota, m.key === elegido, m.marcas); }).join('') + '</div>';
     }).join('');
   }
+  function pagoElegido(){ var k = radio('pago'); return C.PAGO.filter(function(m){ return m.key === k; })[0]; }
 
   var cupon = null;
   function descuento(){
@@ -226,15 +237,27 @@
     var envio = ent === 'recojo' ? 0 : z.tarifa, pend = envio === null, desc = descuento();
     var h = '<div><dt>Subtotal</dt><dd>' + (soloCot ? 'A cotizar' : T.fmt(tot.subtotal)) + '</dd></div>';
     if(desc) h += '<div><dt>Cupón ' + esc(cupon) + '</dt><dd>− ' + T.fmt(desc) + '</dd></div>';
-    if(tot.cotizar && !soloCot) h += '<div><dt>' + tot.cotizar + (tot.cotizar === 1 ? ' pieza' : ' piezas') + ' a cotizar</dt><dd>Por confirmar</dd></div>';
-    h += '<div><dt>' + (ent === 'recojo' ? 'Recojo en estudio' : 'Envío · ' + z.label) + '</dt><dd>' + (pend ? 'Por confirmar' : envio ? T.fmt(envio) : 'Sin costo') + '</dd></div>';
-    if($('coArmado').checked) h += '<div><dt>Armado / instalación</dt><dd>Por cotizar</dd></div>';
+    if(tot.cotizar && !soloCot) h += '<div><dt>' + tot.cotizar + (tot.cotizar === 1 ? ' pieza' : ' piezas') + ' a cotizar</dt><dd>Lo confirma el estudio</dd></div>';
+    h += '<div><dt>' + (ent === 'recojo' ? 'Recojo en estudio' : 'Envío · ' + z.label) + '</dt><dd>' + (pend ? 'Lo confirma el estudio' : envio ? T.fmt(envio) : 'Sin costo') + '</dd></div>';
+    if($('coArmado').checked) h += '<div><dt>Armado / instalación</dt><dd>Lo cotiza el estudio</dd></div>';
     if(!soloCot){
       var total = tot.subtotal - desc + (envio || 0);
-      h += '<div class="es-total"><dt>' + (pend || tot.cotizar || $('coArmado').checked ? 'Total parcial' : 'Total') + '</dt><dd>' + T.fmt(total) + '</dd></div>';
+      h += '<div class="es-total"><dt>' + (pend || tot.cotizar || $('coArmado').checked ? 'Total de piezas' : 'Total') + '</dt><dd>' + T.fmt(total) + '</dd></div>';
       if(C.PRECIOS_CON_IGV) h += '<div class="es-igv"><dt>Incluye IGV (18 %)</dt><dd>' + T.fmt(total * 18 / 118) + '</dd></div>';
     }
     $('coTot').innerHTML = h;
+  }
+  function entregaTexto(){
+    return radio('ent') === 'recojo' ? 'Recojo en ' + C.RECOJO.lugar + ' — ' + C.RECOJO.dir
+      : g('coDir') + ', ' + g('coDist') + ', ' + g('coProv') + ', ' + g('coDep') + ' · Ref.: ' + g('coRef');
+  }
+  function revision(){
+    var comp = radio('comp'), pg = pagoElegido();
+    var f = [['Datos', esc(g('coNombre')) + '<br>' + esc(g('coCel')) + ' · ' + esc(g('coEmail')) + '<br>' +
+                (comp === 'boleta' ? 'Boleta · ' + esc(g('coTdoc')) + ' ' + esc(g('coDoc')) : 'Factura · RUC ' + esc(g('coRuc')) + ' · ' + esc(g('coRazon'))), 0],
+             ['Entrega', esc(entregaTexto()) + ($('coOtro').checked ? '<br>Recibe: ' + esc(g('coOtroN')) : '') + ($('coArmado').checked ? '<br>Con cotización de armado' : ''), 1]];
+    if(pg) f.push(['Pago', esc(pg.label), 2]);
+    $('coRev').innerHTML = f.map(function(x){ return '<div><dt>' + x[0] + '</dt><dd>' + x[1] + '</dd><button type="button" data-ir="' + x[2] + '">Editar</button></div>'; }).join('');
   }
   function condicionales(){
     form.querySelectorAll('[data-si]').forEach(function(el){
@@ -245,6 +268,52 @@
     $('coOtroBox').hidden = !$('coOtro').checked;
     pintarPago(); totales();
   }
+
+  /* ---- validación, un paso a la vez ---- */
+  function revisar(id, bien){ $(id).closest('.gd-field').classList.toggle('is-mal', !bien); return bien; }
+  var VALIDA = [
+    function(){
+      var comp = radio('comp'), doc = g('coDoc');
+      var r = [revisar('coNombre', g('coNombre').split(/\s+/).length >= 2), revisar('coCel', /^9\d{8}$/.test(g('coCel'))), revisar('coEmail', /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(g('coEmail')))];
+      if(comp === 'boleta') r.push(revisar('coDoc', g('coTdoc') === 'DNI' ? /^\d{8}$/.test(doc) : /^[A-Za-z0-9]{6,12}$/.test(doc)));
+      else r.push(revisar('coRuc', /^(10|20)\d{9}$/.test(g('coRuc'))), revisar('coRazon', g('coRazon').length > 2), revisar('coFiscal', g('coFiscal').length > 5));
+      return r.every(Boolean);
+    },
+    function(){
+      var r = [];
+      if(radio('ent') === 'envio') r.push(revisar('coProv', g('coProv').length > 1), revisar('coDist', g('coDist').length > 1), revisar('coDir', g('coDir').length > 5), revisar('coRef', g('coRef').length > 3));
+      if($('coOtro').checked) r.push(revisar('coOtroN', g('coOtroN').length > 4), revisar('coOtroD', /^[A-Za-z0-9]{6,12}$/.test(g('coOtroD'))));
+      return r.every(Boolean);
+    }
+  ];
+
+  var actual = 0, hecho = 0;
+  function mostrar(i){
+    actual = i; hecho = Math.max(hecho, i);
+    form.querySelectorAll('.co-paso').forEach(function(s){ s.hidden = +s.getAttribute('data-paso') !== i; });
+    document.querySelectorAll('#coRuta li').forEach(function(li, k){
+      li.classList.toggle('is-activo', k === i); li.classList.toggle('is-hecho', k < i); li.classList.toggle('es-alcanzable', k <= hecho);
+      if(k === i) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+    });
+    if(i === ULT) revision();
+    var t = form.querySelector('.co-paso:not([hidden]) .co-paso-t');
+    window.scrollTo(0, 0); if(t){ t.setAttribute('tabindex', '-1'); t.focus({ preventScroll:true }); }
+  }
+  function avanzar(){
+    form.querySelectorAll('.is-mal').forEach(function(f){ f.classList.remove('is-mal'); });
+    if(VALIDA[actual] && !VALIDA[actual]()){ var m = form.querySelector('.co-paso:not([hidden]) .is-mal input'); if(m) m.focus(); return; }
+    mostrar(actual + 1);
+  }
+  root.addEventListener('click', function(e){
+    if(e.target.closest('[data-sigue]')){ avanzar(); return; }
+    var ir = e.target.closest('[data-ir]');
+    if(ir){ var n = +ir.getAttribute('data-ir'); if(n <= hecho && n !== actual) mostrar(n); }
+  });
+  // Enter en un campo avanza de paso en vez de enviar el pedido a medias
+  form.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && e.target.tagName === 'INPUT' && actual < ULT){ e.preventDefault(); avanzar(); }
+  });
+
   form.addEventListener('change', function(e){
     if(e.target.id === 'coDep'){
       var d = e.target.value;
@@ -262,38 +331,27 @@
     msg.textContent = cupon ? 'Código aplicado.' : 'Ese código no es válido.';
     totales();
   });
-  condicionales();
+  condicionales(); mostrar(0);
 
   // si la selección cambia desde el cajón, el resumen se rehace entero
   var enviando = false;
   document.addEventListener('gd:carrito', function(){ if(!enviando) location.reload(); });
 
-  function revisar(id, bien){ var f = $(id).closest('.gd-field'); f.classList.toggle('is-mal', !bien); return bien; }
   form.addEventListener('submit', function(e){
     e.preventDefault();
-    form.querySelectorAll('.is-mal').forEach(function(f){ f.classList.remove('is-mal'); });
-    var comp = radio('comp'), ent = radio('ent'), tdoc = g('coTdoc'), doc = g('coDoc');
-    var docOk = tdoc === 'DNI' ? /^\d{8}$/.test(doc) : /^[A-Za-z0-9]{6,12}$/.test(doc);
-    var r = [
-      revisar('coNombre', g('coNombre').split(/\s+/).length >= 2),
-      revisar('coCel', /^9\d{8}$/.test(g('coCel'))),
-      revisar('coEmail', /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(g('coEmail')))
-    ];
-    if(comp === 'boleta') r.push(revisar('coDoc', docOk));
-    else r.push(revisar('coRuc', /^(10|20)\d{9}$/.test(g('coRuc'))), revisar('coRazon', g('coRazon').length > 2), revisar('coFiscal', g('coFiscal').length > 5));
-    if(ent === 'envio') r.push(revisar('coProv', g('coProv').length > 1), revisar('coDist', g('coDist').length > 1), revisar('coDir', g('coDir').length > 5), revisar('coRef', g('coRef').length > 3));
-    if($('coOtro').checked) r.push(revisar('coOtroN', g('coOtroN').length > 4), revisar('coOtroD', /^[A-Za-z0-9]{6,12}$/.test(g('coOtroD'))));
+    if(actual < ULT){ avanzar(); return; }
+    if(!VALIDA[0]()){ mostrar(0); return; }
+    if(!VALIDA[1]()){ mostrar(1); return; }
     var acepto = $('coAcepto').checked;
     $('coAceptoErr').style.display = acepto ? '' : 'block';
-    if(!r.every(Boolean)){ var m = form.querySelector('.is-mal input'); if(m) m.focus(); return; }
     if(!acepto){ $('coAcepto').focus(); return; }
 
-    var z = zona(), pagoKey = radio('pago'), pago = C.PAGO.filter(function(m){ return m.key === pagoKey; })[0];
+    var comp = radio('comp'), ent = radio('ent'), tdoc = g('coTdoc'), doc = g('coDoc'), z = zona(), pago = pagoElegido();
     var entrega = ent === 'recojo'
-      ? { tipo:'recojo', resumen:'Recojo en ' + C.RECOJO.lugar + ' — ' + C.RECOJO.dir }
+      ? { tipo:'recojo', resumen:entregaTexto() }
       : { tipo:'envio', zona:z.key, distrito:g('coDist'), dir:g('coDir'), ref:g('coRef'),
           horario: g('coHora') === 'Sin preferencia' ? '' : g('coHora'),
-          resumen:'Envío a ' + g('coDir') + ', ' + g('coDist') + ', ' + g('coProv') + ', ' + g('coDep') + ' · Ref.: ' + g('coRef') + ' · ' + g('coInm') + ', ' + g('coAcc').toLowerCase() };
+          resumen:'Envío a ' + entregaTexto() + ' · ' + g('coInm') + ', ' + g('coAcc').toLowerCase() };
     entrega.armado = $('coArmado').checked;
     if($('coOtro').checked) entrega.recibe = g('coOtroN') + ' (doc. ' + g('coOtroD') + ')';
 
@@ -309,7 +367,7 @@
     // la cuenta nace con el primer pedido: nadie se registra antes de comprar
     T.sesion.set({ nombre:g('coNombre'), cel:g('coCel'), email:g('coEmail') });
     T.db('datos', { comp:comp, tdoc:tdoc, doc:doc, ruc:g('coRuc'), razon:g('coRazon'), fiscal:g('coFiscal'), ent:ent,
-                    dep:g('coDep'), prov:g('coProv'), distrito:g('coDist'), dir:g('coDir'), ref:g('coRef'), inmueble:g('coInm'), acceso:g('coAcc'), pago:pagoKey });
+                    dep:g('coDep'), prov:g('coProv'), distrito:g('coDist'), dir:g('coDir'), ref:g('coRef'), inmueble:g('coInm'), acceso:g('coAcc'), pago:pago ? pago.key : '' });
     enviando = true;
     T.carrito.vaciar();
     window.open(T.wa(T.pedidos.mensaje(ped)), '_blank', 'noopener');
@@ -317,6 +375,5 @@
   });
 })();
 </script>
-<script src="js/gd-chat.js?v=5" defer></script>
 </body>
 </html>

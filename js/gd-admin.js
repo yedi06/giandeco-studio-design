@@ -175,7 +175,7 @@ V.productos = function(){
         return '<tr' + (p.activo ? '' : ' class="es-off"') + '><td><img src="' + esc(p.img) + '" alt="" loading="lazy"></td>' +
           '<td><a href="producto-' + p.key + '.html" target="_blank"><b>' + esc(p.nombre) + '</b></a><small>' + p.key + (p.nuevo ? ' · añadida desde el panel' : '') + '</small></td><td>' + esc(p.cat) + '</td>' +
           '<td class="num"><input class="ad-in" type="number" step="0.01" min="0" data-c="precio" data-k="' + p.key + '" value="' + (p.precio != null ? p.precio : (isNaN(base) ? '' : base)) + '" placeholder="consultar"></td>' +
-          '<td class="num"><input class="ad-in es-corto" type="number" min="0" data-c="stock" data-k="' + p.key + '" value="' + (p.stock != null ? p.stock : '') + '" placeholder="—"></td>' +
+          '<td class="num"><input class="ad-in es-corto" type="number" min="0" data-c="stock" data-k="' + p.key + '" value="' + (p.stock != null ? p.stock : 1) + '"></td>' +
           '<td><label class="ad-sw"><input type="checkbox" data-c="activo" data-k="' + p.key + '"' + (p.activo ? ' checked' : '') + '><i></i></label></td></tr>';
       }).join('') + '</tbody></table></div>';
 };

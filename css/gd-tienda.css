@@ -451,3 +451,51 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
   body{ background:#fff !important; color:#000 !important; }
   .lr-hoja, .lr-hoja *{ color:#000 !important; background:none !important; border-color:#999 !important; }
 }
+
+/* disponibilidad */
+.pdp-stock{ margin:-10px 0 20px; font-size:.7rem; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); }
+.pdp-stock.es-agotado{ color:var(--text-faint); }
+.gdt-quick.es-agotado{ cursor:default; border-bottom-color:transparent; color:var(--text-faint); }
+.gdt-quick.es-agotado:hover{ color:var(--text-faint); border-color:transparent; }
+
+/* ==========================================================================
+   CHECKOUT POR PASOS — cabecera propia, sin menú del sitio
+   ========================================================================== */
+.co-body{ min-height:100svh; display:flex; flex-direction:column; }
+.co-body .co-top{ flex:1; padding-top:clamp(28px,5vw,56px); }
+.co-head{ display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:16px; padding:14px var(--gd-gut); border-bottom:1px solid var(--line); background:var(--bg-raised); }
+.co-head-logo img{ height:52px; width:auto; display:block; }
+.co-head-volver, .co-head-seguro{ display:inline-flex; align-items:center; gap:8px; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); text-decoration:none; }
+.co-head-volver:hover{ color:var(--accent); }
+.co-head-seguro{ justify-self:end; color:var(--accent); }
+.co-head svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.5; }
+@media (max-width:560px){ .co-head-volver{ font-size:0; gap:0; } .co-head-seguro{ font-size:.6rem; } }
+.co-foot{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px 24px; padding:22px var(--gd-gut); border-top:1px solid var(--line); }
+.co-foot a{ font-size:.76rem; color:var(--text-faint); text-decoration:none; }
+.co-foot a:hover{ color:var(--accent); }
+
+.co-ruta{ list-style:none; margin:0 0 clamp(32px,5vw,56px); padding:0; display:flex; gap:0; max-width:760px; }
+.co-ruta li{ flex:1; position:relative; padding-top:18px; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint); }
+.co-ruta li::before{ content:''; position:absolute; left:0; right:0; top:4px; height:1px; background:var(--line); }
+.co-ruta li::after{ content:''; position:absolute; left:0; top:0; width:9px; height:9px; border-radius:50%; background:var(--bg); border:1px solid var(--text-faint); }
+.co-ruta li i{ font-style:normal; margin-right:8px; font-variant-numeric:tabular-nums; }
+.co-ruta li.is-hecho{ color:var(--text-dim); }
+.co-ruta li.is-hecho::before{ background:var(--accent); }
+.co-ruta li.is-hecho::after{ background:var(--accent); border-color:var(--accent); }
+.co-ruta li.is-activo{ color:var(--lino); }
+.co-ruta li.is-activo::after{ border-color:var(--accent); box-shadow:0 0 0 3px rgba(201,162,74,.22); }
+.co-ruta li.es-alcanzable:not(.is-activo){ cursor:pointer; }
+@media (max-width:560px){ .co-ruta li span{ display:none; } .co-ruta li.is-activo span{ display:inline; } }
+
+.co-body .co-paso{ padding:0; border-top:none; }
+.co-body .co-paso-t{ display:block; font-family:var(--display); font-weight:400; font-size:clamp(1.9rem,3vw,2.3rem); line-height:1.1; margin:0 0 var(--sp-24); outline:none; }
+.co-nav{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:var(--sp-40); padding-top:var(--sp-24); border-top:1px solid var(--line); }
+.co-nav .gd-btn{ padding:16px 30px; border:none; cursor:pointer; }
+.co-atras{ background:none; border:none; padding:8px 0; cursor:pointer; font-family:var(--body); font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); }
+.co-atras:hover{ color:var(--accent); }
+.co-rev{ margin:0; }
+.co-rev div{ display:grid; grid-template-columns:90px 1fr auto; gap:16px; padding:16px 0; border-bottom:1px solid var(--line); align-items:start; }
+.co-rev dt{ font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--text-faint); padding-top:3px; }
+.co-rev dd{ margin:0; color:var(--text-dim); font-size:.92rem; line-height:1.6; overflow-wrap:anywhere; }
+.co-rev button{ background:none; border:none; padding:2px 0; cursor:pointer; font-family:var(--body); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); }
+.co-body .co-res .co-conf{ margin-top:18px; }

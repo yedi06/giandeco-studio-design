@@ -149,6 +149,14 @@ window.GD_NAVIDAD = NAVIDAD;
       if(o.precio != null) L[l][k].precio = 'S/ ' + Number(o.precio).toLocaleString('en-US', { minimumFractionDigits:2, maximumFractionDigits:2 });
     });
   });
+  // stock: el que fijó el panel o, si no hay dato, el inicial de la tienda
+  var STOCK_INICIAL = 1;
+  Object.keys(L).forEach(function(l){
+    Object.keys(L[l]).forEach(function(k){
+      var o = aj && aj.over && aj.over[k];
+      L[l][k].stock = o && o.stock != null ? o.stock : STOCK_INICIAL;
+    });
+  });
 })();
 
 /* --------------------------------------------------------------------------
@@ -500,6 +508,15 @@ function montarPuntos(){
       else{ card.style.left = left + '%'; card.style.marginLeft = '28px'; card.style.marginRight = '0'; }
       if(top > 55){ card.style.bottom = (100 - top) + '%'; card.style.marginBottom = '-20px'; }
       else{ card.style.top = top + '%'; card.style.marginTop = '-20px'; }
+
+      // la ficha nunca se sale de la fotografía: si no cabe, se corre lo justo
+      card.style.translate = '';
+      var sr = shop.getBoundingClientRect(), cr = card.getBoundingClientRect(), aire = 10, dx = 0, dy = 0;
+      if(cr.right > sr.right - aire) dx = sr.right - aire - cr.right;
+      if(cr.left + dx < sr.left + aire) dx = sr.left + aire - cr.left;
+      if(cr.bottom > sr.bottom - aire) dy = sr.bottom - aire - cr.bottom;
+      if(cr.top + dy < sr.top + aire) dy = sr.top + aire - cr.top;
+      card.style.translate = Math.round(dx) + 'px ' + Math.round(dy) + 'px';
 
       card.classList.add('is-open');
       if(abierto && abierto !== dot) abierto.classList.remove('is-open');

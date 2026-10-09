@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="css/gd-movil.css?v=1">
 <link rel="stylesheet" href="css/gd-tema.css?v=1">
 <script src="js/gd-tema.js?v=1"></script>
-<link rel="stylesheet" href="css/gd-tienda.css?v=3">
+<link rel="stylesheet" href="css/gd-tienda.css?v=5">
 </head>
 <body data-mundo="catalogo" data-seccion="producto" data-p="muneco-nieve">
 
@@ -36,8 +36,8 @@
 <main id="pdp"><section class="pdp-top"><div class="gd-in"><p class="gd-migas"><a href="catalogo">Catálogo</a> / <a href="catalogo-navidad">Navidad</a> / <span>Iluminados</span></p><h1 class="gd-h1">Muñeco de nieve iluminado</h1><p class="gd-body">S/ 30.00</p><p class="gd-body">Material de porcelana.</p><img src="images/navidad/muneco-nieve-1.png" alt="Muñeco de nieve iluminado" width="600"></div></section></main>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=13"></script>
-<script src="js/gd-tienda.js?v=5"></script>
+<script src="js/giandeco.js?v=14"></script>
+<script src="js/gd-tienda.js?v=6"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc;
@@ -134,14 +134,17 @@
       '<h1>' + esc(p.nombre) + '</h1>' +
       '<p class="pdp-precio"><b>' + esc(consulta ? 'Precio a consultar' : p.precio) + '</b>' +
         (consulta ? '' : '<span>' + (T.CFG.PRECIOS_CON_IGV ? 'Incluye IGV · ' : '') + 'No incluye envío ni instalación</span>') + '</p>' +
+      '<p class="pdp-stock' + (p.stock <= 0 ? ' es-agotado' : '') + '">' + (p.stock <= 0 ? 'Agotado' : p.stock === 1 ? 'Última unidad disponible' : p.stock + ' unidades disponibles') + '</p>' +
       '<p class="pdp-nota">' + esc(p.nota) + '</p>' +
       variantes +
+      (p.stock <= 0 ? '<div class="pdp-acc" id="pdpAcc"><a class="gd-btn gd-btn-primary" target="_blank" rel="noopener" href="' + T.wa('Hola Giandeco, avísenme cuando vuelva a estar disponible: ' + p.nombre + '.') + '">Avíseme cuando vuelva' + T.FLECHA + '</a></div><div hidden>' : '') +
       '<div class="pdp-acc" id="pdpAcc">' +
         '<span class="gdt-qty" role="group" aria-label="Cantidad"><button type="button" data-pdp-qty="-1" aria-label="Quitar una">−</button><b id="pdpQty">1</b><button type="button" data-pdp-qty="1" aria-label="Añadir una">+</button></span>' +
         '<button type="button" class="gd-btn gd-btn-primary" id="pdpAdd" data-gdt-add="' + key + '" data-qty="1">' + (consulta ? 'Añadir para cotizar' : 'Añadir a mi selección') + T.FLECHA + '</button>' +
         (consulta ? '<a class="gd-btn gd-btn-ghost" href="' + waPieza + '" target="_blank" rel="noopener">Consultar por WhatsApp</a>'
                   : '<button type="button" class="gd-btn gd-btn-ghost" id="pdpYa">Comprar ahora</button>') +
       '</div>' +
+      (p.stock <= 0 ? '</div>' : '') +
       '<div class="pdp-sub">' +
         '<button type="button" data-gdt-fav="' + key + '" class="' + (T.favs.es(key) ? 'is-on' : '') + '" aria-pressed="' + (T.favs.es(key) ? 'true' : 'false') + '">' + I.cora + 'Guardar</button>' +
         (consulta ? '' : '<a href="' + waPieza + '" target="_blank" rel="noopener">' + I.chat + 'Hablar con un diseñador</a>') +
@@ -281,7 +284,7 @@
   root.innerHTML = top + '<div class="gd-in">' + ficha + guia + set + estudio +
     pregHTML + '<section class="gdt-sec" id="opiniones">' + opinionesHTML() + '</section>' + simHTML + visHTML + '</div>' +
     '<div class="pdp-bar" id="pdpBar"><span><b>' + esc(p.nombre) + '</b><i>' + esc(p.precio) + '</i></span>' +
-      '<button type="button" class="gd-btn gd-btn-primary" data-gdt-add="' + key + '">' + (consulta ? 'Cotizar' : 'Añadir') + '</button></div>';
+      (p.stock <= 0 ? '' : '<button type="button" class="gd-btn gd-btn-primary" data-gdt-add="' + key + '">' + (consulta ? 'Cotizar' : 'Añadir') + '</button>') + '</div>';
 
   /* ==================== COMPORTAMIENTO ==================== */
   var plate = document.getElementById('pdpPlate'), img = document.getElementById('pdpImg');
@@ -311,7 +314,7 @@
   var qty = 1, add = document.getElementById('pdpAdd'), qtyEl = document.getElementById('pdpQty');
   root.querySelectorAll('[data-pdp-qty]').forEach(function(b){
     b.addEventListener('click', function(){
-      qty = Math.max(1, Math.min(99, qty + parseInt(b.getAttribute('data-pdp-qty'), 10)));
+      qty = Math.max(1, Math.min(p.stock, 99, qty + parseInt(b.getAttribute('data-pdp-qty'), 10)));
       qtyEl.textContent = qty; add.setAttribute('data-qty', qty);
     });
   });

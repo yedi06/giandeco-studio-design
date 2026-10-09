@@ -66,3 +66,34 @@ $$
 $$;
 grant execute on function estado_pedido(text, text) to anon, authenticated;
 revoke execute on function es_admin() from anon;
+
+-- ---------- stock: cada pedido nuevo descuenta las unidades pedidas ----------
+-- El stock vive en config 'prod' (over.<clave>.stock). Sin dato, vale 1.
+create or replace function descontar_stock() returns trigger
+language plpgsql security definer set search_path = public as
+$$
+declare it jsonb; k text; q int; actual int; v jsonb;
+begin
+  select valor into v from config where clave = 'prod';
+  v := coalesce(v, '{}'::jsonb);
+  if v -> 'over' is null then v := jsonb_set(v, '{over}', '{}'::jsonb); end if;
+  for it in select * from jsonb_array_elements(coalesce(new.datos -> 'items', '[]'::jsonb)) loop
+    k := it ->> 'key';
+    if k is not null then
+      q := greatest(1, coalesce((it ->> 'qty')::int, 1));
+      actual := coalesce((v -> 'over' -> k ->> 'stock')::int, 1);
+      v := jsonb_set(v, array['over', k], coalesce(v -> 'over' -> k, '{}'::jsonb) || jsonb_build_object('stock', greatest(0, actual - q)));
+    end if;
+  end loop;
+  insert into config (clave, valor) values ('prod', v)
+    on conflict (clave) do update set valor = excluded.valor, actualizado = now();
+  return new;
+exception when others then
+  return new;   -- un dato raro en el pedido nunca impide registrarlo
+end
+$$;
+
+drop trigger if exists pedidos_descuenta_stock on pedidos;
+create trigger pedidos_descuenta_stock after insert on pedidos
+  for each row when (coalesce(new.datos ->> 'demo', 'false') <> 'true')
+  execute function descontar_stock();
