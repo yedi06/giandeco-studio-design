@@ -15,9 +15,25 @@ var root = document.getElementById('adMain'), nav = document.getElementById('adN
 /* --------------------------------------------------------------------------
    DATOS
    -------------------------------------------------------------------------- */
+/* La sesión y los datos viven en Supabase. MEM es la copia en memoria con la
+   que pintan las pantallas; cada guardado se escribe también en la nube. */
+var sb = window.supabase.createClient(T.NUBE.url, T.NUBE.key);
+var MEM = {}, COLS = ['pedidos', 'reclamos', 'opiniones', 'preguntas', 'testimonios'], listo = false;
+function idDe(x){ return x.n || x.id; }
 var DATOS = {
-  leer: function(k, def){ var v = T.db(k); return v === null || v === undefined ? def : v; },
-  guardar: function(k, v){ T.db(k, v); }
+  leer: function(k, def){ return MEM[k] === undefined || MEM[k] === null ? def : MEM[k]; },
+  guardar: function(k, v){
+    var antes = MEM[k] || [], op;
+    MEM[k] = v;
+    if(COLS.indexOf(k) === -1){
+      op = sb.from('config').upsert({ clave:k, valor:v, actualizado:new Date().toISOString() });
+    } else {
+      var ids = v.map(idDe), fuera = antes.map(idDe).filter(function(i){ return ids.indexOf(i) === -1; });
+      op = v.length ? sb.from(k).upsert(v.map(function(x){ return { id:idDe(x), datos:x }; })) : Promise.resolve({});
+      if(fuera.length) op = op.then(function(r){ return r && r.error ? r : sb.from(k).delete().in('id', fuera); });
+    }
+    op.then(function(r){ if(r && r.error) aviso('No se pudo guardar: ' + r.error.message); });
+  }
 };
 function pedidos(){ return DATOS.leer('pedidos', []); }
 function config(){ return DATOS.leer('config', {}); }
@@ -301,7 +317,7 @@ function pintar(){
   nav.innerHTML = SECC.map(function(x){ return '<a href="#' + x[0] + '"' + (x[0] === s ? ' class="is-on"' : '') + '>' + x[1] + (n[x[0]] ? '<i>' + n[x[0]] + '</i>' : '') + '</a>'; }).join('');
   root.innerHTML = V[s]();
 }
-window.addEventListener('hashchange', function(){ abierto = null; pintar(); window.scrollTo(0, 0); });
+window.addEventListener('hashchange', function(){ if(!listo) return; abierto = null; pintar(); window.scrollTo(0, 0); });
 
 root.addEventListener('click', function(e){
   var b = e.target.closest('[data-a]'); if(!b) return;
@@ -385,5 +401,44 @@ root.addEventListener('submit', function(e){
   }
 });
 
-pintar();
+/* --------------------------------------------------------------------------
+   ACCESO
+   Sin contraseñas: el estudio entra con un enlace que llega a su correo.
+   Solo los correos de la tabla admins ven los datos.
+   -------------------------------------------------------------------------- */
+function pantallaAcceso(mensaje){
+  nav.innerHTML = '';
+  root.innerHTML = '<div class="ad-acceso"><h1>Administración</h1><p>' + (mensaje || 'Escriba su correo y le enviamos un enlace para entrar. No hay contraseña que recordar.') + '</p>' +
+    '<form class="ad-form" id="adLogin"><label>Correo<input type="email" name="email" required autocomplete="email"></label>' +
+    '<button class="ad-btn es-pri" type="submit">Enviarme el enlace</button></form><p class="ad-nota" id="adLoginMsg"></p></div>';
+  document.getElementById('adLogin').addEventListener('submit', function(e){
+    e.preventDefault(); e.stopPropagation();
+    var correo = e.target.email.value.trim().toLowerCase(), msg = document.getElementById('adLoginMsg');
+    msg.textContent = 'Enviando…';
+    sb.auth.signInWithOtp({ email:correo, options:{ emailRedirectTo: location.origin + location.pathname } }).then(function(r){
+      msg.textContent = r.error ? 'No se pudo enviar: ' + r.error.message : 'Revise su correo (' + correo + ') y abra el enlace en este mismo navegador.';
+    });
+  });
+}
+function cargar(){
+  root.innerHTML = '<p class="ad-nota">Cargando…</p>';
+  Promise.all(COLS.map(function(c){ return sb.from(c).select('datos').order('creado', { ascending:false }); }).concat([sb.from('config').select('clave,valor')])).then(function(rs){
+    COLS.forEach(function(c, i){ MEM[c] = (rs[i].data || []).map(function(f){ return f.datos; }); });
+    (rs[COLS.length].data || []).forEach(function(f){ MEM[f.clave] = f.valor; });
+    listo = true; pintar();
+  });
+}
+document.getElementById('adSalir').addEventListener('click', function(){ sb.auth.signOut().then(function(){ location.reload(); }); });
+document.getElementById('adRefrescar').addEventListener('click', function(){ if(listo) cargar(); });
+
+sb.auth.getSession().then(function(r){
+  var ses = r.data && r.data.session;
+  if(!ses){ pantallaAcceso(); return; }
+  document.getElementById('adQuien').textContent = ses.user.email;
+  document.body.classList.add('con-sesion');
+  sb.from('admins').select('email').then(function(a){
+    if(a.data && a.data.length) cargar();
+    else pantallaAcceso('El correo ' + esc(ses.user.email) + ' no tiene acceso de administración. Entre con un correo autorizado.');
+  });
+});
 })();

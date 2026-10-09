@@ -99,6 +99,25 @@ function emitir(n){ try{ document.dispatchEvent(new CustomEvent('gd:' + n)); }ca
 var FLECHA = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
 
 /* --------------------------------------------------------------------------
+   2b. NUBE  (PostgreSQL en Supabase)
+   La clave es la pública del proyecto: solo permite lo que las políticas de
+   backend/schema.sql conceden a un visitante, que es registrar pedidos,
+   opiniones, preguntas, testimonios y reclamos, y leer los ajustes públicos.
+   Lo guardado en el navegador sigue siendo la copia del cliente.
+   -------------------------------------------------------------------------- */
+var NUBE = { url:'https://vsivmdfmecqxeumepyea.supabase.co', key:'sb_publishable_mA4Evx59RnBY4lKVGh3GRg_Coe26bp-' };
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 10); }
+function nubeFetch(ruta, cuerpo){
+  return fetch(NUBE.url + '/rest/v1/' + ruta, {
+    method: cuerpo ? 'POST' : 'GET', keepalive: true,   // keepalive: el envío sobrevive al cambio de página
+    headers: { apikey:NUBE.key, 'Content-Type':'application/json', Prefer:'return=minimal' },
+    body: cuerpo ? JSON.stringify(cuerpo) : undefined
+  });
+}
+function nube(tabla, id, datos){ try{ nubeFetch(tabla, { id:id, datos:datos }).catch(function(){}); }catch(e){} }
+function rpc(fn, args){ return nubeFetch('rpc/' + fn, args).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }); }
+
+/* --------------------------------------------------------------------------
    3. CATÁLOGO UNIFICADO
    -------------------------------------------------------------------------- */
 var COND = 'Los precios no incluyen instalación ni envío. Entrega en Lima y Callao; coordinamos provincia bajo cotización.';
@@ -298,6 +317,7 @@ var pedidos = {
     d.n = 'GD-' + String(f.getFullYear()).slice(2) + p2(f.getMonth() + 1) + p2(f.getDate()) + '-' + Math.floor(1000 + Math.random() * 9000);
     d.fecha = f.toISOString(); d.estado = 0;
     var l = pedidos.lista(); l.unshift(d); db('pedidos', l);
+    nube('pedidos', d.n, d);
     return d;
   },
   mensaje: function(p){
@@ -317,6 +337,20 @@ var pedidos = {
     if(p.nota) m += '\nNota: ' + p.nota;
     return m;
   },
+  /* trae de la nube lo que el estudio actualizó: estado, envío y pago */
+  sincronizar: function(alCambiar){
+    var l = pedidos.lista(), pend = l.length, cambio = false;
+    l.forEach(function(p){
+      rpc('estado_pedido', { p_n:p.n, p_cel:p.cliente.cel }).then(function(e){
+        if(e){
+          ['estado', 'envio', 'armadoMonto', 'pagado'].forEach(function(k){
+            if(e[k] !== undefined && e[k] !== null && p[k] !== e[k]){ p[k] = e[k]; cambio = true; }
+          });
+        }
+        if(--pend === 0 && cambio){ db('pedidos', l); if(alCambiar) alCambiar(); }
+      });
+    });
+  },
   /* ¿este dispositivo registró una compra de esa pieza? */
   conProducto: function(key){
     return pedidos.lista().filter(function(p){ return p.items.some(function(x){ return x.key === key; }); })[0] || null;
@@ -335,7 +369,8 @@ var opiniones = {
   mia: function(key){ return opiniones.mias().filter(function(o){ return o.producto === key; })[0] || null; },
   guardar: function(o){
     var l = opiniones.mias().filter(function(x){ return x.producto !== o.producto; });
-    o.fecha = new Date().toISOString(); o.estado = 'en revisión'; l.unshift(o); db('opiniones', l);
+    o.id = o.id || uid(); o.fecha = new Date().toISOString(); o.estado = 'en revisión'; l.unshift(o); db('opiniones', l);
+    nube('opiniones', o.id, o);
   },
   promedio: function(o){ var s = 0; CRITERIOS.forEach(function(c){ s += o.notas[c.k] || 0; }); return s / CRITERIOS.length; },
   mensaje: function(o){
@@ -503,6 +538,14 @@ function montar(){
   window.addEventListener('storage', function(e){ if(e.key === 'gd.carrito') pintarCajon(); });
   pintarCajon();
 
+  // ajustes del estudio (precios, envío, medios de pago, opiniones publicadas):
+  // se leen de la nube sin frenar la página y rigen desde la siguiente vista
+  try{
+    nubeFetch('config?select=clave,valor').then(function(r){ return r.ok ? r.json() : []; }).then(function(filas){
+      (filas || []).forEach(function(f){ if(f.clave === 'config' || f.clave === 'prod') db(f.clave, f.valor); });
+    }).catch(function(){});
+  }catch(e){}
+
   // páginas de ayuda: datos del estudio, aviso de borrador y recomendados
   var E = CFG.EMPRESA;
   document.querySelectorAll('[data-emp]').forEach(function(el){
@@ -517,7 +560,7 @@ function montar(){
 
 window.GD_TIENDA = {
   CFG:CFG, CAT:CAT, LINEAS:LINEAS, COND:COND, CRITERIOS:CRITERIOS, ESTADOS:ESTADOS, FLECHA:FLECHA,
-  esc:esc, fmt:fmt, wa:wa, url:url, db:db, card:card,
+  esc:esc, fmt:fmt, wa:wa, url:url, db:db, card:card, NUBE:NUBE, nube:nube, rpc:rpc, uid:uid,
   familia:familia, complementos:complementos, similares:similares, espaciosDe:espaciosDe, recomendados:recomendados,
   carrito:carrito, favs:favs, vistos:vistos, sesion:sesion, pedidos:pedidos, opiniones:opiniones,
   abrir:abrir, cerrar:cerrar

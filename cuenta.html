@@ -23,7 +23,7 @@
 
 <div id="gdFooter"></div>
 <script src="js/giandeco.js?v=13"></script>
-<script src="js/gd-tienda.js?v=4"></script>
+<script src="js/gd-tienda.js?v=5"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc;
@@ -185,7 +185,7 @@
       f.querySelector('.cu-nps').closest('.gd-field').classList.toggle('is-mal', !nps);
       var mal = f.querySelector('.is-mal input, .is-mal textarea'); if(mal){ mal.focus(); return; }
       var s = T.sesion.get(), rol = g('tsRol').value.trim();
-      var tss = T.db('testimonios') || []; tss.unshift({ autor:s.nombre, rol:rol, proyecto:g('tsProy').value.trim(), antes:g('tsAntes').value.trim(), despues:g('tsDespues').value.trim(), nps:+nps.value, publicar:g('tsPub').checked, fecha:new Date().toISOString() }); T.db('testimonios', tss);
+      var ts, tss = T.db('testimonios') || []; tss.unshift(ts = { id:T.uid(), autor:s.nombre, rol:rol, proyecto:g('tsProy').value.trim(), antes:g('tsAntes').value.trim(), despues:g('tsDespues').value.trim(), nps:+nps.value, publicar:g('tsPub').checked, fecha:new Date().toISOString() }); T.db('testimonios', tss); T.nube('testimonios', ts.id, ts);
       window.open(T.wa('Hola Giandeco, dejo mi testimonio del proyecto ' + g('tsProy').value.trim() + '.\n\n' +
         'Qué necesitaba resolver: ' + g('tsAntes').value.trim() + '\n\n' +
         'Qué cambió después: ' + g('tsDespues').value.trim() + '\n\n' +
@@ -196,6 +196,7 @@
   });
 
   pintar();
+  T.pedidos.sincronizar(pintar);
 })();
 </script>
 <script src="js/gd-movil.js?v=1" defer></script>

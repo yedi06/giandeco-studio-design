@@ -92,7 +92,7 @@
 
 <div id="gdFooter"></div>
 <script src="js/giandeco.js?v=13"></script>
-<script src="js/gd-tienda.js?v=4"></script>
+<script src="js/gd-tienda.js?v=5"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc, E = T.CFG.EMPRESA;
@@ -118,7 +118,7 @@
       nombre:g('lrNombre'), doc:g('lrTdoc') + ' ' + g('lrDoc'), dom:g('lrDom'), cel:g('lrCel'), email:g('lrEmail'), apod:g('lrApod'),
       bien:form.querySelector('input[name="lrBien"]:checked').value, pedido:g('lrPedido'), monto:g('lrMonto'), desc:g('lrDesc'),
       tipo:form.querySelector('input[name="lrTipo"]:checked').value, detalle:g('lrDetalle'), pide:g('lrPide') };
-    lista.push(r); T.db('reclamos', lista);
+    lista.push(r); T.db('reclamos', lista); T.nube('reclamos', r.n, r);
 
     var filas = [['Hoja de reclamación', r.n], ['Fecha', r.fecha], ['Proveedor', (E.razon || 'por confirmar') + ' · RUC ' + (E.ruc || 'por confirmar')],
       ['Consumidor', r.nombre + ' · ' + r.doc], ['Domicilio', r.dom], ['Contacto', r.cel + ' · ' + r.email]];

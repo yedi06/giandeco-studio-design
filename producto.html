@@ -24,7 +24,7 @@
 
 <div id="gdFooter"></div>
 <script src="js/giandeco.js?v=13"></script>
-<script src="js/gd-tienda.js?v=4"></script>
+<script src="js/gd-tienda.js?v=5"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc;
@@ -337,7 +337,7 @@
       var t = e.target.querySelector('#pgTexto');
       t.parentNode.classList.toggle('is-mal', t.value.trim().length < 8);
       if(t.value.trim().length < 8){ t.focus(); return; }
-      var pgs = T.db('preguntas') || []; pgs.unshift({ producto:key, p:t.value.trim(), fecha:new Date().toISOString() }); T.db('preguntas', pgs);
+      var pg = { id:T.uid(), producto:key, p:t.value.trim(), fecha:new Date().toISOString() }, pgs = T.db('preguntas') || []; pgs.unshift(pg); T.db('preguntas', pgs); T.nube('preguntas', pg.id, pg);
       window.open(T.wa('Hola Giandeco, tengo una pregunta sobre ' + p.nombre + ' (' + p.precio + '):\n\n' + t.value.trim()), '_blank', 'noopener');
       return;
     }

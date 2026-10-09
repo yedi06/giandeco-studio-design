@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/gd-admin.css?v=1">
+<link rel="stylesheet" href="css/gd-admin.css?v=2">
 </head>
 <!-- data-home evita que giandeco.js monte el header y el footer del sitio -->
 <body data-home="true">
@@ -19,7 +19,7 @@
     <a class="ad-logo" href="./" target="_blank"><img src="img/logo-negativo.svg" alt="Giandeco Studio Design"></a>
     <p class="ad-rol">Administración</p>
     <nav class="ad-nav" id="adNav" aria-label="Secciones"></nav>
-    <p class="ad-modo">Modo local: los datos son los de este navegador. Al conectar la base de datos, aquí aparecerán los pedidos de todos los clientes.</p>
+    <p class="ad-modo"><span id="adQuien"></span><button type="button" id="adRefrescar">Actualizar datos</button><button type="button" id="adSalir">Cerrar sesión</button></p>
     <a class="ad-salir" href="catalogo" target="_blank">Ver la tienda →</a>
   </aside>
   <main class="ad-main" id="adMain"></main>
@@ -27,7 +27,8 @@
 <div class="ad-aviso" id="adAviso" role="status"></div>
 
 <script src="js/giandeco.js?v=13"></script>
-<script src="js/gd-tienda.js?v=4"></script>
-<script src="js/gd-admin.js?v=2"></script>
+<script src="js/gd-tienda.js?v=5"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/gd-admin.js?v=3"></script>
 </body>
 </html>
