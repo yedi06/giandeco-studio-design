@@ -135,7 +135,7 @@
   +   '.gdc.is-snap{transition:none!important}.gdc-panel .gdc-s{opacity:1;transform:none}}'
   + '@media print{.gdc,.gdc-panel{display:none!important}}';
 
-  /* ---------- lanzador: círculo en latón con el icono de mensaje de librería ---------- */
+  /* ---------- lanzador: círculo en latón con el icono de mensaje de Flaticon ---------- */
   css += ''
   + '.gdc{gap:0}'
   + '.gdc-grip{display:none}'                       /* se sigue arrastrando: basta mantener pulsado el botón */
@@ -145,12 +145,13 @@
   + '.gdc:hover .gdc-seal{background:#dcb768;box-shadow:0 14px 32px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.3);transform:translateY(-2px)}'
   + '.gdc.is-drag .gdc-seal{background:#dcb768;box-shadow:0 18px 38px rgba(0,0,0,.55);transform:none}'
   + '.gdc.is-open .gdc-seal{background:#DED8CB;box-shadow:0 10px 26px rgba(0,0,0,.45);transform:none}'
-  + '.gdc-g{width:24px;height:24px;font-size:0;fill:currentColor;transform:translateY(1px);shape-rendering:geometricPrecision}'
+  + '.gdc-g{width:26px;height:26px;font-size:0;transform:translateY(1px);background:currentColor;'
+  +   '-webkit-mask:url(images/icono-mensaje.png) center/contain no-repeat;mask:url(images/icono-mensaje.png) center/contain no-repeat}'
   + '.gdc.is-open .gdc-g{opacity:0;transform:rotate(90deg) scale(.6)}'
   + '.gdc-x{display:block;width:15px;height:15px;color:#0A0A09;stroke-width:1.6}'
   + '.gdc-badge{top:-3px;right:-3px;min-width:19px;height:19px;background:#0A0A09;color:#C9A24A;font-size:10.5px;box-shadow:0 0 0 2px #C9A24A}'
   + '.gdc-badge::after{display:none}'
-  + '@media (max-width:640px){.gdc-seal{width:52px;height:52px}.gdc-g{width:22px;height:22px;font-size:0}}';
+  + '@media (max-width:640px){.gdc-seal{width:52px;height:52px}.gdc-g{width:24px;height:24px;font-size:0}}';
 
   var st = document.createElement('style');
   st.textContent = css;
@@ -169,8 +170,8 @@
       '<span class="gdc-grip" aria-hidden="true" title="Arrastre para mover"><i></i><i></i><i></i><i></i><i></i><i></i></span>'
     + '<button class="gdc-btn" type="button" aria-label="Abrir atención al cliente, 1 mensaje" aria-expanded="false" aria-controls="gdcPanel">'
     +   '<span class="gdc-seal" aria-hidden="true">'
-    +     /* Heroicons 2.2.0 · chat-bubble-bottom-center-text (solid) · MIT · Tailwind Labs */
-          '<svg class="gdc-g" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.848 2.771A49.144 49.144 0 0 1 12 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 0 1-3.476.383.39.39 0 0 0-.297.17l-2.755 4.133a.75.75 0 0 1-1.248 0l-2.755-4.133a.39.39 0 0 0-.297-.17 48.9 48.9 0 0 1-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97ZM6.75 8.25a.75.75 0 0 1 .75-.75h9a.75.75 0 0 1 0 1.5h-9a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5H12a.75.75 0 0 0 0-1.5H7.5Z"/></svg>'
+    +     /* icono «Chat» de mattbadal · Flaticon n.º 2769104 · crédito en términos y condiciones */
+          '<span class="gdc-g"></span>'
     +     '<svg class="gdc-x" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg><span class="gdc-badge">1</span></span>'
     + '</button>';
 
