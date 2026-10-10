@@ -135,23 +135,22 @@
   +   '.gdc.is-snap{transition:none!important}.gdc-panel .gdc-s{opacity:1;transform:none}}'
   + '@media print{.gdc,.gdc-panel{display:none!important}}';
 
-  /* ---------- lanzador: icono de mensaje de librería, sin círculo ---------- */
+  /* ---------- lanzador: círculo en latón con el icono de mensaje de librería ---------- */
   css += ''
   + '.gdc{gap:0}'
-  + '.gdc-grip{display:none}'                       /* se sigue arrastrando: basta mantener pulsado el icono */
-  + '.gdc-btn{border-radius:12px}'
-  + '.gdc-seal{width:58px;height:58px;border-radius:0;background:none;box-shadow:none;color:#C9A24A;'
-  +   'filter:drop-shadow(0 10px 18px rgba(0,0,0,.5)) drop-shadow(0 2px 4px rgba(0,0,0,.35));transition:color .3s ease,transform .4s ' + EASE + '}'
+  + '.gdc-grip{display:none}'                       /* se sigue arrastrando: basta mantener pulsado el botón */
+  + '.gdc-seal{width:56px;height:56px;border-radius:50%;color:#0A0A09;background:#C9A24A;filter:none;'
+  +   'box-shadow:0 10px 26px rgba(0,0,0,.45),0 2px 6px rgba(0,0,0,.3);transition:background-color .3s ease,box-shadow .3s ease,transform .4s ' + EASE + '}'
   + '.gdc-seal::before,.gdc-seal::after{display:none}'
-  + '.gdc:hover .gdc-seal{color:#dcb768;box-shadow:none;transform:translateY(-2px)}'
-  + '.gdc.is-drag .gdc-seal{color:#dcb768;box-shadow:none;transform:none}'
-  + '.gdc.is-open .gdc-seal{color:#DED8CB;box-shadow:none;transform:none}'
-  + '.gdc-g{width:100%;height:100%;font-size:0;transform:none;fill:currentColor;shape-rendering:geometricPrecision}'
-  + '.gdc.is-open .gdc-g{opacity:1;transform:none}'
-  + '.gdc-x{display:none}'
-  + '.gdc-badge{top:-4px;right:-5px;min-width:20px;height:20px;background:#0A0A09;color:#C9A24A;font-size:11px;box-shadow:0 0 0 2px #C9A24A}'
+  + '.gdc:hover .gdc-seal{background:#dcb768;box-shadow:0 14px 32px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.3);transform:translateY(-2px)}'
+  + '.gdc.is-drag .gdc-seal{background:#dcb768;box-shadow:0 18px 38px rgba(0,0,0,.55);transform:none}'
+  + '.gdc.is-open .gdc-seal{background:#DED8CB;box-shadow:0 10px 26px rgba(0,0,0,.45);transform:none}'
+  + '.gdc-g{width:24px;height:24px;font-size:0;fill:currentColor;transform:translateY(1px);shape-rendering:geometricPrecision}'
+  + '.gdc.is-open .gdc-g{opacity:0;transform:rotate(90deg) scale(.6)}'
+  + '.gdc-x{display:block;width:15px;height:15px;color:#0A0A09;stroke-width:1.6}'
+  + '.gdc-badge{top:-3px;right:-3px;min-width:19px;height:19px;background:#0A0A09;color:#C9A24A;font-size:10.5px;box-shadow:0 0 0 2px #C9A24A}'
   + '.gdc-badge::after{display:none}'
-  + '@media (max-width:640px){.gdc-seal{width:52px;height:52px}.gdc-g{font-size:0}}';
+  + '@media (max-width:640px){.gdc-seal{width:52px;height:52px}.gdc-g{width:22px;height:22px;font-size:0}}';
 
   var st = document.createElement('style');
   st.textContent = css;
@@ -170,8 +169,8 @@
       '<span class="gdc-grip" aria-hidden="true" title="Arrastre para mover"><i></i><i></i><i></i><i></i><i></i><i></i></span>'
     + '<button class="gdc-btn" type="button" aria-label="Abrir atención al cliente, 1 mensaje" aria-expanded="false" aria-controls="gdcPanel">'
     +   '<span class="gdc-seal" aria-hidden="true">'
-    +     /* Heroicons 2.2.0 · chat-bubble-left-ellipsis (solid) · MIT · Tailwind Labs */
-          '<svg class="gdc-g" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.25c-2.429 0-4.817.178-7.152.521C2.87 3.061 1.5 4.795 1.5 6.741v6.018c0 1.946 1.37 3.68 3.348 3.97.877.129 1.761.234 2.652.316V21a.75.75 0 0 0 1.28.53l4.184-4.183a.39.39 0 0 1 .266-.112c2.006-.05 3.982-.22 5.922-.506 1.978-.29 3.348-2.023 3.348-3.97V6.741c0-1.947-1.37-3.68-3.348-3.97A49.145 49.145 0 0 0 12 2.25ZM8.25 8.625a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Zm2.625 1.125a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875-1.125a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Z"/></svg>'
+    +     /* Heroicons 2.2.0 · chat-bubble-bottom-center-text (solid) · MIT · Tailwind Labs */
+          '<svg class="gdc-g" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.848 2.771A49.144 49.144 0 0 1 12 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 0 1-3.476.383.39.39 0 0 0-.297.17l-2.755 4.133a.75.75 0 0 1-1.248 0l-2.755-4.133a.39.39 0 0 0-.297-.17 48.9 48.9 0 0 1-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97ZM6.75 8.25a.75.75 0 0 1 .75-.75h9a.75.75 0 0 1 0 1.5h-9a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5H12a.75.75 0 0 0 0-1.5H7.5Z"/></svg>'
     +     '<svg class="gdc-x" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg><span class="gdc-badge">1</span></span>'
     + '</button>';
 
