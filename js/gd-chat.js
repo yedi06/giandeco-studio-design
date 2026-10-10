@@ -135,6 +135,23 @@
   +   '.gdc.is-snap{transition:none!important}.gdc-panel .gdc-s{opacity:1;transform:none}}'
   + '@media print{.gdc,.gdc-panel{display:none!important}}';
 
+  /* ---------- lanzador: botón de mensajería, sobrio ---------- */
+  css += ''
+  + '.gdc{gap:0}'
+  + '.gdc-grip{display:none}'                       /* se sigue arrastrando: basta mantener pulsado el botón */
+  + '.gdc-seal{width:54px;height:54px;color:#0A0A09;background:#C9A24A;'
+  +   'box-shadow:0 10px 28px rgba(0,0,0,.42),0 2px 6px rgba(0,0,0,.28);transition:background-color .3s ease,box-shadow .3s ease,transform .4s ' + EASE + '}'
+  + '.gdc-seal::before,.gdc-seal::after{display:none}'
+  + '.gdc:hover .gdc-seal{background:#dcb768;box-shadow:0 14px 34px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.3);transform:translateY(-2px)}'
+  + '.gdc.is-drag .gdc-seal{background:#dcb768;box-shadow:0 18px 40px rgba(0,0,0,.55);transform:none}'
+  + '.gdc.is-open .gdc-seal{background:#DED8CB;box-shadow:0 10px 28px rgba(0,0,0,.42);transform:none}'
+  + '.gdc-g{width:25px;height:25px;font-size:0;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transform:none}'
+  + '.gdc.is-open .gdc-g{opacity:0;transform:rotate(90deg) scale(.6)}'
+  + '.gdc-x{width:15px;height:15px;stroke-width:1.5}'
+  + '.gdc-badge{top:-3px;right:-3px;min-width:19px;height:19px;background:#0A0A09;color:#C9A24A;font-size:10.5px;box-shadow:0 0 0 2px #C9A24A}'
+  + '.gdc-badge::after{display:none}'
+  + '@media (max-width:640px){.gdc-seal{width:50px;height:50px}.gdc-g{width:23px;height:23px;font-size:0}}';
+
   var st = document.createElement('style');
   st.textContent = css;
   document.head.appendChild(st);
@@ -151,7 +168,8 @@
   root.innerHTML =
       '<span class="gdc-grip" aria-hidden="true" title="Arrastre para mover"><i></i><i></i><i></i><i></i><i></i><i></i></span>'
     + '<button class="gdc-btn" type="button" aria-label="Abrir atención al cliente, 1 mensaje" aria-expanded="false" aria-controls="gdcPanel">'
-    +   '<span class="gdc-seal" aria-hidden="true"><span class="gdc-g">G</span>'
+    +   '<span class="gdc-seal" aria-hidden="true">'
+    +     '<svg class="gdc-g" viewBox="0 0 24 24"><path d="M20.5 11.6c0 4.3-3.8 7.8-8.5 7.8-1.1 0-2.2-.2-3.2-.6L4 20.5l1.3-3.9c-1.1-1.4-1.8-3.100-1.800-5 0-4.300 3.800-7.800 8.500-7.800s8.500 3.500 8.500 7.800z"/><path d="M8.600 10.400h6.800M8.600 13.300h4.300"/></svg>'
     +     '<svg class="gdc-x" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg><span class="gdc-badge">1</span></span>'
     + '</button>';
 
