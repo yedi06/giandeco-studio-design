@@ -135,27 +135,23 @@
   +   '.gdc.is-snap{transition:none!important}.gdc-panel .gdc-s{opacity:1;transform:none}}'
   + '@media print{.gdc,.gdc-panel{display:none!important}}';
 
-  /* ---------- lanzador: un globo de mensaje, en vector ---------- */
+  /* ---------- lanzador: icono de mensaje de librería, sin círculo ---------- */
   css += ''
   + '.gdc{gap:0}'
-  + '.gdc-grip{display:none}'                       /* se sigue arrastrando: basta mantener pulsado el globo */
-  + '.gdc-btn{border-radius:14px}'
-  + '.gdc-seal{width:60px;height:60px;border-radius:0;background:none;box-shadow:none;color:#C9A24A;'
-  +   'filter:drop-shadow(0 10px 18px rgba(0,0,0,.45)) drop-shadow(0 2px 4px rgba(0,0,0,.3));transition:color .3s ease,transform .4s ' + EASE + '}'
+  + '.gdc-grip{display:none}'                       /* se sigue arrastrando: basta mantener pulsado el icono */
+  + '.gdc-btn{border-radius:12px}'
+  + '.gdc-seal{width:58px;height:58px;border-radius:0;background:none;box-shadow:none;color:#C9A24A;'
+  +   'filter:drop-shadow(0 10px 18px rgba(0,0,0,.5)) drop-shadow(0 2px 4px rgba(0,0,0,.35));transition:color .3s ease,transform .4s ' + EASE + '}'
   + '.gdc-seal::before,.gdc-seal::after{display:none}'
   + '.gdc:hover .gdc-seal{color:#dcb768;box-shadow:none;transform:translateY(-2px)}'
   + '.gdc.is-drag .gdc-seal{color:#dcb768;box-shadow:none;transform:none}'
   + '.gdc.is-open .gdc-seal{color:#DED8CB;box-shadow:none;transform:none}'
-  + '.gdc-g{width:100%;height:100%;font-size:0;transform:none;overflow:visible}'
-  + '.gdc-g path{fill:currentColor}'
-  + '.gdc-g circle{fill:#0A0A09;transition:opacity .25s ease}'
+  + '.gdc-g{width:100%;height:100%;font-size:0;transform:none;fill:currentColor;shape-rendering:geometricPrecision}'
   + '.gdc.is-open .gdc-g{opacity:1;transform:none}'
-  + '.gdc.is-open .gdc-g circle{opacity:0}'
-  + '.gdc-x{width:16px;height:16px;color:#0A0A09;stroke-width:1.7;transform:translateY(-5px) rotate(-90deg) scale(.6)}'
-  + '.gdc.is-open .gdc-x{transform:translateY(-5px)}'
-  + '.gdc-badge{top:-5px;right:-6px;min-width:20px;height:20px;background:#0A0A09;color:#C9A24A;font-size:11px;box-shadow:0 0 0 2px #C9A24A}'
+  + '.gdc-x{display:none}'
+  + '.gdc-badge{top:-4px;right:-5px;min-width:20px;height:20px;background:#0A0A09;color:#C9A24A;font-size:11px;box-shadow:0 0 0 2px #C9A24A}'
   + '.gdc-badge::after{display:none}'
-  + '@media (max-width:640px){.gdc-seal{width:54px;height:54px}.gdc-g{font-size:0}}';
+  + '@media (max-width:640px){.gdc-seal{width:52px;height:52px}.gdc-g{font-size:0}}';
 
   var st = document.createElement('style');
   st.textContent = css;
@@ -174,8 +170,8 @@
       '<span class="gdc-grip" aria-hidden="true" title="Arrastre para mover"><i></i><i></i><i></i><i></i><i></i><i></i></span>'
     + '<button class="gdc-btn" type="button" aria-label="Abrir atención al cliente, 1 mensaje" aria-expanded="false" aria-controls="gdcPanel">'
     +   '<span class="gdc-seal" aria-hidden="true">'
-    +     '<svg class="gdc-g" viewBox="0 0 56 56"><path d="M16 5h24a13 13 0 0 1 13 13v11a13 13 0 0 1-13 13H25.5L14 52v-10.2A13 13 0 0 1 3 29V18A13 13 0 0 1 16 5z"/>'
-    +     '<circle cx="18" cy="23.500" r="2.700"/><circle cx="28" cy="23.500" r="2.700"/><circle cx="38" cy="23.500" r="2.700"/></svg>'
+    +     /* Heroicons 2.2.0 · chat-bubble-left-ellipsis (solid) · MIT · Tailwind Labs */
+          '<svg class="gdc-g" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.25c-2.429 0-4.817.178-7.152.521C2.87 3.061 1.5 4.795 1.5 6.741v6.018c0 1.946 1.37 3.68 3.348 3.97.877.129 1.761.234 2.652.316V21a.75.75 0 0 0 1.28.53l4.184-4.183a.39.39 0 0 1 .266-.112c2.006-.05 3.982-.22 5.922-.506 1.978-.29 3.348-2.023 3.348-3.97V6.741c0-1.947-1.37-3.68-3.348-3.97A49.145 49.145 0 0 0 12 2.25ZM8.25 8.625a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Zm2.625 1.125a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875-1.125a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Z"/></svg>'
     +     '<svg class="gdc-x" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg><span class="gdc-badge">1</span></span>'
     + '</button>';
 
