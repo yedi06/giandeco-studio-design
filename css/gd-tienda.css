@@ -533,3 +533,17 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 :root[data-tema="claro"] .co-head-logo img{ filter:brightness(0); }
 :root[data-tema="claro"] .co-body .gdt-line-img.is-vacia{ background:#E8E2D6; border-color:rgba(138,111,60,.45); }
 :root[data-tema="claro"] .pg-aviso{ background:rgba(160,62,42,.08); border-color:#A85A45; color:#171613; }
+
+/* --- logos de medios de pago --- */
+.gdt-logos{ display:inline-flex; flex-wrap:wrap; align-items:center; gap:6px; font-style:normal; }
+.gdt-logos img{ display:block; width:39px; height:25px; object-fit:cover; border-radius:3px; box-shadow:0 0 0 1px rgba(128,120,104,.28); }
+.gdt-op.con-logos > span{ position:relative; }
+.gdt-op.con-logos .gdt-logos{ display:flex; margin:8px 0 2px; }
+@media (min-width:720px){
+  .gdt-op.con-logos .gdt-logos{ position:absolute; top:14px; right:18px; margin:0; }
+  .gdt-op.con-logos b{ display:block; padding-right:190px; }
+}
+.co-medios{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; margin-top:18px; padding-top:16px; border-top:1px solid var(--line); }
+.co-medios > span{ font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--text-faint); }
+.pg-medios{ max-width:480px; margin:0 0 18px; padding:0; border-top:none; }
+@media (max-width:999px){ .pg-medios{ max-width:none; } }

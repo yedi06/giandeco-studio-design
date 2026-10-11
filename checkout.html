@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/giandeco.css?v=12">
-<link rel="stylesheet" href="css/gd-tienda.css?v=8">
+<link rel="stylesheet" href="css/gd-tienda.css?v=9">
 <link rel="stylesheet" href="css/gd-tema.css?v=1">
 <script src="js/gd-tema.js?v=1"></script>
 </head>
@@ -37,7 +37,7 @@
 </footer>
 
 <script src="js/giandeco.js?v=15"></script>
-<script src="js/gd-tienda.js?v=8"></script>
+<script src="js/gd-tienda.js?v=9"></script>
 <script src="js/gd-pago.js?v=6"></script>
 <script>
 (function(){
@@ -98,9 +98,9 @@
     return '<div class="gd-field"><label for="' + id + '">' + label + '</label><select id="' + id + '">' +
       ops.map(function(o){ return '<option' + (o === val ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></div>';
   }
-  function opcion(name, value, titulo, nota, on, marcas){
-    return '<label class="gdt-op"><input type="radio" name="' + name + '" value="' + value + '"' + (on ? ' checked' : '') + '><span><b>' + titulo + '</b>' +
-      (marcas ? '<em>' + marcas + '</em>' : '') + (nota ? '<small>' + nota + '</small>' : '') + '</span></label>';
+  function opcion(name, value, titulo, nota, on, marcas, logos){
+    return '<label class="gdt-op' + (logos ? ' con-logos' : '') + '"><input type="radio" name="' + name + '" value="' + value + '"' + (on ? ' checked' : '') + '><span><b>' + titulo + '</b>' +
+      (logos ? T.logosPago(logos) : marcas ? '<em>' + marcas + '</em>' : '') + (nota ? '<small>' + nota + '</small>' : '') + '</span></label>';
   }
   function pie(i){
     return '<div class="co-nav">' + (i ? '<button type="button" class="co-atras" data-ir="' + (i - 1) + '">Volver</button>' : '<span></span>') +
@@ -192,6 +192,7 @@
         '<li>Boleta o factura electrónica a su correo.</li>' +
         '<li>Atención directa del estudio por WhatsApp.</li>' +
       '</ul>' +
+      '<div class="co-medios" id="coMedios" hidden><span>Aceptamos</span>' + T.logosPago(['visa', 'mastercard', 'amex', 'diners', 'yape']) + '</div>' +
     '</aside>' +
     '</form>';
 
@@ -225,7 +226,7 @@
     ops.forEach(function(m){ if(grupos.indexOf(m.grupo) === -1) grupos.push(m.grupo); });
     host.innerHTML = grupos.map(function(gr){
       return '<p class="co-etq">' + gr + '</p><div class="gdt-ops">' +
-        ops.filter(function(m){ return m.grupo === gr; }).map(function(m){ return opcion('pago', m.key, m.label, enLinea(m) && m.notaEnLinea ? m.notaEnLinea : m.nota, m.key === elegido, m.marcas); }).join('') + '</div>';
+        ops.filter(function(m){ return m.grupo === gr; }).map(function(m){ return opcion('pago', m.key, m.label, enLinea(m) && m.notaEnLinea ? m.notaEnLinea : m.nota, m.key === elegido, m.marcas, m.logos); }).join('') + '</div>';
     }).join('');
   }
   function pagoElegido(){ var k = radio('pago'); return C.PAGO.filter(function(m){ return m.key === k; })[0]; }
@@ -239,6 +240,7 @@
       ? 'Con tarjeta o Yape paga en línea al registrar el pedido, en el formulario seguro de Culqi: esta web no ve ni guarda los datos de su tarjeta. Los demás medios se coordinan con el estudio.'
       : 'El pago se realiza después de que el estudio confirme su pedido. Esta web no solicita datos de tarjeta.';
     if(b) b.textContent = pasarela ? 'Pago en línea protegido por Culqi.' : 'Sin cobro hasta que el estudio confirme.';
+    if($('coMedios')) $('coMedios').hidden = !pasarela;
   }
   P.estado().then(function(a){ if(a !== pasarela){ pasarela = a; textosPago(); pintarPago(); } });
 

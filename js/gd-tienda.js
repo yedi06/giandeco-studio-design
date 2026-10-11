@@ -37,12 +37,12 @@ var CFG = {
        medio se cobra al registrar el pedido (js/gd-pago.js).
      PagoEfectivo queda apagado hasta integrar la generación del código CIP. */
   PAGO: [
-    { key:'yape',     activo:true, grupo:'Billeteras digitales', label:'Yape', nota:'Paga con QR o al número del estudio. Se lo enviamos por WhatsApp al confirmar el pedido.',
+    { key:'yape',     activo:true, grupo:'Billeteras digitales', label:'Yape', logos:['yape'], nota:'Paga con QR o al número del estudio. Se lo enviamos por WhatsApp al confirmar el pedido.',
       notaEnLinea:'Paga ahora con su celular Yape y el código de aprobación de la app. Hasta S/ 2,000 por compra.' },
     { key:'plin',     activo:true, grupo:'Billeteras digitales', label:'Plin', nota:'Desde la app de su banco afiliado a Plin, con QR o número.' },
-    { key:'tarjeta',  activo:true, grupo:'Tarjetas', label:'Tarjeta de crédito o débito', marcas:'Visa · Mastercard · American Express · Diners Club', nota:'Paga en un enlace seguro de la pasarela. Sus datos de tarjeta no pasan por esta web.',
+    { key:'tarjeta',  activo:true, grupo:'Tarjetas', label:'Tarjeta de crédito o débito', marcas:'Visa · Mastercard · American Express · Diners Club', logos:['visa','mastercard','amex','diners'], nota:'Paga en un enlace seguro de la pasarela. Sus datos de tarjeta no pasan por esta web.',
       notaEnLinea:'Paga ahora en el formulario seguro de Culqi. Giandeco no ve ni guarda los datos de su tarjeta.' },
-    { key:'cuotas',   activo:true, grupo:'Tarjetas', label:'Cuotas con tarjeta de crédito', nota:'Elige el número de cuotas en el mismo enlace seguro, según las condiciones de su banco.',
+    { key:'cuotas',   activo:true, grupo:'Tarjetas', label:'Cuotas con tarjeta de crédito', logos:['visa','mastercard'], nota:'Elige el número de cuotas en el mismo enlace seguro, según las condiciones de su banco.',
       notaEnLinea:'Paga ahora y elige el número de cuotas en el formulario, según las condiciones de su banco.' },
     { key:'transf',   activo:true, grupo:'Banca', label:'Transferencia o depósito bancario', nota:'Le enviamos el número de cuenta en soles y el CCI para transferencias interbancarias.' },
     { key:'pagoefectivo', activo:false, grupo:'Banca', label:'PagoEfectivo', nota:'Recibe un código CIP y paga desde su banca por internet o en agentes y bodegas.' },
@@ -102,6 +102,14 @@ function db(k, v){
   }catch(e){ return null; }
 }
 function emitir(n){ try{ document.dispatchEvent(new CustomEvent('gd:' + n)); }catch(e){} }
+/* logos de medios de pago (images/pago). Las tarjetas vienen de
+   aaronfagan/svg-credit-card-payment-icons (Apache 2.0); Yape, de Wikimedia Commons. */
+var MARCAS = { visa:'Visa', mastercard:'Mastercard', amex:'American Express', diners:'Diners Club', yape:'Yape' };
+function logosPago(lista){
+  return '<i class="gdt-logos">' + (lista || []).map(function(k){
+    return '<img src="images/pago/' + k + '.svg" alt="' + MARCAS[k] + '" width="39" height="25" loading="lazy" decoding="async">';
+  }).join('') + '</i>';
+}
 var FLECHA = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
 
 /* --------------------------------------------------------------------------
@@ -568,7 +576,7 @@ function montar(){
 
 window.GD_TIENDA = {
   CFG:CFG, CAT:CAT, LINEAS:LINEAS, COND:COND, CRITERIOS:CRITERIOS, ESTADOS:ESTADOS, FLECHA:FLECHA,
-  esc:esc, fmt:fmt, wa:wa, url:url, db:db, card:card, NUBE:NUBE, nube:nube, rpc:rpc, uid:uid,
+  esc:esc, fmt:fmt, wa:wa, logosPago:logosPago, url:url, db:db, card:card, NUBE:NUBE, nube:nube, rpc:rpc, uid:uid,
   familia:familia, complementos:complementos, similares:similares, espaciosDe:espaciosDe, recomendados:recomendados,
   carrito:carrito, favs:favs, vistos:vistos, sesion:sesion, pedidos:pedidos, opiniones:opiniones,
   abrir:abrir, cerrar:cerrar

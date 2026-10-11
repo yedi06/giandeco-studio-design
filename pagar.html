@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/giandeco.css?v=12">
-<link rel="stylesheet" href="css/gd-tienda.css?v=8">
+<link rel="stylesheet" href="css/gd-tienda.css?v=9">
 <link rel="stylesheet" href="css/gd-tema.css?v=1">
 <script src="js/gd-tema.js?v=1"></script>
 </head>
@@ -37,7 +37,7 @@
 </footer>
 
 <script src="js/giandeco.js?v=15"></script>
-<script src="js/gd-tienda.js?v=8"></script>
+<script src="js/gd-tienda.js?v=9"></script>
 <script src="js/gd-pago.js?v=6"></script>
 <script>
 (function(){
@@ -128,6 +128,7 @@
         '<section class="pg-pago" aria-labelledby="pgT">' +
           '<h2 class="pg-t" id="pgT">Datos de pago</h2>' +
           '<p class="co-ayuda">Elija tarjeta' + (c.yape ? ' o Yape' : '') + ' y complete los datos. Se procesan en el formulario cifrado de Culqi: Giandeco no ve ni guarda los datos de su tarjeta.</p>' +
+          '<div class="co-medios pg-medios"><span>Aceptamos</span>' + T.logosPago(['visa', 'mastercard', 'amex', 'diners'].concat(c.yape ? ['yape'] : [])) + '</div>' +
           '<p class="pg-aviso" id="pgAviso" role="alert"' + (aviso ? '' : ' hidden') + '>' + (aviso ? esc(aviso) : '') + '</p>' +
           '<div class="pg-culqi" id="pgCulqi"><div class="pg-espera" role="status" aria-label="Cargando el formulario de pago"></div></div>' +
           '<ul class="pg-sellos">' +
