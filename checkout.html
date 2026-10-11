@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/giandeco.css?v=12">
-<link rel="stylesheet" href="css/gd-tienda.css?v=10">
+<link rel="stylesheet" href="css/gd-tienda.css?v=11">
 <link rel="stylesheet" href="css/gd-tema.css?v=1">
 <script src="js/gd-tema.js?v=1"></script>
 </head>
@@ -37,7 +37,7 @@
 </footer>
 
 <script src="js/giandeco.js?v=15"></script>
-<script src="js/gd-tienda.js?v=11"></script>
+<script src="js/gd-tienda.js?v=12"></script>
 <script src="js/gd-pago.js?v=6"></script>
 <script>
 (function(){
@@ -146,11 +146,6 @@
         '</div>' +
         campo('coDir', 'Dirección', 'type="text" autocomplete="street-address" placeholder="Avenida, calle o jirón, número, dpto. o interior"', 'Indique la dirección de entrega.', datos.dir) +
         campo('coRef', 'Referencia', 'type="text" placeholder="Frente al parque, a una cuadra de…"', 'Una referencia ayuda a que el reparto llegue.', datos.ref) +
-        '<div class="gd-form co-3">' +
-          lista('coInm', 'Tipo de inmueble', ['Casa', 'Departamento', 'Oficina', 'Local comercial'], datos.inmueble) +
-          lista('coAcc', 'Acceso', ['Primer piso', 'Piso alto con ascensor', 'Piso alto solo con escaleras'], datos.acceso) +
-          lista('coHora', 'Horario preferido', ['Sin preferencia', 'Por la mañana', 'Por la tarde'], '') +
-        '</div>' +
       '</div>' +
       '<label class="gdt-check"><input type="checkbox" id="coOtro"><span id="coOtroT">Recibirá el pedido otra persona.</span></label>' +
       '<div class="co-sub gd-form gd-form-2" id="coOtroBox" hidden>' +
@@ -168,7 +163,7 @@
   var pasoFinal =
     '<section class="co-paso" data-paso="' + ULT + '" hidden><h2 class="co-paso-t">Revise y confirme</h2>' +
       '<dl class="co-rev" id="coRev"></dl>' +
-      '<div class="gd-field" style="margin:24px 0;"><label for="coNota">Nota para el estudio (opcional)</label><textarea id="coNota" style="min-height:88px;" placeholder="Fecha en que lo necesita, si es un regalo…"></textarea></div>' +
+      '<div class="gd-field" style="margin:24px 0;"><label for="coNota">Nota para el estudio (opcional)</label><textarea id="coNota" style="min-height:88px;" placeholder="Fecha en que lo necesita, piso o acceso del inmueble, si es un regalo…"></textarea></div>' +
       '<label class="gdt-check"><input type="checkbox" id="coAcepto"><span>He leído y acepto los <a href="' + C.LEGAL.terminos + '" target="_blank">términos y condiciones</a> y la <a href="' + C.LEGAL.privacidad + '" target="_blank">política de privacidad</a>.</span></label>' +
       '<span class="gdt-err" id="coAceptoErr">Marque la casilla para continuar.</span>' +
       '<label class="gdt-check" style="margin-top:12px;"><input type="checkbox" id="coPromo"><span>Quiero recibir novedades y campañas del estudio (opcional).</span></label>' +
@@ -221,13 +216,27 @@
       if(m.solo) return ent === 'envio' && m.solo.indexOf(zk) !== -1;
       return true;
     });
+    // con pasarela las cuotas se eligen dentro del pago con tarjeta: no hace falta una opción aparte
+    if(pasarela) ops = ops.filter(function(m){ return m.key !== 'cuotas'; });
+    function grupoDe(m){ return !pasarela ? m.grupo : enLinea(m) ? 'Pague ahora, en línea' : 'Coordine el pago con el estudio'; }
+    var NOTA_GRUPO = {
+      'Pague ahora, en línea': 'Paga en el siguiente paso y su pedido queda confirmado al instante.',
+      'Coordine el pago con el estudio': 'Registra su pedido y el estudio le escribe por WhatsApp con los datos para pagar.'
+    };
+    if(pasarela) ops.sort(function(a, b){ return (enLinea(b) ? 1 : 0) - (enLinea(a) ? 1 : 0) || (b.key === 'tarjeta' ? 1 : 0) - (a.key === 'tarjeta' ? 1 : 0); });
     var elegido = ops.some(function(m){ return m.key === antes; }) ? antes : ops[0].key;
     var grupos = [];
-    ops.forEach(function(m){ if(grupos.indexOf(m.grupo) === -1) grupos.push(m.grupo); });
+    ops.forEach(function(m){ if(grupos.indexOf(grupoDe(m)) === -1) grupos.push(grupoDe(m)); });
     host.innerHTML = grupos.map(function(gr){
-      return '<p class="co-etq">' + gr + '</p><div class="gdt-ops">' +
-        ops.filter(function(m){ return m.grupo === gr; }).map(function(m){ return opcion('pago', m.key, m.label, enLinea(m) && m.notaEnLinea ? m.notaEnLinea : m.nota, m.key === elegido, m.marcas, m.logos); }).join('') + '</div>';
+      return '<p class="co-etq' + (NOTA_GRUPO[gr] ? ' es-grupo' : '') + '">' + gr + '</p>' + (NOTA_GRUPO[gr] ? '<p class="co-etq-nota">' + NOTA_GRUPO[gr] + '</p>' : '') + '<div class="gdt-ops">' +
+        ops.filter(function(m){ return grupoDe(m) === gr; }).map(function(m){ return opcion('pago', m.key, m.label, enLinea(m) && m.notaEnLinea ? m.notaEnLinea : m.nota, m.key === elegido, m.marcas, m.logos); }).join('') + '</div>';
     }).join('');
+    botonFinal();
+  }
+  /* el último botón dice lo que va a pasar */
+  function botonFinal(){
+    var b = form.querySelector('.co-paso[data-paso="' + ULT + '"] button[type="submit"]'); if(!b || soloCot) return;
+    b.innerHTML = (enLinea(pagoElegido()) ? 'Continuar al pago' : 'Registrar pedido') + T.FLECHA;
   }
   function pagoElegido(){ var k = radio('pago'); return C.PAGO.filter(function(m){ return m.key === k; })[0]; }
 
@@ -236,9 +245,7 @@
   function enLinea(m){ return pasarela && !!m && P.EN_LINEA.indexOf(m.key) !== -1; }
   function textosPago(){
     var a = $('coPagoAyuda'), b = $('coConfPago');
-    if(a) a.textContent = pasarela
-      ? 'Con tarjeta o Yape paga en línea al registrar el pedido, en el formulario seguro de Culqi: esta web no ve ni guarda los datos de su tarjeta. Los demás medios se coordinan con el estudio.'
-      : 'El pago se realiza después de que el estudio confirme su pedido. Esta web no solicita datos de tarjeta.';
+    if(a){ a.hidden = pasarela; a.textContent = 'El pago se realiza después de que el estudio confirme su pedido. Esta web no solicita datos de tarjeta.'; }
     if(b) b.textContent = pasarela ? 'Pago en línea protegido por Culqi.' : 'Sin cobro hasta que el estudio confirme.';
     if($('coMedios')) $('coMedios').hidden = !pasarela;
   }
@@ -337,7 +344,7 @@
       var d = e.target.value;
       $('coProv').value = d === 'Lima' ? 'Lima' : d === 'Callao' ? 'Callao' : '';
     }
-    if(e.target.name === 'pago') return;
+    if(e.target.name === 'pago'){ botonFinal(); return; }
     condicionales();
   });
   $('coCel').addEventListener('input', function(){ this.value = this.value.replace(/\D/g, ''); });
@@ -368,8 +375,7 @@
     var entrega = ent === 'recojo'
       ? { tipo:'recojo', resumen:entregaTexto() }
       : { tipo:'envio', zona:z.key, distrito:g('coDist'), dir:g('coDir'), ref:g('coRef'),
-          horario: g('coHora') === 'Sin preferencia' ? '' : g('coHora'),
-          resumen:'Envío a ' + entregaTexto() + ' · ' + g('coInm') + ', ' + g('coAcc').toLowerCase() };
+          resumen:'Envío a ' + entregaTexto() };
     entrega.armado = $('coArmado').checked;
     if($('coOtro').checked) entrega.recibe = g('coOtroN') + ' (doc. ' + g('coOtroD') + ')';
 
@@ -385,7 +391,7 @@
     // la cuenta nace con el primer pedido: nadie se registra antes de comprar
     T.sesion.set({ nombre:g('coNombre'), cel:g('coCel'), email:g('coEmail') });
     T.db('datos', { comp:comp, tdoc:tdoc, doc:doc, ruc:g('coRuc'), razon:g('coRazon'), fiscal:g('coFiscal'), ent:ent,
-                    dep:g('coDep'), prov:g('coProv'), distrito:g('coDist'), dir:g('coDir'), ref:g('coRef'), inmueble:g('coInm'), acceso:g('coAcc'), pago:pago ? pago.key : '' });
+                    dep:g('coDep'), prov:g('coProv'), distrito:g('coDist'), dir:g('coDir'), ref:g('coRef'), pago:pago ? pago.key : '' });
     enviando = true;
     T.carrito.vaciar();
     // medio en línea: directo a pagar. Si el total aún depende del estudio, esa página lo explica.

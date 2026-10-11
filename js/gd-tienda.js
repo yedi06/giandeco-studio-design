@@ -38,10 +38,10 @@ var CFG = {
      PagoEfectivo queda apagado hasta integrar la generación del código CIP. */
   PAGO: [
     { key:'yape',     activo:true, grupo:'Billeteras digitales', label:'Yape', logos:['yape'], nota:'Paga con QR o al número del estudio. Se lo enviamos por WhatsApp al confirmar el pedido.',
-      notaEnLinea:'Paga ahora con su celular Yape y el código de aprobación de la app. Hasta S/ 2,000 por compra.' },
+      notaEnLinea:'Con su celular Yape y el código de aprobación de la app. Hasta S/ 2,000.' },
     { key:'plin',     activo:true, grupo:'Billeteras digitales', label:'Plin', logos:['plin'], nota:'Desde la app de su banco afiliado a Plin, con QR o número.' },
     { key:'tarjeta',  activo:true, grupo:'Tarjetas', label:'Tarjeta de crédito o débito', marcas:'Visa · Mastercard · American Express · Diners Club', logos:['visa','mastercard','amex','diners'], nota:'Paga en un enlace seguro de la pasarela. Sus datos de tarjeta no pasan por esta web.',
-      notaEnLinea:'Paga ahora en el formulario seguro de Culqi. Giandeco no ve ni guarda los datos de su tarjeta.' },
+      notaEnLinea:'Crédito o débito. Con tarjeta de crédito puede pagar en cuotas.' },
     { key:'cuotas',   activo:true, grupo:'Tarjetas', label:'Cuotas con tarjeta de crédito', logos:['visa','mastercard'], nota:'Elige el número de cuotas en el mismo enlace seguro, según las condiciones de su banco.',
       notaEnLinea:'Paga ahora y elige el número de cuotas en el formulario, según las condiciones de su banco.' },
     { key:'transf',   activo:true, grupo:'Banca', label:'Transferencia o depósito bancario', nota:'Le enviamos el número de cuenta en soles y el CCI para transferencias interbancarias.' },
