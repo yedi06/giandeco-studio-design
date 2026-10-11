@@ -32,14 +32,20 @@ var CFG = {
      · solo:        zonas de envío donde aplica
      · soloRecojo / soloFactura: aparece únicamente en ese caso
      Tarjeta, cuotas y PagoEfectivo se cobran con el enlace de pago de la
-     pasarela que contrate el estudio; esta web nunca recibe datos de tarjeta. */
+     pasarela que contrate el estudio; esta web nunca recibe datos de tarjeta.
+     · notaEnLinea: texto que se muestra cuando la pasarela está activa y ese
+       medio se cobra al registrar el pedido (js/gd-pago.js).
+     PagoEfectivo queda apagado hasta integrar la generación del código CIP. */
   PAGO: [
-    { key:'yape',     activo:true, grupo:'Billeteras digitales', label:'Yape', nota:'Paga con QR o al número del estudio. Se lo enviamos por WhatsApp al confirmar el pedido.' },
+    { key:'yape',     activo:true, grupo:'Billeteras digitales', label:'Yape', nota:'Paga con QR o al número del estudio. Se lo enviamos por WhatsApp al confirmar el pedido.',
+      notaEnLinea:'Paga ahora con su celular Yape y el código de aprobación de la app. Hasta S/ 2,000 por compra.' },
     { key:'plin',     activo:true, grupo:'Billeteras digitales', label:'Plin', nota:'Desde la app de su banco afiliado a Plin, con QR o número.' },
-    { key:'tarjeta',  activo:true, grupo:'Tarjetas', label:'Tarjeta de crédito o débito', marcas:'Visa · Mastercard · American Express · Diners Club', nota:'Paga en un enlace seguro de la pasarela. Sus datos de tarjeta no pasan por esta web.' },
-    { key:'cuotas',   activo:true, grupo:'Tarjetas', label:'Cuotas con tarjeta de crédito', nota:'Elige el número de cuotas en el mismo enlace seguro, según las condiciones de su banco.' },
+    { key:'tarjeta',  activo:true, grupo:'Tarjetas', label:'Tarjeta de crédito o débito', marcas:'Visa · Mastercard · American Express · Diners Club', nota:'Paga en un enlace seguro de la pasarela. Sus datos de tarjeta no pasan por esta web.',
+      notaEnLinea:'Paga ahora en el formulario seguro de Culqi. Giandeco no ve ni guarda los datos de su tarjeta.' },
+    { key:'cuotas',   activo:true, grupo:'Tarjetas', label:'Cuotas con tarjeta de crédito', nota:'Elige el número de cuotas en el mismo enlace seguro, según las condiciones de su banco.',
+      notaEnLinea:'Paga ahora y elige el número de cuotas en el formulario, según las condiciones de su banco.' },
     { key:'transf',   activo:true, grupo:'Banca', label:'Transferencia o depósito bancario', nota:'Le enviamos el número de cuenta en soles y el CCI para transferencias interbancarias.' },
-    { key:'pagoefectivo', activo:true, grupo:'Banca', label:'PagoEfectivo', nota:'Recibe un código CIP y paga desde su banca por internet o en agentes y bodegas.' },
+    { key:'pagoefectivo', activo:false, grupo:'Banca', label:'PagoEfectivo', nota:'Recibe un código CIP y paga desde su banca por internet o en agentes y bodegas.' },
     { key:'contra',   activo:true, grupo:'Al recibir', label:'Pago contra entrega', nota:'Paga al recibir su pedido, en efectivo, con Yape o con tarjeta. Solo en Lima y Callao.', solo:['lima','callao'] },
     { key:'enestudio',activo:true, grupo:'Al recibir', label:'Pago al recoger en el estudio', nota:'Paga al recoger, en efectivo, con Yape, Plin o tarjeta.', soloRecojo:true },
     { key:'adelanto', activo:true, grupo:'Proyectos y empresas', label:'Adelanto y saldo', nota:'Para piezas por encargo o pedidos de proyecto: una parte al confirmar y el saldo antes de la entrega. El estudio le indica los montos.' },

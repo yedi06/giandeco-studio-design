@@ -37,7 +37,7 @@
 </footer>
 
 <script src="js/giandeco.js?v=15"></script>
-<script src="js/gd-tienda.js?v=7"></script>
+<script src="js/gd-tienda.js?v=8"></script>
 <script src="js/gd-pago.js?v=6"></script>
 <script>
 (function(){
@@ -225,7 +225,7 @@
     ops.forEach(function(m){ if(grupos.indexOf(m.grupo) === -1) grupos.push(m.grupo); });
     host.innerHTML = grupos.map(function(gr){
       return '<p class="co-etq">' + gr + '</p><div class="gdt-ops">' +
-        ops.filter(function(m){ return m.grupo === gr; }).map(function(m){ return opcion('pago', m.key, m.label, m.nota, m.key === elegido, m.marcas); }).join('') + '</div>';
+        ops.filter(function(m){ return m.grupo === gr; }).map(function(m){ return opcion('pago', m.key, m.label, enLinea(m) && m.notaEnLinea ? m.notaEnLinea : m.nota, m.key === elegido, m.marcas); }).join('') + '</div>';
     }).join('');
   }
   function pagoElegido(){ var k = radio('pago'); return C.PAGO.filter(function(m){ return m.key === k; })[0]; }
@@ -240,7 +240,7 @@
       : 'El pago se realiza después de que el estudio confirme su pedido. Esta web no solicita datos de tarjeta.';
     if(b) b.textContent = pasarela ? 'Pago en línea protegido por Culqi.' : 'Sin cobro hasta que el estudio confirme.';
   }
-  P.estado().then(function(a){ if(a !== pasarela){ pasarela = a; textosPago(); } });
+  P.estado().then(function(a){ if(a !== pasarela){ pasarela = a; textosPago(); pintarPago(); } });
 
   var cupon = null;
   function descuento(){
