@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/giandeco.css?v=12">
-<link rel="stylesheet" href="css/gd-tienda.css?v=6">
+<link rel="stylesheet" href="css/gd-tienda.css?v=7">
 </head>
 <!-- Misma cabecera sobria del checkout: nada que distraiga de pagar. -->
 <body data-home="true" class="co-body">
@@ -23,7 +23,7 @@
   <span class="co-head-seguro"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Pago seguro</span>
 </header>
 
-<main class="co-top"><div class="gd-in"><div class="co-ok" id="pg" aria-live="polite"></div></div></main>
+<main class="co-top"><div class="gd-in"><div class="pg" id="pg" aria-live="polite"></div></div></main>
 
 <footer class="co-foot">
   <a href="compra-segura" target="_blank">Compra segura</a>
@@ -36,7 +36,7 @@
 
 <script src="js/giandeco.js?v=15"></script>
 <script src="js/gd-tienda.js?v=7"></script>
-<script src="js/gd-pago.js?v=2"></script>
+<script src="js/gd-pago.js?v=3"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, P = window.GD_PAGO, esc = T.esc;
@@ -59,6 +59,7 @@
 
   /* ---------- sin número, o pedido hecho en otro dispositivo ---------- */
   function pedirDatos(aviso){
+    simple();
     root.innerHTML = '<p class="gd-eyebrow">Pago en línea</p><h1>Pagar mi pedido</h1>' +
       '<p class="co-lead">Escriba el número de su pedido y el celular con el que lo registró.</p>' +
       '<form class="gd-form" id="pgForm" novalidate style="max-width:520px;">' +
@@ -89,6 +90,7 @@
     'sin-pasarela': ['Coordinemos el pago', 'Su pedido está registrado. El estudio le enviará los datos para pagar con el medio que eligió.']
   };
   function noPagable(motivo){
+    simple();
     var t = PORQUE[motivo] || PORQUE['sin-pasarela'];
     root.innerHTML = cabecera('Pedido registrado', t[0]) + '<p class="co-lead">' + t[1] + '</p>' +
       '<div class="co-ok-acc">' + waBtn('Escribir al estudio', local ? T.pedidos.mensaje(local) : 'Hola Giandeco, quiero coordinar el pago de mi pedido ' + n + '.', 'gd-btn-primary') + '</div>' + enlaces();
@@ -96,6 +98,7 @@
 
   /* ---------- pagado ---------- */
   function pagado(p){
+    simple();
     if(local && !local.pagado){ var l = T.pedidos.lista(); l.forEach(function(x){ if(x.n === n) x.pagado = true; }); T.db('pedidos', l); }
     var con = p && p.medio === 'yape' ? 'Yape' : p && p.ultimos4 ? (p.marca ? esc(p.marca) + ' ' : 'Tarjeta ') + 'terminada en ' + esc(p.ultimos4) : '';
     root.innerHTML = cabecera('Pago recibido', 'Gracias' + (c && c.cliente && c.cliente.nombre ? ', ' + esc(c.cliente.nombre) : '')) +
@@ -107,32 +110,52 @@
 
   /* ---------- listo para pagar ---------- */
   function fila(dt, dd, clase){ return '<div' + (clase ? ' class="' + clase + '"' : '') + '><dt>' + dt + '</dt><dd>' + dd + '</dd></div>'; }
+  function linea(x){
+    var p = x.key ? T.CAT[x.key] : null;
+    return '<li class="gdt-line">' + (p && p.img ? '<span class="gdt-line-img"><img decoding="async" src="' + esc(p.img) + '" alt=""></span>' : '<span class="gdt-line-img is-vacia" aria-hidden="true">G</span>') +
+      '<div class="gdt-line-body">' + (p ? '<span class="gdt-line-cat">' + esc(p.cat) + '</span>' : '') + '<span class="gdt-line-name">' + esc(x.nombre) + '</span>' +
+      '<div class="gdt-line-row"><span class="gdt-qty"><b>' + x.qty + '</b></span><span class="gdt-line-price">' + (x.importe ? money(x.importe) : '') + '</span></div></div></li>';
+  }
   function listo(aviso){
     var d = c.desglose;
-    root.innerHTML = cabecera('Pago en línea', 'Pagar mi pedido') +
-      (c.prueba ? '<p class="pg-prueba">Modo de prueba · no se realizan cobros reales</p>' : '') +
-      '<div class="pg-caja">' +
-        '<ul class="pg-items">' + c.items.map(function(x){ return '<li><span>' + x.qty + ' × ' + esc(x.nombre) + '</span></li>'; }).join('') + '</ul>' +
-        '<dl class="co-tot">' + fila('Subtotal', money(d.subtotal)) + (d.descuento ? fila('Descuento', '− ' + money(d.descuento)) : '') +
-          fila('Envío', d.envio ? money(d.envio) : 'Sin costo') + (d.armado ? fila('Armado / instalación', money(d.armado)) : '') +
-          fila('Total a pagar', money(c.monto), 'es-total') + (T.CFG.PRECIOS_CON_IGV ? fila('Incluye IGV (18 %)', money(c.monto * 18 / 118), 'es-igv') : '') + '</dl>' +
-      '</div>' +
-      '<p class="gdt-err" id="pgAviso" style="display:' + (aviso ? 'block' : 'none') + ';margin:0 0 16px;">' + (aviso ? esc(aviso) : '') + '</p>' +
-      '<div class="co-ok-acc"><button type="button" class="gd-btn gd-btn-primary" id="pgPagar">Pagar ' + money(c.monto) + T.FLECHA + '</button></div>' +
-      '<ul class="co-conf pg-conf">' +
-        '<li>Tarjeta de crédito o débito' + (c.yape ? ' y Yape' : '') + ', en el formulario seguro de Culqi.</li>' +
-        '<li>Giandeco no ve ni guarda los datos de su tarjeta.</li>' +
-        '<li>Su banco puede pedirle una verificación adicional.</li>' +
-      '</ul>' +
-      '<p class="gd-form-nota" style="margin-top:var(--sp-24);">¿Prefiere otro medio de pago? ' +
-        '<a href="' + T.wa('Hola Giandeco, quiero coordinar el pago de mi pedido ' + n + '.') + '" target="_blank" rel="noopener">Escriba al estudio</a>.</p>';
-    document.getElementById('pgPagar').addEventListener('click', function(){
-      var b = this; if(b.disabled) return;
-      b.disabled = true; setTimeout(function(){ b.disabled = false; }, 2500);   // evita el doble clic mientras abre el formulario
-      P.pagar({ n:n, cel:cel, cuenta:c, alProcesar:procesando, alTerminar:resultado });
+    root.classList.add('es-pago');
+    root.innerHTML =
+      '<p class="gd-eyebrow">Pago en línea</p><h1>Pagar mi pedido</h1>' +
+      '<p class="pg-meta"><span class="co-ok-n">' + esc(n) + '</span>' + (c.prueba ? '<span class="pg-prueba">Modo de prueba · no se realizan cobros reales</span>' : '') + '</p>' +
+      '<div class="co-grid pg-grid">' +
+        '<section class="pg-pago" aria-labelledby="pgT">' +
+          '<h2 class="pg-t" id="pgT">Datos de pago</h2>' +
+          '<p class="co-ayuda">Elija tarjeta' + (c.yape ? ' o Yape' : '') + ' y complete los datos. Se procesan en el formulario cifrado de Culqi: Giandeco no ve ni guarda los datos de su tarjeta.</p>' +
+          '<p class="pg-aviso" id="pgAviso" role="alert"' + (aviso ? '' : ' hidden') + '>' + (aviso ? esc(aviso) : '') + '</p>' +
+          '<div class="pg-culqi" id="pgCulqi"><div class="pg-espera" role="status" aria-label="Cargando el formulario de pago"></div></div>' +
+          '<ul class="pg-sellos">' +
+            '<li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Conexión cifrada</li>' +
+            '<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>Verificación de su banco</li>' +
+            '<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M9 12h6M9 16h6M9 8h3"/></svg>Boleta o factura a su correo</li>' +
+          '</ul>' +
+          '<p class="gd-form-nota">¿Prefiere otro medio de pago? ' +
+            '<a href="' + T.wa('Hola Giandeco, quiero coordinar el pago de mi pedido ' + n + '.') + '" target="_blank" rel="noopener">Escriba al estudio</a>.</p>' +
+        '</section>' +
+        '<aside class="co-res pg-res" aria-label="Resumen del pedido">' +
+          '<h2>Su pedido</h2><ul class="gdt-lines">' + c.items.map(linea).join('') + '</ul>' +
+          '<dl class="co-tot">' + fila('Subtotal', money(d.subtotal)) + (d.descuento ? fila('Descuento', '− ' + money(d.descuento)) : '') +
+            fila(c.recojo ? 'Recojo en estudio' : 'Envío', d.envio ? money(d.envio) : 'Sin costo') + (d.armado ? fila('Armado / instalación', money(d.armado)) : '') +
+            fila('Total a pagar', money(c.monto), 'es-total') + (T.CFG.PRECIOS_CON_IGV ? fila('Incluye IGV (18 %)', money(c.monto * 18 / 118), 'es-igv') : '') + '</dl>' +
+        '</aside>' +
+      '</div>';
+    P.pagar({ n:n, cel:cel, cuenta:c, contenedor:'#pgCulqi', alProcesar:procesando, alTerminar:resultado });
+    // el aro de espera se retira cuando el formulario ya está pintado
+    var caja = document.getElementById('pgCulqi'), ojo = new MutationObserver(function(){
+      var m = caja.querySelector('iframe'); if(!m) return;
+      ojo.disconnect(); m.addEventListener('load', function(){ setTimeout(function(){ caja.classList.add('is-lista'); }, 500); });
+      setTimeout(function(){ caja.classList.add('is-lista'); }, 6000);
     });
+    ojo.observe(caja, { childList:true, subtree:true });
+    if(aviso) document.getElementById('pgAviso').scrollIntoView({ block:'center' });
   }
+  function simple(){ P.cerrar(); root.classList.remove('es-pago'); }
   function procesando(){
+    simple();
     root.innerHTML = cabecera('Pago en línea', 'Procesando su pago') +
       '<p class="co-lead">No cierre ni recargue esta página. Puede tardar unos segundos.</p><div class="pg-espera" role="status" aria-label="Procesando"></div>';
   }
@@ -151,6 +174,7 @@
 
   /* ---------- consulta al servidor ---------- */
   function consultar(intento){
+    simple();
     root.innerHTML = cabecera('Pago en línea', 'Un momento') + '<div class="pg-espera" role="status" aria-label="Consultando su pedido"></div>';
     P.consulta(n, cel).then(function(r){
       // el pedido recién registrado puede tardar un instante en llegar al servidor

@@ -87,7 +87,8 @@ const cent = (s: number) => Math.round(s * 100);
 
 async function cuenta(d: J) {
   const items = (Array.isArray(d.items) ? d.items : []).map((x: J) => ({ nombre: String(x.nombre ?? ''), qty: Math.max(1, Math.min(99, parseInt(x.qty) || 1)), key: x.key as string | undefined }));
-  const base = { pagado: d.pagado === true, items: items.map((x: J) => ({ nombre: x.nombre, qty: x.qty })) };
+  const vista: J[] = items.map((x: J) => ({ nombre: x.nombre, qty: x.qty, key: x.key ?? '' }));
+  const base = { pagado: d.pagado === true, recojo: d.entrega?.tipo === 'recojo', items: vista };
   const no = (motivo: string) => ({ ...base, pagable: false, motivo, monto: 0, desglose: null });
   if (base.pagado) return no('pagado');
   if (d.demo || d.estado === 5) return no('cerrado');
@@ -100,6 +101,7 @@ async function cuenta(d: J) {
     const p = x.key ? P[x.key] : null;
     if (p == null) return no('cotizar');                     // pieza a cotizar o que ya no está a la venta
     subtotal += p * x.qty;
+    vista[items.indexOf(x)].importe = cent(p * x.qty);
   }
   const c = d.cupon ? cfg.CUPONES?.[String(d.cupon).toUpperCase()] : null;
   const descuento = c ? Math.min(subtotal, c.pct ? subtotal * Number(c.pct) / 100 : Number(c.monto) || 0) : 0;

@@ -17,7 +17,7 @@ function llamar(cuerpo){
   return fetch(FN, { method:'POST', headers:{ 'Content-Type':'application/json', apikey:T.NUBE.key }, body:JSON.stringify(cuerpo) })
     .then(function(r){ return r.json(); }).catch(function(){ return null; });
 }
-var cargados = {};
+var cargados = {}, actual = null;
 function cargar(src){
   return cargados[src] || (cargados[src] = new Promise(function(ok, mal){
     var s = document.createElement('script'); s.src = src; s.async = true;
@@ -35,7 +35,7 @@ function estado(){
 function consulta(n, cel){ return llamar({ accion:'consulta', n:n, cel:cel }); }
 
 /* Abre el formulario y cobra.
-   o = { n, cel, cuenta (respuesta de consulta), alProcesar(), alTerminar(resultado) }
+   o = { n, cel, cuenta (respuesta de consulta), contenedor? ('#id' donde incrustarlo), alProcesar(), alTerminar(resultado) }
    resultado = { ok:true, … }  |  { ok:false, mensaje | motivo }  |  { cerrado:true } */
 function pagar(o){
   var c = o.cuenta, fin = false;
@@ -70,23 +70,42 @@ function pagar(o){
     }
 
     var medios = { tarjeta:true, yape:!!c.yape };
+    /* El formulario vive dentro de la página (o.contenedor) con los colores del sitio.
+       Sigue siendo un marco de Culqi: lo que se escribe ahí no pasa por esta web. */
+    var F = '#0D0D0B', CAMPO = '#141311', RAYA = '#2A2621', ORO = '#C9A24A', LINO = '#DED8CB', GRIS = '#B9B3A6';
     var Culqi = new window.CulqiCheckout(c.pk, {
       settings: { title:'Giandeco Studio Design', currency:'PEN', amount:c.monto },
       client: { email:c.cliente.email },
-      options: { lang:'es', installments:true, modal:true, paymentMethods:medios, paymentMethodsSort:Object.keys(medios) },
+      options: { lang:'es', installments:true, modal:!o.contenedor, container:o.contenedor || undefined, paymentMethods:medios, paymentMethodsSort:Object.keys(medios) },
       appearance: {
-        theme:'default', hiddenCulqiLogo:false, hiddenBannerContent:false, hiddenBanner:false, hiddenToolBarAmount:false,
-        menuType:'sidebar', buttonCardPayText:'Pagar',   // Culqi añade el monto
+        theme:'default', hiddenCulqiLogo:false, hiddenBannerContent:!!o.contenedor, hiddenBanner:!!o.contenedor, hiddenToolBarAmount:!!o.contenedor,
+        menuType:'sliderTop', buttonCardPayText:'Pagar',   // Culqi añade el monto
         logo:'https://giandeco.com/images/firma/logo-giandeco-oficial.png',
-        defaultStyle:{ bannerColor:'#0A0A09', buttonBackground:'#C9A24A', menuColor:'#9C7A2B', linksColor:'#9C7A2B', buttonTextColor:'#0A0A09', priceColor:'#C9A24A' }
+        defaultStyle:{ bannerColor:F, buttonBackground:ORO, menuColor:ORO, linksColor:ORO, buttonTextColor:'#0A0A09', priceColor:ORO },
+        variables:{ fontFamily:'Jost, "Helvetica Neue", Helvetica, Arial, sans-serif', borderRadius:'2px', colorBackground:F, colorPrimary:ORO, colorPrimaryText:'#0A0A09',
+                    colorText:LINO, colorTextSecondary:GRIS, colorTextPlaceholder:'#6B675E', colorIconTab:LINO, colorLogo:'light' },
+        rules:{
+          'html, body, #app':{ background:F }, '::-webkit-scrollbar':{ display:'none' }, 'html':{ scrollbarWidth:'none' },
+          '.mx-6':{ marginLeft:'0', marginRight:'0' }, '.rounded-xl':{ borderRadius:'0' }, '.bg-culqi-white':{ background:F },
+          '.Culqi-Main-Container':{ background:F, fontFamily:'var(--fontFamily)' }, '.Culqi-Main-Method':{ background:F },
+          '.Culqi-Label':{ color:GRIS, fontWeight:'400', letterSpacing:'.04em' }, '.Culqi-Text':{ color:GRIS },
+          '.Culqi-Input':{ background:CAMPO, border:'1px solid ' + RAYA, color:LINO, borderRadius:'2px' }, '.Culqi-Input:focus':{ border:'1px solid ' + ORO },
+          '.Culqi-Input-Select':{ background:CAMPO, border:'1px solid ' + RAYA, color:LINO, borderRadius:'2px' },
+          '.Culqi-Input-Select-Options':{ background:CAMPO, color:LINO }, '.Culqi-Input-Select-Options-Hover':{ background:ORO, color:'#0A0A09' },
+          '.Culqi-Button':{ background:ORO, color:'#0A0A09', borderRadius:'2px', letterSpacing:'.14em', textTransform:'uppercase', fontWeight:'500' },
+          '.Culqi-Menu':{ color:GRIS }, '.Culqi-Menu-Item':{ background:CAMPO, color:GRIS, border:'1px solid ' + RAYA, borderRadius:'2px' },
+          '.Culqi-Menu-Item.active':{ background:CAMPO, color:ORO, border:'1px solid ' + ORO }, '.Culqi-Menu-Item.active .Culqi-Icon':{ color:ORO },
+          '.Culqi-Text-Link':{ color:ORO }
+        }
       }
     });
+    actual = Culqi;
     Culqi.culqi = function(){
       if(Culqi.token){
         token = Culqi.token.id;
         var m = Culqi.token.metadata || {};
         cuotas = parseInt(m.installments, 10) || 0;
-        Culqi.close();
+        try{ Culqi.close(); }catch(e){}
         cobrar();
       } else if(Culqi.error){
         // el propio formulario muestra el error y deja corregir
@@ -104,6 +123,7 @@ function pagar(o){
 
 window.GD_PAGO = {
   estado: estado, consulta: consulta, pagar: pagar,
+  cerrar: function(){ try{ if(actual) actual.close(); }catch(e){} actual = null; },
   activa: function(){ return T.db('pasarela') === true; },
   /* medios que se cobran en línea cuando hay pasarela */
   EN_LINEA: ['tarjeta', 'cuotas', 'yape']

@@ -501,12 +501,29 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 .co-body .co-res .co-conf{ margin-top:18px; }
 
 /* --- pago en línea (pagar.html) --- */
-.pg-prueba{ display:inline-block; margin:0 0 var(--sp-24); padding:6px 12px; border:1px dashed var(--line); border-radius:2px; font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--text-dim); }
-.pg-caja{ max-width:520px; margin:0 0 var(--sp-24); padding:22px 24px 24px; border:1px solid var(--line); border-radius:2px; }
-.pg-items{ list-style:none; margin:0; padding:0 0 16px; border-bottom:1px solid var(--line); display:grid; gap:8px; }
-.pg-items li{ font-size:.92rem; line-height:1.5; color:var(--lino); }
-.pg-conf{ max-width:520px; margin-top:var(--sp-24); }
+.pg{ max-width:760px; }
+.pg.es-pago{ max-width:none; }
+.pg h1{ margin-bottom:16px; }
+.pg-meta{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:0 0 var(--sp-40); }
+.pg-meta .co-ok-n{ margin:0; }
+.pg-prueba{ display:inline-block; padding:8px 12px; border:1px dashed var(--line); border-radius:2px; font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--text-dim); }
+.pg-t{ font-family:var(--display); font-weight:400; font-size:clamp(1.6rem,2.4vw,1.95rem); line-height:1.1; color:var(--lino); margin:0 0 12px; }
+.pg-pago .co-ayuda{ max-width:52ch; margin:0 0 var(--sp-24); }
+.pg-aviso{ max-width:480px; margin:0 0 16px; padding:12px 14px; border:1px solid #8c4a3c; border-left-width:3px; border-radius:2px; background:rgba(140,74,60,.12); color:var(--lino); font-size:.86rem; line-height:1.5; }
+/* marco del formulario de Culqi: mismo fondo que pinta el formulario por dentro */
+.pg-culqi{ position:relative; max-width:480px; height:560px; background:#0D0D0B; border:1px solid var(--line); border-radius:3px; overflow:hidden; }
+.pg-culqi iframe{ display:block; opacity:0; transition:opacity .4s ease; }
+.pg-culqi.is-lista iframe{ opacity:1; }
+.pg-culqi .pg-espera{ position:absolute; top:50%; left:50%; margin:-17px 0 0 -17px; }
+.pg-culqi.is-lista .pg-espera{ display:none; }
+.pg-sellos{ list-style:none; max-width:480px; margin:18px 0 var(--sp-24); padding:0; display:flex; flex-wrap:wrap; gap:10px 22px; }
+.pg-sellos li{ display:inline-flex; align-items:center; gap:8px; font-size:.72rem; letter-spacing:.06em; color:var(--text-dim); }
+.pg-sellos svg{ width:16px; height:16px; flex:none; stroke:var(--accent); fill:none; stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; }
+.pg-res .gdt-lines{ margin-bottom:4px; }
+.pg-res .gdt-line:last-child{ border-bottom:none; }
+.pg-res .co-tot{ border-top:1px solid var(--line); }
+@media (min-width:1000px){ .pg-grid{ grid-template-columns:1.1fr .9fr; } }
+@media (max-width:999px){ .pg-grid .pg-res{ order:-1; } .pg-culqi, .pg-aviso, .pg-sellos{ max-width:none; } }
 .pg-espera{ width:34px; height:34px; margin:var(--sp-24) 0; border-radius:50%; border:1px solid var(--line); border-top-color:var(--accent); animation:pgGira .9s linear infinite; }
 @keyframes pgGira{ to{ transform:rotate(360deg); } }
-@media (prefers-reduced-motion: reduce){ .pg-espera{ animation-duration:2.4s; } }
-#pgPagar[disabled]{ opacity:.6; cursor:default; }
+@media (prefers-reduced-motion: reduce){ .pg-espera{ animation-duration:2.4s; } .pg-culqi iframe{ transition:none; } }
