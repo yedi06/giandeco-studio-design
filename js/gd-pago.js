@@ -70,9 +70,46 @@ function pagar(o){
     }
 
     var medios = { tarjeta:true, yape:!!c.yape };
-    /* El formulario vive dentro de la página (o.contenedor) con los colores del sitio.
-       Sigue siendo un marco de Culqi: lo que se escribe ahí no pasa por esta web. */
-    var F = '#0D0D0B', CAMPO = '#141311', RAYA = '#2A2621', ORO = '#C9A24A', LINO = '#DED8CB', GRIS = '#B9B3A6';
+    /* El formulario vive dentro de la página (o.contenedor) y se viste con el tema en uso.
+       Sigue siendo un marco de Culqi: lo que se escribe ahí no pasa por esta web.
+       Colores del brandbook: sobre claro el acento es bronce y el texto ébano. */
+    var claro = document.documentElement.getAttribute('data-tema') === 'claro';
+    var K = claro
+      ? { fondo:'#F4F1EA', campo:'#FBF9F4', raya:'#CFC8B9', acento:'#8A6F3C', texto:'#171613', apoyo:'#4A4844', guia:'#7A746A',
+          off:'#DED8CB', offTxt:'#6F6A63', suave:'rgba(138,111,60,.10)', mal:'rgba(160,62,42,.08)', malRaya:'#A85A45', malIco:'#A85A45', logo:'dark' }
+      : { fondo:'#0D0D0B', campo:'#171613', raya:'#35302A', acento:'#C9A24A', texto:'#DED8CB', apoyo:'#B9B3A6', guia:'#8A8375',
+          off:'#2A2621', offTxt:'#9A9385', suave:'rgba(201,162,74,.10)', mal:'rgba(176,90,70,.16)', malRaya:'#B05A46', malIco:'#D9917F', logo:'light' };
+    var FUENTE = 'Jost, "Helvetica Neue", Helvetica, Arial, sans-serif';
+    var reglas = {
+      'html, body, #app':{ background:K.fondo }, '::-webkit-scrollbar':{ display:'none' }, 'html':{ scrollbarWidth:'none' },
+      'body':{ color:K.apoyo }, 'body, body *':{ fontFamily:FUENTE },
+      '.mx-6':{ marginLeft:'0', marginRight:'0' }, '.rounded-xl':{ borderRadius:'0' }, '.bg-culqi-white':{ background:K.fondo },
+      '.Culqi-Main-Container':{ background:K.fondo }, '.Culqi-Main-Method':{ background:K.fondo },
+      '.Culqi-Label':{ color:K.apoyo, fontWeight:'400', fontSize:'11px', letterSpacing:'.14em', textTransform:'uppercase' },
+      '.Culqi-Text, .Culqi-Main-Container ~ * span, .Culqi-Main-Method ~ * span':{ color:K.apoyo, opacity:'1' },
+      '.Culqi-Input':{ background:K.campo, border:'1px solid ' + K.raya, color:K.texto, borderRadius:'2px', fontSize:'15px' },
+      '.Culqi-Input:focus, .Culqi-Input:focus-within':{ border:'1px solid ' + K.acento },
+      '.Culqi-Input::placeholder, .Culqi-Input input::placeholder, input::placeholder':{ color:K.guia, opacity:'1' },
+      '.Culqi-Input .Culqi-Icon, .Culqi-Input svg':{ color:K.guia },
+      '.Culqi-Input-Select':{ background:K.campo, border:'1px solid ' + K.raya, color:K.texto, borderRadius:'2px' },
+      '.Culqi-Input-Select-Options':{ background:K.campo, color:K.texto }, '.Culqi-Input-Select-Options-Hover':{ background:K.acento, color:claro ? '#F4F1EA' : '#0A0A09' },
+      '.Culqi-Input-Select-Selected':{ color:K.texto },
+      '.Culqi-Button':{ background:'#C9A24A', color:'#0A0A09', borderColor:'#C9A24A', borderRadius:'2px', letterSpacing:'.16em', textTransform:'uppercase', fontWeight:'500', fontSize:'12px', opacity:'1' },
+      '.Culqi-Button:disabled, .Culqi-Button[disabled]':{ background:K.off, color:K.offTxt, borderColor:K.off, opacity:'1' },
+      '.Culqi-Menu':{ color:K.apoyo }, '.Culqi-Menu-Item':{ background:'transparent', color:K.apoyo, border:'1px solid ' + K.raya, borderRadius:'2px' },
+      '.Culqi-Menu-Item .Culqi-Icon':{ color:K.apoyo },
+      '.Culqi-Menu-Item.active':{ background:K.suave, color:K.acento, border:'1px solid ' + K.acento }, '.Culqi-Menu-Item.active .Culqi-Icon':{ color:K.acento },
+      '.Culqi-Menu-Item-Text':{ fontSize:'12px', letterSpacing:'.04em' },
+      '.Culqi-message':{ borderRadius:'2px' },
+      '.Culqi-message-error':{ background:K.mal, color:K.texto, border:'1px solid ' + K.malRaya }, '.Culqi-message-error .Culqi-Icon':{ color:K.malIco },
+      '.Culqi-message-info':{ background:K.campo, color:K.apoyo, border:'1px solid ' + K.raya },
+      '.Culqi-message-warning':{ background:K.suave, color:K.texto, border:'1px solid ' + K.acento }, '.Culqi-message-warning .Culqi-Icon':{ color:K.acento },
+      '.Culqi-message-success':{ background:K.campo, color:K.texto, border:'1px solid ' + K.raya },
+      '.Culqi-Text-Error':{ color:K.malIco }, '.Culqi-Text-Link':{ color:K.acento }
+    };
+    // la tipografía del sitio también dentro del formulario
+    reglas['@font-face { font-family: Jost; font-weight: 300 600; font-display: swap; src: url(https://fonts.gstatic.com/s/jost/v20/92zatBhPNqw73oTd4g.woff2) format("woff2"); } .gd-fuente'] = { display:'block' };
+    if(o.contenedor){ var marco = document.querySelector(o.contenedor); if(marco) marco.style.background = K.fondo; }
     var Culqi = new window.CulqiCheckout(c.pk, {
       settings: { title:'Giandeco Studio Design', currency:'PEN', amount:c.monto },
       client: { email:c.cliente.email },
@@ -81,22 +118,10 @@ function pagar(o){
         theme:'default', hiddenCulqiLogo:false, hiddenBannerContent:!!o.contenedor, hiddenBanner:!!o.contenedor, hiddenToolBarAmount:!!o.contenedor,
         menuType:'sliderTop', buttonCardPayText:'Pagar',   // Culqi añade el monto
         logo:'https://giandeco.com/images/firma/logo-giandeco-oficial.png',
-        defaultStyle:{ bannerColor:F, buttonBackground:ORO, menuColor:ORO, linksColor:ORO, buttonTextColor:'#0A0A09', priceColor:ORO },
-        variables:{ fontFamily:'Jost, "Helvetica Neue", Helvetica, Arial, sans-serif', borderRadius:'2px', colorBackground:F, colorPrimary:ORO, colorPrimaryText:'#0A0A09',
-                    colorText:LINO, colorTextSecondary:GRIS, colorTextPlaceholder:'#6B675E', colorIconTab:LINO, colorLogo:'light' },
-        rules:{
-          'html, body, #app':{ background:F }, '::-webkit-scrollbar':{ display:'none' }, 'html':{ scrollbarWidth:'none' },
-          '.mx-6':{ marginLeft:'0', marginRight:'0' }, '.rounded-xl':{ borderRadius:'0' }, '.bg-culqi-white':{ background:F },
-          '.Culqi-Main-Container':{ background:F, fontFamily:'var(--fontFamily)' }, '.Culqi-Main-Method':{ background:F },
-          '.Culqi-Label':{ color:GRIS, fontWeight:'400', letterSpacing:'.04em' }, '.Culqi-Text':{ color:GRIS },
-          '.Culqi-Input':{ background:CAMPO, border:'1px solid ' + RAYA, color:LINO, borderRadius:'2px' }, '.Culqi-Input:focus':{ border:'1px solid ' + ORO },
-          '.Culqi-Input-Select':{ background:CAMPO, border:'1px solid ' + RAYA, color:LINO, borderRadius:'2px' },
-          '.Culqi-Input-Select-Options':{ background:CAMPO, color:LINO }, '.Culqi-Input-Select-Options-Hover':{ background:ORO, color:'#0A0A09' },
-          '.Culqi-Button':{ background:ORO, color:'#0A0A09', borderRadius:'2px', letterSpacing:'.14em', textTransform:'uppercase', fontWeight:'500' },
-          '.Culqi-Menu':{ color:GRIS }, '.Culqi-Menu-Item':{ background:CAMPO, color:GRIS, border:'1px solid ' + RAYA, borderRadius:'2px' },
-          '.Culqi-Menu-Item.active':{ background:CAMPO, color:ORO, border:'1px solid ' + ORO }, '.Culqi-Menu-Item.active .Culqi-Icon':{ color:ORO },
-          '.Culqi-Text-Link':{ color:ORO }
-        }
+        defaultStyle:{ bannerColor:K.fondo, buttonBackground:'#C9A24A', menuColor:K.acento, linksColor:K.acento, buttonTextColor:'#0A0A09', priceColor:K.acento },
+        variables:{ fontFamily:FUENTE, borderRadius:'2px', colorBackground:K.fondo, colorPrimary:K.acento, colorPrimaryText:'#0A0A09',
+                    colorText:K.texto, colorTextSecondary:K.apoyo, colorTextPlaceholder:K.guia, colorIconTab:K.texto, colorLogo:K.logo },
+        rules: reglas
       }
     });
     actual = Culqi;
