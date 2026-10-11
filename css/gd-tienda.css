@@ -553,3 +553,34 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 .co-etq.es-grupo{ margin:var(--sp-24) 0 4px; font-size:.74rem; letter-spacing:.14em; color:var(--accent); }
 #coPago .co-etq.es-grupo:first-child{ margin-top:0; }
 .co-etq-nota{ margin:0 0 12px; font-size:.86rem; line-height:1.5; color:var(--text-dim); }
+
+/* --- sello de la pasarela junto al pago en línea --- */
+.co-etq.es-grupo{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:6px 16px; }
+.co-culqi{ display:inline-flex; align-items:center; gap:8px; font-size:.62rem; letter-spacing:.1em; color:var(--text-faint); }
+.co-culqi img{ display:block; height:18px; width:auto; filter:invert(1) hue-rotate(180deg); }   /* el logotipo es negro: en tema oscuro se pasa a claro sin tocar el naranja */
+:root[data-tema="claro"] .co-culqi img{ filter:none; }
+
+/* --- pago directo al estudio --- */
+.pd{ margin:var(--sp-40) 0; }
+.pd h2{ font-family:var(--display); font-weight:400; font-size:clamp(1.6rem,2.4vw,1.95rem); line-height:1.1; color:var(--lino); margin:0 0 16px; }
+.pd-total{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; max-width:420px; margin:0 0 8px; padding:14px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.pd-total span{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-dim); }
+.pd-total b{ font-weight:400; font-size:1.6rem; color:var(--lino); font-variant-numeric:tabular-nums; }
+.pd-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin:var(--sp-24) 0 0; }
+.pd-medio{ padding:20px; background:var(--bg-raised); border:1px solid var(--line); border-radius:3px; }
+.pd-medio header{ display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.pd-medio h3{ margin:0; font-family:var(--body); font-weight:500; font-size:.95rem; color:var(--lino); }
+.pd-qr{ display:block; width:100%; max-width:200px; height:auto; margin:0 auto 14px; padding:8px; background:#fff; border-radius:3px; }
+.pd-dato{ display:grid; grid-template-columns:1fr auto; align-items:center; gap:2px 12px; padding:10px 0; border-top:1px solid var(--line); }
+.pd-dato span{ grid-column:1 / -1; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint); }
+.pd-dato b{ font-weight:500; font-size:.98rem; color:var(--lino); font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+.pd-copiar{ background:none; border:1px solid var(--line); border-radius:2px; padding:5px 10px; cursor:pointer; font-family:var(--body); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); }
+.pd-copiar:hover{ border-color:var(--accent); }
+
+/* --- confianza en el paso de pago --- */
+.co-confianza{ max-width:none; margin:14px 0 0; padding:16px 18px; display:grid; grid-template-columns:1fr; gap:14px 24px; background:var(--bg-raised); border:1px solid var(--line); border-radius:3px; }
+@media (min-width:720px){ .co-confianza{ grid-template-columns:1fr 1fr; } }
+.co-confianza li{ align-items:flex-start; gap:12px; letter-spacing:0; }
+.co-confianza svg{ width:20px; height:20px; margin-top:2px; }
+.co-confianza span{ font-size:.8rem; line-height:1.5; color:var(--text-dim); }
+.co-confianza b{ display:block; font-weight:500; font-size:.84rem; color:var(--lino); }

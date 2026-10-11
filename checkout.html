@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/giandeco.css?v=12">
-<link rel="stylesheet" href="css/gd-tienda.css?v=11">
+<link rel="stylesheet" href="css/gd-tienda.css?v=12">
 <link rel="stylesheet" href="css/gd-tema.css?v=1">
 <script src="js/gd-tema.js?v=1"></script>
 </head>
@@ -37,7 +37,7 @@
 </footer>
 
 <script src="js/giandeco.js?v=15"></script>
-<script src="js/gd-tienda.js?v=12"></script>
+<script src="js/gd-tienda.js?v=13"></script>
 <script src="js/gd-pago.js?v=6"></script>
 <script>
 (function(){
@@ -54,9 +54,11 @@
       '<p class="gd-eyebrow">' + (cot ? 'Cotización registrada' : 'Pedido registrado') + '</p>' +
       '<h1>Gracias, ' + esc(ped.cliente.nombre.split(' ')[0]) + '</h1>' +
       '<p class="co-ok-n">' + esc(ped.n) + '</p>' +
-      '<p class="co-lead">Su ' + (cot ? 'solicitud' : 'pedido') + ' quedó registrado. Confírmelo con el estudio por WhatsApp: el mensaje ya está redactado con las piezas, la entrega y sus datos.</p>' +
-      '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="' + T.wa(T.pedidos.mensaje(ped)) + '" target="_blank" rel="noopener">Confirmar por WhatsApp' + T.FLECHA + '</a></div>' +
-      '<ol class="co-pasos">' +
+      (ped.pagoKey === 'directo' && !cot && !ped.pagado
+        ? '<p class="co-lead">Su pedido quedó registrado. Para confirmarlo, pague con cualquiera de los medios del estudio y envíenos el comprobante.</p>' + T.pagoDirectoHTML(ped) + '<ol class="co-pasos" hidden>'
+        : '<p class="co-lead">Su ' + (cot ? 'solicitud' : 'pedido') + ' quedó registrado. Confírmelo con el estudio por WhatsApp: el mensaje ya está redactado con las piezas, la entrega y sus datos.</p>' +
+          '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="' + T.wa(T.pedidos.mensaje(ped)) + '" target="_blank" rel="noopener">Confirmar por WhatsApp' + T.FLECHA + '</a></div>' +
+          '<ol class="co-pasos">') +
         '<li><b>Usted confirma el pedido</b>Con un mensaje al WhatsApp oficial del estudio.</li>' +
         '<li><b>El estudio responde</b>Disponibilidad, costo de envío' + (ped.entrega.armado ? ', armado' : '') + ' y fecha de entrega.</li>' +
         (cot ? '<li><b>Recibe la cotización</b>Con el detalle por pieza y las condiciones.</li>'
@@ -218,21 +220,29 @@
     });
     // con pasarela las cuotas se eligen dentro del pago con tarjeta: no hace falta una opción aparte
     if(pasarela) ops = ops.filter(function(m){ return m.key !== 'cuotas'; });
-    function grupoDe(m){ return !pasarela ? m.grupo : enLinea(m) ? 'Pague ahora, en línea' : 'Coordine el pago con el estudio'; }
+    function grupoDe(m){ return !pasarela ? m.grupo : enLinea(m) ? 'Pague ahora, en línea' : 'Otros medios de pago'; }
     var NOTA_GRUPO = {
       'Pague ahora, en línea': 'Paga en el siguiente paso y su pedido queda confirmado al instante.',
-      'Coordine el pago con el estudio': 'Registra su pedido y el estudio le escribe por WhatsApp con los datos para pagar.'
+      'Otros medios de pago': 'Para cuando no pueda pagar en línea.'
     };
     if(pasarela) ops.sort(function(a, b){ return (enLinea(b) ? 1 : 0) - (enLinea(a) ? 1 : 0) || (b.key === 'tarjeta' ? 1 : 0) - (a.key === 'tarjeta' ? 1 : 0); });
     var elegido = ops.some(function(m){ return m.key === antes; }) ? antes : ops[0].key;
     var grupos = [];
     ops.forEach(function(m){ if(grupos.indexOf(grupoDe(m)) === -1) grupos.push(grupoDe(m)); });
     host.innerHTML = grupos.map(function(gr){
-      return '<p class="co-etq' + (NOTA_GRUPO[gr] ? ' es-grupo' : '') + '">' + gr + '</p>' + (NOTA_GRUPO[gr] ? '<p class="co-etq-nota">' + NOTA_GRUPO[gr] + '</p>' : '') + '<div class="gdt-ops">' +
-        ops.filter(function(m){ return grupoDe(m) === gr; }).map(function(m){ return opcion('pago', m.key, m.label, enLinea(m) && m.notaEnLinea ? m.notaEnLinea : m.nota, m.key === elegido, m.marcas, m.logos); }).join('') + '</div>';
+      return '<p class="co-etq' + (NOTA_GRUPO[gr] ? ' es-grupo' : '') + '">' + gr +
+        (gr === 'Pague ahora, en línea' ? '<span class="co-culqi">Pagos procesados por <img src="images/pago/culqi.svg" alt="Culqi" width="63" height="18"></span>' : '') + '</p>' + (NOTA_GRUPO[gr] ? '<p class="co-etq-nota">' + NOTA_GRUPO[gr] + '</p>' : '') + '<div class="gdt-ops">' +
+        ops.filter(function(m){ return grupoDe(m) === gr; }).map(function(m){ return opcion('pago', m.key, m.label, enLinea(m) && m.notaEnLinea ? m.notaEnLinea : m.nota, m.key === elegido, m.marcas, m.logos); }).join('') + '</div>' + (gr === 'Pague ahora, en línea' ? CONFIANZA : '');
     }).join('');
     botonFinal();
   }
+  /* por qué pagar aquí es seguro: solo hechos que la pasarela respalda */
+  var CONFIANZA = '<ul class="pg-sellos co-confianza">' +
+    '<li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg><span><b>Sus datos viajan cifrados</b>Van directo a Culqi. Giandeco no ve ni guarda su tarjeta.</span></li>' +
+    '<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg><span><b>Pasarela certificada</b>Culqi cumple el estándar PCI DSS y cuenta con el respaldo del BCP.</span></li>' +
+    '<li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span><b>Verificación de su banco</b>Si su banco lo pide, usted aprueba la compra desde su app.</span></li>' +
+    '<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M9 12h6M9 16h6M9 8h3"/></svg><span><b>Comprobante electrónico</b>Boleta o factura a su correo.</span></li>' +
+  '</ul>';
   /* el último botón dice lo que va a pasar */
   function botonFinal(){
     var b = form.querySelector('.co-paso[data-paso="' + ULT + '"] button[type="submit"]'); if(!b || soloCot) return;
@@ -382,7 +392,7 @@
     var desc = descuento();
     var ped = T.pedidos.crear({
       items: lineas, subtotal: tot.subtotal, cotizar: tot.cotizar, entrega: entrega,
-      pago: pago ? pago.label : '', nota: g('coNota'), cupon: cupon || '', descuento: desc,
+      pago: pago ? pago.label : '', pagoKey: pago ? pago.key : '', nota: g('coNota'), cupon: cupon || '', descuento: desc,
       promo: $('coPromo').checked,
       comprobante: comp === 'boleta' ? { tipo:'boleta', resumen:'Boleta · ' + tdoc + ' ' + doc }
                                      : { tipo:'factura', resumen:'Factura · RUC ' + g('coRuc') + ' · ' + g('coRazon') + ' · ' + g('coFiscal') },
@@ -396,7 +406,7 @@
     T.carrito.vaciar();
     // medio en línea: directo a pagar. Si el total aún depende del estudio, esa página lo explica.
     if(enLinea(pago)){ location.href = 'pagar?n=' + encodeURIComponent(ped.n); return; }
-    window.open(T.wa(T.pedidos.mensaje(ped)), '_blank', 'noopener');
+    if(!pago || pago.key !== 'directo') window.open(T.wa(T.pedidos.mensaje(ped)), '_blank', 'noopener');
     location.href = 'checkout?ok=' + encodeURIComponent(ped.n);
   });
 })();

@@ -39,21 +39,28 @@ var CFG = {
   PAGO: [
     { key:'yape',     activo:true, grupo:'Billeteras digitales', label:'Yape', logos:['yape'], nota:'Paga con QR o al número del estudio. Se lo enviamos por WhatsApp al confirmar el pedido.',
       notaEnLinea:'Con su celular Yape y el código de aprobación de la app. Hasta S/ 2,000.' },
-    { key:'plin',     activo:true, grupo:'Billeteras digitales', label:'Plin', logos:['plin'], nota:'Desde la app de su banco afiliado a Plin, con QR o número.' },
+    { key:'plin',     activo:false, grupo:'Billeteras digitales', label:'Plin', logos:['plin'], nota:'Desde la app de su banco afiliado a Plin, con QR o número.' },
     { key:'tarjeta',  activo:true, grupo:'Tarjetas', label:'Tarjeta de crédito o débito', marcas:'Visa · Mastercard · American Express · Diners Club', logos:['visa','mastercard','amex','diners'], nota:'Paga en un enlace seguro de la pasarela. Sus datos de tarjeta no pasan por esta web.',
       notaEnLinea:'Crédito o débito. Con tarjeta de crédito puede pagar en cuotas.' },
     { key:'cuotas',   activo:true, grupo:'Tarjetas', label:'Cuotas con tarjeta de crédito', logos:['visa','mastercard'], nota:'Elige el número de cuotas en el mismo enlace seguro, según las condiciones de su banco.',
       notaEnLinea:'Paga ahora y elige el número de cuotas en el formulario, según las condiciones de su banco.' },
-    { key:'transf',   activo:true, grupo:'Banca', label:'Transferencia o depósito bancario', nota:'Le enviamos el número de cuenta en soles y el CCI para transferencias interbancarias.' },
+    { key:'transf',   activo:false, grupo:'Banca', label:'Transferencia o depósito bancario', nota:'Le enviamos el número de cuenta en soles y el CCI para transferencias interbancarias.' },
     { key:'pagoefectivo', activo:false, grupo:'Banca', label:'PagoEfectivo', nota:'Recibe un código CIP y paga desde su banca por internet o en agentes y bodegas.' },
+    /* Pago directo: el cliente paga por su cuenta a los medios del estudio (PAGO_DIRECTO) y envía
+       el comprobante por WhatsApp. Sustituye a Plin, transferencia y adelanto como opciones sueltas. */
+    { key:'directo',  activo:true, grupo:'Pago directo', label:'Pago directo al estudio', logos:['yape','plin'],
+      nota:'Yape, Plin o transferencia a las cuentas del estudio. Al registrar el pedido ve los datos y envía su comprobante por WhatsApp.' },
     { key:'contra',   activo:true, grupo:'Al recibir', label:'Pago contra entrega', nota:'Paga al recibir su pedido, en efectivo, con Yape o con tarjeta. Solo en Lima y Callao.', solo:['lima','callao'] },
     { key:'enestudio',activo:true, grupo:'Al recibir', label:'Pago al recoger en el estudio', nota:'Paga al recoger, en efectivo, con Yape, Plin o tarjeta.', soloRecojo:true },
-    { key:'adelanto', activo:true, grupo:'Proyectos y empresas', label:'Adelanto y saldo', nota:'Para piezas por encargo o pedidos de proyecto: una parte al confirmar y el saldo antes de la entrega. El estudio le indica los montos.' },
+    { key:'adelanto', activo:false, grupo:'Proyectos y empresas', label:'Adelanto y saldo', nota:'Para piezas por encargo o pedidos de proyecto: una parte al confirmar y el saldo antes de la entrega. El estudio le indica los montos.' },
     { key:'empresa',  activo:true, grupo:'Proyectos y empresas', label:'Orden de compra de empresa', nota:'Para compras con factura: coordinamos orden de compra y condiciones de pago.', soloFactura:true }
   ],
   /* Códigos de descuento:  { 'BIENVENIDA': { pct:10 } }  o  { 'ENVIO': { monto:30 } }.
      Vacío = el campo de cupón no se muestra. */
   CUPONES: {},
+  /* Medios del estudio para el pago directo. Se llenan en el panel (Ajustes);
+     lo que esté vacío no se muestra. qr = imagen del código QR. */
+  PAGO_DIRECTO: { yape:{ numero:'', titular:'', qr:'' }, plin:{ numero:'', titular:'', qr:'' }, banco:{ banco:'', cuenta:'', cci:'', titular:'' } },
   /* Datos legales del estudio. Lo que esté vacío se muestra como
      "por confirmar" en las páginas de ayuda y en el libro de reclamaciones. */
   EMPRESA: { razon:'Luis Giancarlo Jiménez Sánchez', ruc:'10452729691', dir:'Ca. Las Bellísimas 170, Urb. Vipol — Callao 07036', correo:'contacto@giandeco.com', tel:'+51 920 775 559' },
@@ -85,6 +92,7 @@ var CFG = {
   if(o.RECOJO_ACTIVO !== undefined) CFG.RECOJO.activo = o.RECOJO_ACTIVO;
   if(o.ENVIO) CFG.ENVIO.forEach(function(z){ if(o.ENVIO[z.key] !== undefined) z.tarifa = o.ENVIO[z.key]; });
   if(o.PAGO) CFG.PAGO.forEach(function(m){ if(o.PAGO[m.key] === false) m.activo = false; });
+  if(o.PAGO_DIRECTO) ['yape', 'plin', 'banco'].forEach(function(k){ if(o.PAGO_DIRECTO[k]) CFG.PAGO_DIRECTO[k] = o.PAGO_DIRECTO[k]; });
 })(db('config'));
 
 /* --------------------------------------------------------------------------
@@ -111,6 +119,49 @@ function logosPago(lista){
     return '<img' + (k === 'plin' ? ' class="es-icono"' : '') + ' src="images/pago/' + k + '.svg" alt="' + MARCAS[k] + '" width="39" height="25" decoding="async">';
   }).join('') + '</i>';
 }
+/* ---- pago directo: datos del estudio, QR y envío del comprobante ---- */
+function totalPedido(p){
+  var envio = p.entrega && p.entrega.tipo === 'recojo' ? 0 : p.envio;
+  if(envio == null && p.entrega){ var z = CFG.ENVIO.filter(function(x){ return x.key === p.entrega.zona; })[0]; envio = z ? z.tarifa : null; }
+  var armado = p.entrega && p.entrega.armado ? p.armadoMonto : 0;
+  return { monto:(p.subtotal || 0) - (p.descuento || 0) + (envio || 0) + (armado || 0), firme: envio != null && armado != null && !p.cotizar };
+}
+function pagoDirectoHTML(p){
+  var D = CFG.PAGO_DIRECTO, t = totalPedido(p), tarjetas = [];
+  function dato(et, v, copiar){
+    return v ? '<div class="pd-dato"><span>' + et + '</span><b>' + esc(v) + '</b>' + (copiar ? '<button type="button" class="pd-copiar" data-copiar="' + esc(String(v).replace(/[\s-]/g, '')) + '">Copiar</button>' : '') + '</div>' : '';
+  }
+  function billetera(k, nombre){
+    var m = D[k] || {}; if(!m.numero && !m.qr) return;
+    tarjetas.push('<article class="pd-medio"><header>' + logosPago([k]) + '<h3>' + nombre + '</h3></header>' +
+      (m.qr ? '<img class="pd-qr" src="' + esc(m.qr) + '" alt="Código QR de ' + nombre + ' del estudio">' : '') +
+      dato('Número', m.numero, true) + dato('A nombre de', m.titular) + '</article>');
+  }
+  billetera('yape', 'Yape'); billetera('plin', 'Plin');
+  var b = D.banco || {};
+  if(b.cuenta || b.cci) tarjetas.push('<article class="pd-medio"><header><h3>Transferencia o depósito</h3></header>' +
+    dato('Banco', b.banco) + dato('Cuenta en soles', b.cuenta, true) + dato('CCI', b.cci, true) + dato('A nombre de', b.titular) + '</article>');
+  var monto = '<p class="pd-total"><span>' + (t.firme ? 'Total a pagar' : 'Total de piezas') + '</span><b>' + fmt(t.monto) + '</b></p>' +
+    (t.firme ? '' : '<p class="gd-form-nota">Falta que el estudio le confirme el costo de envío o de armado. Espere ese dato antes de pagar.</p>');
+  if(!tarjetas.length){
+    return '<section class="pd"><h2>Pago directo al estudio</h2>' + monto +
+      '<p class="co-lead">El estudio le envía por WhatsApp los datos para pagar con Yape, Plin o transferencia.</p>' +
+      '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="' + wa(pedidos.mensaje(p)) + '" target="_blank" rel="noopener">Pedir los datos de pago' + FLECHA + '</a></div></section>';
+  }
+  return '<section class="pd"><h2>Pague su pedido</h2>' + monto +
+    '<div class="pd-grid">' + tarjetas.join('') + '</div>' +
+    '<ol class="co-pasos">' +
+      '<li><b>Pague el total</b>Con el medio que prefiera de los de arriba.</li>' +
+      '<li><b>Guarde el comprobante</b>La captura de pantalla o la constancia de la operación.</li>' +
+      '<li><b>Envíelo por WhatsApp</b>El equipo del estudio valida el pago y le confirma el pedido.</li>' +
+    '</ol>' +
+    '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="' + wa('Hola Giandeco, ya pagué mi pedido ' + p.n + ' (' + fmt(t.monto) + '). Adjunto el comprobante de pago.\n\nNombre: ' + p.cliente.nombre + ' · Cel. ' + p.cliente.cel) + '" target="_blank" rel="noopener">Enviar comprobante por WhatsApp' + FLECHA + '</a></div></section>';
+}
+document.addEventListener('click', function(e){
+  var b = e.target.closest && e.target.closest('[data-copiar]'); if(!b) return;
+  var v = b.getAttribute('data-copiar'), ok = function(){ b.textContent = 'Copiado'; setTimeout(function(){ b.textContent = 'Copiar'; }, 1800); };
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).then(ok, function(){});
+});
 var FLECHA = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
 
 /* --------------------------------------------------------------------------
@@ -577,7 +628,7 @@ function montar(){
 
 window.GD_TIENDA = {
   CFG:CFG, CAT:CAT, LINEAS:LINEAS, COND:COND, CRITERIOS:CRITERIOS, ESTADOS:ESTADOS, FLECHA:FLECHA,
-  esc:esc, fmt:fmt, wa:wa, logosPago:logosPago, url:url, db:db, card:card, NUBE:NUBE, nube:nube, rpc:rpc, uid:uid,
+  esc:esc, fmt:fmt, wa:wa, logosPago:logosPago, pagoDirectoHTML:pagoDirectoHTML, url:url, db:db, card:card, NUBE:NUBE, nube:nube, rpc:rpc, uid:uid,
   familia:familia, complementos:complementos, similares:similares, espaciosDe:espaciosDe, recomendados:recomendados,
   carrito:carrito, favs:favs, vistos:vistos, sesion:sesion, pedidos:pedidos, opiniones:opiniones,
   abrir:abrir, cerrar:cerrar

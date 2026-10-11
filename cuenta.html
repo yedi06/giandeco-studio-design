@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="css/gd-movil.css?v=1">
 <link rel="stylesheet" href="css/gd-tema.css?v=1">
 <script src="js/gd-tema.js?v=1"></script>
-<link rel="stylesheet" href="css/gd-tienda.css?v=11">
+<link rel="stylesheet" href="css/gd-tienda.css?v=12">
 </head>
 <body data-pagina="cuenta">
 
@@ -24,7 +24,7 @@
 
 <div id="gdFooter"></div>
 <script src="js/giandeco.js?v=15"></script>
-<script src="js/gd-tienda.js?v=12"></script>
+<script src="js/gd-tienda.js?v=13"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc;
@@ -81,7 +81,8 @@
       }).join('') +
       '<ol class="cu-linea">' + T.ESTADOS.map(function(e, i){ return '<li' + (i <= p.estado ? ' class="is-hecho"' : '') + '>' + e + '</li>'; }).join('') + '</ol>' +
       '<p class="gd-form-nota" style="margin-top:16px;">' + esc(p.entrega.resumen) + (p.pago ? ' · Pago: ' + esc(p.pago) : '') + (p.pagado ? ' · Pago recibido' : '') + '</p>' +
-      '<div class="cu-ped-acc">' + (p.subtotal && !p.pagado && T.db('pasarela') === true ? '<a class="gd-link" href="pagar?n=' + encodeURIComponent(p.n) + '">Pagar en línea' + T.FLECHA + '</a>' : '') + '<a class="gd-link" href="' + T.wa(T.pedidos.mensaje(p)) + '" target="_blank" rel="noopener">Enviar al estudio' + T.FLECHA + '</a>' +
+      '<div class="cu-ped-acc">' + (p.subtotal && !p.pagado && T.db('pasarela') === true ? '<a class="gd-link" href="pagar?n=' + encodeURIComponent(p.n) + '">Pagar en línea' + T.FLECHA + '</a>' : '') +
+        (p.pagoKey === 'directo' && !p.pagado ? '<a class="gd-link" href="checkout?ok=' + encodeURIComponent(p.n) + '">Ver datos de pago' + T.FLECHA + '</a>' : '') + '<a class="gd-link" href="' + T.wa(T.pedidos.mensaje(p)) + '" target="_blank" rel="noopener">Enviar al estudio' + T.FLECHA + '</a>' +
         '<a class="gd-link" href="' + T.wa('Hola Giandeco, quiero saber el estado de mi pedido ' + p.n + '.') + '" target="_blank" rel="noopener">Consultar estado' + T.FLECHA + '</a>' +
         '<button type="button" class="gdt-quick" style="margin:0;" data-repetir="' + esc(p.n) + '">Repetir pedido</button></div>' +
       '</div></article>';

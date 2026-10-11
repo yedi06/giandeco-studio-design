@@ -285,7 +285,19 @@ V.ajustes = function(){
       '<p class="ad-nota">Vacío = el checkout muestra «por confirmar» y el costo se define en cada pedido.</p>' +
       '<label class="ad-check"><input type="checkbox" name="recojo"' + (c.RECOJO_ACTIVO === false ? '' : ' checked') + '> Ofrecer recojo en el estudio</label>' +
       '<h2 style="margin-top:28px;">Medios de pago</h2>' +
-      C.PAGO.map(function(m){ return '<label class="ad-check"><input type="checkbox" name="pago-' + m.key + '"' + (pg[m.key] === false ? '' : ' checked') + '> ' + m.label + '</label>'; }).join('') + '</section></div>' +
+      C.PAGO.filter(function(m){ return m.activo || pg[m.key] === false; }).map(function(m){ return '<label class="ad-check"><input type="checkbox" name="pago-' + m.key + '"' + (pg[m.key] === false ? '' : ' checked') + '> ' + m.label + '</label>'; }).join('') + '</section></div>' +
+    (function(){
+      var D = c.PAGO_DIRECTO || {}, y = D.yape || {}, pl = D.plin || {}, b = D.banco || {};
+      function qr(k, v){ return '<label>Código QR (imagen)<input type="file" accept="image/*" data-qr="' + k + '"></label><input type="hidden" name="pd-' + k + '-qr" value="' + esc(v || '') + '">' +
+        '<div class="ad-qr" data-qr-vista="' + k + '">' + (v ? '<img src="' + esc(v) + '" alt="QR"><button type="button" class="ad-btn" data-a="quitar-qr" data-v="' + k + '">Quitar</button>' : '<span>Sin imagen</span>') + '</div>'; }
+      return '<section class="ad-caja" style="margin-top:20px;"><h2>Pago directo al estudio</h2>' +
+        '<p class="ad-nota">Lo que llene aquí lo ve el cliente al elegir «Pago directo al estudio»: paga por su cuenta y envía el comprobante por WhatsApp. Lo que deje vacío no se muestra.</p>' +
+        '<div class="ad-cols es-3">' +
+          '<div class="ad-form"><h3>Yape</h3>' + campo('pd-yape-numero', 'Número', y.numero, '9XX XXX XXX') + campo('pd-yape-titular', 'A nombre de', y.titular) + qr('yape', y.qr) + '</div>' +
+          '<div class="ad-form"><h3>Plin</h3>' + campo('pd-plin-numero', 'Número', pl.numero, '9XX XXX XXX') + campo('pd-plin-titular', 'A nombre de', pl.titular) + qr('plin', pl.qr) + '</div>' +
+          '<div class="ad-form"><h3>Transferencia</h3>' + campo('pd-banco-banco', 'Banco', b.banco, 'BCP, Interbank…') + campo('pd-banco-cuenta', 'Cuenta en soles', b.cuenta) + campo('pd-banco-cci', 'CCI', b.cci, '20 dígitos') + campo('pd-banco-titular', 'A nombre de', b.titular) + '</div>' +
+        '</div></section>';
+    })() +
     '<div class="ad-head-acc" style="margin-top:20px;"><button class="ad-btn es-pri" type="submit">Guardar ajustes</button></div></form>';
 };
 
@@ -335,6 +347,7 @@ root.addEventListener('click', function(e){
     p.pagado = document.getElementById('pdPagado').checked; p.notaInterna = document.getElementById('pdNota').value;
     DATOS.guardar('pedidos', ped); pintar(); aviso('Pedido actualizado');
   }
+  else if(a === 'quitar-qr'){ root.querySelector('[name="pd-' + v + '-qr"]').value = ''; root.querySelector('[data-qr-vista="' + v + '"]').innerHTML = '<span>Sin imagen</span>'; aviso('Pulse «Guardar ajustes» para confirmar.'); }
   else if(a === 'nuevo-prod'){ document.getElementById('adNuevo').innerHTML = formNuevo(); }
   else if(a === 'cancelar-nuevo'){ document.getElementById('adNuevo').innerHTML = ''; }
   else if(a === 'moderar'){
@@ -365,6 +378,26 @@ root.addEventListener('click', function(e){
   else if(a === 'csv-productos'){ csv('productos.csv', [['Clave', 'Nombre', 'Línea', 'Categoría', 'Precio base', 'Precio panel', 'Stock', 'Visible']].concat(catalogo().map(function(p){ return [p.key, p.nombre, p.linea, p.cat, p.base, p.precio, p.stock, p.activo ? 'sí' : 'no']; }))); }
   else if(a === 'csv-clientes'){ csv('clientes.csv', [['Nombre', 'Celular', 'Correo', 'Distrito', 'Pedidos', 'Total', 'Último pedido', 'Acepta novedades']].concat(clientes().map(function(c){ return [c.nombre, c.cel, c.email, c.distrito, c.n, c.total, c.ult, c.promo ? 'sí' : 'no']; }))); }
   else if(a === 'csv-reclamos'){ csv('reclamos.csv', [['Hoja', 'Fecha', 'Tipo', 'Consumidor', 'Documento', 'Correo', 'Bien', 'Detalle', 'Pedido', 'Respuesta', 'Respondido']].concat(DATOS.leer('reclamos', []).map(function(r){ return [r.n, r.fecha, r.tipo, r.nombre, r.doc, r.email, r.desc, r.detalle, r.pide, r.respuesta, r.respondido]; }))); }
+});
+
+/* QR del pago directo: la imagen se reduce y se guarda con los ajustes */
+root.addEventListener('change', function(e){
+  var el = e.target, k = el.getAttribute && el.getAttribute('data-qr'); if(!k || !el.files || !el.files[0]) return;
+  var lector = new FileReader();
+  lector.onload = function(){
+    var img = new Image();
+    img.onload = function(){
+      var lado = Math.min(640, Math.max(img.width, img.height)), esc2 = lado / Math.max(img.width, img.height);
+      var cv = document.createElement('canvas'); cv.width = Math.round(img.width * esc2); cv.height = Math.round(img.height * esc2);
+      var cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, cv.width, cv.height); cx.drawImage(img, 0, 0, cv.width, cv.height);
+      var url = cv.toDataURL('image/jpeg', .9);
+      root.querySelector('[name="pd-' + k + '-qr"]').value = url;
+      root.querySelector('[data-qr-vista="' + k + '"]').innerHTML = '<img src="' + url + '" alt="QR"><button type="button" class="ad-btn" data-a="quitar-qr" data-v="' + k + '">Quitar</button>';
+      aviso('Imagen lista. Pulse «Guardar ajustes».');
+    };
+    img.src = lector.result;
+  };
+  lector.readAsDataURL(el.files[0]);
 });
 
 /* edición en línea de productos */
@@ -398,7 +431,9 @@ root.addEventListener('submit', function(e){
     cf.EMPRESA = { razon:d.razon, ruc:d.ruc, dir:d.dir, correo:d.correo, tel:d.tel };
     cf.LEGAL_VALIDADO = d.validado; cf.PRECIOS_CON_IGV = d.igv; cf.GOOGLE_RESENAS = d.google; cf.RECOJO_ACTIVO = d.recojo;
     cf.ENVIO = {}; T.CFG.ENVIO.forEach(function(z){ var x = d['env-' + z.key]; cf.ENVIO[z.key] = x === '' ? null : parseFloat(x); });
-    cf.PAGO = {}; T.CFG.PAGO.forEach(function(m){ cf.PAGO[m.key] = d['pago-' + m.key]; });
+    cf.PAGO = {}; T.CFG.PAGO.forEach(function(m){ if(d['pago-' + m.key] !== undefined) cf.PAGO[m.key] = d['pago-' + m.key]; });
+    cf.PAGO_DIRECTO = { yape:{ numero:d['pd-yape-numero'], titular:d['pd-yape-titular'], qr:d['pd-yape-qr'] }, plin:{ numero:d['pd-plin-numero'], titular:d['pd-plin-titular'], qr:d['pd-plin-qr'] },
+                        banco:{ banco:d['pd-banco-banco'], cuenta:d['pd-banco-cuenta'], cci:d['pd-banco-cci'], titular:d['pd-banco-titular'] } };
     DATOS.guardar('config', cf); aviso('Ajustes guardados');
   }
 });
