@@ -107,7 +107,7 @@ function emitir(n){ try{ document.dispatchEvent(new CustomEvent('gd:' + n)); }ca
 var MARCAS = { visa:'Visa', mastercard:'Mastercard', amex:'American Express', diners:'Diners Club', yape:'Yape' };
 function logosPago(lista){
   return '<i class="gdt-logos">' + (lista || []).map(function(k){
-    return '<img src="images/pago/' + k + '.svg" alt="' + MARCAS[k] + '" width="39" height="25" loading="lazy" decoding="async">';
+    return '<img src="images/pago/' + k + '.svg" alt="' + MARCAS[k] + '" width="39" height="25" decoding="async">';
   }).join('') + '</i>';
 }
 var FLECHA = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
