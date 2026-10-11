@@ -547,3 +547,4 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 .co-medios > span{ font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--text-faint); }
 .pg-medios{ max-width:480px; margin:0 0 18px; padding:0; border-top:none; }
 @media (max-width:999px){ .pg-medios{ max-width:none; } }
+.gdt-logos img.es-icono{ width:25px; object-fit:contain; box-shadow:none; transform:scale(1.3); }

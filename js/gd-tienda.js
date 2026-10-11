@@ -39,7 +39,7 @@ var CFG = {
   PAGO: [
     { key:'yape',     activo:true, grupo:'Billeteras digitales', label:'Yape', logos:['yape'], nota:'Paga con QR o al número del estudio. Se lo enviamos por WhatsApp al confirmar el pedido.',
       notaEnLinea:'Paga ahora con su celular Yape y el código de aprobación de la app. Hasta S/ 2,000 por compra.' },
-    { key:'plin',     activo:true, grupo:'Billeteras digitales', label:'Plin', nota:'Desde la app de su banco afiliado a Plin, con QR o número.' },
+    { key:'plin',     activo:true, grupo:'Billeteras digitales', label:'Plin', logos:['plin'], nota:'Desde la app de su banco afiliado a Plin, con QR o número.' },
     { key:'tarjeta',  activo:true, grupo:'Tarjetas', label:'Tarjeta de crédito o débito', marcas:'Visa · Mastercard · American Express · Diners Club', logos:['visa','mastercard','amex','diners'], nota:'Paga en un enlace seguro de la pasarela. Sus datos de tarjeta no pasan por esta web.',
       notaEnLinea:'Paga ahora en el formulario seguro de Culqi. Giandeco no ve ni guarda los datos de su tarjeta.' },
     { key:'cuotas',   activo:true, grupo:'Tarjetas', label:'Cuotas con tarjeta de crédito', logos:['visa','mastercard'], nota:'Elige el número de cuotas en el mismo enlace seguro, según las condiciones de su banco.',
@@ -103,11 +103,12 @@ function db(k, v){
 }
 function emitir(n){ try{ document.dispatchEvent(new CustomEvent('gd:' + n)); }catch(e){} }
 /* logos de medios de pago (images/pago). Las tarjetas vienen de
-   aaronfagan/svg-credit-card-payment-icons (Apache 2.0); Yape, de Wikimedia Commons. */
-var MARCAS = { visa:'Visa', mastercard:'Mastercard', amex:'American Express', diners:'Diners Club', yape:'Yape' };
+   aaronfagan/svg-credit-card-payment-icons (Apache 2.0); Yape, de Wikimedia Commons;
+   Plin, del juego de logos que publica Culqi en su web. */
+var MARCAS = { visa:'Visa', mastercard:'Mastercard', amex:'American Express', diners:'Diners Club', yape:'Yape', plin:'Plin' };
 function logosPago(lista){
   return '<i class="gdt-logos">' + (lista || []).map(function(k){
-    return '<img src="images/pago/' + k + '.svg" alt="' + MARCAS[k] + '" width="39" height="25" decoding="async">';
+    return '<img' + (k === 'plin' ? ' class="es-icono"' : '') + ' src="images/pago/' + k + '.svg" alt="' + MARCAS[k] + '" width="39" height="25" decoding="async">';
   }).join('') + '</i>';
 }
 var FLECHA = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
