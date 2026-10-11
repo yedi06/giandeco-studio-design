@@ -86,7 +86,7 @@ function pagar(o){
       'h1, h2, h3, h4':{ color:K.texto }, 'h3 span, article p, article li, article li span':{ color:K.apoyo, opacity:'1' },   // títulos e instrucciones de Yape
       '.mx-6':{ marginLeft:'0', marginRight:'0' }, '.rounded-xl':{ borderRadius:'0' }, '.bg-culqi-white':{ background:K.fondo },
       '.Culqi-Main-Container':{ background:K.fondo }, '.Culqi-Main-Method':{ background:K.fondo },
-      '.Culqi-Label':{ color:K.apoyo, fontWeight:'400', fontSize:'11px', letterSpacing:'.14em', textTransform:'uppercase' },
+      '.Culqi-Label':{ color:K.apoyo, fontWeight:'400', fontSize:'10.5px', letterSpacing:'.08em', textTransform:'uppercase', whiteSpace:'nowrap' },   // en una línea también en el celular
       '.Culqi-Text, .Culqi-Main-Container ~ * span, .Culqi-Main-Method ~ * span':{ color:K.apoyo, opacity:'1' },
       '.Culqi-Input':{ background:K.campo, border:'1px solid ' + K.raya, color:K.texto, borderRadius:'2px', fontSize:'15px' },
       '.Culqi-Input:focus, .Culqi-Input:focus-within':{ border:'1px solid ' + K.acento },
