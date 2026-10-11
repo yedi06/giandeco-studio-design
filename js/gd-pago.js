@@ -83,6 +83,7 @@ function pagar(o){
     var reglas = {
       'html, body, #app':{ background:K.fondo }, '::-webkit-scrollbar':{ display:'none' }, 'html':{ scrollbarWidth:'none' },
       'body':{ color:K.apoyo }, 'body, body *':{ fontFamily:FUENTE },
+      'h1, h2, h3, h4':{ color:K.texto }, 'h3 span, article p, article li, article li span':{ color:K.apoyo, opacity:'1' },   // títulos e instrucciones de Yape
       '.mx-6':{ marginLeft:'0', marginRight:'0' }, '.rounded-xl':{ borderRadius:'0' }, '.bg-culqi-white':{ background:K.fondo },
       '.Culqi-Main-Container':{ background:K.fondo }, '.Culqi-Main-Method':{ background:K.fondo },
       '.Culqi-Label':{ color:K.apoyo, fontWeight:'400', fontSize:'11px', letterSpacing:'.14em', textTransform:'uppercase' },
