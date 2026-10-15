@@ -158,19 +158,19 @@
   + '.gdc-badge::after{display:none}'
   + '@media (max-width:640px){.gdc-seal{width:54px;height:54px}.gdc-g{width:26px;height:26px}}';
 
-  /* ---------- versión «widget»: burbuja plana y panel de conversación ---------- */
+  /* ---------- versión «widget»: burbuja plana en terracota (contrasta en tema oscuro y claro) y panel de conversación ---------- */
   css += ''
   /* burbuja */
   + '.gdc{gap:10px}'
-  + '.gdc-grip{width:12px;height:20px;grid-template-columns:repeat(2,3px);gap:4px 4px;opacity:.7}'
-  + '.gdc-grip i{width:3px;height:3px;background:#8A8375}'
-  + '.gdc-seal{width:60px;height:60px;background:#C9A24A;color:#0A0A09;box-shadow:0 6px 18px rgba(0,0,0,.28);transition:background-color .2s ease,box-shadow .2s ease,transform .2s ease}'
-  + '.gdc:hover .gdc-seal{background:#D4AE58;box-shadow:0 8px 22px rgba(0,0,0,.32);transform:none}'
-  + '.gdc.is-open .gdc-seal{background:#C9A24A}'
-  + '.gdc-g{width:30px;height:30px;stroke-width:1.8}'
-  + '.gdc-x{width:18px;height:18px;color:#0A0A09;stroke-width:1.9}'
+  + '.gdc-grip{width:12px;height:20px;grid-template-columns:repeat(2,3.5px);gap:3.5px 4px;opacity:1}'
+  + '.gdc-grip i{width:3.5px;height:3.5px;background:#A39C8E}'
+  + '.gdc-seal{width:60px;height:60px;background:#B4532F;color:#FFFFFF;box-shadow:0 6px 18px rgba(0,0,0,.28);transition:background-color .2s ease,box-shadow .2s ease,transform .2s ease}'
+  + '.gdc:hover .gdc-seal{background:#C25E38;box-shadow:0 8px 22px rgba(0,0,0,.32);transform:none}'
+  + '.gdc.is-open .gdc-seal{background:#B4532F}'
+  + '.gdc-g{width:34px;height:34px;stroke-width:2.1}'
+  + '.gdc-x{width:18px;height:18px;color:#FFFFFF;stroke-width:2}'
   + '.gdc-badge{top:-2px;right:-2px;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:#E5577A;color:#fff;font-size:11.5px;font-weight:600;box-shadow:0 0 0 2px #fff}'
-  + '@media (max-width:640px){.gdc-seal{width:56px;height:56px}.gdc-g{width:28px;height:28px}}'
+  + '@media (max-width:640px){.gdc-seal{width:56px;height:56px}.gdc-g{width:31px;height:31px}}'
   /* panel */
   + '.gdc-panel{width:380px;height:min(600px,calc(100dvh - 120px));padding:0;display:flex;flex-direction:column;overflow:hidden;background:#FBFAF7;color:#1F1D1A;'
   +   'border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.28),0 2px 8px rgba(0,0,0,.12);font-weight:400}'
@@ -182,7 +182,7 @@
   + '.gdc-who b{font-weight:600;font-size:.98rem;letter-spacing:.01em}'
   + '.gdc-who small{font-size:.74rem;color:#B9B3A6}'
   + '.gdc-panel .gdc-close{position:static;width:36px;height:36px;color:#DED8CB;border-radius:8px}'
-  + '.gdc-panel .gdc-close:hover{color:#C9A24A;background:rgba(255,255,255,.06);transform:none}'
+  + '.gdc-panel .gdc-close:hover{color:#B4532F;background:rgba(255,255,255,.06);transform:none}'
   + '.gdc-panel .gdc-close svg{width:14px;height:14px;stroke-width:1.6}'
   + '.gdc-body{flex:1;overflow-y:auto;padding:20px 16px 12px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin}'
   + '.gdc-msg{display:flex;align-items:flex-end;gap:8px;max-width:88%}'
@@ -194,20 +194,21 @@
   + '.gdc-chip{display:inline-flex;align-items:center;padding:8px 13px;border:1.5px solid #1F1D1A;border-radius:10px;background:#fff;color:#1F1D1A;'
   +   'font:inherit;font-size:.84rem;font-weight:500;line-height:1.2;text-decoration:none;cursor:pointer;transition:background-color .2s ease,color .2s ease,border-color .2s ease}'
   + '.gdc-chip:hover,.gdc-chip:focus-visible{background:#0A0A09;color:#F4F1EA;border-color:#0A0A09;outline:none}'
-  + '.gdc-cta2{display:inline-flex;align-items:center;gap:8px;margin:4px 0 0 36px;padding:10px 16px;border-radius:10px;background:#C9A24A;color:#0A0A09;text-decoration:none;font-size:.84rem;font-weight:600;align-self:flex-start}'
-  + '.gdc-cta2:hover{background:#D4AE58}'
+  + '.gdc-cta2{display:inline-flex;align-items:center;gap:8px;margin:4px 0 0 36px;padding:10px 16px;border-radius:10px;background:#B4532F;color:#FFFFFF;text-decoration:none;font-size:.84rem;font-weight:600;align-self:flex-start}'
+  + '.gdc-cta2:hover{background:#C25E38}'
   + '.gdc-cta2 svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}'
   + '.gdc-compose{flex:none;display:flex;align-items:center;gap:6px;margin:8px 12px 6px;padding:6px 6px 6px 16px;border:1.5px solid #D9D2C4;border-radius:24px;background:#fff;transition:border-color .2s ease}'
-  + '.gdc-compose:focus-within{border-color:#8A6F3C}'
+  + '.gdc-compose:focus-within{border-color:#B4532F}'
   + '.gdc-compose input{flex:1;min-width:0;border:none;outline:none;background:none;font:inherit;font-size:.9rem;color:#1F1D1A;padding:8px 0}'
   + '.gdc-compose input::placeholder{color:#8B857A}'
-  + '.gdc-compose button{flex:none;width:36px;height:36px;border:none;border-radius:50%;background:#C9A24A;color:#0A0A09;display:grid;place-items:center;cursor:pointer;transition:background-color .2s ease}'
-  + '.gdc-compose button:hover{background:#D4AE58}'
+  + '.gdc-compose button{flex:none;width:36px;height:36px;border:none;border-radius:50%;background:#B4532F;color:#FFFFFF;display:grid;place-items:center;cursor:pointer;transition:background-color .2s ease}'
+  + '.gdc-compose button:hover{background:#C25E38}'
   + '.gdc-compose svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}'
   + '.gdc-pie{flex:none;margin:0 0 10px;text-align:center;font-size:.7rem;color:#8B857A}'
-  + '.gdc-pie a{color:#8A6F3C;text-decoration:none}'
+  + '.gdc-pie a{color:#B4532F;text-decoration:none}'
   + '@media (max-width:560px){.gdc-panel{height:min(78dvh,620px);border-radius:16px}}';
 
+  + ':root[data-tema="claro"] .gdc-grip i{background:#6F6A63}';
   var st = document.createElement('style');
   st.textContent = css;
   document.head.appendChild(st);
@@ -226,7 +227,7 @@
     + '<button class="gdc-btn" type="button" aria-label="Abrir chat con Giandeco, 1 mensaje" aria-expanded="false" aria-controls="gdcPanel">'
     +   '<span class="gdc-seal" aria-hidden="true">'
     +     /* icono de conversación: burbuja al frente y otra asomando detrás */
-          '<svg class="gdc-g" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7.5h10.5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9l-4.5 3.5V9.5a2 2 0 0 1 2-2z"/><path d="M8.5 4h11a2 2 0 0 1 2 2v8.5"/></svg>'
+          '<svg class="gdc-g" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h11a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2H8.5L4 22.5V10a2 2 0 0 1 2-2z" transform="translate(-1 0)"/><path d="M7.5 4h11.5a2 2 0 0 1 2 2v9.5"/></svg>'
     +     '<svg class="gdc-x" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg><span class="gdc-badge">1</span></span>'
     + '</button>';
 
