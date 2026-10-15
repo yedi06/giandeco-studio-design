@@ -317,8 +317,8 @@ function footerHTML(){
       [['compra-segura','Compra segura'], ['envios-y-entregas','Envíos y entregas'], ['cambios-y-garantia','Cambios y garantía'],
        ['preguntas-frecuentes','Preguntas frecuentes'], ['opiniones','Opiniones de clientes'], ['terminos-y-condiciones','Términos y condiciones'],
        ['politica-de-privacidad','Privacidad']].map(function(l){ return '<a href="' + l[0] + '">' + l[1] + '</a>'; }).join('') +
-      '<a class="gd-footer-libro" href="libro-de-reclamaciones">' +
-        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6"/></svg>Libro de reclamaciones</a>' +
+      '<a class="gd-footer-libro" href="libro-de-reclamaciones" aria-label="Libro de Reclamaciones">' +
+        '<img src="images/legal/libro-reclamaciones-oscuro.svg" alt="Libro de Reclamaciones" width="259" height="96" decoding="async"></a>' +
     '</nav>' +
     '<div class="gd-footer-bar">' +
       '<span>© 2026 Giandeco Studio Design. Todos los derechos reservados.</span>' +

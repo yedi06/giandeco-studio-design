@@ -887,11 +887,11 @@ a.gd-slot:hover .gd-slot-cta{ opacity:1; transform:none; }
 .gd-footer-ayuda a{ font-family: var(--body); font-size:.8rem; color: var(--text-dim); text-decoration:none; transition: color .2s ease; }
 .gd-footer-ayuda a:hover{ color: var(--accent); }
 .gd-footer-libro{
-  display:inline-flex; align-items:center; gap:8px; margin-left:auto; padding:8px 14px;
-  border:1px solid var(--line); border-radius:2px; color: var(--text) !important;
+  display:inline-flex; align-items:center; margin-left:auto; padding:6px 14px 6px 4px;
+  border:1px solid var(--line); border-radius:4px; transition: border-color .25s ease, background-color .25s ease;
 }
-.gd-footer-libro:hover{ border-color: var(--accent); }
-.gd-footer-libro svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.4; }
+.gd-footer-libro:hover{ border-color: var(--accent); background: rgba(201,162,74,.06); }
+.gd-footer-libro img{ display:block; height:52px; width:auto; }   /* distintivo: images/legal (versión para fondo oscuro; el pie es siempre oscuro) */
 @media (max-width:720px){ .gd-footer-libro{ margin-left:0; } }
 .gd-footer-ayuda + .gd-footer-bar{ margin-top:22px; }
 .gd-footer-bar{

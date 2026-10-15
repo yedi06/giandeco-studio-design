@@ -404,7 +404,10 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 .pdp-conf{ display:flex; flex-wrap:wrap; gap:8px 22px; margin:24px 0 0; padding-top:20px; border-top:1px solid var(--line); }
 .pdp-conf a{ font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-dim); text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:3px; transition:color .25s ease, border-color .25s ease; }
 .pdp-conf a:hover{ color:var(--accent); border-color:var(--accent); }
-.pdp-pagos{ margin:16px 0 0; font-size:.74rem; color:var(--text-faint); line-height:1.7; }
+.pdp-pagos{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; margin:18px 0 0; font-size:.74rem; color:var(--text-faint); line-height:1.7; }
+.pdp-culqi{ display:inline-flex; align-items:center; gap:8px; font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; }
+.pdp-culqi img{ display:block; height:16px; width:auto; filter:invert(1) hue-rotate(180deg); }
+:root[data-tema="claro"] .pdp-culqi img{ filter:none; }
 
 /* ==========================================================================
    CENTRO DE AYUDA Y PÁGINAS LEGALES
@@ -584,3 +587,10 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 .co-confianza svg{ width:20px; height:20px; margin-top:2px; }
 .co-confianza span{ font-size:.8rem; line-height:1.5; color:var(--text-dim); }
 .co-confianza b{ display:block; font-weight:500; font-size:.84rem; color:var(--lino); }
+
+/* --- distintivo del libro de reclamaciones --- */
+.lr-sello{ margin:0 0 18px; }
+.lr-sello img{ display:block; height:clamp(64px,7vw,88px); width:auto; }
+.lr-sello .es-claro{ display:none; }
+:root[data-tema="claro"] .lr-sello .es-oscuro{ display:none; }
+:root[data-tema="claro"] .lr-sello .es-claro{ display:block; }
