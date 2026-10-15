@@ -158,6 +158,56 @@
   + '.gdc-badge::after{display:none}'
   + '@media (max-width:640px){.gdc-seal{width:54px;height:54px}.gdc-g{width:26px;height:26px}}';
 
+  /* ---------- versión «widget»: burbuja plana y panel de conversación ---------- */
+  css += ''
+  /* burbuja */
+  + '.gdc{gap:10px}'
+  + '.gdc-grip{width:12px;height:20px;grid-template-columns:repeat(2,3px);gap:4px 4px;opacity:.7}'
+  + '.gdc-grip i{width:3px;height:3px;background:#8A8375}'
+  + '.gdc-seal{width:60px;height:60px;background:#C9A24A;color:#0A0A09;box-shadow:0 6px 18px rgba(0,0,0,.28);transition:background-color .2s ease,box-shadow .2s ease,transform .2s ease}'
+  + '.gdc:hover .gdc-seal{background:#D4AE58;box-shadow:0 8px 22px rgba(0,0,0,.32);transform:none}'
+  + '.gdc.is-open .gdc-seal{background:#C9A24A}'
+  + '.gdc-g{width:30px;height:30px;stroke-width:1.8}'
+  + '.gdc-x{width:18px;height:18px;color:#0A0A09;stroke-width:1.9}'
+  + '.gdc-badge{top:-2px;right:-2px;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:#E5577A;color:#fff;font-size:11.5px;font-weight:600;box-shadow:0 0 0 2px #fff}'
+  + '@media (max-width:640px){.gdc-seal{width:56px;height:56px}.gdc-g{width:28px;height:28px}}'
+  /* panel */
+  + '.gdc-panel{width:380px;height:min(600px,calc(100dvh - 120px));padding:0;display:flex;flex-direction:column;overflow:hidden;background:#FBFAF7;color:#1F1D1A;'
+  +   'border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.28),0 2px 8px rgba(0,0,0,.12);font-weight:400}'
+  + '.gdc-head{flex:none;display:flex;align-items:center;gap:12px;padding:14px 12px 14px 18px;background:#0A0A09;color:#F4F1EA}'
+  + '.gdc-ava{position:relative;flex:none;width:40px;height:40px;border-radius:50%;background:#171613;display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(201,162,74,.45)}'
+  + '.gdc-ava img{width:26px;height:auto;display:block}'
+  + '.gdc-ava::after{content:"";position:absolute;right:0;bottom:1px;width:10px;height:10px;border-radius:50%;background:#2FB36B;box-shadow:0 0 0 2px #0A0A09}'
+  + '.gdc-who{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}'
+  + '.gdc-who b{font-weight:600;font-size:.98rem;letter-spacing:.01em}'
+  + '.gdc-who small{font-size:.74rem;color:#B9B3A6}'
+  + '.gdc-panel .gdc-close{position:static;width:36px;height:36px;color:#DED8CB;border-radius:8px}'
+  + '.gdc-panel .gdc-close:hover{color:#C9A24A;background:rgba(255,255,255,.06);transform:none}'
+  + '.gdc-panel .gdc-close svg{width:14px;height:14px;stroke-width:1.6}'
+  + '.gdc-body{flex:1;overflow-y:auto;padding:20px 16px 12px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin}'
+  + '.gdc-msg{display:flex;align-items:flex-end;gap:8px;max-width:88%}'
+  + '.gdc-msg .gdc-ava{width:28px;height:28px}.gdc-msg .gdc-ava img{width:18px}.gdc-msg .gdc-ava::after{display:none}'
+  + '.gdc-bub{margin:0;padding:10px 14px;border-radius:16px 16px 16px 4px;background:#EFECE5;color:#1F1D1A;font-size:.9rem;line-height:1.45}'
+  + '.gdc-msg.es-yo{align-self:flex-end;flex-direction:row-reverse}'
+  + '.gdc-msg.es-yo .gdc-bub{background:#0A0A09;color:#F4F1EA;border-radius:16px 16px 4px 16px}'
+  + '.gdc-chips{display:flex;flex-wrap:wrap;gap:8px;padding-left:36px}'
+  + '.gdc-chip{display:inline-flex;align-items:center;padding:8px 13px;border:1.5px solid #1F1D1A;border-radius:10px;background:#fff;color:#1F1D1A;'
+  +   'font:inherit;font-size:.84rem;font-weight:500;line-height:1.2;text-decoration:none;cursor:pointer;transition:background-color .2s ease,color .2s ease,border-color .2s ease}'
+  + '.gdc-chip:hover,.gdc-chip:focus-visible{background:#0A0A09;color:#F4F1EA;border-color:#0A0A09;outline:none}'
+  + '.gdc-cta2{display:inline-flex;align-items:center;gap:8px;margin:4px 0 0 36px;padding:10px 16px;border-radius:10px;background:#C9A24A;color:#0A0A09;text-decoration:none;font-size:.84rem;font-weight:600;align-self:flex-start}'
+  + '.gdc-cta2:hover{background:#D4AE58}'
+  + '.gdc-cta2 svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}'
+  + '.gdc-compose{flex:none;display:flex;align-items:center;gap:6px;margin:8px 12px 6px;padding:6px 6px 6px 16px;border:1.5px solid #D9D2C4;border-radius:24px;background:#fff;transition:border-color .2s ease}'
+  + '.gdc-compose:focus-within{border-color:#8A6F3C}'
+  + '.gdc-compose input{flex:1;min-width:0;border:none;outline:none;background:none;font:inherit;font-size:.9rem;color:#1F1D1A;padding:8px 0}'
+  + '.gdc-compose input::placeholder{color:#8B857A}'
+  + '.gdc-compose button{flex:none;width:36px;height:36px;border:none;border-radius:50%;background:#C9A24A;color:#0A0A09;display:grid;place-items:center;cursor:pointer;transition:background-color .2s ease}'
+  + '.gdc-compose button:hover{background:#D4AE58}'
+  + '.gdc-compose svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}'
+  + '.gdc-pie{flex:none;margin:0 0 10px;text-align:center;font-size:.7rem;color:#8B857A}'
+  + '.gdc-pie a{color:#8A6F3C;text-decoration:none}'
+  + '@media (max-width:560px){.gdc-panel{height:min(78dvh,620px);border-radius:16px}}';
+
   var st = document.createElement('style');
   st.textContent = css;
   document.head.appendChild(st);
@@ -173,53 +223,47 @@
   root.className = 'gdc';
   root.innerHTML =
       '<span class="gdc-grip" aria-hidden="true" title="Arrastre para mover"><i></i><i></i><i></i><i></i><i></i><i></i></span>'
-    + '<button class="gdc-btn" type="button" aria-label="Abrir atención al cliente, 1 mensaje" aria-expanded="false" aria-controls="gdcPanel">'
+    + '<button class="gdc-btn" type="button" aria-label="Abrir chat con Giandeco, 1 mensaje" aria-expanded="false" aria-controls="gdcPanel">'
     +   '<span class="gdc-seal" aria-hidden="true">'
-    +     /* icono «messages» de Tabler Icons · MIT · dos burbujas de conversación */
-          '<svg class="gdc-g" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10"/><path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2"/></svg>'
+    +     /* icono de conversación: burbuja al frente y otra asomando detrás */
+          '<svg class="gdc-g" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7.5h10.5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9l-4.5 3.5V9.5a2 2 0 0 1 2-2z"/><path d="M8.5 4h11a2 2 0 0 1 2 2v8.5"/></svg>'
     +     '<svg class="gdc-x" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg><span class="gdc-badge">1</span></span>'
     + '</button>';
 
-  var filas = '';
-  TEMAS.forEach(function(t, i){
-    filas += '<li class="gdc-s" style="--i:' + (i + 3) + '"><a class="gdc-row" href="' + waLink(t.msg) + '" target="_blank" rel="noopener">'
-          +  '<span class="gdc-n">0' + (i + 1) + '</span><span class="gdc-t">' + t.t + '</span>' + ARROW + '</a></li>';
-  });
+  var LOGO = '<span class="gdc-ava" aria-hidden="true"><img src="images/firma/logo-giandeco-oficial.png" alt=""></span>';
+  var ENVIAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>';
+  var chips = TEMAS.map(function(t){
+    return '<a class="gdc-chip" href="' + waLink(t.msg) + '" target="_blank" rel="noopener" data-txt="' + t.t + '">' + t.t + '</a>';
+  }).join('');
 
   var panel = document.createElement('div');
   panel.className = 'gdc-panel';
   panel.id = 'gdcPanel';
   panel.setAttribute('role', 'dialog');
-  panel.setAttribute('aria-label', 'Atención al cliente de Giandeco');
+  panel.setAttribute('aria-label', 'Chat con Giandeco');
   panel.innerHTML =
-      '<button class="gdc-close" type="button" aria-label="Cerrar"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg></button>'
-    + '<div class="gdc-ask">'
-    +   '<p class="gdc-eyebrow gdc-s" style="--i:0">Atención al cliente</p>'
-    +   '<p class="gdc-title gdc-s" style="--i:1">¿En qué podemos <em>ayudarle</em>?</p>'
-    +   '<p class="gdc-lead gdc-s" style="--i:2">Le responde una persona del estudio, por WhatsApp.</p>'
-    +   '<ul class="gdc-list">' + filas + '</ul>'
-    +   '<form class="gdc-form gdc-s" style="--i:7" autocomplete="off">'
-    +     '<input class="gdc-input" type="text" maxlength="400" placeholder="O escriba su consulta" aria-label="Escriba su consulta">'
-    +     '<button class="gdc-send" type="submit" aria-label="Enviar por WhatsApp">' + ARROW + '</button>'
-    +   '</form>'
-    +   '<p class="gdc-foot gdc-s" style="--i:8"><a href="https://wa.me/' + WA + '" target="_blank" rel="noopener">WhatsApp ' + WA_VISIBLE + '</a>'
-    +     '<a class="is-mail" href="mailto:' + MAIL + '">' + MAIL + '</a></p>'
-    + '</div>'
-    + '<div class="gdc-done" aria-live="polite">'
-    +   '<p class="gdc-eyebrow">Mensaje listo</p>'
-    +   '<p class="gdc-title">Le esperamos en <em>WhatsApp</em></p>'
-    +   '<p class="gdc-lead">Abrimos la conversación con su mensaje ya escrito. Solo falta enviarlo.</p>'
-    +   '<div class="gdc-actions"><a class="gdc-cta" href="#" target="_blank" rel="noopener">Abrir WhatsApp' + ARROW + '</a>'
-    +   '<button class="gdc-back" type="button">Hacer otra consulta</button></div>'
-    + '</div>';
+      '<div class="gdc-head">' + LOGO.replace('aria-hidden="true"', '') +
+        '<div class="gdc-who"><b>Giandeco</b><small>En línea · le responde un asesor</small></div>' +
+        '<button class="gdc-close" type="button" aria-label="Cerrar"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg></button>' +
+      '</div>' +
+      '<div class="gdc-body" aria-live="polite">' +
+        '<div class="gdc-msg">' + LOGO + '<p class="gdc-bub">Hola, le saluda el equipo de Giandeco.</p></div>' +
+        '<div class="gdc-msg">' + LOGO + '<p class="gdc-bub">¿En qué podemos ayudarle?</p></div>' +
+        '<div class="gdc-chips">' + chips + '</div>' +
+      '</div>' +
+      '<form class="gdc-compose" autocomplete="off">' +
+        '<input type="text" maxlength="400" placeholder="Escriba su mensaje…" aria-label="Escriba su mensaje">' +
+        '<button type="submit" aria-label="Enviar">' + ENVIAR + '</button>' +
+      '</form>' +
+      '<p class="gdc-pie">Continuamos la conversación por <a href="https://wa.me/' + WA + '" target="_blank" rel="noopener">WhatsApp</a></p>';
 
   document.body.appendChild(panel);
   document.body.appendChild(root);
 
   var btn = root.querySelector('.gdc-btn');
-  var form = panel.querySelector('.gdc-form');
-  var input = panel.querySelector('.gdc-input');
-  var cta = panel.querySelector('.gdc-cta');
+  var form = panel.querySelector('.gdc-compose');
+  var input = form.querySelector('input');
+  var cuerpo = panel.querySelector('.gdc-body');
   var isOpen = false;
 
   function store(k, v){ try{ if(v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); }catch(e){ return null; } }
@@ -322,15 +366,29 @@
   window.addEventListener('pointercancel', endDrag);
   window.addEventListener('resize', place);
 
-  // ---------- derivación a WhatsApp ----------
-  function done(href){
-    cta.href = href;
-    panel.classList.add('is-done');
-    placePanel();
+  // ---------- conversación: lo que el cliente elige o escribe se continúa en WhatsApp ----------
+  function burbuja(txt, yo){
+    var d = document.createElement('div');
+    d.className = 'gdc-msg' + (yo ? ' es-yo' : '');
+    d.innerHTML = (yo ? '' : LOGO) + '<p class="gdc-bub"></p>';
+    d.querySelector('.gdc-bub').textContent = txt;
+    cuerpo.appendChild(d);
   }
-  panel.querySelector('.gdc-list').addEventListener('click', function(e){
-    var a = e.target.closest ? e.target.closest('.gdc-row') : null;
-    if(a) setTimeout(function(){ done(a.href); }, 400);   // el enlace abre WhatsApp; la tarjeta confirma
+  function responder(texto, href){
+    burbuja(texto, true);
+    setTimeout(function(){
+      burbuja('Perfecto. Un asesor le atiende por WhatsApp: abrimos la conversación con su mensaje ya escrito.', false);
+      var a = document.createElement('a');
+      a.className = 'gdc-cta2'; a.href = href; a.target = '_blank'; a.rel = 'noopener';
+      a.innerHTML = 'Abrir WhatsApp' + ENVIAR;
+      cuerpo.appendChild(a);
+      cuerpo.scrollTop = cuerpo.scrollHeight;
+    }, 450);
+    cuerpo.scrollTop = cuerpo.scrollHeight;
+  }
+  panel.querySelector('.gdc-chips').addEventListener('click', function(e){
+    var a = e.target.closest ? e.target.closest('.gdc-chip') : null;
+    if(a) responder(a.getAttribute('data-txt'), a.href);   // el enlace ya abre WhatsApp
   });
   form.addEventListener('submit', function(e){
     e.preventDefault();
@@ -339,11 +397,7 @@
     var href = waLink(v);
     window.open(href, '_blank', 'noopener');
     input.value = '';
-    done(href);
-  });
-  panel.querySelector('.gdc-back').addEventListener('click', function(){
-    panel.classList.remove('is-done');
-    placePanel();
+    responder(v, href);
   });
 
   // ---------- abrir / cerrar ----------
@@ -351,7 +405,8 @@
     if(isOpen) return; isOpen = true;
     root.classList.add('is-open');
     btn.setAttribute('aria-expanded', 'true');
-    btn.setAttribute('aria-label', 'Cerrar atención al cliente');
+    btn.setAttribute('aria-label', 'Cerrar chat');
+    setTimeout(function(){ if(isOpen && window.innerWidth > 560) input.focus({ preventScroll: true }); }, 350);
     placePanel();
     panel.classList.add('is-open');
   }
@@ -360,8 +415,7 @@
     root.classList.remove('is-open');
     panel.classList.remove('is-open');
     btn.setAttribute('aria-expanded', 'false');
-    btn.setAttribute('aria-label', 'Abrir atención al cliente');
-    setTimeout(function(){ if(!isOpen) panel.classList.remove('is-done'); }, 500);
+    btn.setAttribute('aria-label', 'Abrir chat con Giandeco');
     if(refocus) btn.focus({ preventScroll: true });
   }
   btn.addEventListener('click', function(){ if(justDragged) return; isOpen ? close() : open(); });
