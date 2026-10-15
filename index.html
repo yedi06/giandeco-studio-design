@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261015r"></script>
+<script src="js/gd-acceso.js?v=20261015s"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Giandeco Studio Design · Visual merchandising e interiorismo en Lima</title>
 <meta name="description" content="Estudio de diseño comercial en Lima: visual merchandising, diseño de tiendas e interiorismo con producción y montaje propios. Para Zara, El Corte Inglés y Walon.">
-<link rel="stylesheet" href="css/giandeco.css?v=20261015r">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261015r">
+<link rel="stylesheet" href="css/giandeco.css?v=20261015s">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261015s">
 <!-- la portada del hero es el LCP: se pide ya, solo la que corresponde a la pantalla -->
 <link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-mobile.webp" media="(orientation: portrait) and (max-width: 1024px)" fetchpriority="high">
 <link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-desktop.webp" media="(orientation: landscape), (min-width: 1025px)" fetchpriority="high">
@@ -330,8 +330,12 @@
     font-size: 0.68rem;
     letter-spacing: 0.04em;
   }
+  /* en el teléfono la galería sigue a dos columnas: a una sola eran nueve láminas a todo el ancho */
   @media (max-width: 640px){
-    .work-gallery{ grid-template-columns: 1fr; }
+    .work-gallery, .work-gallery-col{ gap: 10px; }
+    .g-cap{ padding: 10px 11px; }
+    .g-cap .gt{ font-size: .8rem; line-height: 1.25; }
+    .g-cap .gg{ display: none; }
   }
 
   /* ---------- Pattern 3: horizontal marquee ---------- */
@@ -1205,9 +1209,155 @@
   
   
 </style>
-<link rel="stylesheet" href="css/gd-movil.css?v=20261015r">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261015r">
-<script src="js/gd-tema.js?v=20261015r"></script>
+<style>
+  /* ==========================================================================
+     HOME · DESCUBRIMIENTO (2026-10): universos compactos, campaña de Navidad
+     con piezas reales, banda de Hogar y productos de catálogo. Todo con los
+     tokens del sitio; los efectos quedan dentro de su contenedor.
+     ========================================================================== */
+  /* el video ya no ocupa toda la pantalla: asoma la sección siguiente y se entiende que hay más */
+  .gd-hero{ height:90vh; height:90svh; }
+  @media (max-width:899px){ .gd-hero{ height:76vh; height:76svh; min-height:420px; } }
+
+  /* --- tres universos --- */
+  .gd-universos{ padding-top:clamp(48px,7vw,96px); }
+  .gd-univ-head{ max-width:52ch; margin-bottom:var(--sp-40); }
+  .gd-univ-head .gd-h2{ margin-bottom:12px; }
+  .gd-univ-head .gd-body{ margin-bottom:0; }
+  .gd-univ-tag{ display:block; font-family:var(--body); font-weight:500; font-size:.64rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:10px; }
+  @media (min-width:860px){ .gd-univ--main{ aspect-ratio:4/3.1; } }
+  @media (max-width:859px){
+    .gd-univ-grid, .gd-univ-col{ gap:12px; }
+    .gd-univ--main{ aspect-ratio:4/3.3; }
+    .gd-univ-col{ grid-template-columns:1fr 1fr; }
+    .gd-univ-col .gd-univ--sub{ aspect-ratio:4/5; }
+    .gd-univ--sub .gd-univ-desc{ display:none; }
+    .gd-univ--sub .gd-univ-body{ padding:16px; }
+    .gd-univ--sub .gd-univ-title{ margin-bottom:6px; }
+    .gd-univ--main .gd-univ-body{ padding:20px; }
+    .gd-univ-more{ min-height:24px; }
+  }
+
+  /* --- Navidad 2026 --- */
+  .gd-nav{
+    position:relative; isolation:isolate; overflow:hidden;
+    background:
+      radial-gradient(60% 50% at 88% 0%, rgba(201,162,74,.15), transparent 70%),
+      radial-gradient(46% 42% at 0% 100%, rgba(122,30,26,.22), transparent 72%),
+      var(--bg-raised);
+    border-block:1px solid rgba(201,162,74,.22);
+  }
+  /* un único destello de latón al entrar en pantalla; nada que se repita */
+  .gd-nav::before{
+    content:""; position:absolute; left:0; right:0; top:-1px; height:1px; z-index:1; pointer-events:none;
+    background:linear-gradient(90deg, transparent, var(--accent) 50%, transparent); background-size:50% 100%; background-repeat:no-repeat;
+    background-position:-60% 0; opacity:0;
+  }
+  .gd-nav.is-in::before{ animation:gdDestello 2.6s var(--gd-ease) .2s 1 both; }
+  @keyframes gdDestello{ 0%{ opacity:0; background-position:-60% 0; } 20%{ opacity:1; } 100%{ opacity:.0; background-position:160% 0; } }
+  .gd-nav-grid{ display:grid; gap:var(--sp-40); grid-template-areas:"head" "prods" "foto" "acc"; }
+  .gd-nav-grid > *{ min-width:0; }
+  .gd-nav-head{ grid-area:head; }
+  .gd-nav-prods{ grid-area:prods; }
+  .gd-nav-foto{ grid-area:foto; }
+  .gd-nav-acc{ grid-area:acc; display:flex; flex-wrap:wrap; align-items:center; gap:14px 28px; }
+  .gd-nav-head .gd-eyebrow i{ display:inline-block; width:22px; height:1px; background:var(--accent); vertical-align:middle; margin-right:10px; }
+  .gd-nav-head .gd-h2{ margin-bottom:12px; }
+  .gd-nav-head .gd-h2 em{ font-style:normal; color:var(--accent); }
+  .gd-nav-head .gd-body{ margin-bottom:0; max-width:44ch; }
+  .gd-nav-chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:var(--sp-24); }
+  .gd-nav-chip{
+    display:inline-flex; align-items:center; gap:8px; min-height:40px; padding:0 14px; border:1px solid var(--line); border-radius:2px;
+    font-family:var(--body); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); text-decoration:none;
+    transition:border-color .25s ease, color .25s ease, background-color .25s ease;
+  }
+  .gd-nav-chip span{ color:var(--accent); font-variant-numeric:tabular-nums; }
+  .gd-nav-chip:hover, .gd-nav-chip:focus-visible{ border-color:var(--accent); color:var(--lino); background:rgba(201,162,74,.06); }
+  .gd-nav-chip:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .gd-nav-foto{ position:relative; display:block; overflow:hidden; border-radius:2px; aspect-ratio:16/10; text-decoration:none; }
+  .gd-nav-foto img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:58% 50%; transition:transform 1.1s var(--gd-ease); }
+  .gd-nav-foto::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, transparent 40%, rgba(10,9,6,.86)); }
+  .gd-nav-foto:hover img{ transform:scale(1.04); }
+  .gd-nav-foto:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+  .gd-nav-foto-cap{ position:absolute; left:0; right:0; bottom:0; z-index:2; display:flex; flex-direction:column; gap:6px; padding:clamp(18px,2.4vw,28px); }
+  .gd-nav-foto-cap .gd-eyebrow{ margin:0; }
+  .gd-nav-foto-cap b{ font-family:var(--body); font-weight:500; font-size:1.1rem; color:var(--lino); }
+  .gd-nav-foto:hover .gd-univ-more i{ width:30px; }
+  /* las piezas entran escalonadas una sola vez */
+  .gd-nav .gdt-card{ opacity:0; transform:translateY(14px); transition:opacity .7s var(--gd-ease), transform .7s var(--gd-ease); }
+  .gd-nav.is-in .gdt-card{ opacity:1; transform:none; }
+  .gd-nav.is-in .gdt-card:nth-child(2){ transition-delay:.06s; } .gd-nav.is-in .gdt-card:nth-child(3){ transition-delay:.12s; }
+  .gd-nav.is-in .gdt-card:nth-child(4){ transition-delay:.18s; } .gd-nav.is-in .gdt-card:nth-child(5){ transition-delay:.24s; }
+  .gd-nav.is-in .gdt-card:nth-child(6){ transition-delay:.3s; }
+  @media (max-width:719px){
+    .gd-nav-chips{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; margin-inline:calc(var(--gd-gut) * -1); padding-inline:var(--gd-gut); }
+    .gd-nav-chips::-webkit-scrollbar{ display:none; }
+    .gd-nav-chip{ flex:none; }
+  }
+  @media (min-width:900px){
+    #navProds.gd-grid{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+    #navProds > :nth-child(n+7){ display:none; }
+  }
+  @media (min-width:1080px){
+    .gd-nav-grid{ grid-template-columns:5fr 7fr; column-gap:clamp(40px,4.5vw,80px); row-gap:var(--sp-40);
+      grid-template-areas:"foto head" "foto prods" "foto acc"; align-items:start; }
+    .gd-nav-foto{ position:sticky; top:110px; aspect-ratio:4/5.2; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .gd-nav .gdt-card{ opacity:1; transform:none; transition:none; }
+    .gd-nav.is-in::before{ animation:none; }
+    .gd-nav-foto img, .gd-hogar-media img{ transition:none; }
+  }
+
+  /* --- Hogar --- */
+  .gd-hogar-grid{ display:grid; gap:var(--sp-24); align-items:center; }
+  .gd-hogar-media{ display:block; position:relative; overflow:hidden; border-radius:2px; aspect-ratio:16/10; }
+  .gd-hogar-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 42%; transition:transform 1.1s var(--gd-ease); }
+  .gd-hogar-media:hover img{ transform:scale(1.04); }
+  .gd-hogar-txt .gd-body{ max-width:44ch; }
+  .gd-hogar-acc{ display:flex; flex-wrap:wrap; align-items:center; gap:14px 28px; margin-top:var(--sp-24); }
+  @media (min-width:900px){
+    .gd-hogar-grid{ grid-template-columns:5fr 7fr; gap:clamp(40px,5vw,96px); }
+    .gd-hogar-media{ aspect-ratio:4/4.4; }
+  }
+
+  /* --- catálogo: cuatro piezas, en dos o cuatro columnas, nunca tres con un hueco --- */
+  @media (min-width:900px){ #catProds.gd-grid{ grid-template-columns:repeat(4, minmax(0,1fr)); } }
+
+  /* --- galería de trabajo: columnas equilibradas, sin hueco al final de una de ellas --- */
+  .work-gallery{ display:block; columns:2; column-gap:14px; }
+  .work-gallery .g-item{ break-inside:avoid; margin-bottom:14px; }
+  @media (min-width:900px){ .work-gallery{ columns:3; column-gap:18px; } .work-gallery .g-item{ margin-bottom:18px; } }
+  @media (max-width:640px){ .work-gallery{ column-gap:10px; } .work-gallery .g-item{ margin-bottom:10px; } }
+  /* --- galería de trabajo: el hover ya no agranda la lámina sobre sus vecinas --- */
+  .g-item.is-visible:hover{ transform:none; }
+  .g-item::before{ transition:background-color .4s ease, opacity .4s ease; }
+  .g-item::after{ content:""; position:absolute; inset:0; z-index:1; pointer-events:none; box-shadow:inset 0 0 0 1px rgba(201,162,74,0); transition:box-shadow .35s ease; }
+  .g-item:hover::after{ box-shadow:inset 0 0 0 1px rgba(201,162,74,.7); }
+  .g-item:hover::before{ background:linear-gradient(180deg, rgba(10,9,6,0) 35%, rgba(10,9,6,.84)); }
+  .g-item:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .g-cap{ transition:transform .4s var(--gd-ease); }
+  .g-item:hover .g-cap{ transform:translateY(-4px); }
+  .gd-claro .gdt-quick{ color: var(--grafito); border-color: rgba(10,9,6,.22); }
+  .gd-claro .gdt-quick:hover, .gd-claro .gdt-quick:focus-visible{ color: var(--bronce-texto); border-color: var(--bronce); }
+  @media (max-width:859px){
+    .gd-univ--main .gd-univ-desc{ display:none; }
+    .gd-univ--main .gd-univ-title{ max-width:12ch; }
+  }
+  /* textos sobre foto oscura: mismos colores en los dos temas */
+  .gd-nav-foto-cap b{ color:#DED8CB; }
+  .gd-nav-foto-cap .gd-eyebrow{ color:#C9A24A; }
+  .gd-nav-foto-cap .gd-univ-more{ color:#DED8CB; }
+  :root[data-tema="claro"] .gd-cta .gd-btn-ghost{ color:#DED8CB; border-color:rgba(222,216,203,.45); }
+  :root[data-tema="claro"] .gd-cta .gd-btn-ghost:hover{ color:#C9A24A; border-color:#C9A24A; }
+  /* retrato del estudio: en el teléfono no ocupa una pantalla entera */
+  @media (max-width:899px){
+    .gd-estudio-foto img{ aspect-ratio:1/1; object-fit:cover; object-position:50% 22%; }
+  }
+</style>
+<link rel="stylesheet" href="css/gd-movil.css?v=20261015s">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261015s">
+<script src="js/gd-tema.js?v=20261015s"></script>
 
 <!-- intro de marca: se decide antes de pintar, para que nunca haya un parpadeo del telón -->
 <script>(function(){try{var f=/[?&]intro\b/.test(location.search);if(!f&&sessionStorage.getItem('gdIntro')==='1')return;if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(window.scrollY>40)return;document.documentElement.classList.add('gd-intro-on');}catch(e){}})();</script>
@@ -1237,13 +1387,87 @@
 </section>
 <!-- ================ fin del bloque header / navegación / banner ================ -->
 
-<!-- ==================== MANIFIESTO ==================== -->
+<!-- ==================== TRES UNIVERSOS ====================
+     Primera parada después del video: las tres líneas de negocio con su peso
+     comercial (Retail domina; Hogar y Catálogo, en segundo plano). -->
+<section class="gd-sec gd-universos" id="universos">
+  <div class="gd-in">
+    <div class="gd-univ-head">
+      <p class="gd-eyebrow reveal">Estudio de diseño comercial · Lima</p>
+      <h2 class="gd-h2 reveal d1">Espacios que saben vender</h2>
+      <p class="gd-body reveal d2">Diseño para marcas retail, interiorismo para su casa y piezas propias para comprar.</p>
+    </div>
+
+    <div class="gd-univ-grid">
+      <a class="gd-univ gd-univ--main reveal-scale" href="retail-proyectos" data-cursor="Ver">
+        <img loading="lazy" decoding="async" src="images/universos/retail.jpg" alt="Isla de exhibición en tienda departamental con maniquíes y piezas escultóricas">
+        <div class="gd-univ-body">
+          <span class="gd-univ-tag">Retail</span>
+          <h3 class="gd-univ-title">Tiendas que venden más</h3>
+          <p class="gd-univ-desc">Layout, mobiliario, iluminación y vitrina en una sola dirección. Nueve proyectos retail documentados.</p>
+          <span class="gd-univ-more">Ver proyectos retail <i></i></span>
+        </div>
+      </a>
+
+      <div class="gd-univ-col">
+        <a class="gd-univ gd-univ--sub reveal-scale d1" href="hogar-espacios" data-cursor="Ver">
+          <img loading="lazy" decoding="async" src="images/universos/hogar.jpg" alt="Sala de estar con techo azul profundo, zócalo verde oliva y arte de gran formato">
+          <div class="gd-univ-body">
+            <span class="gd-univ-tag">Hogar</span>
+            <h3 class="gd-univ-title">Su casa</h3>
+            <p class="gd-univ-desc">Primero el recorrido, después el estilo.</p>
+            <span class="gd-univ-more">Ver espacios <i></i></span>
+          </div>
+        </a>
+        <a class="gd-univ gd-univ--sub reveal-scale d2" href="catalogo" data-cursor="Ver">
+          <img loading="lazy" decoding="async" src="images/universos/catalogo.jpg" alt="Ambientación navideña con árbol decorado y mesa servida">
+          <div class="gd-univ-body">
+            <span class="gd-univ-tag">Catálogo</span>
+            <h3 class="gd-univ-title">Tienda</h3>
+            <p class="gd-univ-desc">Navidad, mueblería e iluminación con precio.</p>
+            <span class="gd-univ-more">Comprar <i></i></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== NAVIDAD 2026 ====================
+     Campaña de temporada con las piezas reales del catálogo (GD_NAVIDAD):
+     las tarjetas, las categorías y el total salen de los datos, no del HTML. -->
+<section class="gd-sec gd-nav" id="navidad" aria-labelledby="navT">
+  <div class="gd-in gd-nav-grid">
+    <div class="gd-nav-head">
+      <p class="gd-eyebrow reveal"><i aria-hidden="true"></i>Colección Navidad 2026</p>
+      <h2 class="gd-h2 reveal d1" id="navT">Navidad, <em>pieza por pieza</em></h2>
+      <p class="gd-body reveal d2"><span id="navTotal">Veintiséis</span> piezas con precio y ficha, para su casa o su tienda.</p>
+      <nav class="gd-nav-chips reveal d2" id="navChips" aria-label="Categorías de la colección de Navidad"></nav>
+    </div>
+
+    <div class="gd-nav-prods">
+      <div class="gd-grid es-carrusel" id="navProds"></div>
+    </div>
+
+    <a class="gd-nav-foto reveal-scale" href="espacio-mesa-navidena" data-cursor="Ver">
+      <img loading="lazy" decoding="async" src="images/espacios/zara-navidad-1.jpg?v=2" width="1458" height="1120" alt="Comedor navideño montado: mesa servida en blanco y plata, árbol iluminado y velas">
+      <span class="gd-nav-foto-cap"><span class="gd-eyebrow">Compre el espacio</span><b>Mesa servida de Navidad</b><span class="gd-univ-more">Ver las piezas <i></i></span></span>
+    </a>
+
+    <div class="gd-nav-acc">
+      <a class="gd-btn gd-btn-primary" href="catalogo-navidad#piezas">Ver toda la colección<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-link" href="catalogo-navidad#campana">Navidad para tiendas: montaje de campaña<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== RETAIL: POSICIONAMIENTO ==================== -->
 <section class="gd-sec gd-manifiesto">
   <div class="gd-in gd-manifiesto-grid">
     <div>
-      <p class="gd-eyebrow reveal">Posicionamiento</p>
-      <h2 class="gd-h2 reveal d1">Para marcas retail que renuevan su punto de venta</h2>
-      <p class="gd-body is-lead reveal d2">Giandeco diseña el espacio con criterio de venta: interiores, mobiliario, iluminación y visual merchandising bajo una sola dirección, con la opción de ejecutarlo. Un solo interlocutor, menos coordinación, menos días cerrados.</p>
+      <p class="gd-eyebrow reveal">Retail</p>
+      <h2 class="gd-h2 reveal d1">Para marcas que renuevan su punto de venta</h2>
+      <p class="gd-body is-lead reveal d2">Interiores, mobiliario, iluminación y visual merchandising bajo una sola dirección, con la opción de ejecutarlo. Un interlocutor, menos días cerrados.</p>
       <div class="gd-triada reveal d3">
         <b>No es un despacho de arquitectura.</b>
         <b>No es un servicio de decoración.</b>
@@ -1262,77 +1486,11 @@
   </div>
 </section>
 
-<!-- ==================== TRES UNIVERSOS ==================== -->
-<section class="gd-sec" id="universos" style="padding-top:0;">
-  <div class="gd-in">
-    <div class="gd-filete is-left reveal"><span aria-hidden="true">◆</span></div>
-    <p class="gd-eyebrow reveal">Tres universos</p>
-    <h2 class="gd-h2 reveal d1">Dónde trabajamos</h2>
-    <p class="gd-body reveal d2">El mismo criterio aplicado a tres escalas distintas. Retail es donde más obra tenemos y donde el argumento comercial pesa más.</p>
-
-    <div class="gd-univ-grid">
-      <a class="gd-univ gd-univ--main reveal-scale" href="retail-proyectos" data-cursor="Ver">
-        <img loading="lazy" decoding="async" src="images/universos/retail.jpg" alt="Isla de exhibición en tienda departamental con maniquíes y piezas escultóricas">
-        <div class="gd-univ-body">
-          <h3 class="gd-univ-title">Retail</h3>
-          <p class="gd-univ-desc">Tiendas departamentales, boutiques, córners y campañas estacionales. Layout, mobiliario, iluminación y vitrina decididos en la misma mesa.</p>
-          <span class="gd-univ-more">Ver proyectos retail <i></i></span>
-        </div>
-      </a>
-
-      <div class="gd-univ-col">
-        <a class="gd-univ gd-univ--sub reveal-scale d1" href="hogar-espacios" data-cursor="Ver">
-          <img loading="lazy" decoding="async" src="images/universos/hogar.jpg" alt="Sala de estar con techo azul profundo, zócalo verde oliva y arte de gran formato">
-          <div class="gd-univ-body">
-            <h3 class="gd-univ-title">Hogar</h3>
-            <p class="gd-univ-desc">Interiorismo residencial con la misma lógica: primero el recorrido, después el estilo.</p>
-            <span class="gd-univ-more">Ver espacios <i></i></span>
-          </div>
-        </a>
-        <a class="gd-univ gd-univ--sub reveal-scale d2" href="catalogo" data-cursor="Ver">
-          <img loading="lazy" decoding="async" src="images/universos/catalogo.jpg" alt="Ambientación navideña con árbol decorado y mesa servida">
-          <div class="gd-univ-body">
-            <h3 class="gd-univ-title">Catálogo</h3>
-            <p class="gd-univ-desc">Navidad y mueblería propia disponibles ahora. Decoración, papel mural e iluminación, muy pronto.</p>
-            <span class="gd-univ-more">Ver catálogo <i></i></span>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
 <div class="page">
 
-  <div class="demo" id="proceso">
-    <div class="intro-col">
-      <h2 class="steps-heading reveal">Nuestro Proceso</h2>
-      <hr class="steps-underline reveal-underline">
-      <p class="reveal d1">Del boceto a la obra terminada, en tres etapas con el mismo criterio.</p>
-      <a class="intro-cta reveal d2" href="proceso-expodeco">
-        Ver proceso completo
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-      </a>
-    </div>
-
-    <div class="accordion reveal-scale" id="accordion">
-      <div class="acc-item is-open" data-index="0">
-        <button class="acc-panel" data-bg="images/proceso/expodeco-tecnico.jpg">
-          <span class="acc-media-title">01 — Boceto</span>
-        </button>
-      </div>
-      <div class="acc-item" data-index="1">
-        <button class="acc-panel" data-bg="images/proceso/expodeco-boceto.jpg">
-          <span class="acc-media-title">02 — Acuarela</span>
-        </button>
-      </div>
-      <div class="acc-item" data-index="2">
-        <button class="acc-panel" data-bg="images/proceso/expodeco-obra.jpg">
-          <span class="acc-media-title">03 — Proyecto</span>
-        </button>
-      </div>
-    </div>
-  </div>
+  <h2 class="section-h reveal" id="trabajo">Trabajo Seleccionado</h2>
+  <p class="work-eyebrow reveal d1">[ nueve casos entre tiendas departamentales, boutiques, cafés y hotelería ]</p>
+  <div class="work-gallery" id="workGallery"></div>
 
   <hr class="rule">
 
@@ -1342,7 +1500,8 @@
       <div>
         <p class="gd-eyebrow reveal">Método</p>
         <h2 class="gd-h2 reveal d1" style="margin-bottom:12px;">Del boceto a la obra</h2>
-        <p class="gd-body reveal d2" style="margin-bottom:0;">Cada proyecto se dibuja en acuarela antes de levantarse: altura de mueble, recorrido, punto de luz. Lo que se aprueba en papel es lo que se monta en obra.</p>
+        <p class="gd-body reveal d2" style="margin-bottom:0;">Cada proyecto se dibuja en acuarela antes de levantarse. Lo que se aprueba en papel es lo que se monta en obra.</p>
+        <a class="gd-link reveal d2" href="proceso-expodeco" style="margin-top:18px;">Ver un proceso completo<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
       </div>
       <div class="reveal d2" style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
         <div class="gd-ba-tabs" role="tablist" aria-label="Proyectos">
@@ -1381,61 +1540,42 @@
 
   <hr class="rule">
 
-  <h2 class="section-h reveal" id="trabajo">Trabajo Seleccionado</h2>
-  <p class="work-eyebrow reveal d1">[ nueve casos entre tiendas departamentales, boutiques, cafés y hotelería ]</p>
-  <div class="work-gallery" id="workGallery">
-    <div class="work-gallery-col" id="wgColA"></div>
-    <div class="work-gallery-col" id="wgColB"></div>
-  </div>
-
-  <hr class="rule">
-
   <!-- ==================== DIFERENCIADORES ==================== -->
   <section id="servicios">
     <p class="gd-eyebrow reveal">Qué nos hace distintos</p>
     <h2 class="gd-h2 reveal d1">Cuatro argumentos propios</h2>
-    <p class="gd-body reveal d2" style="margin-bottom:var(--sp-24);">La mayoría de proveedores resuelve una mitad del problema. Aquí las dos mitades se deciden en la misma mesa.</p>
 
     <div class="gd-dif-grid">
       <article class="gd-dif reveal">
         <i class="gd-dif-mark" aria-hidden="true"></i>
         <div>
           <h3>Interiores y visual merchandising juntos</h3>
-          <p>Unos hacen el contenedor y otros el contenido. Aquí el layout y la exhibición se deciden a la vez, con un solo criterio: dónde va el producto y cómo se mueve el cliente.</p>
+          <p>El layout y la exhibición se deciden a la vez: dónde va el producto y cómo se mueve el cliente.</p>
         </div>
       </article>
       <article class="gd-dif reveal d1">
         <i class="gd-dif-mark" aria-hidden="true"></i>
         <div>
           <h3>Diseño y ejecución</h3>
-          <p>El estudio entrega el proyecto o lo levanta completo. Usted elige el alcance, no el proveedor: menos coordinación entre terceros, menos días con el local cerrado.</p>
+          <p>Entregamos el proyecto o lo levantamos completo. Menos terceros, menos días con el local cerrado.</p>
         </div>
       </article>
       <article class="gd-dif reveal d2">
         <i class="gd-dif-mark" aria-hidden="true"></i>
         <div>
           <h3>Mobiliario propio</h3>
-          <p>Mueblería a medida. Cuando el catálogo no exhibe bien el producto, se diseña la pieza: material, medida y acabado especificados por el estudio, no por el carpintero.</p>
+          <p>Si el catálogo no exhibe bien su producto, diseñamos la pieza: material, medida y acabado.</p>
         </div>
       </article>
       <article class="gd-dif reveal d3">
         <i class="gd-dif-mark" aria-hidden="true"></i>
         <div>
           <h3>Portafolio verificable</h3>
-          <p>El Corte Inglés, Pycca y Enchantée Paris. Nombres que un comité reconoce sin explicación y que resuelven la primera objeción antes de que se formule.</p>
+          <p>El Corte Inglés, Pycca y Enchantée Paris: nombres que un comité reconoce sin explicación.</p>
         </div>
       </article>
     </div>
   </section>
-
-  <hr class="rule">
-
-  <h2 class="section-h reveal">Diseñamos el Cambio</h2>
-  <p class="work-eyebrow reveal d1">[ montaje, obra y detalle de material ]</p>
-  <div class="shift-marquee reveal-left" id="shiftMarquee">
-    <div class="shift-track"></div>
-  </div>
-
 
 </div>
 
@@ -1452,6 +1592,43 @@
   <p class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">El Corte Inglés, Pycca, Enchantée Paris, Zara, Walon, Baby Club Chic, Hotel Unión Cusco, Mássimo Café, Casa Grande, Casacor, Expodeco.</p>
 </section>
 
+<!-- ==================== HOGAR ==================== -->
+<section class="gd-sec gd-hogar" id="hogar">
+  <div class="gd-in gd-hogar-grid">
+    <a class="gd-hogar-media reveal-scale" href="hogar-espacios" data-cursor="Ver" tabindex="-1" aria-hidden="true">
+      <img loading="lazy" decoding="async" src="images/espacios/zara-sala-2.jpg" width="640" height="960" alt="">
+    </a>
+    <div class="gd-hogar-txt">
+      <p class="gd-eyebrow reveal">Hogar</p>
+      <h2 class="gd-h2 reveal d1">Su casa, con el mismo criterio</h2>
+      <p class="gd-body reveal d2">Interiorismo residencial: primero el recorrido, después el estilo. Si un ambiente le gusta, compre sus piezas.</p>
+      <div class="gd-hogar-acc reveal d3">
+        <a class="gd-btn gd-btn-ghost" href="hogar-espacios">Ver espacios</a>
+        <a class="gd-link" href="catalogo-compra-el-espacio">Compra el espacio<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CATÁLOGO: MUEBLERÍA E ILUMINACIÓN ====================
+     Piezas reales con precio, desde GD_PRODUCTOS y GD_ILUMINACION. -->
+<section class="gd-sec gd-catalogo gd-claro" id="catalogo">
+  <div class="gd-in">
+    <div class="gd-cat-head">
+      <div>
+        <p class="gd-eyebrow reveal">Catálogo</p>
+        <h2 class="gd-h2 reveal d1" style="margin-bottom:12px;">Mueblería e iluminación</h2>
+        <p class="gd-body reveal d2" style="margin-bottom:0;">Lo que especificamos en obra, por pieza y con precio.</p>
+      </div>
+      <a class="gd-link reveal d2" href="catalogo">
+        Ver todo el catálogo
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+    <div class="gd-grid" id="catProds"></div>
+  </div>
+</section>
+
 <!-- ==================== EL ESTUDIO ==================== -->
 <section class="gd-sec" id="estudio">
   <div class="gd-in">
@@ -1462,7 +1639,7 @@
       <div>
         <p class="gd-eyebrow reveal">Autoría</p>
         <h2 class="gd-h2 reveal d1">Gian firma cada proyecto</h2>
-        <p class="gd-body reveal d2">La marca no se esconde detrás de un equipo anónimo. Toda propuesta llega con la razón detrás: por qué esa altura de mueble, por qué ese recorrido, por qué ese punto de luz. Si no se puede explicar en una reunión de obra, no se presenta.</p>
+        <p class="gd-body reveal d2">Toda propuesta llega con la razón detrás: por qué esa altura de mueble, ese recorrido, ese punto de luz.</p>
         <blockquote class="gd-quote reveal d3">«Resuelvo el espacio primero. El diseño llega después.»</blockquote>
         <div class="gd-estudio-firma reveal d3">
           <b>Luis Giancarlo Jiménez Sánchez</b>
@@ -1474,51 +1651,6 @@
           <div class="gd-valor"><b>Palabra</b><span>Fecha de entrega y presupuesto se sostienen.</span></div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== CATÁLOGO ==================== -->
-<section class="gd-sec gd-catalogo" id="catalogo">
-  <div class="gd-in">
-    <div class="gd-filete is-left reveal"><span aria-hidden="true">◆</span></div>
-    <div class="gd-cat-head">
-      <div>
-        <p class="gd-eyebrow reveal">Catálogo</p>
-        <h2 class="gd-h2 reveal d1" style="margin-bottom:12px;">Piezas que salen del mismo criterio</h2>
-        <p class="gd-body reveal d2" style="margin-bottom:0;">Mobiliario, decoración, papel mural y navidad. Lo que especificamos en obra se puede comprar por pieza.</p>
-      </div>
-      <a class="gd-link reveal d2" href="catalogo">
-        Ver todo el catálogo
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-      </a>
-    </div>
-
-    <div class="gd-cat-grid">
-      <a class="gd-cat-item reveal" href="catalogo-muebleria#centro-deluxe" data-cursor="Ver">
-        <span class="gd-cat-thumb"><img loading="lazy" decoding="async" src="images/catalogo/centro-tv.jpg" alt="Centro de entretenimiento Deluxe Nature en madera con LED integrado"></span>
-        <span class="gd-cat-cat">Mueblería</span>
-        <span class="gd-cat-name">Centro Deluxe Nature</span>
-        <span class="gd-cat-price">S/ 1,179.00</span>
-      </a>
-      <a class="gd-cat-item reveal d1" href="catalogo-muebleria#comoda-flow" data-cursor="Ver">
-        <span class="gd-cat-thumb"><img loading="lazy" decoding="async" src="images/catalogo/comoda.jpg" alt="Cómoda Flow blanca de cuatro cajones con patas de madera"></span>
-        <span class="gd-cat-cat">Mueblería</span>
-        <span class="gd-cat-name">Cómoda Flow 1.37</span>
-        <span class="gd-cat-price">S/ 879.00</span>
-      </a>
-      <a class="gd-cat-item reveal d2" href="catalogo-navidad" data-cursor="Ver">
-        <span class="gd-cat-thumb"><img loading="lazy" decoding="async" src="images/catalogo/navidad.jpg" alt="Árbol de navidad decorado en tonos cálidos"></span>
-        <span class="gd-cat-cat">Navidad</span>
-        <span class="gd-cat-name">Ambientación de temporada</span>
-        <span class="gd-cat-soon">Colección 2026</span>
-      </a>
-      <a class="gd-cat-item reveal d3" href="proximamente-decoracion" data-cursor="Ver">
-        <span class="gd-cat-thumb"><img loading="lazy" decoding="async" src="images/catalogo/mesa-servida.jpg" alt="Mesa servida con vajilla artesanal y textiles bordados"></span>
-        <span class="gd-cat-cat">Decoración</span>
-        <span class="gd-cat-name">Mesa y objeto</span>
-        <span class="gd-cat-soon">Piezas únicas</span>
-      </a>
     </div>
   </div>
 </section>
@@ -1586,8 +1718,7 @@
     });
   });
 
-  goTo(0);
-  startTimer();
+  if(accItems.length){ goTo(0); startTimer(); }
 
   var copyButtons = document.querySelectorAll('.copy-btn');
   copyButtons.forEach(function(btn){
@@ -1626,8 +1757,13 @@
     }).join('');
   }
 
-  buildGalleryColumn(document.getElementById('wgColA'), galleryColA);
-  buildGalleryColumn(document.getElementById('wgColB'), galleryColB);
+  // una sola lista intercalada; las columnas las reparte el CSS (2 en teléfono, 3 en escritorio)
+  var galleryAll = [];
+  for(var gi = 0; gi < Math.max(galleryColA.length, galleryColB.length); gi++){
+    if(galleryColA[gi]) galleryAll.push(galleryColA[gi]);
+    if(galleryColB[gi]) galleryAll.push(galleryColB[gi]);
+  }
+  buildGalleryColumn(document.getElementById('workGallery'), galleryAll);
 
   var galleryEls = document.querySelectorAll('#workGallery .g-item');
   if('IntersectionObserver' in window){
@@ -1993,7 +2129,44 @@
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar); else iniciar();
 })();
 </script>
-<script src="js/giandeco.js?v=20261015r"></script>
-<script src="js/gd-tienda.js?v=20261015r" defer></script>
-<script src="js/gd-movil.js?v=20261015r" defer></script>
-<script src="js/gd-chat.js?v=20261015r" defer></script>
+<script src="js/giandeco.js?v=20261015s"></script>
+<script>
+/* Home: piezas reales del catálogo en la campaña de Navidad y en la fila de mueblería e iluminación */
+document.addEventListener('DOMContentLoaded', function(){
+  var T = window.GD_TIENDA, N = window.GD_NAVIDAD || {};
+  if(!T) return;
+  function disponibles(lista, fuente){
+    var k = lista.filter(function(x){ return fuente[x]; });
+    Object.keys(fuente).forEach(function(x){ if(k.indexOf(x) === -1) k.push(x); });
+    // primero lo que tiene stock: lo agotado no encabeza una vitrina
+    return k.filter(function(x){ return fuente[x].stock > 0; }).concat(k.filter(function(x){ return !(fuente[x].stock > 0); }));
+  }
+  var navKeys = Object.keys(N), total = document.getElementById('navTotal');
+  if(total && navKeys.length) total.textContent = navKeys.length;
+  var chips = document.getElementById('navChips');
+  if(chips){
+    var cats = [];
+    navKeys.forEach(function(k){ var c = N[k].cat, f = cats.filter(function(x){ return x[0] === c; })[0]; if(f) f[1]++; else cats.push([c, 1]); });
+    chips.innerHTML = cats.map(function(c){
+      return '<a class="gd-nav-chip" href="catalogo-navidad?cat=' + encodeURIComponent(c[0]) + '#piezas">' + T.esc(c[0]) + ' <span>' + c[1] + '</span></a>';
+    }).join('');
+  }
+  var nav = document.getElementById('navProds');
+  if(nav) nav.innerHTML = disponibles(['casa-jengibre', 'cascanueces-musicales', 'farol-157', 'arbol-iluminado', 'reno-de-pie-plato', 'casa-musical', 'taza-cascanuez-roja', 'bombonera-casita'], N)
+    .slice(0, 8).map(function(k){ return T.card(k); }).join('');
+  var cat = document.getElementById('catProds'), M = {};
+  [window.GD_PRODUCTOS, window.GD_ILUMINACION].forEach(function(o){ Object.keys(o || {}).forEach(function(k){ M[k] = o[k]; }); });
+  if(cat) cat.innerHTML = disponibles(['centro-deluxe', 'amaris', 'comoda-flow', 'basilea'], M).slice(0, 4).map(function(k){ return T.card(k); }).join('');
+  var sec = document.getElementById('navidad');
+  if(sec){
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(e){ if(e[0].isIntersecting){ sec.classList.add('is-in'); io.disconnect(); } }, { threshold:.12 });
+      io.observe(sec);
+    } else sec.classList.add('is-in');
+  }
+});
+</script>
+
+<script src="js/gd-tienda.js?v=20261015s" defer></script>
+<script src="js/gd-movil.js?v=20261015s" defer></script>
+<script src="js/gd-chat.js?v=20261015s" defer></script>

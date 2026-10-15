@@ -126,25 +126,29 @@ img{ max-width:100%; display:block; }
   display:inline-flex; align-items:center; gap:10px; cursor:pointer;
   font-family: var(--body); font-weight:500; font-size:.78rem; letter-spacing:.1em; text-transform:uppercase;
   padding:14px 26px; border-radius:2px; text-decoration:none; border:1px solid transparent;
-  transition: background-color .25s ease, color .25s ease, border-color .25s ease, gap .25s ease, transform .3s var(--gd-ease);
-  will-change: transform;
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease;
 }
-.gd-btn svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:1.5; flex:none; }
+/* la flecha avanza con transform: el botón no cambia de ancho ni empuja a sus vecinos */
+.gd-btn svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:1.5; flex:none; transition: transform .3s var(--gd-ease); }
+.gd-btn:hover svg, .gd-link:hover svg{ transform: translateX(4px); }
 .gd-btn-primary{ background: var(--accent); color: var(--ebano); }
-.gd-btn-primary:hover{ background:#dcb768; gap:14px; }
+.gd-btn-primary:hover{ background:#dcb768; }
+.gd-btn-primary:active{ background:#b8913c; }
 .gd-btn-ghost{ border-color: rgba(222,216,203,.28); color: var(--text); background:none; }
-.gd-btn-ghost:hover{ border-color: var(--accent); color: var(--accent); gap:14px; }
+.gd-btn-ghost:hover{ border-color: var(--accent); color: var(--accent); }
+.gd-btn-ghost:active{ background: rgba(201,162,74,.08); }
 .gd-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
 
 .gd-link{
   display:inline-flex; align-items:center; gap:8px; text-decoration:none;
   font-family: var(--body); font-size:.76rem; letter-spacing:.1em; text-transform:uppercase;
   color: var(--text); padding-bottom:4px; border-bottom:1px solid var(--line);
-  transition: color .25s ease, border-color .25s ease, gap .25s ease, transform .3s var(--gd-ease);
-  will-change: transform;
+  transition: color .25s ease, border-color .25s ease;
 }
-.gd-link svg{ width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.5; }
-.gd-link:hover{ color: var(--accent); border-color: var(--accent); gap:12px; }
+.gd-link svg{ width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.5; flex:none; transition: transform .3s var(--gd-ease); }
+.gd-link:hover{ color: var(--accent); border-color: var(--accent); }
+.gd-link:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+@media (prefers-reduced-motion: reduce){ .gd-btn svg, .gd-link svg{ transition:none; } }
 
 /* el foco solo se dibuja con teclado, nunca al hacer clic con el mouse */
 :focus{ outline:none; }

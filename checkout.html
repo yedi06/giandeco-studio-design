@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261015r"></script>
+<script src="js/gd-acceso.js?v=20261015s"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Finalizar pedido — Giandeco Studio Design</title>
 <meta name="robots" content="noindex">
@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261015r">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261015r">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261015r">
-<script src="js/gd-tema.js?v=20261015r"></script>
+<link rel="stylesheet" href="css/giandeco.css?v=20261015s">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261015s">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261015s">
+<script src="js/gd-tema.js?v=20261015s"></script>
 </head>
 <!-- data-home: el checkout no lleva el menú del sitio. Tiene su propia cabecera,
      sin nada que distraiga de terminar la compra. -->
@@ -36,15 +36,15 @@
   <a href="libro-de-reclamaciones" target="_blank">Libro de reclamaciones</a>
 </footer>
 
-<script src="js/giandeco.js?v=20261015r"></script>
-<script src="js/gd-tienda.js?v=20261015r"></script>
-<script src="js/gd-pago.js?v=20261015r"></script>
-<script src="js/gd-ubigeo.js?v=20261015r"></script>
+<script src="js/giandeco.js?v=20261015s"></script>
+<script src="js/gd-tienda.js?v=20261015s"></script>
+<script src="js/gd-pago.js?v=20261015s"></script>
+<script src="js/gd-ubigeo.js?v=20261015s"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc, C = T.CFG, P = window.GD_PAGO;
   var root = document.getElementById('co');
-  var ok = new URLSearchParams(location.search).get('ok');
+  var qs = new URLSearchParams(location.search), ok = qs.get('ok'), dep = qs.get('dep') === '1';
 
   /* ==================== PEDIDO REGISTRADO ==================== */
   if(ok){
@@ -55,7 +55,7 @@
       '<p class="gd-eyebrow">' + (cot ? 'Cotización registrada' : 'Pedido registrado') + '</p>' +
       '<h1>Gracias, ' + esc(ped.cliente.nombre.split(' ')[0]) + '</h1>' +
       '<p class="co-ok-n">' + esc(ped.n) + '</p>' +
-      (ped.pagoKey === 'directo' && !cot && !ped.pagado
+      ((ped.pagoKey === 'directo' || dep) && !cot && !ped.pagado
         ? '<p class="co-lead">Su pedido quedó registrado. Para confirmarlo, pague con cualquiera de los medios de Giandeco y envíenos el comprobante.</p>' + T.pagoDirectoHTML(ped) + '<ol class="co-pasos" hidden>'
         : '<p class="co-lead">Su ' + (cot ? 'solicitud' : 'pedido') + ' quedó registrado. Confírmelo con Giandeco por WhatsApp: el mensaje ya está redactado con las piezas, la entrega y sus datos.</p>' +
           '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="' + T.wa(T.pedidos.mensaje(ped)) + '" target="_blank" rel="noopener">Confirmar por WhatsApp' + T.FLECHA + '</a></div>' +
@@ -89,8 +89,9 @@
   /* ==================== COMPRA POR PASOS ==================== */
   var tot = T.carrito.total(lineas), soloCot = !tot.subtotal;
   var ses = T.sesion.get() || {}, datos = T.db('datos') || {};
-  var PASOS = soloCot ? ['Sus datos', 'Entrega', 'Confirmar'] : ['Sus datos', 'Entrega', 'Pago', 'Confirmar'];
-  var ULT = PASOS.length - 1, P_PAGO = soloCot ? -1 : 2;
+  // tres pasos: el pago se elige en el mismo paso en que se confirma, sin una pantalla solo para eso
+  var PASOS = soloCot ? ['Sus datos', 'Entrega', 'Confirmar'] : ['Sus datos', 'Entrega', 'Pago'];
+  var ULT = PASOS.length - 1;
   /* dirección normalizada con el UBIGEO del INEI (js/gd-ubigeo.js):
      departamento → provincia → distrito, y el código de 6 dígitos va con el pedido */
   var UB = window.GD_UBIGEO || [];
@@ -113,8 +114,8 @@
     return '<div class="gd-field"><label for="' + id + '">' + label + '</label><select id="' + id + '">' +
       ops.map(function(o){ return '<option' + (o === val ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></div>';
   }
-  function opcion(name, value, titulo, nota, on, marcas, logos){
-    return '<label class="gdt-op' + (logos ? ' con-logos' : '') + '"><input type="radio" name="' + name + '" value="' + value + '"' + (on ? ' checked' : '') + '><span><b>' + titulo + '</b>' +
+  function opcion(name, value, titulo, nota, on, marcas, logos, off){
+    return '<label class="gdt-op' + (logos ? ' con-logos' : '') + (off ? ' es-off' : '') + '"><input type="radio" name="' + name + '" value="' + value + '"' + (on ? ' checked' : '') + (off ? ' disabled' : '') + '><span><b>' + titulo + '</b>' +
       (logos ? T.logosPago(logos) : marcas ? '<em>' + marcas + '</em>' : '') + (nota ? '<small>' + nota + '</small>' : '') + '</span></label>';
   }
   function pie(i){
@@ -176,15 +177,12 @@
       '<label class="gdt-check"><input type="checkbox" id="coArmado"><span>Quiero que Giandeco cotice el armado o la instalación.</span></label>' +
     '</div>' + pie(1) + '</section>';
 
-  var pasoPago = soloCot ? '' :
-    '<section class="co-paso" data-paso="2" hidden><h2 class="co-paso-t">¿Cómo prefiere pagar?</h2>' +
-      '<p class="co-ayuda" id="coPagoAyuda" style="margin-bottom:20px;"></p>' +
-      '<div id="coPago"></div>' + pie(2) + '</section>';
-
   var pasoFinal =
-    '<section class="co-paso" data-paso="' + ULT + '" hidden><h2 class="co-paso-t">Revise y confirme</h2>' +
+    '<section class="co-paso" data-paso="' + ULT + '" hidden><h2 class="co-paso-t">' + (soloCot ? 'Revise y confirme' : '¿Cómo prefiere pagar?') + '</h2>' +
+      (soloCot ? '' : '<div id="coPago"></div><p class="co-etq co-etq-rev">Su pedido</p>') +
       '<dl class="co-rev" id="coRev"></dl>' +
-      '<div class="gd-field" style="margin:24px 0;"><label for="coNota">Nota para Giandeco (opcional)</label><textarea id="coNota" style="min-height:88px;" placeholder="Fecha en que lo necesita, piso o acceso del inmueble, si es un regalo…"></textarea></div>' +
+      '<details class="co-nota"><summary>Añadir una nota para Giandeco <span>(opcional)</span></summary>' +
+        '<div class="gd-field"><label for="coNota">Nota para Giandeco</label><textarea id="coNota" style="min-height:88px;" placeholder="Fecha en que lo necesita, piso o acceso del inmueble, si es un regalo…"></textarea></div></details>' +
       '<label class="gdt-check"><input type="checkbox" id="coAcepto"><span>He leído y acepto los <a href="' + C.LEGAL.terminos + '" target="_blank">términos y condiciones</a> y la <a href="' + C.LEGAL.privacidad + '" target="_blank">política de privacidad</a>.</span></label>' +
       '<span class="gdt-err" id="coAceptoErr">Marque la casilla para continuar.</span>' +
       '<label class="gdt-check" style="margin-top:12px;"><input type="checkbox" id="coPromo"><span>Quiero recibir novedades y campañas de Giandeco (opcional).</span></label>' +
@@ -195,7 +193,7 @@
     // teléfono: el resumen queda debajo del formulario; esta barra muestra el total en cada paso y lleva a él
     '<button type="button" class="co-mini" id="coMini" aria-controls="coRes"><span>Su bolsa · ' + lineas.reduce(function(a, x){ return a + x.qty; }, 0) + (lineas.reduce(function(a, x){ return a + x.qty; }, 0) === 1 ? ' pieza' : ' piezas') + '</span><b id="coMiniTot"></b><em>Ver detalle</em></button>' +
     '<form class="co-grid" id="coForm" novalidate>' +
-    '<div>' + pasoDatos + pasoEntrega + pasoPago + pasoFinal + '</div>' +
+    '<div>' + pasoDatos + pasoEntrega + pasoFinal + '</div>' +
     '<aside class="co-res" id="coRes" aria-label="Resumen">' +
       '<h2>Su bolsa</h2><ul class="gdt-lines">' + lineas.map(function(x){
         return '<li class="gdt-line">' + (x.img ? '<span class="gdt-line-img"><img decoding="async" src="' + esc(x.img) + '" alt=""></span>' : '<span class="gdt-line-img is-vacia" aria-hidden="true">G</span>') +
@@ -210,7 +208,6 @@
         '<li>Boleta o factura electrónica a su correo.</li>' +
         '<li>Atención directa de Giandeco por WhatsApp.</li>' +
       '</ul>' +
-      '<div class="co-medios" id="coMedios" hidden><span>Aceptamos</span>' + T.logosPago(['visa', 'mastercard', 'amex', 'diners', 'yape']) + '</div>' +
     '</aside>' +
     '</form>';
 
@@ -248,42 +245,24 @@
   }
   function zona(){ var k = zonaKey(); return C.ENVIO.filter(function(z){ return z.key === k; })[0]; }
 
-  /* medios de pago: se filtran según entrega, zona y comprobante */
+  /* medios de pago: solo dos, Culqi y depósito. Sin pasarela activa, Culqi
+     se muestra apagado (no se ofrece un pago que no se puede hacer). */
+  function usable(m){ return m.key !== 'culqi' || pasarela; }
+  var pagoTocado = false;   // lo que el cliente eligió manda; si no eligió, se propone el último medio usado o el primero disponible
   function pintarPago(){
     var host = $('coPago'); if(!host) return;
-    var ent = radio('ent'), comp = radio('comp'), zk = zonaKey(), antes = radio('pago') || datos.pago;
-    var ops = C.PAGO.filter(function(m){
-      if(!m.activo) return false;
-      if(m.soloRecojo) return ent === 'recojo';
-      if(m.soloFactura) return comp === 'factura';
-      if(m.solo) return ent === 'envio' && m.solo.indexOf(zk) !== -1;
-      return true;
-    });
-    // con pasarela las cuotas se eligen dentro del pago con tarjeta: no hace falta una opción aparte
-    if(pasarela) ops = ops.filter(function(m){ return m.key !== 'cuotas'; });
-    function grupoDe(m){ return !pasarela ? m.grupo : enLinea(m) ? 'Pague ahora, en línea' : 'Otros medios de pago'; }
-    var NOTA_GRUPO = {
-      'Pague ahora, en línea': 'Paga en el siguiente paso y su pedido queda confirmado al instante.',
-      'Otros medios de pago': 'Para cuando no pueda pagar en línea.'
-    };
-    if(pasarela) ops.sort(function(a, b){ return (enLinea(b) ? 1 : 0) - (enLinea(a) ? 1 : 0) || (b.key === 'tarjeta' ? 1 : 0) - (a.key === 'tarjeta' ? 1 : 0); });
-    var elegido = ops.some(function(m){ return m.key === antes; }) ? antes : ops[0].key;
-    var grupos = [];
-    ops.forEach(function(m){ if(grupos.indexOf(grupoDe(m)) === -1) grupos.push(grupoDe(m)); });
-    host.innerHTML = grupos.map(function(gr){
-      return '<p class="co-etq' + (NOTA_GRUPO[gr] ? ' es-grupo' : '') + '">' + gr +
-        (gr === 'Pague ahora, en línea' ? '<span class="co-culqi">Pagos procesados por <img src="images/pago/culqi.svg" alt="Culqi" width="63" height="18"></span>' : '') + '</p>' + (NOTA_GRUPO[gr] ? '<p class="co-etq-nota">' + NOTA_GRUPO[gr] + '</p>' : '') + '<div class="gdt-ops">' +
-        ops.filter(function(m){ return grupoDe(m) === gr; }).map(function(m){ return opcion('pago', m.key, m.label, enLinea(m) && m.notaEnLinea ? m.notaEnLinea : m.nota, m.key === elegido, m.marcas, m.logos); }).join('') + '</div>' + (gr === 'Pague ahora, en línea' ? CONFIANZA : '');
-    }).join('');
-    botonFinal();
+    var ops = C.PAGO.filter(function(m){ return m.activo; }), antes = pagoTocado ? radio('pago') : datos.pago;
+    var elegido = ops.filter(function(m){ return usable(m) && m.key === antes; })[0] || ops.filter(usable)[0];
+    host.innerHTML = ops.length ? '<div class="gdt-ops co-pagos">' + ops.map(function(m){
+        return opcion('pago', m.key, m.label, usable(m) ? m.nota : m.notaOff, !!elegido && m.key === elegido.key, null, m.logos, !usable(m));
+      }).join('') + '</div>' +
+      (pasarela && ops.some(function(m){ return m.key === 'culqi'; }) ? CONFIANZA : '')
+      : '<p class="co-ayuda">Giandeco le escribirá por WhatsApp para coordinar el pago.</p>';
+    botonFinal(); textosPago();
   }
   /* por qué pagar aquí es seguro: solo hechos que la pasarela respalda */
-  var CONFIANZA = '<ul class="pg-sellos co-confianza">' +
-    '<li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg><span><b>Sus datos viajan cifrados</b>Van directo a Culqi. Giandeco no ve ni guarda su tarjeta.</span></li>' +
-    '<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg><span><b>Pasarela certificada</b>Culqi cumple el estándar PCI DSS y cuenta con el respaldo del BCP.</span></li>' +
-    '<li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span><b>Verificación de su banco</b>Si su banco lo pide, usted aprueba la compra desde su app.</span></li>' +
-    '<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M9 12h6M9 16h6M9 8h3"/></svg><span><b>Comprobante electrónico</b>Boleta o factura a su correo.</span></li>' +
-  '</ul>';
+  var CONFIANZA = '<p class="co-seguro"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>' +
+    '<span>Procesado por <img src="images/pago/culqi.svg" alt="Culqi" width="56" height="16">, pasarela certificada PCI DSS. Giandeco no ve ni guarda los datos de su tarjeta.</span></p>';
   /* el último botón dice lo que va a pasar */
   function botonFinal(){
     var b = form.querySelector('.co-paso[data-paso="' + ULT + '"] button[type="submit"]'); if(!b || soloCot) return;
@@ -295,10 +274,8 @@
   var pasarela = P.activa();
   function enLinea(m){ return pasarela && !!m && P.EN_LINEA.indexOf(m.key) !== -1; }
   function textosPago(){
-    var a = $('coPagoAyuda'), b = $('coConfPago');
-    if(a){ a.hidden = pasarela; a.textContent = 'El pago se realiza después de que Giandeco confirme su pedido. Esta web no solicita datos de tarjeta.'; }
-    if(b) b.textContent = pasarela ? 'Pago en línea protegido por Culqi.' : 'Sin cobro hasta que Giandeco confirme.';
-    if($('coMedios')) $('coMedios').hidden = !pasarela;
+    var b = $('coConfPago'), m = pagoElegido();
+    if(b) b.textContent = soloCot ? 'Sin cobro: primero recibe la cotización.' : m && m.key === 'culqi' ? 'Pago en línea protegido por Culqi.' : 'Confirmamos su pedido al recibir el comprobante.';
   }
   P.estado().then(function(a){ if(a !== pasarela){ pasarela = a; textosPago(); pintarPago(); } });
 
@@ -333,11 +310,10 @@
           (g('coAgencia') !== 'Sin preferencia' ? ' · Agencia: ' + g('coAgencia') : '') : '');
   }
   function revision(){
-    var comp = radio('comp'), pg = pagoElegido();
+    var comp = radio('comp');
     var f = [['Datos', esc(g('coNombre')) + '<br>' + esc(g('coCel')) + ' · ' + esc(g('coEmail')) + '<br>' +
                 (comp === 'boleta' ? 'Boleta · ' + esc(g('coTdoc')) + ' ' + esc(g('coDoc')) : 'Factura · RUC ' + esc(g('coRuc')) + ' · ' + esc(g('coRazon'))), 0],
              ['Entrega', entregaTexto().split(' · ').map(esc).join('<br>') + ($('coOtro').checked ? '<br>Recibe: ' + esc(g('coOtroN')) : '') + ($('coArmado').checked ? '<br>Con cotización de armado' : ''), 1]];
-    if(pg) f.push(['Pago', esc(pg.label), 2]);
     $('coRev').innerHTML = f.map(function(x){ return '<div><dt>' + x[0] + '</dt><dd>' + x[1] + '</dd><button type="button" data-ir="' + x[2] + '">Editar</button></div>'; }).join('');
   }
   function condicionales(){
@@ -406,7 +382,7 @@
     if(e.target.id === 'coDep'){ $('coProv').value = ''; $('coDist').value = ''; pintarUbigeo(1); }
     else if(e.target.id === 'coProv'){ $('coDist').value = ''; pintarUbigeo(2); }
     else if(e.target.id === 'coDist') pintarUbigeo(2);
-    if(e.target.name === 'pago'){ botonFinal(); return; }
+    if(e.target.name === 'pago'){ pagoTocado = true; botonFinal(); textosPago(); return; }
     condicionales();
   });
   $('coCel').addEventListener('input', function(){ this.value = this.value.replace(/\D/g, ''); });
@@ -434,7 +410,9 @@
     $('coAceptoErr').style.display = acepto ? '' : 'block';
     if(!acepto){ $('coAcepto').focus(); return; }
 
-    var comp = radio('comp'), ent = radio('ent'), tdoc = g('coTdoc'), doc = g('coDoc'), z = zona(), pago = pagoElegido();
+    var comp = radio('comp'), ent = radio('ent'), tdoc = g('coTdoc'), doc = g('coDoc'), z = zona(), pago = soloCot ? null : pagoElegido();
+    // la pasarela pudo apagarse mientras la página estaba abierta: no se registra un pago que no se puede cobrar
+    if(pago && !usable(pago)){ pintarPago(); $('coPago').scrollIntoView({ block:'center' }); return; }
     var entrega = ent === 'recojo'
       ? { tipo:'recojo', resumen:entregaTexto() }
       : { tipo:'envio', zona:z.key, ubigeo:g('coDist'), departamento:nombreUb('coDep'), provincia:nombreUb('coProv'), distrito:nombreUb('coDist'),

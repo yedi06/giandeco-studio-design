@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261015r"></script>
+<script src="js/gd-acceso.js?v=20261015s"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Navidad — Catálogo Giandeco Studio Design</title>
 <meta name="description" content="Campaña de Navidad Giandeco: montaje completo para tiendas y casas, más 26 piezas de la colección 2026 con ficha y precio. Envío a todo el Perú.">
@@ -21,11 +21,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261015r">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261015r">
-<link rel="stylesheet" href="css/gd-movil.css?v=20261015r">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261015r">
-<script src="js/gd-tema.js?v=20261015r"></script>
+<link rel="stylesheet" href="css/giandeco.css?v=20261015s">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261015s">
+<link rel="stylesheet" href="css/gd-movil.css?v=20261015s">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261015s">
+<script src="js/gd-tema.js?v=20261015s"></script>
 <style>
   .nv-oferta{ display:grid; gap:var(--sp-24); grid-template-columns:1fr; }
   @media (min-width:720px){ .nv-oferta{ grid-template-columns:1fr 1fr; } }
@@ -62,6 +62,15 @@
   .nv-filtro:hover{ border-color:var(--accent); color:var(--lino); }
   .nv-filtro.is-active{ background:var(--accent); border-color:var(--accent); color:var(--ebano); }
   .nv-vacio{ color:var(--text-dim); font-size:.92rem; }
+  .nv-piezas{ background:var(--bg-raised); color:var(--text); }
+  .nv-piezas .gd-h2{ margin-bottom:var(--sp-24); }
+  .nv-piezas-acc{ margin-top:var(--sp-64); padding-top:var(--sp-40); border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:12px; }
+  /* en el teléfono los filtros se deslizan en una sola fila */
+  @media (max-width:719px){
+    .nv-filtros{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; margin-inline:calc(var(--gd-gut) * -1); padding-inline:var(--gd-gut); margin-bottom:var(--sp-24); }
+    .nv-filtros::-webkit-scrollbar{ display:none; }
+    .nv-filtro{ flex:none; min-height:40px; }
+  }
   /* comedor de la colección: 26 puntos, más finos; en móvil se recorre deslizando */
   .nv-shop-tip{ display:none; }
   @media (max-width:719px){
@@ -79,12 +88,12 @@
 <section class="gd-hero is-corto">
   <div class="gd-hero-panel">
     <p class="gd-migas reveal-left"><a href="./">Inicio</a> / <a href="catalogo">Catálogo</a> / <span>Navidad</span></p>
-    <p class="gd-hero-eyebrow reveal-left"><i></i>Temporada con fecha de entrega</p>
-    <h1 class="reveal-left d1">Navidad <em>montada</em>, no comprada</h1>
-    <p class="reveal-left d2">Del árbol a la vitrina: concepto, producción y montaje de la campaña completa. Para su tienda o para su casa.</p>
-    <div class="gd-hero-cta reveal-left d3"><a class="gd-btn gd-btn-primary" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20una%20campa%C3%B1a%20de%20Navidad." target="_blank" rel="noopener">Cotizar campaña
+    <p class="gd-hero-eyebrow reveal-left"><i></i>Colección Navidad 2026</p>
+    <h1 class="reveal-left d1">Navidad, <em>pieza por pieza</em></h1>
+    <p class="reveal-left d2">Veintiséis piezas con precio y ficha. Y si lo necesita, el montaje completo de su campaña.</p>
+    <div class="gd-hero-cta reveal-left d3"><a class="gd-btn gd-btn-primary" href="#piezas">Ver las piezas
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-      <a class="gd-btn gd-btn-ghost" href="contacto">Agendar visita técnica</a></div>
+      <a class="gd-btn gd-btn-ghost" href="#campana">Montaje de campaña</a></div>
   </div>
   <div class="gd-hero-media">
     <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/espacios/zara-navidad-2.jpg?v=2" alt="Ambientación navideña montada por Giandeco"></div>
@@ -95,25 +104,27 @@
   </div>
 </section>
 
-<!-- ==================== QUÉ MONTAMOS ==================== -->
-<section class="gd-sec">
-  <div class="gd-in">
-    <div class="gd-filete is-left reveal"><span aria-hidden="true">◆</span></div>
-    <p class="gd-eyebrow reveal">Qué montamos</p>
-    <h2 class="gd-h2 reveal d1">Cuatro piezas de campaña</h2>
-    <p class="gd-body reveal d2">Se contratan por separado o como campaña completa. En tienda, además, formamos a su equipo para mantenerla durante toda la temporada.</p>
 
-    <div class="nv-oferta" style="margin-top:var(--sp-40);">
-      <div class="nv-card reveal"><b>01</b><h3>Árbol y decoración</h3><p>Árbol curado por paleta, esferas, estrellas y luz cálida. Se instala y se retira en fecha.</p></div>
-      <div class="nv-card reveal d1"><b>02</b><h3>Mesa servida</h3><p>Mantelería, vajilla, cristalería y centro de mesa. El montaje que se fotografía.</p></div>
-      <div class="nv-card reveal d2"><b>03</b><h3>Coronas y accesos</h3><p>Coronas naturales, guirnaldas y recibimiento de entrada para local o vivienda.</p></div>
-      <div class="nv-card reveal d3"><b>04</b><h3>Vitrina de temporada</h3><p>Escaparate navideño completo: concepto, utilería, iluminación y gráfica.</p></div>
+
+
+<!-- ==================== COLECCIÓN 2026 — PIEZAS CON PRECIO ==================== -->
+<section class="gd-sec nv-piezas" id="piezas">
+  <div class="gd-in">
+    <h2 class="gd-h2 reveal" style="color:var(--lino);">Veintiséis piezas, precio y ficha</h2>
+
+    <div class="nv-filtros" id="nvFiltros" role="group" aria-label="Filtrar por categoría"></div>
+    <div class="gd-grid" id="nvGrid"></div>
+
+    <div class="nv-piezas-acc">
+      <a class="gd-btn gd-btn-primary" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20la%20colecci%C3%B3n%20Navidad%202026%20completa." target="_blank" rel="noopener">Cotizar la colección completa
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-ghost" href="catalogo-compra-el-espacio">Ver otros ambientes</a>
     </div>
   </div>
 </section>
 
 <!-- ==================== ESPACIO CON PUNTOS ==================== -->
-<section class="gd-sec" style="padding-top:0;">
+<section class="gd-sec" id="comedor">
   <div class="gd-in">
     <p class="gd-eyebrow reveal">La colección 2026, ambientada</p>
     <h2 class="gd-h2 reveal d1" style="font-size:clamp(1.9rem,3vw,2.4rem);">Comedor de Navidad, pieza por pieza</h2>
@@ -152,34 +163,35 @@
     </div>
     <p class="nv-shop-tip">Deslice la imagen para recorrer el espacio</p>
 
-    <div class="nv-tiempo reveal">
+  </div>
+</section>
+
+<!-- ==================== QUÉ MONTAMOS ==================== -->
+<section class="gd-sec" id="campana" style="background:var(--bg-raised);">
+  <div class="gd-in">
+    <div class="gd-filete is-left reveal"><span aria-hidden="true">◆</span></div>
+    <p class="gd-eyebrow reveal">Para tiendas y casas · montaje de campaña</p>
+    <h2 class="gd-h2 reveal d1">Cuatro piezas de campaña</h2>
+    <p class="gd-body reveal d2">Se contratan por separado o como campaña completa. En tienda, además, formamos a su equipo para mantenerla durante toda la temporada.</p>
+
+    <div class="nv-oferta" style="margin-top:var(--sp-40);">
+      <div class="nv-card reveal"><b>01</b><h3>Árbol y decoración</h3><p>Árbol curado por paleta, esferas, estrellas y luz cálida. Se instala y se retira en fecha.</p></div>
+      <div class="nv-card reveal d1"><b>02</b><h3>Mesa servida</h3><p>Mantelería, vajilla, cristalería y centro de mesa. El montaje que se fotografía.</p></div>
+      <div class="nv-card reveal d2"><b>03</b><h3>Coronas y accesos</h3><p>Coronas naturales, guirnaldas y recibimiento de entrada para local o vivienda.</p></div>
+      <div class="nv-card reveal d3"><b>04</b><h3>Vitrina de temporada</h3><p>Escaparate navideño completo: concepto, utilería, iluminación y gráfica.</p></div>
+    </div>
+    <div class="nv-tiempo reveal" style="margin-top:var(--sp-40);">
       <div><b>Reservas:</b> desde septiembre</div>
       <div><b>Montaje en tienda:</b> octubre – noviembre</div>
       <div><b>Retiro:</b> primera semana de enero</div>
     </div>
-  </div>
-</section>
 
-<!-- ==================== COLECCIÓN 2026 — PIEZAS CON PRECIO ==================== -->
-<section class="gd-sec" style="background:var(--bg-raised); color:var(--text);">
-  <div class="gd-in">
-    <p class="gd-eyebrow reveal">Colección 2026</p>
-    <h2 class="gd-h2 reveal d1" style="color:var(--lino);">Veintiséis piezas, precio y ficha</h2>
-    <p class="gd-body reveal d2" style="color:var(--text-dim);">Del árbol de jengibre a la bombonera de la mesa. Se piden sueltas o como campaña completa.</p>
-
-    <div class="nv-filtros reveal d2" id="nvFiltros" style="margin-top:var(--sp-40);"></div>
-    <div class="gd-grid" id="nvGrid"></div>
-
-    <div style="margin-top:var(--sp-64); padding-top:var(--sp-40); border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:12px;">
-      <a class="gd-btn gd-btn-primary" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20la%20colecci%C3%B3n%20Navidad%202026%20completa." target="_blank" rel="noopener">Cotizar la colección completa
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-      <a class="gd-btn gd-btn-ghost" href="catalogo-compra-el-espacio">Ver otros ambientes</a>
-    </div>
+    <div class="gd-hero-cta" style="margin-top:var(--sp-40);"><a class="gd-btn gd-btn-primary" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20una%20campa%C3%B1a%20de%20Navidad." target="_blank" rel="noopener">Cotizar campaña<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a><a class="gd-btn gd-btn-ghost" href="contacto">Agendar visita técnica</a></div>
   </div>
 </section>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=20261015r"></script>
+<script src="js/giandeco.js?v=20261015s"></script>
 <script>
 (function(){
   var P = window.GD_NAVIDAD || {};
@@ -197,34 +209,35 @@
 
   function pintar(cat){
     var lista = keys.filter(function(k){ return cat === 'Todo' || P[k].cat === cat; });
-    grid.innerHTML = lista.length ? lista.map(function(k, i){
+    var T = window.GD_TIENDA;
+    grid.innerHTML = lista.length ? lista.map(function(k){
+      if(T) return T.card(k);
       var p = P[k];
-      var d = i < 4 ? '' : (i < 8 ? ' d1' : ' d2');
-      return '<a class="gd-prod reveal' + d + '" href="' + GD_URL(k) + '" data-cursor="Ver">' +
+      return '<article class="gdt-card"><a class="gd-prod" href="' + GD_URL(k) + '" data-cursor="Ver">' +
         '<span class="gd-prod-thumb"><img decoding="async" src="' + p.img + '" alt="' + p.nombre + '" loading="lazy"></span>' +
-        '<span class="gd-prod-cat">' + p.cat + '</span>' +
-        '<span class="gd-prod-name">' + p.nombre + '</span>' +
-        '<span class="gd-prod-price">' + p.precio + '</span>' +
-      '</a>';
+        '<span class="gd-prod-cat">' + p.cat + '</span><span class="gd-prod-name">' + p.nombre + '</span><span class="gd-prod-price">' + p.precio + '</span></a></article>';
     }).join('') : '<p class="nv-vacio">Sin piezas en esta categoría por ahora.</p>';
-    grid.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('is-visible'); });
+    filtros.querySelectorAll('.nv-filtro').forEach(function(x){ var on = x.dataset.cat === cat; x.classList.toggle('is-active', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
   }
 
   filtros.addEventListener('click', function(e){
     var b = e.target.closest('.nv-filtro'); if(!b) return;
-    filtros.querySelectorAll('.nv-filtro').forEach(function(x){ x.classList.remove('is-active'); });
-    b.classList.add('is-active');
     pintar(b.dataset.cat);
   });
 
 
-  pintar('Todo');
+  // la home enlaza por categoría: catalogo-navidad?cat=Jengibre#piezas
+  var pedida = new URLSearchParams(location.search).get('cat');
+  var inicial = cats.indexOf(pedida) !== -1 ? pedida : 'Todo';
+  pintar(inicial);
+  // con la capa de tienda cargada, las tarjetas pasan a las del sistema (añadir a la bolsa, agotado)
+  document.addEventListener('DOMContentLoaded', function(){ var a = filtros.querySelector('.nv-filtro.is-active'); pintar(a ? a.dataset.cat : inicial); });
   var hash = (location.hash || '').replace('#','');
   if(hash && P[hash]) location.replace(GD_URL(hash));
 })();
 </script>
-<script src="js/gd-tienda.js?v=20261015r" defer></script>
-<script src="js/gd-movil.js?v=20261015r" defer></script>
-<script src="js/gd-chat.js?v=20261015r" defer></script>
+<script src="js/gd-tienda.js?v=20261015s" defer></script>
+<script src="js/gd-movil.js?v=20261015s" defer></script>
+<script src="js/gd-chat.js?v=20261015s" defer></script>
 </body>
 </html>

@@ -152,6 +152,6 @@ window.GD_PAGO = {
   cerrar: function(){ try{ if(actual) actual.close(); }catch(e){} actual = null; },
   activa: function(){ return T.db('pasarela') === true; },
   /* medios que se cobran en línea cuando hay pasarela */
-  EN_LINEA: ['tarjeta', 'cuotas', 'yape']
+  EN_LINEA: ['culqi', 'tarjeta', 'cuotas', 'yape']
 };
 })();
