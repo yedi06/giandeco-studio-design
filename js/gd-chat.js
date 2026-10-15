@@ -135,23 +135,28 @@
   +   '.gdc.is-snap{transition:none!important}.gdc-panel .gdc-s{opacity:1;transform:none}}'
   + '@media print{.gdc,.gdc-panel{display:none!important}}';
 
-  /* ---------- lanzador: círculo en latón con el icono de mensaje de Flaticon ---------- */
+  /* ---------- lanzador: burbuja en latón con el icono de conversación, contador y asa de arrastre ---------- */
   css += ''
-  + '.gdc{gap:0}'
-  + '.gdc-grip{display:none}'                       /* se sigue arrastrando: basta mantener pulsado el botón */
+  + '.gdc{gap:6px}'
+  /* asa de arrastre: seis puntos discretos a la izquierda de la burbuja, como los lanzadores profesionales */
+  + '.gdc-grip{display:grid;width:14px;height:22px;grid-template-columns:repeat(2,4px);gap:3px 4px;opacity:.6}'
+  + '.gdc-grip i{width:4px;height:4px;background:#8A8375;box-shadow:none}'
+  + ':root[data-tema="claro"] .gdc-grip i{background:#6F6A63}'
+  + '.gdc:hover .gdc-grip,.gdc.is-drag .gdc-grip{opacity:1}'
+  + '.gdc.is-drag .gdc-grip i{background:#C9A24A}'
   + '.gdc-seal{width:56px;height:56px;border-radius:50%;color:#0A0A09;background:#C9A24A;filter:none;'
   +   'box-shadow:0 10px 26px rgba(0,0,0,.45),0 2px 6px rgba(0,0,0,.3);transition:background-color .3s ease,box-shadow .3s ease,transform .4s ' + EASE + '}'
   + '.gdc-seal::before,.gdc-seal::after{display:none}'
   + '.gdc:hover .gdc-seal{background:#dcb768;box-shadow:0 14px 32px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.3);transform:translateY(-2px)}'
   + '.gdc.is-drag .gdc-seal{background:#dcb768;box-shadow:0 18px 38px rgba(0,0,0,.55);transform:none}'
   + '.gdc.is-open .gdc-seal{background:#DED8CB;box-shadow:0 10px 26px rgba(0,0,0,.45);transform:none}'
-  + '.gdc-g{width:26px;height:26px;font-size:0;transform:translateY(1px);background:currentColor;'
-  +   '-webkit-mask:url(images/icono-mensaje.png) center/contain no-repeat;mask:url(images/icono-mensaje.png) center/contain no-repeat}'
-  + '.gdc.is-open .gdc-g{opacity:0;transform:rotate(90deg) scale(.6)}'
-  + '.gdc-x{display:block;width:15px;height:15px;color:#0A0A09;stroke-width:1.6}'
-  + '.gdc-badge{top:-3px;right:-3px;min-width:19px;height:19px;background:#0A0A09;color:#C9A24A;font-size:10.5px;box-shadow:0 0 0 2px #C9A24A}'
+  + '.gdc-g{width:28px;height:28px;font-size:0;transform:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}'
+  + '.gdc.is-open .gdc-g{opacity:0;transform:rotate(-90deg) scale(.6)}'
+  + '.gdc-x{display:block;width:16px;height:16px;color:#0A0A09;stroke-width:1.8}'
+  /* contador: pequeño, fuera del borde y separado de la burbuja por un aro del color de la página */
+  + '.gdc-badge{top:-5px;right:-5px;min-width:20px;height:20px;padding:0 5px;background:#0A0A09;color:#F4F1EA;font-family:var(--body,Jost,sans-serif);font-weight:500;font-size:11px;box-shadow:0 0 0 2.5px var(--bg,#0A0A09)}'
   + '.gdc-badge::after{display:none}'
-  + '@media (max-width:640px){.gdc-seal{width:52px;height:52px}.gdc-g{width:24px;height:24px;font-size:0}}';
+  + '@media (max-width:640px){.gdc-seal{width:54px;height:54px}.gdc-g{width:26px;height:26px}}';
 
   var st = document.createElement('style');
   st.textContent = css;
@@ -170,8 +175,8 @@
       '<span class="gdc-grip" aria-hidden="true" title="Arrastre para mover"><i></i><i></i><i></i><i></i><i></i><i></i></span>'
     + '<button class="gdc-btn" type="button" aria-label="Abrir atención al cliente, 1 mensaje" aria-expanded="false" aria-controls="gdcPanel">'
     +   '<span class="gdc-seal" aria-hidden="true">'
-    +     /* icono «Chat» de mattbadal · Flaticon n.º 2769104 · crédito en términos y condiciones */
-          '<span class="gdc-g"></span>'
+    +     /* icono «messages» de Tabler Icons · MIT · dos burbujas de conversación */
+          '<svg class="gdc-g" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10"/><path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2"/></svg>'
     +     '<svg class="gdc-x" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg><span class="gdc-badge">1</span></span>'
     + '</button>';
 
