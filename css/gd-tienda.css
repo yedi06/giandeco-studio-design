@@ -591,4 +591,5 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 /* --- distintivo del libro de reclamaciones --- */
 .lr-sello{ display:inline-block; margin:0 0 20px; padding:4px; background:#fff; border-radius:8px; box-shadow:0 0 0 1px var(--line); }
 .lr-sello img{ display:block; height:clamp(96px,9vw,128px); width:auto; border-radius:5px; }
-.lg-prosa.es-libro{ max-width:1040px; }   /* el libro es un formulario: aprovecha el ancho, el texto legal no */
+.lg-prosa.es-libro{ max-width:none; }   /* el libro es un formulario: llega al mismo borde derecho que la cabecera */
+.lg-prosa.es-libro > ul, .lg-prosa.es-libro > p{ max-width:74ch; }   /* el libro es un formulario: aprovecha el ancho, el texto legal no */
