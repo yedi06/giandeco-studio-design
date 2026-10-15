@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=2"></script>
+<script src="js/gd-acceso.js?v=3"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Finalizar pedido — Giandeco Studio Design</title>
 <meta name="robots" content="noindex">
@@ -37,7 +37,7 @@
 </footer>
 
 <script src="js/giandeco.js?v=15"></script>
-<script src="js/gd-tienda.js?v=13"></script>
+<script src="js/gd-tienda.js?v=14"></script>
 <script src="js/gd-pago.js?v=6"></script>
 <script>
 (function(){
@@ -55,20 +55,20 @@
       '<h1>Gracias, ' + esc(ped.cliente.nombre.split(' ')[0]) + '</h1>' +
       '<p class="co-ok-n">' + esc(ped.n) + '</p>' +
       (ped.pagoKey === 'directo' && !cot && !ped.pagado
-        ? '<p class="co-lead">Su pedido quedó registrado. Para confirmarlo, pague con cualquiera de los medios del estudio y envíenos el comprobante.</p>' + T.pagoDirectoHTML(ped) + '<ol class="co-pasos" hidden>'
-        : '<p class="co-lead">Su ' + (cot ? 'solicitud' : 'pedido') + ' quedó registrado. Confírmelo con el estudio por WhatsApp: el mensaje ya está redactado con las piezas, la entrega y sus datos.</p>' +
+        ? '<p class="co-lead">Su pedido quedó registrado. Para confirmarlo, pague con cualquiera de los medios de Giandeco y envíenos el comprobante.</p>' + T.pagoDirectoHTML(ped) + '<ol class="co-pasos" hidden>'
+        : '<p class="co-lead">Su ' + (cot ? 'solicitud' : 'pedido') + ' quedó registrado. Confírmelo con Giandeco por WhatsApp: el mensaje ya está redactado con las piezas, la entrega y sus datos.</p>' +
           '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="' + T.wa(T.pedidos.mensaje(ped)) + '" target="_blank" rel="noopener">Confirmar por WhatsApp' + T.FLECHA + '</a></div>' +
           '<ol class="co-pasos">') +
-        '<li><b>Usted confirma el pedido</b>Con un mensaje al WhatsApp oficial del estudio.</li>' +
-        '<li><b>El estudio responde</b>Disponibilidad, costo de envío' + (ped.entrega.armado ? ', armado' : '') + ' y fecha de entrega.</li>' +
+        '<li><b>Usted confirma el pedido</b>Con un mensaje al WhatsApp oficial de Giandeco.</li>' +
+        '<li><b>Giandeco responde</b>Disponibilidad, costo de envío' + (ped.entrega.armado ? ', armado' : '') + ' y fecha de entrega.</li>' +
         (cot ? '<li><b>Recibe la cotización</b>Con el detalle por pieza y las condiciones.</li>'
              : '<li><b>Usted paga</b>' + esc(ped.pago) + '. Recibe su comprobante electrónico en ' + esc(ped.cliente.email) + '.</li>') +
-        '<li><b>' + (ped.entrega.tipo === 'recojo' ? 'Recoge en el estudio' : 'Recibe en su dirección') + '</b>' + esc(ped.entrega.resumen) + '</li>' +
+        '<li><b>' + (ped.entrega.tipo === 'recojo' ? 'Recoge en Giandeco' : 'Recibe en su dirección') + '</b>' + esc(ped.entrega.resumen) + '</li>' +
       '</ol>' +
       '<div class="co-ok-acc">' + (!cot && !ped.pagado && P.activa() ? '<a class="gd-btn gd-btn-ghost" href="pagar?n=' + encodeURIComponent(ped.n) + '">Pagar en línea</a>' : '') +
         '<a class="gd-btn gd-btn-ghost" href="cuenta#pedidos">Ver mis pedidos</a>' +
         '<a class="gd-link" href="seguimiento?n=' + encodeURIComponent(ped.n) + '" style="align-self:center;">Seguir este pedido' + T.FLECHA + '</a></div></div>' +
-      '<section class="gdt-sec" style="margin-top:var(--sp-64);"><div class="gdt-sec-head"><div><p class="gd-eyebrow">Selección del estudio</p><h2 class="gd-h2">Para seguir armando el ambiente</h2></div></div>' +
+      '<section class="gdt-sec" style="margin-top:var(--sp-64);"><div class="gdt-sec-head"><div><p class="gd-eyebrow">Selección Giandeco</p><h2 class="gd-h2">Para seguir armando el ambiente</h2></div></div>' +
         '<div class="gd-grid">' + T.recomendados(4).map(function(k){ return T.card(k); }).join('') + '</div></section>';
     return;
   }
@@ -80,7 +80,7 @@
       '<p class="co-lead">Añada piezas del catálogo o toque un punto sobre la foto de un espacio para empezar.</p>' +
       '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="catalogo">Ver el catálogo' + T.FLECHA + '</a>' +
       '<a class="gd-btn gd-btn-ghost" href="catalogo-compra-el-espacio">Compra el espacio</a></div>' +
-      '<section class="gdt-sec" style="margin-top:var(--sp-64);"><div class="gdt-sec-head"><div><p class="gd-eyebrow">Selección del estudio</p><h2 class="gd-h2">Por dónde empezar</h2></div></div>' +
+      '<section class="gdt-sec" style="margin-top:var(--sp-64);"><div class="gdt-sec-head"><div><p class="gd-eyebrow">Selección Giandeco</p><h2 class="gd-h2">Por dónde empezar</h2></div></div>' +
         '<div class="gd-grid">' + T.recomendados(4).map(function(k){ return T.card(k); }).join('') + '</div></section>';
     return;
   }
@@ -154,7 +154,7 @@
         campo('coOtroN', 'Nombre de quien recibe', 'type="text"', 'Indique el nombre.', '') +
         campo('coOtroD', 'Su documento (DNI o CE)', 'type="text" maxlength="12"', 'Indique el documento.', '') +
       '</div>' +
-      '<label class="gdt-check"><input type="checkbox" id="coArmado"><span>Quiero que el estudio cotice el armado o la instalación.</span></label>' +
+      '<label class="gdt-check"><input type="checkbox" id="coArmado"><span>Quiero que Giandeco cotice el armado o la instalación.</span></label>' +
     '</div>' + pie(1) + '</section>';
 
   var pasoPago = soloCot ? '' :
@@ -165,10 +165,10 @@
   var pasoFinal =
     '<section class="co-paso" data-paso="' + ULT + '" hidden><h2 class="co-paso-t">Revise y confirme</h2>' +
       '<dl class="co-rev" id="coRev"></dl>' +
-      '<div class="gd-field" style="margin:24px 0;"><label for="coNota">Nota para el estudio (opcional)</label><textarea id="coNota" style="min-height:88px;" placeholder="Fecha en que lo necesita, piso o acceso del inmueble, si es un regalo…"></textarea></div>' +
+      '<div class="gd-field" style="margin:24px 0;"><label for="coNota">Nota para Giandeco (opcional)</label><textarea id="coNota" style="min-height:88px;" placeholder="Fecha en que lo necesita, piso o acceso del inmueble, si es un regalo…"></textarea></div>' +
       '<label class="gdt-check"><input type="checkbox" id="coAcepto"><span>He leído y acepto los <a href="' + C.LEGAL.terminos + '" target="_blank">términos y condiciones</a> y la <a href="' + C.LEGAL.privacidad + '" target="_blank">política de privacidad</a>.</span></label>' +
       '<span class="gdt-err" id="coAceptoErr">Marque la casilla para continuar.</span>' +
-      '<label class="gdt-check" style="margin-top:12px;"><input type="checkbox" id="coPromo"><span>Quiero recibir novedades y campañas del estudio (opcional).</span></label>' +
+      '<label class="gdt-check" style="margin-top:12px;"><input type="checkbox" id="coPromo"><span>Quiero recibir novedades y campañas de Giandeco (opcional).</span></label>' +
       pie(ULT) + '</section>';
 
   root.innerHTML =
@@ -187,7 +187,7 @@
       '<ul class="co-conf">' +
         '<li id="coConfPago"></li>' +
         '<li>Boleta o factura electrónica a su correo.</li>' +
-        '<li>Atención directa del estudio por WhatsApp.</li>' +
+        '<li>Atención directa de Giandeco por WhatsApp.</li>' +
       '</ul>' +
       '<div class="co-medios" id="coMedios" hidden><span>Aceptamos</span>' + T.logosPago(['visa', 'mastercard', 'amex', 'diners', 'yape']) + '</div>' +
     '</aside>' +
@@ -255,8 +255,8 @@
   function enLinea(m){ return pasarela && !!m && P.EN_LINEA.indexOf(m.key) !== -1; }
   function textosPago(){
     var a = $('coPagoAyuda'), b = $('coConfPago');
-    if(a){ a.hidden = pasarela; a.textContent = 'El pago se realiza después de que el estudio confirme su pedido. Esta web no solicita datos de tarjeta.'; }
-    if(b) b.textContent = pasarela ? 'Pago en línea protegido por Culqi.' : 'Sin cobro hasta que el estudio confirme.';
+    if(a){ a.hidden = pasarela; a.textContent = 'El pago se realiza después de que Giandeco confirme su pedido. Esta web no solicita datos de tarjeta.'; }
+    if(b) b.textContent = pasarela ? 'Pago en línea protegido por Culqi.' : 'Sin cobro hasta que Giandeco confirme.';
     if($('coMedios')) $('coMedios').hidden = !pasarela;
   }
   P.estado().then(function(a){ if(a !== pasarela){ pasarela = a; textosPago(); pintarPago(); } });
@@ -272,9 +272,9 @@
     var envio = ent === 'recojo' ? 0 : z.tarifa, pend = envio === null, desc = descuento();
     var h = '<div><dt>Subtotal</dt><dd>' + (soloCot ? 'A cotizar' : T.fmt(tot.subtotal)) + '</dd></div>';
     if(desc) h += '<div><dt>Cupón ' + esc(cupon) + '</dt><dd>− ' + T.fmt(desc) + '</dd></div>';
-    if(tot.cotizar && !soloCot) h += '<div><dt>' + tot.cotizar + (tot.cotizar === 1 ? ' pieza' : ' piezas') + ' a cotizar</dt><dd>Lo confirma el estudio</dd></div>';
-    h += '<div><dt>' + (ent === 'recojo' ? 'Recojo en estudio' : 'Envío · ' + z.label) + '</dt><dd>' + (pend ? 'Lo confirma el estudio' : envio ? T.fmt(envio) : 'Sin costo') + '</dd></div>';
-    if($('coArmado').checked) h += '<div><dt>Armado / instalación</dt><dd>Lo cotiza el estudio</dd></div>';
+    if(tot.cotizar && !soloCot) h += '<div><dt>' + tot.cotizar + (tot.cotizar === 1 ? ' pieza' : ' piezas') + ' a cotizar</dt><dd>Lo confirma Giandeco</dd></div>';
+    h += '<div><dt>' + (ent === 'recojo' ? 'Recojo en Giandeco' : 'Envío · ' + z.label) + '</dt><dd>' + (pend ? 'Lo confirma Giandeco' : envio ? T.fmt(envio) : 'Sin costo') + '</dd></div>';
+    if($('coArmado').checked) h += '<div><dt>Armado / instalación</dt><dd>Lo cotiza Giandeco</dd></div>';
     if(!soloCot){
       var total = tot.subtotal - desc + (envio || 0);
       h += '<div class="es-total"><dt>' + (pend || tot.cotizar || $('coArmado').checked ? 'Total de piezas' : 'Total') + '</dt><dd>' + T.fmt(total) + '</dd></div>';

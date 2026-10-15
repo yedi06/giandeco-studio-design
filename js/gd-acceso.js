@@ -11,7 +11,7 @@
    está protegido de verdad son los datos, en la base de datos.
    ========================================================================== */
 (function(){
-  var EN_MANTENIMIENTO = true;
+  var EN_MANTENIMIENTO = false;
   var LOCAL = ['127.0.0.1', 'localhost', ''];
   var SESION = 'sb-vsivmdfmecqxeumepyea-auth-token';   // la que deja el acceso de /admin
 

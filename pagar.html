@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=2"></script>
+<script src="js/gd-acceso.js?v=3"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pagar mi pedido — Giandeco Studio Design</title>
 <meta name="robots" content="noindex">
@@ -37,7 +37,7 @@
 </footer>
 
 <script src="js/giandeco.js?v=15"></script>
-<script src="js/gd-tienda.js?v=13"></script>
+<script src="js/gd-tienda.js?v=14"></script>
 <script src="js/gd-pago.js?v=6"></script>
 <script>
 (function(){
@@ -84,18 +84,18 @@
 
   /* ---------- pedido que todavía no se puede pagar aquí ---------- */
   var PORQUE = {
-    'envio':   ['El estudio confirma el envío', 'Su pedido está registrado. En cuanto el estudio confirme el costo de envío a su dirección, podrá pagarlo en esta misma página.'],
-    'armado':  ['El estudio cotiza el armado', 'Su pedido está registrado. En cuanto el estudio le confirme el costo de armado o instalación, podrá pagarlo en esta misma página.'],
-    'cotizar': ['El estudio confirma su pedido', 'Su pedido incluye piezas que el estudio cotiza. Cuando reciba el detalle, coordinamos el pago con usted.'],
-    'monto':   ['Coordinemos el pago', 'Por su monto, este pedido se paga coordinando directamente con el estudio.'],
+    'envio':   ['Giandeco confirma el envío', 'Su pedido está registrado. En cuanto Giandeco confirme el costo de envío a su dirección, podrá pagarlo en esta misma página.'],
+    'armado':  ['Giandeco cotiza el armado', 'Su pedido está registrado. En cuanto Giandeco le confirme el costo de armado o instalación, podrá pagarlo en esta misma página.'],
+    'cotizar': ['Giandeco confirma su pedido', 'Su pedido incluye piezas que Giandeco cotiza. Cuando reciba el detalle, coordinamos el pago con usted.'],
+    'monto':   ['Coordinemos el pago', 'Por su monto, este pedido se paga coordinando directamente con Giandeco.'],
     'cerrado': ['Pedido cerrado', 'Este pedido ya no admite pagos. Si cree que es un error, escríbanos.'],
-    'sin-pasarela': ['Coordinemos el pago', 'Su pedido está registrado. El estudio le enviará los datos para pagar con el medio que eligió.']
+    'sin-pasarela': ['Coordinemos el pago', 'Su pedido está registrado. Giandeco le enviará los datos para pagar con el medio que eligió.']
   };
   function noPagable(motivo){
     simple();
     var t = PORQUE[motivo] || PORQUE['sin-pasarela'];
     root.innerHTML = cabecera('Pedido registrado', t[0]) + '<p class="co-lead">' + t[1] + '</p>' +
-      '<div class="co-ok-acc">' + waBtn('Escribir al estudio', local ? T.pedidos.mensaje(local) : 'Hola Giandeco, quiero coordinar el pago de mi pedido ' + n + '.', 'gd-btn-primary') + '</div>' + enlaces();
+      '<div class="co-ok-acc">' + waBtn('Escribir a Giandeco', local ? T.pedidos.mensaje(local) : 'Hola Giandeco, quiero coordinar el pago de mi pedido ' + n + '.', 'gd-btn-primary') + '</div>' + enlaces();
   }
 
   /* ---------- pagado ---------- */
@@ -105,9 +105,9 @@
     var con = p && p.medio === 'yape' ? 'Yape' : p && p.ultimos4 ? (p.marca ? esc(p.marca) + ' ' : 'Tarjeta ') + 'terminada en ' + esc(p.ultimos4) : '';
     root.innerHTML = cabecera('Pago recibido', 'Gracias' + (c && c.cliente && c.cliente.nombre ? ', ' + esc(c.cliente.nombre) : '')) +
       '<p class="co-lead">Recibimos su pago' + (p && p.monto ? ' de <b style="color:var(--lino);">' + money(p.monto) + '</b>' : '') + (con ? ' con ' + con : '') + '. ' +
-        'El estudio prepara su pedido y le escribe para coordinar la entrega. Su comprobante electrónico llega a su correo.</p>' +
+        'Giandeco prepara su pedido y le escribe para coordinar la entrega. Su comprobante electrónico llega a su correo.</p>' +
       (p && p.ref ? '<p class="gd-form-nota">Referencia del pago: ' + esc(p.ref) + '</p>' : '') +
-      '<div class="co-ok-acc" style="margin-top:var(--sp-24);">' + waBtn('Avisar al estudio', 'Hola Giandeco, acabo de pagar en línea mi pedido ' + n + '.', 'gd-btn-primary') + '</div>' + enlaces();
+      '<div class="co-ok-acc" style="margin-top:var(--sp-24);">' + waBtn('Avisar a Giandeco', 'Hola Giandeco, acabo de pagar en línea mi pedido ' + n + '.', 'gd-btn-primary') + '</div>' + enlaces();
   }
 
   /* ---------- listo para pagar ---------- */
@@ -137,12 +137,12 @@
             '<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M9 12h6M9 16h6M9 8h3"/></svg>Boleta o factura a su correo</li>' +
           '</ul>' +
           '<p class="gd-form-nota">¿Prefiere otro medio de pago? ' +
-            '<a href="' + T.wa('Hola Giandeco, quiero coordinar el pago de mi pedido ' + n + '.') + '" target="_blank" rel="noopener">Escriba al estudio</a>.</p>' +
+            '<a href="' + T.wa('Hola Giandeco, quiero coordinar el pago de mi pedido ' + n + '.') + '" target="_blank" rel="noopener">Escríbanos</a>.</p>' +
         '</section>' +
         '<aside class="co-res pg-res" aria-label="Resumen del pedido">' +
           '<h2>Su pedido</h2><ul class="gdt-lines">' + c.items.map(linea).join('') + '</ul>' +
           '<dl class="co-tot">' + fila('Subtotal', money(d.subtotal)) + (d.descuento ? fila('Descuento', '− ' + money(d.descuento)) : '') +
-            fila(c.recojo ? 'Recojo en estudio' : 'Envío', d.envio ? money(d.envio) : 'Sin costo') + (d.armado ? fila('Armado / instalación', money(d.armado)) : '') +
+            fila(c.recojo ? 'Recojo en Giandeco' : 'Envío', d.envio ? money(d.envio) : 'Sin costo') + (d.armado ? fila('Armado / instalación', money(d.armado)) : '') +
             fila('Total a pagar', money(c.monto), 'es-total') + (T.CFG.PRECIOS_CON_IGV ? fila('Incluye IGV (18 %)', money(c.monto * 18 / 118), 'es-igv') : '') + '</dl>' +
         '</aside>' +
       '</div>';
@@ -166,8 +166,8 @@
     if(r.ok && r.pagado){ pagado(r); return; }
     if(r.motivo === 'incierto' || r.motivo === 'en-curso'){
       root.innerHTML = cabecera('Pago en verificación', 'Estamos confirmando su pago') +
-        '<p class="co-lead">No recibimos a tiempo la respuesta del banco. <b style="color:var(--lino);">No vuelva a pagar:</b> el estudio verifica la operación y le confirma por WhatsApp. Si el cobro no se realizó, no se le descuenta nada.</p>' +
-        '<div class="co-ok-acc">' + waBtn('Escribir al estudio', 'Hola Giandeco, intenté pagar en línea mi pedido ' + n + ' y quedó en verificación.', 'gd-btn-primary') + '</div>' + enlaces();
+        '<p class="co-lead">No recibimos a tiempo la respuesta del banco. <b style="color:var(--lino);">No vuelva a pagar:</b> Giandeco verifica la operación y le confirma por WhatsApp. Si el cobro no se realizó, no se le descuenta nada.</p>' +
+        '<div class="co-ok-acc">' + waBtn('Escribir a Giandeco', 'Hola Giandeco, intenté pagar en línea mi pedido ' + n + ' y quedó en verificación.', 'gd-btn-primary') + '</div>' + enlaces();
       return;
     }
     if(r.cerrado){ listo(''); return; }
@@ -185,7 +185,7 @@
       if(!r || r.motivo === 'error'){
         root.innerHTML = cabecera('Pago en línea', 'No pudimos consultar su pedido') +
           '<p class="co-lead">Revise su conexión e inténtelo de nuevo. Su pedido sigue registrado.</p>' +
-          '<div class="co-ok-acc"><button type="button" class="gd-btn gd-btn-primary" id="pgOtra">Reintentar</button>' + waBtn('Escribir al estudio', 'Hola Giandeco, quiero pagar mi pedido ' + n + '.') + '</div>';
+          '<div class="co-ok-acc"><button type="button" class="gd-btn gd-btn-primary" id="pgOtra">Reintentar</button>' + waBtn('Escribir a Giandeco', 'Hola Giandeco, quiero pagar mi pedido ' + n + '.') + '</div>';
         document.getElementById('pgOtra').addEventListener('click', function(){ consultar(0); });
         return;
       }

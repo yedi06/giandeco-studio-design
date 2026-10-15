@@ -22,7 +22,7 @@ if(window.GD_TIENDA) return;
 var CFG = {
   WA: '51920775559',
   PRECIOS_CON_IGV: true,
-  RECOJO: { activo:true, lugar:'Estudio Giandeco', dir:'Ca. Las Bellísimas 170, Urb. Vipol — Callao' },
+  RECOJO: { activo:true, lugar:'Giandeco', dir:'Ca. Las Bellísimas 170, Urb. Vipol — Callao' },
   ENVIO: [
     { key:'lima',      label:'Lima Metropolitana', tarifa:null },
     { key:'callao',    label:'Callao',             tarifa:null },
@@ -37,7 +37,7 @@ var CFG = {
        medio se cobra al registrar el pedido (js/gd-pago.js).
      PagoEfectivo queda apagado hasta integrar la generación del código CIP. */
   PAGO: [
-    { key:'yape',     activo:true, grupo:'Billeteras digitales', label:'Yape', logos:['yape'], nota:'Paga con QR o al número del estudio. Se lo enviamos por WhatsApp al confirmar el pedido.',
+    { key:'yape',     activo:true, grupo:'Billeteras digitales', label:'Yape', logos:['yape'], nota:'Paga con QR o al número de Giandeco. Se lo enviamos por WhatsApp al confirmar el pedido.',
       notaEnLinea:'Con su celular Yape y el código de aprobación de la app. Hasta S/ 2,000.' },
     { key:'plin',     activo:false, grupo:'Billeteras digitales', label:'Plin', logos:['plin'], nota:'Desde la app de su banco afiliado a Plin, con QR o número.' },
     { key:'tarjeta',  activo:true, grupo:'Tarjetas', label:'Tarjeta de crédito o débito', marcas:'Visa · Mastercard · American Express · Diners Club', logos:['visa','mastercard','amex','diners'], nota:'Paga en un enlace seguro de la pasarela. Sus datos de tarjeta no pasan por esta web.',
@@ -48,11 +48,11 @@ var CFG = {
     { key:'pagoefectivo', activo:false, grupo:'Banca', label:'PagoEfectivo', nota:'Recibe un código CIP y paga desde su banca por internet o en agentes y bodegas.' },
     /* Pago directo: el cliente paga por su cuenta a los medios del estudio (PAGO_DIRECTO) y envía
        el comprobante por WhatsApp. Sustituye a Plin, transferencia y adelanto como opciones sueltas. */
-    { key:'directo',  activo:true, grupo:'Pago directo', label:'Pago directo al estudio', logos:['yape','plin'],
-      nota:'Yape, Plin o transferencia a las cuentas del estudio. Al registrar el pedido ve los datos y envía su comprobante por WhatsApp.' },
+    { key:'directo',  activo:true, grupo:'Pago directo', label:'Pago directo a Giandeco', logos:['yape','plin'],
+      nota:'Yape, Plin o transferencia a las cuentas de Giandeco. Al registrar el pedido ve los datos y envía su comprobante por WhatsApp.' },
     { key:'contra',   activo:true, grupo:'Al recibir', label:'Pago contra entrega', nota:'Paga al recibir su pedido, en efectivo, con Yape o con tarjeta. Solo en Lima y Callao.', solo:['lima','callao'] },
-    { key:'enestudio',activo:true, grupo:'Al recibir', label:'Pago al recoger en el estudio', nota:'Paga al recoger, en efectivo, con Yape, Plin o tarjeta.', soloRecojo:true },
-    { key:'adelanto', activo:false, grupo:'Proyectos y empresas', label:'Adelanto y saldo', nota:'Para piezas por encargo o pedidos de proyecto: una parte al confirmar y el saldo antes de la entrega. El estudio le indica los montos.' },
+    { key:'enestudio',activo:false, grupo:'Al recibir', label:'Pago al recoger en Giandeco', nota:'Paga al recoger, en efectivo, con Yape, Plin o tarjeta.', soloRecojo:true },
+    { key:'adelanto', activo:false, grupo:'Proyectos y empresas', label:'Adelanto y saldo', nota:'Para piezas por encargo o pedidos de proyecto: una parte al confirmar y el saldo antes de la entrega. Giandeco le indica los montos.' },
     { key:'empresa',  activo:true, grupo:'Proyectos y empresas', label:'Orden de compra de empresa', nota:'Para compras con factura: coordinamos orden de compra y condiciones de pago.', soloFactura:true }
   ],
   /* Códigos de descuento:  { 'BIENVENIDA': { pct:10 } }  o  { 'ENVIO': { monto:30 } }.
@@ -66,7 +66,7 @@ var CFG = {
   EMPRESA: { razon:'Luis Giancarlo Jiménez Sánchez', ruc:'10452729691', dir:'Ca. Las Bellísimas 170, Urb. Vipol — Callao 07036', correo:'contacto@giandeco.com', tel:'+51 920 775 559' },
   /* En false, las páginas de políticas llevan el aviso "borrador pendiente
      de validación". Se pasa a true cuando el estudio las aprueba. */
-  LEGAL_VALIDADO: false,
+  LEGAL_VALIDADO: true,
   CAMBIO_DIAS: null,
   GOOGLE_RESENAS: '',
   LEGAL: { terminos:'terminos-y-condiciones', privacidad:'politica-de-privacidad', libro:'libro-de-reclamaciones' },
@@ -142,10 +142,10 @@ function pagoDirectoHTML(p){
   if(b.cuenta || b.cci) tarjetas.push('<article class="pd-medio"><header><h3>Transferencia o depósito</h3></header>' +
     dato('Banco', b.banco) + dato('Cuenta en soles', b.cuenta, true) + dato('CCI', b.cci, true) + dato('A nombre de', b.titular) + '</article>');
   var monto = '<p class="pd-total"><span>' + (t.firme ? 'Total a pagar' : 'Total de piezas') + '</span><b>' + fmt(t.monto) + '</b></p>' +
-    (t.firme ? '' : '<p class="gd-form-nota">Falta que el estudio le confirme el costo de envío o de armado. Espere ese dato antes de pagar.</p>');
+    (t.firme ? '' : '<p class="gd-form-nota">Falta que Giandeco le confirme el costo de envío o de armado. Espere ese dato antes de pagar.</p>');
   if(!tarjetas.length){
-    return '<section class="pd"><h2>Pago directo al estudio</h2>' + monto +
-      '<p class="co-lead">El estudio le envía por WhatsApp los datos para pagar con Yape, Plin o transferencia.</p>' +
+    return '<section class="pd"><h2>Pago directo a Giandeco</h2>' + monto +
+      '<p class="co-lead">Giandeco le envía por WhatsApp los datos para pagar con Yape, Plin o transferencia.</p>' +
       '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="' + wa(pedidos.mensaje(p)) + '" target="_blank" rel="noopener">Pedir los datos de pago' + FLECHA + '</a></div></section>';
   }
   return '<section class="pd"><h2>Pague su pedido</h2>' + monto +
@@ -153,7 +153,7 @@ function pagoDirectoHTML(p){
     '<ol class="co-pasos">' +
       '<li><b>Pague el total</b>Con el medio que prefiera de los de arriba.</li>' +
       '<li><b>Guarde el comprobante</b>La captura de pantalla o la constancia de la operación.</li>' +
-      '<li><b>Envíelo por WhatsApp</b>El equipo del estudio valida el pago y le confirma el pedido.</li>' +
+      '<li><b>Envíelo por WhatsApp</b>El equipo de Giandeco valida el pago y le confirma el pedido.</li>' +
     '</ol>' +
     '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="' + wa('Hola Giandeco, ya pagué mi pedido ' + p.n + ' (' + fmt(t.monto) + '). Adjunto el comprobante de pago.\n\nNombre: ' + p.cliente.nombre + ' · Cel. ' + p.cliente.cel) + '" target="_blank" rel="noopener">Enviar comprobante por WhatsApp' + FLECHA + '</a></div></section>';
 }
