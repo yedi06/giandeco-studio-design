@@ -13,6 +13,8 @@
 (function(){
 'use strict';
 if(window.GD_TIENDA) return;
+/* versión del sitio: la misma que trae este archivo (?v=…), para que lo que se carga después no salga de una caché vieja */
+var VERSION = (function(){ var sc = document.currentScript, m = sc && /[?&]v=([^&]+)/.exec(sc.src); return m ? m[1] : ''; })();
 
 /* --------------------------------------------------------------------------
    1. CONFIGURACIÓN DEL ESTUDIO
@@ -548,7 +550,7 @@ function cerrar(){
 
 function montar(){
   if(!document.querySelector('link[href*="gd-tienda.css"]')){
-    var lk = document.createElement('link'); lk.rel = 'stylesheet'; lk.href = 'css/gd-tienda.css?v=5';
+    var lk = document.createElement('link'); lk.rel = 'stylesheet'; lk.href = 'css/gd-tienda.css' + (VERSION ? '?v=' + VERSION : '');
     document.head.appendChild(lk);
   }
   document.body.insertAdjacentHTML('beforeend',
