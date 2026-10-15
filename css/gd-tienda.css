@@ -197,7 +197,7 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 .pdp-estudio{ display:grid; grid-template-columns:1fr; gap:var(--sp-24); }
 @media (min-width:900px){ .pdp-estudio{ grid-template-columns:1fr 1fr 1fr; } }
 .pdp-estudio-cta{ background:var(--humo); color:var(--ebano); border-radius:2px; padding:clamp(24px,3vw,40px); display:flex; flex-direction:column; }
-.pdp-estudio-cta .gd-eyebrow{ color:var(--bronce); }
+.pdp-estudio-cta .gd-eyebrow{ color:var(--bronce-texto); }
 .pdp-estudio-cta h3{ font-family:var(--display); font-weight:400; font-size:1.95rem; line-height:1.1; margin:0 0 14px; }
 .pdp-estudio-cta p{ margin:0 0 24px; color:var(--grafito); font-size:.94rem; line-height:1.65; }
 .pdp-estudio-cta .gd-btn{ margin-top:auto; align-self:flex-start; background:var(--ebano); color:var(--humo); }

@@ -24,7 +24,7 @@
   var ARROW = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
 
   var css = ''
-  + '.gdc,.gdc-panel{--e:#0A0A09;--l:#C9A24A;--li:#DED8CB;--dim:#B9B3A6;--faint:#8a8375;--hair:rgba(222,216,203,.11);'
+  + '.gdc,.gdc-panel{--e:#0A0A09;--l:#C9A24A;--li:#DED8CB;--dim:#B9B3A6;--faint:#948D80;--hair:rgba(222,216,203,.11);'
   +   'font-family:var(--body,"Jost",system-ui,sans-serif);font-weight:300;-webkit-font-smoothing:antialiased;box-sizing:border-box}'
   + '.gdc *,.gdc-panel *{box-sizing:border-box}'
 

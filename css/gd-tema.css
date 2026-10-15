@@ -29,8 +29,8 @@
   --line:#D9D2C4;
   --text:#171613;
   --text-dim:#4A4844;      /* grafito */
-  --text-faint:#6F6A63;
-  --accent:#8A6F3C;        /* bronce: donde el latón no contrasta */
+  --text-faint:#625D57;    /* 5:1 sobre humo y lino (antes #6F6A63, 4,2:1 sobre lino) */
+  --accent:#715B31;        /* bronce de texto: donde el latón no contrasta (AA sobre humo y lino) */
   --accent-2:#6E5830;
   --accent-soft:rgba(138,111,60,.14);
   --lino:#0A0A09;          /* el "color de título" del sistema: sobre claro es ébano */
@@ -50,7 +50,7 @@
   .gd-oscuro
 ){
   --bg:#0A0A09; --bg-raised:#171613; --panel:#1c1a16; --panel-2:#262319; --line:#2a2621;
-  --text:#DED8CB; --text-dim:#B9B3A6; --text-faint:#8a8375;
+  --text:#DED8CB; --text-dim:#B9B3A6; --text-faint:#948D80;
   --accent:#C9A24A; --accent-2:#8A6F3C; --accent-soft:rgba(201,162,74,.16);
   --lino:#DED8CB;
   color: var(--text);
@@ -107,7 +107,7 @@
    -------------------------------------------------------------------------- */
 /* botón secundario */
 :root[data-tema="claro"] .gd-btn-ghost{ border-color: rgba(10,10,9,.3); color:#0A0A09; }
-:root[data-tema="claro"] .gd-btn-ghost:hover{ border-color:#8A6F3C; color:#8A6F3C; }
+:root[data-tema="claro"] .gd-btn-ghost:hover{ border-color:#8A6F3C; color:#715B31; }
 /* el botón principal conserva latón con ébano (lámina 25: permitido en piezas pequeñas) */
 :root[data-tema="claro"] .gd-btn-primary{ background:#C9A24A; color:#0A0A09; }
 :root[data-tema="claro"] .gd-btn-primary:hover{ background:#b8913c; }
@@ -163,3 +163,12 @@ html.gd-tema-anim, html.gd-tema-anim body, html.gd-tema-anim *:not(video):not(im
 @media (prefers-reduced-motion:reduce){
   html.gd-tema-anim, html.gd-tema-anim body, html.gd-tema-anim *{ transition:none !important; }
 }
+
+/* filtros activos: texto ébano sobre latón (8:1), como el botón principal;
+   sobre el bronce de texto el ébano no alcanzaría a leerse bien */
+:root[data-tema="claro"] :is(.nv-filtro.is-active, .pr-filtro.is-active, .gd-ba-tab[aria-selected="true"]){ background:#C9A24A; border-color:#C9A24A; color:#0A0A09; }
+
+/* islas sin fondo propio: el cierre de Proceso Expodeco pintaba sobre la
+   página; en claro quedaba texto lino sobre humo. Recupera su ébano. */
+:root[data-tema="claro"] .px-cta{ background:#0A0A09; }
+:root[data-tema="claro"] .ct-feature-badge.is-bronce{ color:#715B31; }

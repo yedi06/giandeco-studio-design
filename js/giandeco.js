@@ -433,7 +433,7 @@ document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ cerrar
 /* --------------------------------------------------------------------------
    7. REVELADO AL SCROLL + BARRA DE PROGRESO
    -------------------------------------------------------------------------- */
-var revealTargets = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale, .gd-curtain');
+var revealTargets = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale, .reveal-underline, .gd-curtain, hr.rule');
 if('IntersectionObserver' in window){
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
@@ -686,6 +686,48 @@ function montarMarcas(){
   }
 }
 montarMarcas();
+
+/* --------------------------------------------------------------------------
+   8c. DETALLE DEL MONTAJE — piezas sin foto de producto
+   En "Las piezas de este espacio", una pieza que aún no tiene foto propia
+   muestra un recorte ampliado de la fotografía del espacio, centrado en su
+   punto de compra: se ve la pieza real, montada por el estudio, en vez de
+   un recuadro vacío. Cuando la pieza tenga foto de producto, la tarjeta deja
+   de ser .is-slot y esto no la toca.
+   -------------------------------------------------------------------------- */
+function detallesDeMontaje(){
+  var foto = document.querySelector('.gd-shop .gd-shop-img');
+  var slots = document.querySelectorAll('.gd-pieza-thumb.is-slot');
+  if(!foto || !slots.length) return;
+  function pintar(){
+    var r = foto.naturalHeight / foto.naturalWidth;            // alto/ancho de la foto
+    if(!r) return;
+    var z = Math.max(3.2, 1.25 / r * 1.4);                      // ampliación: la miniatura es 4:5
+    var src = foto.currentSrc || foto.src;
+    slots.forEach(function(slot){
+      var card = slot.parentElement, b = card && card.querySelector('[data-gdt-add-esp]');
+      if(!b) return;
+      var nombre = b.getAttribute('data-gdt-add-esp'), punto = null;
+      document.querySelectorAll('.gd-shop-dot[data-nombre]').forEach(function(d){ if(d.getAttribute('data-nombre') === nombre) punto = d; });
+      if(!punto) return;
+      var px = parseFloat(punto.style.left) / 100, py = parseFloat(punto.style.top) / 100;
+      if(isNaN(px) || isNaN(py)) return;
+      // posición de fondo que deja el punto en el centro del recorte
+      var bx = Math.min(1, Math.max(0, (px * z - .5) / (z - 1)));
+      var by = Math.min(1, Math.max(0, (py * z * r - .625) / (z * r - 1.25)));
+      slot.classList.remove('is-slot'); slot.classList.add('is-detalle');
+      slot.style.backgroundImage = "url('" + src + "')";
+      slot.style.backgroundSize = (z * 100).toFixed(1) + '% auto';
+      slot.style.backgroundPosition = (bx * 100).toFixed(1) + '% ' + (by * 100).toFixed(1) + '%';
+      slot.setAttribute('role', 'img');
+      slot.setAttribute('aria-label', nombre + ', detalle de la fotografía del espacio');
+      slot.innerHTML = '<span class="gd-detalle-tag">Detalle del montaje</span>';
+    });
+  }
+  if(foto.complete && foto.naturalWidth) pintar(); else foto.addEventListener('load', pintar, { once:true });
+}
+// la grilla de piezas la arma el script de cada espacio, después de este archivo
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', detallesDeMontaje); else detallesDeMontaje();
 
 /* --------------------------------------------------------------------------
    9. BOTONES MAGNÉTICOS
