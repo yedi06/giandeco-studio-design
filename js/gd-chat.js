@@ -214,6 +214,8 @@
   +   '.gdc-body{padding:16px 12px 10px}.gdc-chips{padding-left:0}.gdc-msg{max-width:94%}'
   +   '.gdc-compose{margin:8px 10px 6px}.gdc-compose input{font-size:16px}'   /* 16 px: iPhone no hace zoom al escribir */
   +   '.gdc.is-open{opacity:0;pointer-events:none}'                          /* la hoja tapa la burbuja: se cierra con su X */
+  +   '.gdc{gap:6px}.gdc-seal{width:48px;height:48px}.gdc-g{width:26px;height:26px}'   /* en celular, más discreta */
+  +   '.gdc-badge{min-width:17px;height:17px;padding:0 5px;font-size:10px;top:-3px;right:-3px}.gdc-grip{transform:scale(.85)}'
   + '}';
 
   + ':root[data-tema="claro"] .gdc-grip i{background:#6F6A63}';
