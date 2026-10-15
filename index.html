@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261015k"></script>
+<script src="js/gd-acceso.js?v=20261015l"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Giandeco Studio Design</title>
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261015k">
+<title>Giandeco Studio Design · Visual merchandising e interiorismo en Lima</title>
+<meta name="description" content="Estudio de diseño comercial en Lima: visual merchandising, diseño de tiendas e interiorismo con producción y montaje propios. Para Zara, El Corte Inglés y Walon.">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261015l">
 <!-- la portada del hero es el LCP: se pide ya, solo la que corresponde a la pantalla -->
 <link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-mobile.webp" media="(orientation: portrait) and (max-width: 1024px)" fetchpriority="high">
 <link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-desktop.webp" media="(orientation: landscape), (min-width: 1025px)" fetchpriority="high">
@@ -17,8 +18,8 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Giandeco Studio Design">
 <meta property="og:locale" content="es_PE">
-<meta property="og:title" content="Giandeco Studio Design">
-<meta property="og:description" content="">
+<meta property="og:title" content="Giandeco Studio Design · Visual merchandising e interiorismo en Lima">
+<meta property="og:description" content="Estudio de diseño comercial en Lima: visual merchandising, diseño de tiendas e interiorismo con producción y montaje propios. Para Zara, El Corte Inglés y Walon.">
 <meta property="og:url" content="https://giandeco.com/">
 <meta property="og:image" content="https://giandeco.com/images/posicionamiento/manifiesto.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -924,7 +925,8 @@
   }
   .sh-search-chip:hover{ color: var(--text); border-color: var(--accent); }
   .sh-search-results{ margin-top: 28px; display: grid; gap: 2px; }
-  .sh-search-result{ padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--text-dim); font-size: 0.92rem; }
+  .sh-search-result{ display: block; padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--text-dim); font-size: 0.92rem; text-decoration: none; }
+  .sh-search-result:hover, .sh-search-result:focus-visible{ color: var(--accent); }
   .sh-search-empty{ color: var(--text-faint); font-size: 0.85rem; margin-top: 28px; }
 
   /* ---------- banner / hero ---------- */
@@ -1422,9 +1424,9 @@
   input, textarea, select{ cursor: text; }
   input[type="checkbox"], input[type="radio"]{ cursor: default; }
 </style>
-<link rel="stylesheet" href="css/gd-movil.css?v=20261015k">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261015k">
-<script src="js/gd-tema.js?v=20261015k"></script>
+<link rel="stylesheet" href="css/gd-movil.css?v=20261015l">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261015l">
+<script src="js/gd-tema.js?v=20261015l"></script>
 
 <!-- intro de marca: se decide antes de pintar, para que nunca haya un parpadeo del telón -->
 <script>(function(){try{var f=/[?&]intro\b/.test(location.search);if(!f&&sessionStorage.getItem('gdIntro')==='1')return;if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(window.scrollY>40)return;document.documentElement.classList.add('gd-intro-on');}catch(e){}})();</script>
@@ -1587,7 +1589,7 @@
     </div>
     <div class="gd-manifiesto-media reveal-scale d2">
       <div class="gd-curtain">
-        <img decoding="async" class="gd-kb-img" src="images/posicionamiento/manifiesto.jpg" alt="Equipo Giandeco instalando papel mural en un stand de feria, con la chaqueta de marca del estudio">
+        <img loading="lazy" decoding="async" class="gd-kb-img" src="images/posicionamiento/manifiesto.jpg" alt="Equipo Giandeco instalando papel mural en un stand de feria, con la chaqueta de marca del estudio">
       </div>
       <div class="gd-manifiesto-cap">
         <p class="gd-eyebrow is-muted">En cifras</p>
@@ -1607,7 +1609,7 @@
 
     <div class="gd-univ-grid">
       <a class="gd-univ gd-univ--main reveal-scale" href="retail-proyectos" data-cursor="Ver">
-        <img decoding="async" src="images/universos/retail.jpg" alt="Isla de exhibición en tienda departamental con maniquíes y piezas escultóricas">
+        <img loading="lazy" decoding="async" src="images/universos/retail.jpg" alt="Isla de exhibición en tienda departamental con maniquíes y piezas escultóricas">
         <div class="gd-univ-body">
           <h3 class="gd-univ-title">Retail</h3>
           <p class="gd-univ-desc">Tiendas departamentales, boutiques, córners y campañas estacionales. Layout, mobiliario, iluminación y vitrina decididos en la misma mesa.</p>
@@ -1617,7 +1619,7 @@
 
       <div class="gd-univ-col">
         <a class="gd-univ gd-univ--sub reveal-scale d1" href="hogar-espacios" data-cursor="Ver">
-          <img decoding="async" src="images/universos/hogar.jpg" alt="Sala de estar con techo azul profundo, zócalo verde oliva y arte de gran formato">
+          <img loading="lazy" decoding="async" src="images/universos/hogar.jpg" alt="Sala de estar con techo azul profundo, zócalo verde oliva y arte de gran formato">
           <div class="gd-univ-body">
             <h3 class="gd-univ-title">Hogar</h3>
             <p class="gd-univ-desc">Interiorismo residencial con la misma lógica: primero el recorrido, después el estilo.</p>
@@ -1625,7 +1627,7 @@
           </div>
         </a>
         <a class="gd-univ gd-univ--sub reveal-scale d2" href="catalogo" data-cursor="Ver">
-          <img decoding="async" src="images/universos/catalogo.jpg" alt="Ambientación navideña con árbol decorado y mesa servida">
+          <img loading="lazy" decoding="async" src="images/universos/catalogo.jpg" alt="Ambientación navideña con árbol decorado y mesa servida">
           <div class="gd-univ-body">
             <h3 class="gd-univ-title">Catálogo</h3>
             <p class="gd-univ-desc">Navidad y mueblería propia disponibles ahora. Decoración, papel mural e iluminación, muy pronto.</p>
@@ -1652,17 +1654,17 @@
 
     <div class="accordion reveal-scale" id="accordion">
       <div class="acc-item is-open" data-index="0">
-        <button class="acc-panel" style="background-image: url('images/proceso/expodeco-tecnico.jpg');">
+        <button class="acc-panel" data-bg="images/proceso/expodeco-tecnico.jpg">
           <span class="acc-media-title">01 — Boceto</span>
         </button>
       </div>
       <div class="acc-item" data-index="1">
-        <button class="acc-panel" style="background-image: url('images/proceso/expodeco-boceto.jpg');">
+        <button class="acc-panel" data-bg="images/proceso/expodeco-boceto.jpg">
           <span class="acc-media-title">02 — Acuarela</span>
         </button>
       </div>
       <div class="acc-item" data-index="2">
-        <button class="acc-panel" style="background-image: url('images/proceso/expodeco-obra.jpg');">
+        <button class="acc-panel" data-bg="images/proceso/expodeco-obra.jpg">
           <span class="acc-media-title">03 — Proyecto</span>
         </button>
       </div>
@@ -1695,8 +1697,8 @@
     </div>
 
     <div class="gd-ba-frame reveal-scale" id="baFrame">
-      <img decoding="async" id="baImgA" src="images/proceso/zonatienda-boceto.jpg" alt="Boceto en acuarela de la zona de tienda">
-      <img decoding="async" id="baImgB" class="gd-ba-after" src="images/proceso/zonatienda-obra.jpg" alt="Zona de tienda ya montada">
+      <img loading="lazy" decoding="async" id="baImgA" src="images/proceso/zonatienda-boceto.jpg" alt="Boceto en acuarela de la zona de tienda">
+      <img loading="lazy" decoding="async" id="baImgB" class="gd-ba-after" src="images/proceso/zonatienda-obra.jpg" alt="Zona de tienda ya montada">
       <span class="gd-ba-tag is-a">Boceto</span>
       <span class="gd-ba-tag is-b">Obra</span>
       <input class="gd-ba-range" id="baRange" type="range" min="0" max="100" value="50" step="0.5"
@@ -1792,7 +1794,7 @@
   <div class="gd-in">
     <div class="gd-estudio-grid">
       <div class="gd-estudio-foto reveal-scale">
-        <img decoding="async" src="images/estudio/gian.jpg" alt="Gian Jiménez, fundador y director de diseño de Giandeco">
+        <img loading="lazy" decoding="async" src="images/estudio/gian.jpg" alt="Gian Jiménez, fundador y director de diseño de Giandeco">
       </div>
       <div>
         <p class="gd-eyebrow reveal">Autoría</p>
@@ -1831,25 +1833,25 @@
 
     <div class="gd-cat-grid">
       <a class="gd-cat-item reveal" href="catalogo-muebleria#centro-deluxe" data-cursor="Ver">
-        <span class="gd-cat-thumb"><img decoding="async" src="images/catalogo/centro-tv.jpg" alt="Centro de entretenimiento Deluxe Nature en madera con LED integrado"></span>
+        <span class="gd-cat-thumb"><img loading="lazy" decoding="async" src="images/catalogo/centro-tv.jpg" alt="Centro de entretenimiento Deluxe Nature en madera con LED integrado"></span>
         <span class="gd-cat-cat">Mueblería</span>
         <span class="gd-cat-name">Centro Deluxe Nature</span>
         <span class="gd-cat-price">S/ 1,179.00</span>
       </a>
       <a class="gd-cat-item reveal d1" href="catalogo-muebleria#comoda-flow" data-cursor="Ver">
-        <span class="gd-cat-thumb"><img decoding="async" src="images/catalogo/comoda.jpg" alt="Cómoda Flow blanca de cuatro cajones con patas de madera"></span>
+        <span class="gd-cat-thumb"><img loading="lazy" decoding="async" src="images/catalogo/comoda.jpg" alt="Cómoda Flow blanca de cuatro cajones con patas de madera"></span>
         <span class="gd-cat-cat">Mueblería</span>
         <span class="gd-cat-name">Cómoda Flow 1.37</span>
         <span class="gd-cat-price">S/ 879.00</span>
       </a>
       <a class="gd-cat-item reveal d2" href="catalogo-navidad" data-cursor="Ver">
-        <span class="gd-cat-thumb"><img decoding="async" src="images/catalogo/navidad.jpg" alt="Árbol de navidad decorado en tonos cálidos"></span>
+        <span class="gd-cat-thumb"><img loading="lazy" decoding="async" src="images/catalogo/navidad.jpg" alt="Árbol de navidad decorado en tonos cálidos"></span>
         <span class="gd-cat-cat">Navidad</span>
         <span class="gd-cat-name">Ambientación de temporada</span>
         <span class="gd-cat-soon">Colección 2026</span>
       </a>
       <a class="gd-cat-item reveal d3" href="proximamente-decoracion" data-cursor="Ver">
-        <span class="gd-cat-thumb"><img decoding="async" src="images/catalogo/mesa-servida.jpg" alt="Mesa servida con vajilla artesanal y textiles bordados"></span>
+        <span class="gd-cat-thumb"><img loading="lazy" decoding="async" src="images/catalogo/mesa-servida.jpg" alt="Mesa servida con vajilla artesanal y textiles bordados"></span>
         <span class="gd-cat-cat">Decoración</span>
         <span class="gd-cat-name">Mesa y objeto</span>
         <span class="gd-cat-soon">Piezas únicas</span>
@@ -2026,7 +2028,7 @@
     if(!el) return;
     el.innerHTML = items.map(function(it){
       var ratio = it[3][0] + ' / ' + it[3][1];
-      return '<a class="g-item" href="' + it[5] + '" data-cursor="Ver" style="aspect-ratio: ' + ratio + '; background-image:url(\'' + it[2] + '\'); background-position: ' + it[4] + ';">' +
+      return '<a class="g-item" href="' + it[5] + '" data-cursor="Ver" data-bg="' + it[2] + '" style="aspect-ratio: ' + ratio + '; background-position: ' + it[4] + ';">' +
         '<div class="g-cap"><span class="gt">' + it[0] + '</span><span class="gg">' + it[1] + '</span></div>' +
       '</a>';
     }).join('');
@@ -2070,7 +2072,7 @@
     for(var rs = 0; rs < REPES_SHIFT; rs++) sBase = sBase.concat(shiftItems);
     var sList = sBase.concat(sBase);
     shiftTrack.innerHTML = sList.map(function(it, i){
-      return '<div class="shift-card" style="background-image:url(\'' + it[1] + '\'); background-position: ' + it[2] + ';" data-idx="' + (i % shiftItems.length) + '" data-cursor="Ver" tabindex="0" role="button" aria-label="Ampliar: ' + it[0] + '">' +
+      return '<div class="shift-card" data-bg="' + it[1] + '" style="background-position: ' + it[2] + ';" data-idx="' + (i % shiftItems.length) + '" data-cursor="Ver" tabindex="0" role="button" aria-label="Ampliar: ' + it[0] + '">' +
         '<div class="fc2">' + it[0] + '</div>' +
       '</div>';
     }).join('');
@@ -2362,10 +2364,21 @@
 
   // ---- 4. buscador ----
   var FRECUENTES = ['Navidad', 'Mueblería', 'Compra el espacio', 'Diseño de interiores'];
-  var SEARCH_INDEX = [
-    'Navidad','Mueblería','Compra el espacio','Iluminación','Decoración','Papel Mural',
-    'Diseño de tiendas','Diseño de interiores','Espacios','Proyectos','Blog','Contacto','Quiénes somos'
-  ];
+  // el índice (secciones y piezas) lo escribe hacer-seo.js; se pide al abrir la búsqueda
+  var INDICE = null;
+  function cargarIndice(){
+    if(INDICE || document.getElementById('gdIndice')) return;
+    var sc = document.createElement('script');
+    sc.id = 'gdIndice'; sc.src = 'js/gd-indice.js?v=20261015l';
+    sc.onload = function(){
+      INDICE = (window.GD_INDICE || []).map(function(i){ return { l:i.l, h:i.h, p:i.p, t:plano(i.l + ' ' + (i.x || '')) }; });
+      if(searchInput && searchInput.value) runSearch(searchInput.value);
+    };
+    document.head.appendChild(sc);
+  }
+  /* sin tildes ni mayúsculas: "lampara" encuentra "Lámpara" */
+  function plano(s){ return String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9.]+/g, ' ').trim(); }
+  function esc(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   var searchOverlay = document.getElementById('shSearchOverlay');
   var searchInput = document.getElementById('shSearchInput');
   var searchChips = document.getElementById('shSearchChips');
@@ -2383,18 +2396,28 @@
     });
   }
   function runSearch(q){
-    q = (q || '').trim().toLowerCase();
     if(!searchResults) return;
-    if(!q){ searchResults.innerHTML = ''; return; }
-    var matches = SEARCH_INDEX.filter(function(item){ return item.toLowerCase().indexOf(q) > -1; });
-    if(matches.length){
-      searchResults.innerHTML = matches.map(function(m){ return '<div class="sh-search-result">' + m + '</div>'; }).join('');
-    } else {
-      searchResults.innerHTML = '<div class="sh-search-empty">Sin resultados para “' + q + '”.</div>';
-    }
+    var t = plano(q);
+    if(!t){ searchResults.innerHTML = ''; return; }
+    if(!INDICE){ searchResults.innerHTML = '<div class="sh-search-empty">Buscando…</div>'; return; }
+    // cada palabra debe aparecer; el plural también vale ("lamparas", "comedores")
+    var palabras = t.split(' ').filter(function(w){ return w.length > 1; })   // una letra suelta coincide con todo
+      .map(function(w){ return w.length > 4 ? w.replace(/(es|s)$/, '') : w; });
+    var hits = INDICE.filter(function(i){ return palabras.length && palabras.every(function(w){ return i.t.indexOf(w) !== -1; }); })
+      .map(function(i){
+        // primero lo que coincide en el nombre visible, y antes si empieza por la búsqueda
+        var l = plano(i.l), n = palabras.every(function(w){ return l.indexOf(w) !== -1; }) ? 2 : 0;
+        return { i:i, n: n + (l.indexOf(palabras[0]) === 0 ? 1 : 0) };
+      })
+      .sort(function(a, b){ return b.n - a.n; })
+      .slice(0, 8);
+    searchResults.innerHTML = hits.length
+      ? hits.map(function(x){ return '<a class="sh-search-result" href="' + esc(x.i.h) + '">' + esc(x.i.l) + '</a>'; }).join('')
+      : '<div class="sh-search-empty">Sin resultados para “' + esc(q.trim()) + '”. Escríbanos por WhatsApp y le respondemos.</div>';
   }
   function openSearch(){
     if(!searchOverlay) return;
+    cargarIndice();
     renderChips();
     if(searchResults) searchResults.innerHTML = '';
     if(searchInput) searchInput.value = '';
@@ -2736,6 +2759,28 @@
   document.addEventListener('visibilitychange', function(){ if(document.hidden) v.pause(); else if(loadedFor){ var p = v.play(); if(p && p.catch) p.catch(function(){}); } });
 })();
 </script>
-<script src="js/gd-tienda.js?v=20261015k" defer></script>
-<script src="js/gd-movil.js?v=20261015k" defer></script>
-<script src="js/gd-chat.js?v=20261015k" defer></script>
+<script>
+/* Fondos diferidos: las fotos de proceso, galería y "Diseñamos el cambio" son
+   fondos CSS, que el navegador descarga aunque estén lejos de la pantalla.
+   Cada sección pide los suyos cuando está a una pantalla de distancia, todos
+   juntos, para que el carrusel no muestre tarjetas vacías al girar. */
+(function(){
+  function poner(sec){ sec.querySelectorAll('[data-bg]').forEach(function(el){ el.style.backgroundImage = "url('" + el.getAttribute('data-bg') + "')"; el.removeAttribute('data-bg'); }); }
+  function iniciar(){
+    var secciones = [];
+    document.querySelectorAll('[data-bg]').forEach(function(el){
+      var s = el.closest('section') || el.parentElement;
+      if(secciones.indexOf(s) === -1) secciones.push(s);
+    });
+    if(!('IntersectionObserver' in window)){ secciones.forEach(poner); return; }
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ poner(e.target); io.unobserve(e.target); } });
+    }, { rootMargin:'100% 0px' });
+    secciones.forEach(function(s){ io.observe(s); });
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar); else iniciar();
+})();
+</script>
+<script src="js/gd-tienda.js?v=20261015l" defer></script>
+<script src="js/gd-movil.js?v=20261015l" defer></script>
+<script src="js/gd-chat.js?v=20261015l" defer></script>

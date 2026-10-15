@@ -7,7 +7,8 @@
       de producto.html: título, descripción, canónica, Open Graph y datos
       estructurados quedan escritos en el HTML, sin depender de JavaScript.
    2. Pone canónica y Open Graph en todas las páginas indexables.
-   3. Escribe sitemap.xml y robots.txt.
+   3. Escribe js/gd-indice.js, el índice del buscador del home.
+   4. Escribe sitemap.xml y robots.txt.
    ========================================================================== */
 'use strict';
 var fs = require('fs');
@@ -121,7 +122,26 @@ fijas.forEach(function(f){
   paginas.push({ f:f, url:url, prio: esHome ? '1.0' : /^(catalogo|retail|hogar)/.test(f) ? '0.8' : '0.5' });
 });
 
-/* ---- 3. sitemap y robots ---- */
+/* ---- 3. índice del buscador para el home ----
+   El home no carga js/giandeco.js; su buscador lee este archivo, que se
+   rehace aquí cada vez que cambia el catálogo. */
+var MAPA = objeto('SITIO');
+var PAGS = (new Function('return ' + fuente.match(/var PAGINAS = (\[[\s\S]*?\r?\n\]);/)[1]))();
+var indice = [];
+Object.keys(MAPA).forEach(function(k){
+  MAPA[k].secciones.forEach(function(s){ indice.push({ l: MAPA[k].label + ' · ' + s.label, h: s.href }); });
+  (MAPA[k].pronto || []).forEach(function(s){ indice.push({ l: s.label + ' (próximamente)', h: s.href }); });
+});
+PAGS.forEach(function(s){ indice.push({ l: s.label, h: s.href }); });
+LINEAS.forEach(function(L){
+  Object.keys(L.datos).forEach(function(k){
+    var d = L.datos[k];
+    indice.push({ l: d.nombre + ' — ' + d.precio, h: ruta(d.nombre), x: d.cat + ' ' + L.label, p: 1 });
+  });
+});
+fs.writeFileSync('js/gd-indice.js', '/* Generado por hacer-seo.js: no editar a mano. */\nwindow.GD_INDICE = ' + JSON.stringify(indice) + ';\n');
+
+/* ---- 4. sitemap y robots ---- */
 var hoy = new Date().toISOString().slice(0, 10);
 var urls = paginas.map(function(p){ return '  <url><loc>' + p.url + '</loc><lastmod>' + hoy + '</lastmod><priority>' + p.prio + '</priority></url>'; })
   .concat(productos.map(function(f){ return '  <url><loc>' + pub(f) + '</loc><lastmod>' + hoy + '</lastmod><priority>0.7</priority></url>'; }));

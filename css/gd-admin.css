@@ -147,3 +147,9 @@ body:not(.con-sesion) .ad-modo{ display:none; }
 .ad-qr{ display:flex; align-items:center; gap:12px; margin-top:8px; font-size:.8rem; opacity:.9; }
 .ad-qr img{ width:96px; height:96px; object-fit:contain; background:#fff; border-radius:3px; padding:4px; }
 .ad-form h3{ margin:0 0 4px; font-size:.9rem; font-weight:500; }
+
+/* campos en el teléfono: 16px evita que Safari de iPhone amplíe la página */
+@media (max-width:899px){
+  body input:not([type="checkbox"]):not([type="radio"]),
+  body select:not([multiple]):not([size]), body textarea:not([hidden]){ font-size:16px; }
+}

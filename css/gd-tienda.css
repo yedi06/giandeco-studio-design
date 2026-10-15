@@ -593,3 +593,12 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 .lr-sello img{ display:block; height:clamp(96px,9vw,128px); width:auto; border-radius:5px; }
 .lg-prosa.es-libro{ max-width:none; }   /* el libro es un formulario: llega al mismo borde derecho que la cabecera */
 .lg-prosa.es-libro > ul, .lg-prosa.es-libro > p{ max-width:74ch; }   /* el libro es un formulario: aprovecha el ancho, el texto legal no */
+
+/* --- campos en el teléfono: 16px como mínimo ---
+   Por debajo de 16px, Safari de iPhone amplía la página al tocar un campo y
+   el cliente queda con la vista desplazada. La especificidad (0,2,2) supera a
+   las reglas de cada formulario (.clase input) sin recurrir a !important. */
+@media (max-width:899px){
+  body input:not([type="checkbox"]):not([type="radio"]),
+  body select:not([multiple]):not([size]), body textarea:not([hidden]){ font-size:16px; }
+}
