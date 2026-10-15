@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261015s"></script>
+<script src="js/gd-acceso.js?v=20261015t"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Giandeco Studio Design · Visual merchandising e interiorismo en Lima</title>
 <meta name="description" content="Estudio de diseño comercial en Lima: visual merchandising, diseño de tiendas e interiorismo con producción y montaje propios. Para Zara, El Corte Inglés y Walon.">
-<link rel="stylesheet" href="css/giandeco.css?v=20261015s">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261015s">
+<link rel="stylesheet" href="css/giandeco.css?v=20261015t">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261015t">
 <!-- la portada del hero es el LCP: se pide ya, solo la que corresponde a la pantalla -->
 <link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-mobile.webp" media="(orientation: portrait) and (max-width: 1024px)" fetchpriority="high">
 <link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-desktop.webp" media="(orientation: landscape), (min-width: 1025px)" fetchpriority="high">
@@ -1215,8 +1215,8 @@
      con piezas reales, banda de Hogar y productos de catálogo. Todo con los
      tokens del sitio; los efectos quedan dentro de su contenedor.
      ========================================================================== */
-  /* el video ya no ocupa toda la pantalla: asoma la sección siguiente y se entiende que hay más */
-  .gd-hero{ height:90vh; height:90svh; }
+  /* escritorio: el video ocupa toda la primera impresión (decisión de marca).
+     Teléfono: asoma la sección siguiente para que se entienda que hay más. */
   @media (max-width:899px){ .gd-hero{ height:76vh; height:76svh; min-height:420px; } }
 
   /* --- tres universos --- */
@@ -1239,8 +1239,9 @@
   }
 
   /* --- Navidad 2026 --- */
+  /* sin overflow:hidden: convertiría la sección en el contenedor del sticky y la foto bajaría 110px */
   .gd-nav{
-    position:relative; isolation:isolate; overflow:hidden;
+    position:relative; isolation:isolate;
     background:
       radial-gradient(60% 50% at 88% 0%, rgba(201,162,74,.15), transparent 70%),
       radial-gradient(46% 42% at 0% 100%, rgba(122,30,26,.22), transparent 72%),
@@ -1275,7 +1276,7 @@
   .gd-nav-chip:hover, .gd-nav-chip:focus-visible{ border-color:var(--accent); color:var(--lino); background:rgba(201,162,74,.06); }
   .gd-nav-chip:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
   .gd-nav-foto{ position:relative; display:block; overflow:hidden; border-radius:2px; aspect-ratio:16/10; text-decoration:none; }
-  .gd-nav-foto img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:58% 50%; transition:transform 1.1s var(--gd-ease); }
+  .gd-nav-foto img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 52%; transition:transform 1.1s var(--gd-ease); }
   .gd-nav-foto::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, transparent 40%, rgba(10,9,6,.86)); }
   .gd-nav-foto:hover img{ transform:scale(1.04); }
   .gd-nav-foto:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
@@ -1355,9 +1356,9 @@
     .gd-estudio-foto img{ aspect-ratio:1/1; object-fit:cover; object-position:50% 22%; }
   }
 </style>
-<link rel="stylesheet" href="css/gd-movil.css?v=20261015s">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261015s">
-<script src="js/gd-tema.js?v=20261015s"></script>
+<link rel="stylesheet" href="css/gd-movil.css?v=20261015t">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261015t">
+<script src="js/gd-tema.js?v=20261015t"></script>
 
 <!-- intro de marca: se decide antes de pintar, para que nunca haya un parpadeo del telón -->
 <script>(function(){try{var f=/[?&]intro\b/.test(location.search);if(!f&&sessionStorage.getItem('gdIntro')==='1')return;if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(window.scrollY>40)return;document.documentElement.classList.add('gd-intro-on');}catch(e){}})();</script>
@@ -1420,7 +1421,7 @@
           </div>
         </a>
         <a class="gd-univ gd-univ--sub reveal-scale d2" href="catalogo" data-cursor="Ver">
-          <img loading="lazy" decoding="async" src="images/universos/catalogo.jpg" alt="Ambientación navideña con árbol decorado y mesa servida">
+          <img loading="lazy" decoding="async" src="images/espacios/mesa-servida-navidad.jpg" style="object-position:72% 50%;" alt="Comedor ambientado con la colección Navidad 2026 de Giandeco: árbol, farol iluminado y repisas con piezas de temporada">
           <div class="gd-univ-body">
             <span class="gd-univ-tag">Catálogo</span>
             <h3 class="gd-univ-title">Tienda</h3>
@@ -1449,9 +1450,9 @@
       <div class="gd-grid es-carrusel" id="navProds"></div>
     </div>
 
-    <a class="gd-nav-foto reveal-scale" href="espacio-mesa-navidena" data-cursor="Ver">
-      <img loading="lazy" decoding="async" src="images/espacios/zara-navidad-1.jpg?v=2" width="1458" height="1120" alt="Comedor navideño montado: mesa servida en blanco y plata, árbol iluminado y velas">
-      <span class="gd-nav-foto-cap"><span class="gd-eyebrow">Compre el espacio</span><b>Mesa servida de Navidad</b><span class="gd-univ-more">Ver las piezas <i></i></span></span>
+    <a class="gd-nav-foto reveal-scale" href="catalogo-navidad#comedor" data-cursor="Ver">
+      <img loading="lazy" decoding="async" src="images/campana/navidad-comedor.jpg" width="1273" height="1500" alt="Comedor navideño ambientado por Giandeco con piezas de la colección 2026: aparador con casa de jengibre, cascanueces, Papá Noel y renos dorados, guirnalda iluminada y velas">
+      <span class="gd-nav-foto-cap"><span class="gd-eyebrow">Compre el espacio</span><b>El comedor de la colección</b><span class="gd-univ-more">Las 26 piezas, en un solo ambiente <i></i></span></span>
     </a>
 
     <div class="gd-nav-acc">
@@ -2129,7 +2130,7 @@
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar); else iniciar();
 })();
 </script>
-<script src="js/giandeco.js?v=20261015s"></script>
+<script src="js/giandeco.js?v=20261015t"></script>
 <script>
 /* Home: piezas reales del catálogo en la campaña de Navidad y en la fila de mueblería e iluminación */
 document.addEventListener('DOMContentLoaded', function(){
@@ -2167,6 +2168,6 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 
-<script src="js/gd-tienda.js?v=20261015s" defer></script>
-<script src="js/gd-movil.js?v=20261015s" defer></script>
-<script src="js/gd-chat.js?v=20261015s" defer></script>
+<script src="js/gd-tienda.js?v=20261015t" defer></script>
+<script src="js/gd-movil.js?v=20261015t" defer></script>
+<script src="js/gd-chat.js?v=20261015t" defer></script>
