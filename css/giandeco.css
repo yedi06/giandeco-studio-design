@@ -887,11 +887,11 @@ a.gd-slot:hover .gd-slot-cta{ opacity:1; transform:none; }
 .gd-footer-ayuda a{ font-family: var(--body); font-size:.8rem; color: var(--text-dim); text-decoration:none; transition: color .2s ease; }
 .gd-footer-ayuda a:hover{ color: var(--accent); }
 .gd-footer-libro{
-  display:inline-flex; align-items:center; margin-left:auto; padding:6px 14px 6px 4px;
-  border:1px solid var(--line); border-radius:4px; transition: border-color .25s ease, background-color .25s ease;
+  display:inline-flex; align-items:center; margin-left:auto; padding:3px; background:#fff;
+  border:1px solid transparent; border-radius:6px; transition: box-shadow .25s ease, transform .25s ease;
 }
-.gd-footer-libro:hover{ border-color: var(--accent); background: rgba(201,162,74,.06); }
-.gd-footer-libro img{ display:block; height:52px; width:auto; }   /* distintivo: images/legal (versión para fondo oscuro; el pie es siempre oscuro) */
+.gd-footer-libro:hover{ box-shadow:0 0 0 2px var(--accent); }
+.gd-footer-libro img{ display:block; height:64px; width:auto; border-radius:4px; }   /* aviso estándar del Libro de Reclamaciones (images/legal) */
 @media (max-width:720px){ .gd-footer-libro{ margin-left:0; } }
 .gd-footer-ayuda + .gd-footer-bar{ margin-top:22px; }
 .gd-footer-bar{

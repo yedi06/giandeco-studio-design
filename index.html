@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261015"></script>
+<script src="js/gd-acceso.js?v=20261015b"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Giandeco Studio Design</title>
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261015">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261015b">
 <!-- la portada del hero es el LCP: se pide ya, solo la que corresponde a la pantalla -->
 <link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-mobile.webp" media="(orientation: portrait) and (max-width: 1024px)" fetchpriority="high">
 <link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-desktop.webp" media="(orientation: landscape), (min-width: 1025px)" fetchpriority="high">
@@ -1363,9 +1363,9 @@
   }
   .gd-footer-ayuda a{ font-family: var(--body); font-size:.8rem; color: var(--text-dim); text-decoration:none; transition: color .2s ease; }
   .gd-footer-ayuda a:hover{ color: var(--accent); }
-  .gd-footer-libro{ display:inline-flex; align-items:center; margin-left:auto; padding:6px 14px 6px 4px; border:1px solid var(--line); border-radius:4px; transition: border-color .25s ease, background-color .25s ease; }
-  .gd-footer-libro:hover{ border-color: var(--accent); background: rgba(201,162,74,.06); }
-  .gd-footer-libro img{ display:block; height:52px; width:auto; }
+  .gd-footer-libro{ display:inline-flex; align-items:center; margin-left:auto; padding:3px; background:#fff; border:1px solid transparent; border-radius:6px; transition: box-shadow .25s ease; }
+  .gd-footer-libro:hover{ box-shadow:0 0 0 2px var(--accent); }
+  .gd-footer-libro img{ display:block; height:64px; width:auto; border-radius:4px; }
   @media (max-width:720px){ .gd-footer-libro{ margin-left:0; } }
   .gd-footer-ayuda + .gd-footer-bar{ margin-top:22px; }
   .gd-footer-bar{
@@ -1422,9 +1422,9 @@
   input, textarea, select{ cursor: text; }
   input[type="checkbox"], input[type="radio"]{ cursor: default; }
 </style>
-<link rel="stylesheet" href="css/gd-movil.css?v=20261015">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261015">
-<script src="js/gd-tema.js?v=20261015"></script>
+<link rel="stylesheet" href="css/gd-movil.css?v=20261015b">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261015b">
+<script src="js/gd-tema.js?v=20261015b"></script>
 
 <!-- intro de marca: se decide antes de pintar, para que nunca haya un parpadeo del telón -->
 <script>(function(){try{var f=/[?&]intro\b/.test(location.search);if(!f&&sessionStorage.getItem('gdIntro')==='1')return;if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(window.scrollY>40)return;document.documentElement.classList.add('gd-intro-on');}catch(e){}})();</script>
@@ -1952,7 +1952,7 @@
       <a href="opiniones">Opiniones de clientes</a>
       <a href="terminos-y-condiciones">Términos y condiciones</a>
       <a href="politica-de-privacidad">Privacidad</a>
-      <a class="gd-footer-libro" href="libro-de-reclamaciones" aria-label="Libro de Reclamaciones"><img src="images/legal/libro-reclamaciones-oscuro.svg" alt="Libro de Reclamaciones" width="259" height="96" decoding="async"></a>
+      <a class="gd-footer-libro" href="libro-de-reclamaciones" aria-label="Libro de Reclamaciones"><img src="images/legal/libro-reclamaciones.svg" alt="Libro de Reclamaciones" width="204" height="128" decoding="async"></a>
     </nav>
     <div class="gd-footer-bar">
       <span>© 2026 Giandeco Studio Design. Todos los derechos reservados.</span>
@@ -2736,6 +2736,6 @@
   document.addEventListener('visibilitychange', function(){ if(document.hidden) v.pause(); else if(loadedFor){ var p = v.play(); if(p && p.catch) p.catch(function(){}); } });
 })();
 </script>
-<script src="js/gd-tienda.js?v=20261015" defer></script>
-<script src="js/gd-movil.js?v=20261015" defer></script>
-<script src="js/gd-chat.js?v=20261015" defer></script>
+<script src="js/gd-tienda.js?v=20261015b" defer></script>
+<script src="js/gd-movil.js?v=20261015b" defer></script>
+<script src="js/gd-chat.js?v=20261015b" defer></script>

@@ -589,9 +589,6 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 .co-confianza b{ display:block; font-weight:500; font-size:.84rem; color:var(--lino); }
 
 /* --- distintivo del libro de reclamaciones --- */
-.lr-sello{ margin:0 0 18px; }
-.lr-sello img{ display:block; height:clamp(64px,7vw,88px); width:auto; }
-.lr-sello .es-claro{ display:none; }
-:root[data-tema="claro"] .lr-sello .es-oscuro{ display:none; }
-:root[data-tema="claro"] .lr-sello .es-claro{ display:block; }
+.lr-sello{ display:inline-block; margin:0 0 20px; padding:4px; background:#fff; border-radius:8px; box-shadow:0 0 0 1px var(--line); }
+.lr-sello img{ display:block; height:clamp(96px,9vw,128px); width:auto; border-radius:5px; }
 .lg-prosa.es-libro{ max-width:1040px; }   /* el libro es un formulario: aprovecha el ancho, el texto legal no */
