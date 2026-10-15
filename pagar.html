@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261015o"></script>
+<script src="js/gd-acceso.js?v=20261015p"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pagar mi pedido — Giandeco Studio Design</title>
 <meta name="robots" content="noindex">
@@ -11,10 +11,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261015o">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261015o">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261015o">
-<script src="js/gd-tema.js?v=20261015o"></script>
+<link rel="stylesheet" href="css/giandeco.css?v=20261015p">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261015p">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261015p">
+<script src="js/gd-tema.js?v=20261015p"></script>
 </head>
 <!-- Misma cabecera sobria del checkout: nada que distraiga de pagar. -->
 <body data-home="true" class="co-body">
@@ -36,9 +36,9 @@
   <a href="libro-de-reclamaciones" target="_blank">Libro de reclamaciones</a>
 </footer>
 
-<script src="js/giandeco.js?v=20261015o"></script>
-<script src="js/gd-tienda.js?v=20261015o"></script>
-<script src="js/gd-pago.js?v=20261015o"></script>
+<script src="js/giandeco.js?v=20261015p"></script>
+<script src="js/gd-tienda.js?v=20261015p"></script>
+<script src="js/gd-pago.js?v=20261015p"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, P = window.GD_PAGO, esc = T.esc;
@@ -142,7 +142,7 @@
         '<aside class="co-res pg-res" aria-label="Resumen del pedido">' +
           '<h2>Su pedido</h2><ul class="gdt-lines">' + c.items.map(linea).join('') + '</ul>' +
           '<dl class="co-tot">' + fila('Subtotal', money(d.subtotal)) + (d.descuento ? fila('Descuento', '− ' + money(d.descuento)) : '') +
-            fila(c.recojo ? 'Recojo en Giandeco' : 'Envío', d.envio ? money(d.envio) : 'Sin costo') + (d.armado ? fila('Armado / instalación', money(d.armado)) : '') +
+            fila(c.recojo ? 'Recojo en Giandeco' : c.agencia && !d.envio ? 'Envío por agencia' : 'Envío', d.envio ? money(d.envio) : c.agencia ? 'A cargo del cliente' : 'Sin costo') + (d.armado ? fila('Armado / instalación', money(d.armado)) : '') +
             fila('Total a pagar', money(c.monto), 'es-total') + (T.CFG.PRECIOS_CON_IGV ? fila('Incluye IGV (18 %)', money(c.monto * 18 / 118), 'es-igv') : '') + '</dl>' +
         '</aside>' +
       '</div>';

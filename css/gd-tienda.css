@@ -717,3 +717,10 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
   .co-mini em{ font-style:normal; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); border-bottom:1px solid currentColor; }
   .co-res{ scroll-margin-top:16px; }
 }
+
+/* checkout: confirmación del UBIGEO elegido y bloque de la agencia */
+.co-ubigeo{ margin:-4px 0 0; min-height:1.2em; font-size:12px; letter-spacing:.06em; color:var(--text-faint); font-variant-numeric:tabular-nums; }
+#coAgBox{ display:grid; gap:14px; margin-top:6px; padding-top:18px; border-top:1px solid var(--line); }
+#coAgBox[hidden]{ display:none; }
+#coAgBox .co-etq{ margin:0; }
+.gd-field select:disabled{ opacity:.55; cursor:not-allowed; }

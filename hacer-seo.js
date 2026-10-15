@@ -74,7 +74,7 @@ LINEAS.forEach(function(L){
     var p = L.datos[k], archivo = ruta(p.nombre) + '.html', url = pub(archivo), valor = num(p.precio);
     if(fijas.indexOf(archivo) !== -1 || productos.indexOf(archivo) !== -1) throw new Error('La ruta ' + archivo + ' ya existe: cambie el nombre de la pieza ' + k);
     var titulo = p.nombre + ' — ' + L.label + ' · Giandeco Studio Design';
-    var desc = p.nombre + ' · ' + p.cat + ' · ' + p.precio + '. ' + p.nota + ' Entrega en Lima y Callao.';
+    var desc = p.nombre + ' · ' + p.cat + ' · ' + p.precio + '. ' + p.nota + ' Envío a todo el Perú.';
     var ld = { '@context':'https://schema.org', '@type':'Product', name:p.nombre, sku:k, category:p.cat, description:p.nota,
                image:[abs(p.img)], brand:{ '@type':'Brand', name:'Giandeco' } };
     if(valor !== null) ld.offers = { '@type':'Offer', priceCurrency:'PEN', price:valor.toFixed(2), url:url, seller:{ '@type':'Organization', name:'Giandeco Studio Design' } };

@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261015o"></script>
+<script src="js/gd-acceso.js?v=20261015p"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Finalizar pedido — Giandeco Studio Design</title>
 <meta name="robots" content="noindex">
@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261015o">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261015o">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261015o">
-<script src="js/gd-tema.js?v=20261015o"></script>
+<link rel="stylesheet" href="css/giandeco.css?v=20261015p">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261015p">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261015p">
+<script src="js/gd-tema.js?v=20261015p"></script>
 </head>
 <!-- data-home: el checkout no lleva el menú del sitio. Tiene su propia cabecera,
      sin nada que distraiga de terminar la compra. -->
@@ -36,9 +36,10 @@
   <a href="libro-de-reclamaciones" target="_blank">Libro de reclamaciones</a>
 </footer>
 
-<script src="js/giandeco.js?v=20261015o"></script>
-<script src="js/gd-tienda.js?v=20261015o"></script>
-<script src="js/gd-pago.js?v=20261015o"></script>
+<script src="js/giandeco.js?v=20261015p"></script>
+<script src="js/gd-tienda.js?v=20261015p"></script>
+<script src="js/gd-pago.js?v=20261015p"></script>
+<script src="js/gd-ubigeo.js?v=20261015p"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc, C = T.CFG, P = window.GD_PAGO;
@@ -60,7 +61,7 @@
           '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="' + T.wa(T.pedidos.mensaje(ped)) + '" target="_blank" rel="noopener">Confirmar por WhatsApp' + T.FLECHA + '</a></div>' +
           '<ol class="co-pasos">') +
         '<li><b>Usted confirma el pedido</b>Con un mensaje al WhatsApp oficial de Giandeco.</li>' +
-        '<li><b>Giandeco responde</b>Disponibilidad, costo de envío' + (ped.entrega.armado ? ', armado' : '') + ' y fecha de entrega.</li>' +
+        '<li><b>Giandeco responde</b>Disponibilidad, ' + (ped.entrega.porAgencia ? 'agencia de despacho' : 'costo de envío') + (ped.entrega.armado ? ', armado' : '') + ' y fecha de entrega.</li>' +
         (cot ? '<li><b>Recibe la cotización</b>Con el detalle por pieza y las condiciones.</li>'
              : '<li><b>Usted paga</b>' + esc(ped.pago) + '. Recibe su comprobante electrónico en ' + esc(ped.cliente.email) + '.</li>') +
         '<li><b>' + (ped.entrega.tipo === 'recojo' ? 'Recoge en Giandeco' : 'Recibe en su dirección') + '</b>' + esc(ped.entrega.resumen) + '</li>' +
@@ -90,8 +91,20 @@
   var ses = T.sesion.get() || {}, datos = T.db('datos') || {};
   var PASOS = soloCot ? ['Sus datos', 'Entrega', 'Confirmar'] : ['Sus datos', 'Entrega', 'Pago', 'Confirmar'];
   var ULT = PASOS.length - 1, P_PAGO = soloCot ? -1 : 2;
-  var DEPS = 'Amazonas|Áncash|Apurímac|Arequipa|Ayacucho|Cajamarca|Callao|Cusco|Huancavelica|Huánuco|Ica|Junín|La Libertad|Lambayeque|Lima|Loreto|Madre de Dios|Moquegua|Pasco|Piura|Puno|San Martín|Tacna|Tumbes|Ucayali'.split('|');
-  var DISTRITOS = 'Ancón|Ate|Barranco|Breña|Carabayllo|Chaclacayo|Chorrillos|Cieneguilla|Comas|El Agustino|Independencia|Jesús María|La Molina|La Victoria|Lima|Lince|Los Olivos|Lurigancho|Lurín|Magdalena del Mar|Miraflores|Pachacámac|Pucusana|Pueblo Libre|Puente Piedra|Punta Hermosa|Punta Negra|Rímac|San Bartolo|San Borja|San Isidro|San Juan de Lurigancho|San Juan de Miraflores|San Luis|San Martín de Porres|San Miguel|Santa Anita|Santa María del Mar|Santa Rosa|Santiago de Surco|Surquillo|Villa El Salvador|Villa María del Triunfo|Bellavista|Callao|Carmen de la Legua|La Perla|La Punta|Mi Perú|Ventanilla'.split('|');
+  /* dirección normalizada con el UBIGEO del INEI (js/gd-ubigeo.js):
+     departamento → provincia → distrito, y el código de 6 dígitos va con el pedido */
+  var UB = window.GD_UBIGEO || [];
+  function ubDep(c){ return UB.filter(function(d){ return d[0] === c; })[0]; }
+  function ubProv(c){ var d = ubDep(c.slice(0, 2)); return d ? d[2].filter(function(p){ return p[0] === c; })[0] : null; }
+  function ubDist(c){ var p = ubProv(c.slice(0, 4)); return p ? p[2].filter(function(x){ return x[0] === c; })[0] : null; }
+  var ubInicial = datos.ubigeo && ubDist(datos.ubigeo) ? datos.ubigeo : '';
+  function opciones(lista, elegido, vacio){
+    return (vacio ? '<option value="">' + vacio + '</option>' : '') +
+      lista.map(function(x){ return '<option value="' + x[0] + '"' + (x[0] === elegido ? ' selected' : '') + '>' + esc(x[1]) + '</option>'; }).join('');
+  }
+  function selUb(id, label, err){
+    return '<div class="gd-field"><label for="' + id + '">' + label + '</label><select id="' + id + '" autocomplete="off"></select><span class="gdt-err">' + err + '</span></div>';
+  }
   function v(x){ return esc(x || ''); }
   function campo(id, label, attrs, err, val){
     return '<div class="gd-field"><label for="' + id + '">' + label + '</label><input id="' + id + '" ' + attrs + ' value="' + v(val) + '"><span class="gdt-err">' + err + '</span></div>';
@@ -136,15 +149,21 @@
   var pasoEntrega =
     '<section class="co-paso" data-paso="1" hidden><h2 class="co-paso-t">¿Cómo lo recibe?</h2><div class="gd-form">' +
       '<div class="gdt-ops">' +
-        opcion('ent', 'envio', 'Envío a domicilio', 'Lima y Callao. Otros departamentos, bajo cotización.', datos.ent !== 'recojo' || !C.RECOJO.activo) +
+        opcion('ent', 'envio', 'Envío', esc(C.AGENCIA.nota), datos.ent !== 'recojo' || !C.RECOJO.activo) +
         (C.RECOJO.activo ? opcion('ent', 'recojo', 'Recojo en ' + esc(C.RECOJO.lugar), esc(C.RECOJO.dir) + ' · sin costo.', datos.ent === 'recojo') : '') +
       '</div>' +
       '<div class="co-sub gd-form" data-si="ent=envio">' +
         '<div class="gd-form co-3">' +
-          lista('coDep', 'Departamento', DEPS, datos.dep || 'Lima') +
-          campo('coProv', 'Provincia', 'type="text" autocomplete="address-level1"', 'Indique la provincia.', datos.prov || 'Lima') +
-          '<div class="gd-field"><label for="coDist">Distrito</label><input id="coDist" type="text" list="coDistritos" autocomplete="address-level2" value="' + v(datos.distrito) + '"><span class="gdt-err">Indique el distrito.</span>' +
-            '<datalist id="coDistritos">' + DISTRITOS.map(function(d){ return '<option value="' + d + '">'; }).join('') + '</datalist></div>' +
+          selUb('coDep', 'Departamento', 'Elija el departamento.') +
+          selUb('coProv', 'Provincia', 'Elija la provincia.') +
+          selUb('coDist', 'Distrito', 'Elija el distrito.') +
+        '</div>' +
+        '<p class="co-ubigeo" id="coUbigeo" aria-live="polite"></p>' +
+        '<div class="co-sub" id="coAgBox">' +
+          '<p class="co-etq">Entrega de la agencia</p>' +
+          '<div class="gdt-ops en-fila">' + opcion('agdest', 'domicilio', 'En su domicilio', 'La agencia lo lleva a su dirección.', datos.agdest !== 'oficina') +
+            opcion('agdest', 'oficina', 'En la oficina de la agencia', 'Usted lo recoge en la oficina que elija.', datos.agdest === 'oficina') + '</div>' +
+          lista('coAgencia', 'Agencia de preferencia (opcional)', ['Sin preferencia'].concat(C.AGENCIA.lista, ['Otra (indíquela en la nota)']), datos.agencia || 'Sin preferencia') +
         '</div>' +
         campo('coDir', 'Dirección', 'type="text" autocomplete="street-address" placeholder="Avenida, calle o jirón, número, dpto. o interior"', 'Indique la dirección de entrega.', datos.dir) +
         campo('coRef', 'Referencia', 'type="text" placeholder="Frente al parque, a una cuadra de…"', 'Una referencia ayuda a que el reparto llegue.', datos.ref) +
@@ -196,16 +215,36 @@
     '</form>';
 
   var form = document.getElementById('coForm');
+  // la nota del envío cambia con la zona (agencia o tarifa del estudio)
+  var notaEnvio = form.querySelector('input[name="ent"][value="envio"]').closest('label').querySelector('small');
+  if(notaEnvio) notaEnvio.id = 'coEntNota';
   function $(id){ return document.getElementById(id); }
   function g(id){ var el = $(id); return el ? el.value.trim() : ''; }
   function radio(n){ var r = form.querySelector('input[name="' + n + '"]:checked'); return r ? r.value : ''; }
-  function plano(s){ return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
 
   function zonaKey(){
-    var dep = g('coDep');
-    if(dep === 'Callao') return 'callao';
-    if(dep === 'Lima' && plano(g('coProv')) === 'lima') return 'lima';
+    var dep = g('coDep'), prov = g('coProv');
+    if(dep === '07') return 'callao';
+    if(prov === '1501') return 'lima';           // Lima Metropolitana = provincia de Lima
     return 'provincia';
+  }
+  /* sin tarifa propia en la zona: va por agencia y el flete lo paga el cliente */
+  function porAgencia(){ return radio('ent') === 'envio' && zona().tarifa == null; }
+  function nombreUb(id){ var el = $(id); return el && el.value ? el.options[el.selectedIndex].text : ''; }
+  function pintarUbigeo(nivel){
+    var dep = $('coDep'), prov = $('coProv'), dist = $('coDist');
+    if(nivel <= 0){ dep.innerHTML = opciones(UB.map(function(d){ return [d[0], d[1]]; }), dep.value || (ubInicial ? ubInicial.slice(0, 2) : '15')); }
+    if(nivel <= 1){
+      var d = ubDep(dep.value), pv = prov.value || (ubInicial ? ubInicial.slice(0, 4) : '1501');
+      if(!d || pv.slice(0, 2) !== dep.value) pv = d && d[2].length === 1 ? d[2][0][0] : '';
+      prov.innerHTML = opciones(d ? d[2].map(function(p){ return [p[0], p[1]]; }) : [], pv, 'Elija la provincia');
+    }
+    var p = ubProv(prov.value || '----'), dv = dist.value || ubInicial;
+    if(!p || dv.slice(0, 4) !== prov.value) dv = '';
+    dist.innerHTML = opciones(p ? p[2] : [], dv, p ? 'Elija el distrito' : 'Elija primero la provincia');
+    dist.disabled = !p;
+    ubInicial = '';
+    $('coUbigeo').textContent = dist.value ? 'UBIGEO ' + dist.value + ' · ' + nombreUb('coDist') + ', ' + nombreUb('coProv') + ', ' + nombreUb('coDep') : '';
   }
   function zona(){ var k = zonaKey(); return C.ENVIO.filter(function(z){ return z.key === k; })[0]; }
 
@@ -271,29 +310,33 @@
   }
   function totales(){
     var ent = radio('ent'), z = zona();
-    var envio = ent === 'recojo' ? 0 : z.tarifa, pend = envio === null, desc = descuento();
+    var agencia = porAgencia(), envio = ent === 'recojo' || agencia ? 0 : z.tarifa, pend = envio === null, desc = descuento();
     var h = '<div><dt>Subtotal</dt><dd>' + (soloCot ? 'A cotizar' : T.fmt(tot.subtotal)) + '</dd></div>';
     if(desc) h += '<div><dt>Cupón ' + esc(cupon) + '</dt><dd>− ' + T.fmt(desc) + '</dd></div>';
     if(tot.cotizar && !soloCot) h += '<div><dt>' + tot.cotizar + (tot.cotizar === 1 ? ' pieza' : ' piezas') + ' a cotizar</dt><dd>Lo confirma Giandeco</dd></div>';
-    h += '<div><dt>' + (ent === 'recojo' ? 'Recojo en Giandeco' : 'Envío · ' + z.label) + '</dt><dd>' + (pend ? 'Lo confirma Giandeco' : envio ? T.fmt(envio) : 'Sin costo') + '</dd></div>';
+    h += '<div><dt>' + (ent === 'recojo' ? 'Recojo en Giandeco' : agencia ? 'Envío por agencia' : 'Envío · ' + z.label) + '</dt><dd>' +
+      (agencia ? 'A cargo del cliente' : pend ? 'Lo confirma Giandeco' : envio ? T.fmt(envio) : 'Sin costo') + '</dd></div>';
     if($('coArmado').checked) h += '<div><dt>Armado / instalación</dt><dd>Lo cotiza Giandeco</dd></div>';
     if(!soloCot){
       var total = tot.subtotal - desc + (envio || 0);
       h += '<div class="es-total"><dt>' + (pend || tot.cotizar || $('coArmado').checked ? 'Total de piezas' : 'Total') + '</dt><dd>' + T.fmt(total) + '</dd></div>';
       if(C.PRECIOS_CON_IGV) h += '<div class="es-igv"><dt>Incluye IGV (18 %)</dt><dd>' + T.fmt(total * 18 / 118) + '</dd></div>';
+      if(agencia) h += '<div class="es-igv"><dt>El flete se paga a la agencia al recibir o recoger.</dt><dd></dd></div>';
     }
     $('coTot').innerHTML = h;
     $('coMiniTot').textContent = soloCot ? 'A cotizar' : T.fmt(tot.subtotal - desc + (envio || 0));
   }
   function entregaTexto(){
     return radio('ent') === 'recojo' ? 'Recojo en ' + C.RECOJO.lugar + ' — ' + C.RECOJO.dir
-      : g('coDir') + ', ' + g('coDist') + ', ' + g('coProv') + ', ' + g('coDep') + ' · Ref.: ' + g('coRef');
+      : g('coDir') + ', ' + nombreUb('coDist') + ', ' + nombreUb('coProv') + ', ' + nombreUb('coDep') + ' (UBIGEO ' + g('coDist') + ') · Ref.: ' + g('coRef') +
+        (porAgencia() ? ' · Por agencia, a cargo del cliente · ' + (radio('agdest') === 'oficina' ? 'Recoge en oficina de la agencia' : 'Entrega en domicilio') +
+          (g('coAgencia') !== 'Sin preferencia' ? ' · Agencia: ' + g('coAgencia') : '') : '');
   }
   function revision(){
     var comp = radio('comp'), pg = pagoElegido();
     var f = [['Datos', esc(g('coNombre')) + '<br>' + esc(g('coCel')) + ' · ' + esc(g('coEmail')) + '<br>' +
                 (comp === 'boleta' ? 'Boleta · ' + esc(g('coTdoc')) + ' ' + esc(g('coDoc')) : 'Factura · RUC ' + esc(g('coRuc')) + ' · ' + esc(g('coRazon'))), 0],
-             ['Entrega', esc(entregaTexto()) + ($('coOtro').checked ? '<br>Recibe: ' + esc(g('coOtroN')) : '') + ($('coArmado').checked ? '<br>Con cotización de armado' : ''), 1]];
+             ['Entrega', entregaTexto().split(' · ').map(esc).join('<br>') + ($('coOtro').checked ? '<br>Recibe: ' + esc(g('coOtroN')) : '') + ($('coArmado').checked ? '<br>Con cotización de armado' : ''), 1]];
     if(pg) f.push(['Pago', esc(pg.label), 2]);
     $('coRev').innerHTML = f.map(function(x){ return '<div><dt>' + x[0] + '</dt><dd>' + x[1] + '</dd><button type="button" data-ir="' + x[2] + '">Editar</button></div>'; }).join('');
   }
@@ -304,6 +347,10 @@
     });
     $('coOtroT').textContent = radio('ent') === 'recojo' ? 'Recogerá el pedido otra persona.' : 'Recibirá el pedido otra persona.';
     $('coOtroBox').hidden = !$('coOtro').checked;
+    $('coAgBox').hidden = !porAgencia();
+    var z = zona();
+    $('coEntNota').textContent = z.tarifa == null ? C.AGENCIA.nota : 'Despacho a ' + z.label + ': ' + T.fmt(z.tarifa) + '.';
+    $('coDir').placeholder = porAgencia() && radio('agdest') === 'oficina' ? 'Su dirección (para la guía de la agencia)' : 'Avenida, calle o jirón, número, dpto. o interior';
     pintarPago(); totales();
   }
 
@@ -319,7 +366,7 @@
     },
     function(){
       var r = [];
-      if(radio('ent') === 'envio') r.push(revisar('coProv', g('coProv').length > 1), revisar('coDist', g('coDist').length > 1), revisar('coDir', g('coDir').length > 5), revisar('coRef', g('coRef').length > 3));
+      if(radio('ent') === 'envio') r.push(revisar('coDep', !!g('coDep')), revisar('coProv', !!g('coProv')), revisar('coDist', /^\d{6}$/.test(g('coDist'))), revisar('coDir', g('coDir').length > 5), revisar('coRef', g('coRef').length > 3));
       if($('coOtro').checked) r.push(revisar('coOtroN', g('coOtroN').length > 4), revisar('coOtroD', /^[A-Za-z0-9]{6,12}$/.test(g('coOtroD'))));
       return r.every(Boolean);
     }
@@ -339,7 +386,7 @@
   }
   function avanzar(){
     form.querySelectorAll('.is-mal').forEach(function(f){ f.classList.remove('is-mal'); });
-    if(VALIDA[actual] && !VALIDA[actual]()){ var m = form.querySelector('.co-paso:not([hidden]) .is-mal input'); if(m) m.focus(); return; }
+    if(VALIDA[actual] && !VALIDA[actual]()){ var m = form.querySelector('.co-paso:not([hidden]) .is-mal :is(input, select)'); if(m) m.focus(); return; }
     mostrar(actual + 1);
   }
   root.addEventListener('click', function(e){
@@ -352,11 +399,13 @@
     if(e.key === 'Enter' && e.target.tagName === 'INPUT' && actual < ULT){ e.preventDefault(); avanzar(); }
   });
 
+  function limpiarError(e){ var f = e.target.closest && e.target.closest('.gd-field.is-mal'); if(f) f.classList.remove('is-mal'); }
+  form.addEventListener('input', limpiarError);
   form.addEventListener('change', function(e){
-    if(e.target.id === 'coDep'){
-      var d = e.target.value;
-      $('coProv').value = d === 'Lima' ? 'Lima' : d === 'Callao' ? 'Callao' : '';
-    }
+    limpiarError(e);
+    if(e.target.id === 'coDep'){ $('coProv').value = ''; $('coDist').value = ''; pintarUbigeo(1); }
+    else if(e.target.id === 'coProv'){ $('coDist').value = ''; pintarUbigeo(2); }
+    else if(e.target.id === 'coDist') pintarUbigeo(2);
     if(e.target.name === 'pago'){ botonFinal(); return; }
     condicionales();
   });
@@ -370,7 +419,7 @@
     msg.textContent = cupon ? 'Código aplicado.' : 'Ese código no es válido.';
     totales();
   });
-  condicionales(); textosPago(); mostrar(0);
+  pintarUbigeo(0); condicionales(); textosPago(); mostrar(0);
 
   // si la selección cambia desde el cajón, el resumen se rehace entero
   var enviando = false;
@@ -388,7 +437,9 @@
     var comp = radio('comp'), ent = radio('ent'), tdoc = g('coTdoc'), doc = g('coDoc'), z = zona(), pago = pagoElegido();
     var entrega = ent === 'recojo'
       ? { tipo:'recojo', resumen:entregaTexto() }
-      : { tipo:'envio', zona:z.key, distrito:g('coDist'), dir:g('coDir'), ref:g('coRef'),
+      : { tipo:'envio', zona:z.key, ubigeo:g('coDist'), departamento:nombreUb('coDep'), provincia:nombreUb('coProv'), distrito:nombreUb('coDist'),
+          dir:g('coDir'), ref:g('coRef'), porAgencia:porAgencia(), destino:porAgencia() ? radio('agdest') : 'domicilio',
+          agencia:porAgencia() && g('coAgencia') !== 'Sin preferencia' ? g('coAgencia') : '',
           resumen:'Envío a ' + entregaTexto() };
     entrega.armado = $('coArmado').checked;
     if($('coOtro').checked) entrega.recibe = g('coOtroN') + ' (doc. ' + g('coOtroD') + ')';
@@ -405,7 +456,7 @@
     // la cuenta nace con el primer pedido: nadie se registra antes de comprar
     T.sesion.set({ nombre:g('coNombre'), cel:g('coCel'), email:g('coEmail') });
     T.db('datos', { comp:comp, tdoc:tdoc, doc:doc, ruc:g('coRuc'), razon:g('coRazon'), fiscal:g('coFiscal'), ent:ent,
-                    dep:g('coDep'), prov:g('coProv'), distrito:g('coDist'), dir:g('coDir'), ref:g('coRef'), pago:pago ? pago.key : '' });
+                    ubigeo:g('coDist'), dir:g('coDir'), ref:g('coRef'), agdest:radio('agdest'), agencia:g('coAgencia'), pago:pago ? pago.key : '' });
     enviando = true;
     T.carrito.vaciar();
     // medio en línea: directo a pagar. Si el total aún depende del estudio, esa página lo explica.

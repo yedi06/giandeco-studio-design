@@ -129,7 +129,7 @@ V.pedidos = function(){
     (lista.length ? '<div class="ad-tabla-w"><table class="ad-tabla"><thead><tr><th>Pedido</th><th>Fecha</th><th>Cliente</th><th>Entrega</th><th>Pago</th><th class="num">Total</th><th>Estado</th></tr></thead><tbody>' +
       lista.map(function(p){
         return '<tr data-a="abrir" data-v="' + esc(p.n) + '" class="es-fila"><td><b>' + esc(p.n) + '</b>' + (p.demo ? ' <em class="ad-tag">demo</em>' : '') + '</td><td>' + fecha(p.fecha) + '</td>' +
-          '<td>' + esc(p.cliente.nombre) + '<small>' + esc(p.cliente.cel) + '</small></td><td>' + (p.entrega.tipo === 'recojo' ? 'Recojo' : esc(p.entrega.distrito || 'Envío')) + '</td>' +
+          '<td>' + esc(p.cliente.nombre) + '<small>' + esc(p.cliente.cel) + '</small></td><td>' + (p.entrega.tipo === 'recojo' ? 'Recojo' : esc(p.entrega.distrito || 'Envío') + (p.entrega.provincia ? '<small>' + esc(p.entrega.provincia) + ' · ' + esc(p.entrega.departamento || '') + '</small>' : '') + (p.entrega.porAgencia ? ' <em class="ad-tag">agencia</em>' : '')) + '</td>' +
           '<td>' + esc(p.pago || 'Cotización') + (p.pagado ? ' <em class="ad-tag es-ok">pagado</em>' : '') + '</td><td class="num">' + (p.subtotal ? fmt(totalDe(p)) : '—') + '</td>' +
           '<td><em class="ad-estado e' + p.estado + '">' + ESTADOS[p.estado] + '</em></td></tr>';
       }).join('') + '</tbody></table></div>' : vacio('No hay pedidos en este estado.'));
@@ -141,7 +141,7 @@ function pedidoDetalle(p){
       p.items.map(function(x){ return '<tr><td>' + x.qty + ' × ' + esc(x.nombre) + '<small>' + esc(x.cat || '') + '</small></td><td class="num">' + (x.valor === null ? 'A cotizar' : fmt(x.valor * x.qty)) + '</td></tr>'; }).join('') +
       '</tbody></table>' +
       '<div class="ad-form es-3" style="margin-top:20px;">' +
-        '<label>Envío (S/)<input type="number" step="0.01" min="0" id="pdEnvio" value="' + num(p.envio) + '" placeholder="por confirmar"></label>' +
+        '<label>Envío (S/)<input type="number" step="0.01" min="0" id="pdEnvio" value="' + num(p.envio) + '" placeholder="' + (p.entrega.porAgencia ? 'a cargo del cliente' : 'por confirmar') + '"></label>' +
         '<label>Armado (S/)<input type="number" step="0.01" min="0" id="pdArmado" value="' + num(p.armadoMonto) + '"' + (p.entrega.armado ? '' : ' placeholder="no pedido"') + '></label>' +
         '<label>Estado<select id="pdEstado">' + ESTADOS.map(function(e, i){ return '<option value="' + i + '"' + (i === p.estado ? ' selected' : '') + '>' + e + '</option>'; }).join('') + '</select></label>' +
       '</div>' +
@@ -150,11 +150,15 @@ function pedidoDetalle(p){
       '<p class="ad-total">Subtotal ' + fmt(p.subtotal || 0) + (p.descuento ? ' · Cupón −' + fmt(p.descuento) : '') + ' · <b>Total ' + fmt(totalDe(p)) + '</b></p>' +
       '<div class="ad-head-acc"><button class="ad-btn es-pri" data-a="guardar-pedido" data-v="' + esc(p.n) + '">Guardar cambios</button>' +
         '<a class="ad-btn" target="_blank" rel="noopener" href="' + waCliente(p.cliente.cel, 'Hola ' + p.cliente.nombre.split(' ')[0] + ', le escribe Giandeco por su pedido ' + p.n + '. ' +
-          (p.envio != null ? 'Confirmamos disponibilidad. Envío: ' + fmt(p.envio) + (p.armadoMonto ? ' · Armado: ' + fmt(p.armadoMonto) : '') + '. Total: ' + fmt(totalDe(p)) + '. Medio de pago elegido: ' + (p.pago || 'por definir') + '.' : 'Estamos revisando la disponibilidad y el envío.')) + '">Escribir al cliente</a></div>' +
+          (p.envio != null ? 'Confirmamos disponibilidad. Envío: ' + fmt(p.envio) + (p.armadoMonto ? ' · Armado: ' + fmt(p.armadoMonto) : '') + '. Total: ' + fmt(totalDe(p)) + '. Medio de pago elegido: ' + (p.pago || 'por definir') + '.'
+            : p.entrega.porAgencia ? 'Confirmamos disponibilidad. Lo despachamos por agencia' + (p.entrega.agencia ? ' (' + p.entrega.agencia + ')' : '') + '; el flete se lo cobra la agencia al ' + (p.entrega.destino === 'oficina' ? 'recogerlo' : 'recibirlo') + '. Total de las piezas: ' + fmt(totalDe(p)) + '. Medio de pago elegido: ' + (p.pago || 'por definir') + '.'
+            : 'Estamos revisando la disponibilidad y el envío.')) + '">Escribir al cliente</a></div>' +
     '</section>' +
     '<section class="ad-caja"><h2>Cliente</h2><dl class="ad-dl">' +
       '<dt>Nombre</dt><dd>' + esc(p.cliente.nombre) + '</dd><dt>Celular</dt><dd>' + esc(p.cliente.cel) + '</dd><dt>Correo</dt><dd>' + esc(p.cliente.email) + '</dd>' +
       '<dt>Comprobante</dt><dd>' + esc(p.comprobante.resumen) + '</dd><dt>Entrega</dt><dd>' + esc(p.entrega.resumen) + '</dd>' +
+      (p.entrega.ubigeo ? '<dt>UBIGEO</dt><dd>' + esc(p.entrega.ubigeo) + ' · ' + esc(p.entrega.distrito) + ', ' + esc(p.entrega.provincia) + ', ' + esc(p.entrega.departamento) + '</dd>' : '') +
+      (p.entrega.porAgencia ? '<dt>Despacho</dt><dd>Por agencia, a cargo del cliente · ' + (p.entrega.destino === 'oficina' ? 'recoge en oficina' : 'a domicilio') + (p.entrega.agencia ? ' · ' + esc(p.entrega.agencia) : ' · sin preferencia') + '</dd>' : '') +
       (p.entrega.recibe ? '<dt>Recibe</dt><dd>' + esc(p.entrega.recibe) + '</dd>' : '') + (p.entrega.horario ? '<dt>Horario</dt><dd>' + esc(p.entrega.horario) + '</dd>' : '') +
       '<dt>Armado</dt><dd>' + (p.entrega.armado ? 'Sí, cotizar' : 'No') + '</dd><dt>Pago</dt><dd>' + esc(p.pago || '—') + '</dd>' +
       (p.pagoOnline ? '<dt>Cobro en línea</dt><dd>' + fmt(p.pagoOnline.monto / 100) + ' · ' + esc(p.pagoOnline.medio === 'yape' ? 'Yape' : (p.pagoOnline.marca || 'Tarjeta') + (p.pagoOnline.ultimos4 ? ' ···· ' + p.pagoOnline.ultimos4 : '')) +
@@ -281,8 +285,8 @@ V.ajustes = function(){
       '<label class="ad-check"><input type="checkbox" name="igv"' + (c.PRECIOS_CON_IGV === false ? '' : ' checked') + '> Los precios del catálogo incluyen IGV</label>' +
       '<div class="ad-form">' + campo('google', 'Enlace a las reseñas de Google (opcional)', c.GOOGLE_RESENAS) + '</div></section>' +
     '<section class="ad-caja"><h2>Envío</h2><div class="ad-form es-3">' +
-      C.ENVIO.map(function(z){ return '<label>' + z.label + ' (S/)<input name="env-' + z.key + '" type="number" step="0.01" min="0" value="' + (env[z.key] != null ? env[z.key] : '') + '" placeholder="por confirmar"></label>'; }).join('') + '</div>' +
-      '<p class="ad-nota">Vacío = el checkout muestra «por confirmar» y el costo se define en cada pedido.</p>' +
+      C.ENVIO.map(function(z){ return '<label>' + z.label + ' (S/)<input name="env-' + z.key + '" type="number" step="0.01" min="0" value="' + (env[z.key] != null ? env[z.key] : '') + '" placeholder="por agencia"></label>'; }).join('') + '</div>' +
+      '<p class="ad-nota">Vacío = envío por agencia, a cargo del cliente: el flete lo paga a la agencia y el pedido se cobra solo por las piezas. Con un monto, esa zona se cobra con el pedido.</p>' +
       '<label class="ad-check"><input type="checkbox" name="recojo"' + (c.RECOJO_ACTIVO === false ? '' : ' checked') + '> Ofrecer recojo en el estudio</label>' +
       '<h2 style="margin-top:28px;">Medios de pago</h2>' +
       C.PAGO.filter(function(m){ return m.activo || pg[m.key] === false; }).map(function(m){ return '<label class="ad-check"><input type="checkbox" name="pago-' + m.key + '"' + (pg[m.key] === false ? '' : ' checked') + '> ' + m.label + '</label>'; }).join('') + '</section></div>' +
@@ -374,7 +378,7 @@ root.addEventListener('click', function(e){
     rec[i].respuesta = t; rec[i].respondido = new Date().toISOString(); DATOS.guardar('reclamos', rec); pintar(); aviso('Respuesta registrada');
   }
   else if(a === 'borrar-cupon'){ var c = config(); delete c.CUPONES[v]; DATOS.guardar('config', c); pintar(); }
-  else if(a === 'csv-pedidos'){ csv('pedidos.csv', [['Pedido', 'Fecha', 'Estado', 'Cliente', 'Celular', 'Correo', 'Comprobante', 'Entrega', 'Pago', 'Pagado', 'Subtotal', 'Envío', 'Total', 'Piezas']].concat(pedidos().map(function(p){ return [p.n, p.fecha, ESTADOS[p.estado], p.cliente.nombre, p.cliente.cel, p.cliente.email, p.comprobante.resumen, p.entrega.resumen, p.pago, p.pagado ? 'sí' : 'no', p.subtotal, p.envio, totalDe(p), p.items.map(function(x){ return x.qty + ' x ' + x.nombre; }).join(' | ')]; }))); }
+  else if(a === 'csv-pedidos'){ csv('pedidos.csv', [['Pedido', 'Fecha', 'Estado', 'Cliente', 'Celular', 'Correo', 'Comprobante', 'Entrega', 'UBIGEO', 'Departamento', 'Provincia', 'Distrito', 'Agencia', 'Pago', 'Pagado', 'Subtotal', 'Envío', 'Total', 'Piezas']].concat(pedidos().map(function(p){ return [p.n, p.fecha, ESTADOS[p.estado], p.cliente.nombre, p.cliente.cel, p.cliente.email, p.comprobante.resumen, p.entrega.resumen, p.entrega.ubigeo || '', p.entrega.departamento || '', p.entrega.provincia || '', p.entrega.distrito || '', p.entrega.porAgencia ? (p.entrega.agencia || 'sin preferencia') : '', p.pago, p.pagado ? 'sí' : 'no', p.subtotal, p.envio, totalDe(p), p.items.map(function(x){ return x.qty + ' x ' + x.nombre; }).join(' | ')]; }))); }
   else if(a === 'csv-productos'){ csv('productos.csv', [['Clave', 'Nombre', 'Línea', 'Categoría', 'Precio base', 'Precio panel', 'Stock', 'Visible']].concat(catalogo().map(function(p){ return [p.key, p.nombre, p.linea, p.cat, p.base, p.precio, p.stock, p.activo ? 'sí' : 'no']; }))); }
   else if(a === 'csv-clientes'){ csv('clientes.csv', [['Nombre', 'Celular', 'Correo', 'Distrito', 'Pedidos', 'Total', 'Último pedido', 'Acepta novedades']].concat(clientes().map(function(c){ return [c.nombre, c.cel, c.email, c.distrito, c.n, c.total, c.ult, c.promo ? 'sí' : 'no']; }))); }
   else if(a === 'csv-reclamos'){ csv('reclamos.csv', [['Hoja', 'Fecha', 'Tipo', 'Consumidor', 'Documento', 'Correo', 'Bien', 'Detalle', 'Pedido', 'Respuesta', 'Respondido']].concat(DATOS.leer('reclamos', []).map(function(r){ return [r.n, r.fecha, r.tipo, r.nombre, r.doc, r.email, r.desc, r.detalle, r.pide, r.respuesta, r.respondido]; }))); }

@@ -88,7 +88,7 @@ const cent = (s: number) => Math.round(s * 100);
 async function cuenta(d: J) {
   const items = (Array.isArray(d.items) ? d.items : []).map((x: J) => ({ nombre: String(x.nombre ?? ''), qty: Math.max(1, Math.min(99, parseInt(x.qty) || 1)), key: x.key as string | undefined }));
   const vista: J[] = items.map((x: J) => ({ nombre: x.nombre, qty: x.qty, key: x.key ?? '' }));
-  const base = { pagado: d.pagado === true, recojo: d.entrega?.tipo === 'recojo', items: vista };
+  const base = { pagado: d.pagado === true, recojo: d.entrega?.tipo === 'recojo', agencia: d.entrega?.porAgencia === true, items: vista };
   const no = (motivo: string) => ({ ...base, pagable: false, motivo, monto: 0, desglose: null });
   if (base.pagado) return no('pagado');
   if (d.demo || d.estado === 5) return no('cerrado');
@@ -107,7 +107,12 @@ async function cuenta(d: J) {
   const descuento = c ? Math.min(subtotal, c.pct ? subtotal * Number(c.pct) / 100 : Number(c.monto) || 0) : 0;
 
   let envio: number | null = 0;
-  if (d.entrega?.tipo !== 'recojo') envio = num(d.envio) ?? num(cfg.ENVIO?.[d.entrega?.zona]);
+  if (d.entrega?.tipo !== 'recojo') {
+    envio = num(d.envio) ?? num(cfg.ENVIO?.[d.entrega?.zona]);
+    // zona sin tarifa propia: va por agencia y el flete lo paga el cliente a la agencia.
+    // Solo vale si el estudio no fijó tarifa para esa zona: con tarifa, se cobra esa.
+    if (envio === null && d.entrega?.porAgencia === true) envio = 0;
+  }
   if (envio === null) return no('envio');                    // el estudio aún no confirmó el envío
   const armado = d.entrega?.armado ? num(d.armadoMonto) : 0;
   if (armado === null) return no('armado');

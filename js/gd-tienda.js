@@ -18,8 +18,10 @@ var VERSION = (function(){ var sc = document.currentScript, m = sc && /[?&]v=([^
 
 /* --------------------------------------------------------------------------
    1. CONFIGURACIÓN DEL ESTUDIO
-   Una tarifa en null se muestra como "por confirmar": nunca se inventa un
-   monto. Un enlace legal vacío no se pinta.
+   Una zona sin tarifa (null) se despacha por AGENCIA de transporte y el
+   flete lo paga el cliente a la agencia (pago en destino): Giandeco no lo
+   cobra ni inventa un monto. Si el estudio fija una tarifa en el panel, esa
+   zona pasa a cobrarse con el pedido. Un enlace legal vacío no se pinta.
    -------------------------------------------------------------------------- */
 var CFG = {
   WA: '51920775559',
@@ -28,8 +30,15 @@ var CFG = {
   ENVIO: [
     { key:'lima',      label:'Lima Metropolitana', tarifa:null },
     { key:'callao',    label:'Callao',             tarifa:null },
-    { key:'provincia', label:'Otra provincia',     tarifa:null, nota:'Se coordina bajo cotización.' }
+    { key:'provincia', label:'Resto del Perú',     tarifa:null }
   ],
+  /* envío por agencia: el cliente elige su agencia de preferencia (opcional)
+     y paga el flete a la agencia al recibir o al recoger */
+  AGENCIA: {
+    titulo: 'Por agencia · a cargo del cliente',
+    nota: 'Despachamos por agencia de transporte a todo el Perú. El flete lo cobra la agencia al recibir o al recoger su pedido.',
+    lista: ['Shalom', 'Olva Courier', 'Marvisur', 'Cruz del Sur Cargo']
+  },
   /* Medios de pago. activo:false lo quita del checkout sin tocar nada más.
      · solo:        zonas de envío donde aplica
      · soloRecojo / soloFactura: aparece únicamente en ese caso
@@ -125,6 +134,7 @@ function logosPago(lista){
 function totalPedido(p){
   var envio = p.entrega && p.entrega.tipo === 'recojo' ? 0 : p.envio;
   if(envio == null && p.entrega){ var z = CFG.ENVIO.filter(function(x){ return x.key === p.entrega.zona; })[0]; envio = z ? z.tarifa : null; }
+  if(envio == null && p.entrega && p.entrega.porAgencia) envio = 0;    // el flete se paga a la agencia, no a Giandeco
   var armado = p.entrega && p.entrega.armado ? p.armadoMonto : 0;
   return { monto:(p.subtotal || 0) - (p.descuento || 0) + (envio || 0) + (armado || 0), firme: envio != null && armado != null && !p.cotizar };
 }
@@ -188,7 +198,7 @@ function rpc(fn, args){ return nubeFetch('rpc/' + fn, args).then(function(r){ re
 /* --------------------------------------------------------------------------
    3. CATÁLOGO UNIFICADO
    -------------------------------------------------------------------------- */
-var COND = 'Los precios no incluyen instalación ni envío. Entrega en Lima y Callao; coordinamos provincia bajo cotización.';
+var COND = 'No incluye instalación. Enviamos a todo el Perú por agencia de transporte; el flete lo paga el cliente a la agencia.';
 var LINEAS = {
   muebleria:   { label:'Mueblería',   href:'catalogo-muebleria',   src:'GD_PRODUCTOS' },
   iluminacion: { label:'Iluminación', href:'catalogo-iluminacion', src:'GD_ILUMINACION' },
@@ -527,7 +537,7 @@ function pintarCajon(){
   pie.innerHTML =
     '<div class="gdt-tot"><span>Subtotal</span><b>' + (soloCot ? 'A cotizar' : fmt(t.subtotal)) + '</b></div>' +
     (t.cotizar && !soloCot ? '<p class="gdt-tot-nota">+ ' + t.cotizar + (t.cotizar === 1 ? ' pieza' : ' piezas') + ' a cotizar por el estudio.</p>' : '') +
-    '<p class="gdt-tot-nota">Envío y armado se confirman en el siguiente paso.</p>' +
+    '<p class="gdt-tot-nota">Envío por agencia a todo el Perú, a cargo del cliente. Armado, a cotizar.</p>' +
     '<a class="gd-btn gd-btn-primary" href="checkout">' + (soloCot ? 'Solicitar cotización' : 'Finalizar pedido') + FLECHA + '</a>' +
     '<button type="button" class="gdt-seguir" data-gdt-cerrar>Seguir viendo</button>';
 }
