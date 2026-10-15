@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261015k"></script>
+<script src="js/gd-acceso.js?v=20261015r"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mi cuenta — Giandeco Studio Design</title>
 <meta name="robots" content="noindex">
@@ -10,11 +10,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261015k">
-<link rel="stylesheet" href="css/gd-movil.css?v=20261015k">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261015k">
-<script src="js/gd-tema.js?v=20261015k"></script>
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261015k">
+<link rel="stylesheet" href="css/giandeco.css?v=20261015r">
+<link rel="stylesheet" href="css/gd-movil.css?v=20261015r">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261015r">
+<script src="js/gd-tema.js?v=20261015r"></script>
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261015r">
 </head>
 <body data-pagina="cuenta">
 
@@ -23,8 +23,8 @@
 <main class="cu-top"><div class="gd-in" id="cu"></div></main>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=20261015k"></script>
-<script src="js/gd-tienda.js?v=20261015k"></script>
+<script src="js/giandeco.js?v=20261015r"></script>
+<script src="js/gd-tienda.js?v=20261015r"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc;
@@ -139,7 +139,7 @@
           (d.dir ? esc(d.dir) + ', ' + esc(d.distrito) + (d.ref ? ' · Ref.: ' + esc(d.ref) : '') : 'Sin dirección guardada.') + '<br>' +
           (d.comp === 'factura' ? 'Factura · RUC ' + esc(d.ruc) + ' · ' + esc(d.razon) : d.doc ? 'Boleta · ' + esc(d.tdoc) + ' ' + esc(d.doc) : 'Sin comprobante guardado.') +
           '<br>Se actualizan con su próximo pedido.</p></div>' +
-        '<div class="cu-bloque"><h3>Este dispositivo</h3><p>Su cuenta, sus pedidos y su selección se guardan solo en este navegador.</p>' +
+        '<div class="cu-bloque"><h3>Este dispositivo</h3><p>Su cuenta, sus pedidos y su bolsa se guardan solo en este navegador.</p>' +
           '<div class="co-ok-acc"><button type="button" class="gd-btn gd-btn-ghost" id="cuSalir">Cerrar sesión</button>' +
           '<button type="button" class="gdt-quick" style="margin:0;align-self:center;" id="cuBorrar">Borrar todos mis datos de este dispositivo</button></div></div>';
     }
@@ -167,7 +167,7 @@
       T.abrir(); return;
     }
     if(e.target.id === 'cuSalir'){ T.sesion.salir(); location.hash = ''; pintar(); }
-    if(e.target.id === 'cuBorrar' && window.confirm('Se borrarán su cuenta, pedidos, guardados y selección de este dispositivo. ¿Continuar?')){
+    if(e.target.id === 'cuBorrar' && window.confirm('Se borrarán su cuenta, pedidos, guardados y bolsa de este dispositivo. ¿Continuar?')){
       ['sesion','pedidos','favs','vistos','datos','opiniones','carrito','reclamos','preguntas','testimonios'].forEach(function(k){ T.db(k, null); });
       location.href = 'cuenta';
     }
@@ -201,7 +201,7 @@
   T.pedidos.sincronizar(pintar);
 })();
 </script>
-<script src="js/gd-movil.js?v=20261015k" defer></script>
-<script src="js/gd-chat.js?v=20261015k" defer></script>
+<script src="js/gd-movil.js?v=20261015r" defer></script>
+<script src="js/gd-chat.js?v=20261015r" defer></script>
 </body>
 </html>

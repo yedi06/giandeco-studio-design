@@ -18,8 +18,10 @@ var VERSION = (function(){ var sc = document.currentScript, m = sc && /[?&]v=([^
 
 /* --------------------------------------------------------------------------
    1. CONFIGURACIÓN DEL ESTUDIO
-   Una tarifa en null se muestra como "por confirmar": nunca se inventa un
-   monto. Un enlace legal vacío no se pinta.
+   Una zona sin tarifa (null) se despacha por AGENCIA de transporte y el
+   flete lo paga el cliente a la agencia (pago en destino): Giandeco no lo
+   cobra ni inventa un monto. Si el estudio fija una tarifa en el panel, esa
+   zona pasa a cobrarse con el pedido. Un enlace legal vacío no se pinta.
    -------------------------------------------------------------------------- */
 var CFG = {
   WA: '51920775559',
@@ -28,8 +30,15 @@ var CFG = {
   ENVIO: [
     { key:'lima',      label:'Lima Metropolitana', tarifa:null },
     { key:'callao',    label:'Callao',             tarifa:null },
-    { key:'provincia', label:'Otra provincia',     tarifa:null, nota:'Se coordina bajo cotización.' }
+    { key:'provincia', label:'Resto del Perú',     tarifa:null }
   ],
+  /* envío por agencia: el cliente elige su agencia de preferencia (opcional)
+     y paga el flete a la agencia al recibir o al recoger */
+  AGENCIA: {
+    titulo: 'Por agencia · a cargo del cliente',
+    nota: 'Despachamos por agencia de transporte a todo el Perú. El flete lo cobra la agencia al recibir o al recoger su pedido.',
+    lista: ['Shalom', 'Olva Courier', 'Marvisur', 'Cruz del Sur Cargo']
+  },
   /* Medios de pago. activo:false lo quita del checkout sin tocar nada más.
      · solo:        zonas de envío donde aplica
      · soloRecojo / soloFactura: aparece únicamente en ese caso
@@ -50,8 +59,8 @@ var CFG = {
     { key:'pagoefectivo', activo:false, grupo:'Banca', label:'PagoEfectivo', nota:'Recibe un código CIP y paga desde su banca por internet o en agentes y bodegas.' },
     /* Pago directo: el cliente paga por su cuenta a los medios del estudio (PAGO_DIRECTO) y envía
        el comprobante por WhatsApp. Sustituye a Plin, transferencia y adelanto como opciones sueltas. */
-    { key:'directo',  activo:true, grupo:'Pago directo', label:'Pago directo a Giandeco', logos:['yape','plin'],
-      nota:'Yape, Plin o transferencia a las cuentas de Giandeco. Al registrar el pedido ve los datos y envía su comprobante por WhatsApp.' },
+    { key:'directo',  activo:true, grupo:'Pago directo', label:'Pago directo a Giandeco', logos:['yape'],
+      nota:'Yape o transferencia a la cuenta BCP de Giandeco, sin pasarela. Al registrar el pedido verá el QR y las cuentas, y enviará su comprobante por WhatsApp.' },
     { key:'contra',   activo:true, grupo:'Al recibir', label:'Pago contra entrega', nota:'Paga al recibir su pedido, en efectivo, con Yape o con tarjeta. Solo en Lima y Callao.', solo:['lima','callao'] },
     { key:'enestudio',activo:false, grupo:'Al recibir', label:'Pago al recoger en Giandeco', nota:'Paga al recoger, en efectivo, con Yape, Plin o tarjeta.', soloRecojo:true },
     { key:'adelanto', activo:false, grupo:'Proyectos y empresas', label:'Adelanto y saldo', nota:'Para piezas por encargo o pedidos de proyecto: una parte al confirmar y el saldo antes de la entrega. Giandeco le indica los montos.' },
@@ -60,9 +69,14 @@ var CFG = {
   /* Códigos de descuento:  { 'BIENVENIDA': { pct:10 } }  o  { 'ENVIO': { monto:30 } }.
      Vacío = el campo de cupón no se muestra. */
   CUPONES: {},
-  /* Medios del estudio para el pago directo. Se llenan en el panel (Ajustes);
-     lo que esté vacío no se muestra. qr = imagen del código QR. */
-  PAGO_DIRECTO: { yape:{ numero:'', titular:'', qr:'' }, plin:{ numero:'', titular:'', qr:'' }, banco:{ banco:'', cuenta:'', cci:'', titular:'' } },
+  /* Medios del estudio para el pago directo (sin pasarela). El panel puede
+     cambiarlos en Ajustes; lo que esté vacío no se muestra. qr = imagen del
+     código QR (el de Yape se verificó: decodifica igual que el original). */
+  PAGO_DIRECTO: {
+    yape:  { numero:'921 433 741', titular:'Luis Giancarlo Jiménez Sánchez', qr:'images/pago/yape-qr-giandeco.png' },
+    plin:  { numero:'', titular:'', qr:'' },
+    banco: { banco:'BCP · Banco de Crédito del Perú', cuenta:'191-00733854-0-65', cci:'002-191-100733854065-55', titular:'Luis Giancarlo Jiménez Sánchez' }
+  },
   /* Datos legales del estudio. Lo que esté vacío se muestra como
      "por confirmar" en las páginas de ayuda y en el libro de reclamaciones. */
   EMPRESA: { razon:'Luis Giancarlo Jiménez Sánchez', ruc:'10452729691', dir:'Ca. Las Bellísimas 170, Urb. Vipol — Callao 07036', correo:'contacto@giandeco.com', tel:'+51 920 775 559' },
@@ -94,7 +108,11 @@ var CFG = {
   if(o.RECOJO_ACTIVO !== undefined) CFG.RECOJO.activo = o.RECOJO_ACTIVO;
   if(o.ENVIO) CFG.ENVIO.forEach(function(z){ if(o.ENVIO[z.key] !== undefined) z.tarifa = o.ENVIO[z.key]; });
   if(o.PAGO) CFG.PAGO.forEach(function(m){ if(o.PAGO[m.key] === false) m.activo = false; });
-  if(o.PAGO_DIRECTO) ['yape', 'plin', 'banco'].forEach(function(k){ if(o.PAGO_DIRECTO[k]) CFG.PAGO_DIRECTO[k] = o.PAGO_DIRECTO[k]; });
+  // campo a campo: un dato vacío en el panel no borra el que trae el sitio
+  if(o.PAGO_DIRECTO) ['yape', 'plin', 'banco'].forEach(function(k){
+    var src = o.PAGO_DIRECTO[k]; if(!src) return;
+    Object.keys(src).forEach(function(f){ if(src[f]) CFG.PAGO_DIRECTO[k][f] = src[f]; });
+  });
 })(db('config'));
 
 /* --------------------------------------------------------------------------
@@ -125,6 +143,7 @@ function logosPago(lista){
 function totalPedido(p){
   var envio = p.entrega && p.entrega.tipo === 'recojo' ? 0 : p.envio;
   if(envio == null && p.entrega){ var z = CFG.ENVIO.filter(function(x){ return x.key === p.entrega.zona; })[0]; envio = z ? z.tarifa : null; }
+  if(envio == null && p.entrega && p.entrega.porAgencia) envio = 0;    // el flete se paga a la agencia, no a Giandeco
   var armado = p.entrega && p.entrega.armado ? p.armadoMonto : 0;
   return { monto:(p.subtotal || 0) - (p.descuento || 0) + (envio || 0) + (armado || 0), firme: envio != null && armado != null && !p.cotizar };
 }
@@ -188,7 +207,7 @@ function rpc(fn, args){ return nubeFetch('rpc/' + fn, args).then(function(r){ re
 /* --------------------------------------------------------------------------
    3. CATÁLOGO UNIFICADO
    -------------------------------------------------------------------------- */
-var COND = 'Los precios no incluyen instalación ni envío. Entrega en Lima y Callao; coordinamos provincia bajo cotización.';
+var COND = 'No incluye instalación. Enviamos a todo el Perú por agencia de transporte; el flete lo paga el cliente a la agencia.';
 var LINEAS = {
   muebleria:   { label:'Mueblería',   href:'catalogo-muebleria',   src:'GD_PRODUCTOS' },
   iluminacion: { label:'Iluminación', href:'catalogo-iluminacion', src:'GD_ILUMINACION' },
@@ -468,7 +487,7 @@ function card(key, o){
       '<span class="gd-prod-price">' + esc(p.precio) + '</span>' +
     '</a>' +
     (o.porque ? '<p class="gdt-card-why">' + esc(o.porque) + '</p>' : '') +
-    (o.sinBoton ? '' : p.stock <= 0 ? '<span class="gdt-quick es-agotado">Agotado</span>' : '<button type="button" class="gdt-quick" data-gdt-add="' + key + '">' + (p.valor === null ? 'Añadir para cotizar' : 'Añadir a mi selección') + '</button>') +
+    (o.sinBoton ? '' : p.stock <= 0 ? '<span class="gdt-quick es-agotado">Agotado</span>' : '<button type="button" class="gdt-quick" data-gdt-add="' + key + '">' + (p.valor === null ? 'Añadir para cotizar' : 'Añadir a la bolsa') + '</button>') +
   '</article>';
 }
 
@@ -504,7 +523,7 @@ function pintarCajon(){
   cajon.querySelector('#gdtCount').textContent = t.piezas ? (t.piezas + (t.piezas === 1 ? ' pieza' : ' piezas')) : '';
   var cuerpo = cajon.querySelector('#gdtBody'), pie = cajon.querySelector('#gdtFoot');
   if(!l.length){
-    cuerpo.innerHTML = '<div class="gdt-vacio"><p class="gdt-vacio-t">Su selección está vacía</p>' +
+    cuerpo.innerHTML = '<div class="gdt-vacio"><p class="gdt-vacio-t">Su bolsa está vacía</p>' +
       '<p>Añada piezas del catálogo o toque un punto sobre la foto de un espacio.</p>' +
       '<a class="gd-btn gd-btn-primary" href="catalogo">Ver el catálogo' + FLECHA + '</a>' +
       '<a class="gd-link" href="catalogo-compra-el-espacio">Compra el espacio' + FLECHA + '</a></div>';
@@ -527,7 +546,7 @@ function pintarCajon(){
   pie.innerHTML =
     '<div class="gdt-tot"><span>Subtotal</span><b>' + (soloCot ? 'A cotizar' : fmt(t.subtotal)) + '</b></div>' +
     (t.cotizar && !soloCot ? '<p class="gdt-tot-nota">+ ' + t.cotizar + (t.cotizar === 1 ? ' pieza' : ' piezas') + ' a cotizar por el estudio.</p>' : '') +
-    '<p class="gdt-tot-nota">Envío y armado se confirman en el siguiente paso.</p>' +
+    '<p class="gdt-tot-nota">Envío por agencia a todo el Perú, a cargo del cliente. Armado, a cotizar.</p>' +
     '<a class="gd-btn gd-btn-primary" href="checkout">' + (soloCot ? 'Solicitar cotización' : 'Finalizar pedido') + FLECHA + '</a>' +
     '<button type="button" class="gdt-seguir" data-gdt-cerrar>Seguir viendo</button>';
 }
@@ -555,8 +574,8 @@ function montar(){
   }
   document.body.insertAdjacentHTML('beforeend',
     '<div class="gdt-scrim" id="gdtScrim"></div>' +
-    '<aside class="gdt-drawer" id="gdtDrawer" role="dialog" aria-modal="true" aria-label="Su selección" aria-hidden="true">' +
-      '<header class="gdt-head"><div><span class="gdt-eyebrow">Su selección</span><b id="gdtCount"></b></div>' +
+    '<aside class="gdt-drawer" id="gdtDrawer" role="dialog" aria-modal="true" aria-label="Su bolsa" aria-hidden="true">' +
+      '<header class="gdt-head"><div><span class="gdt-eyebrow">Su bolsa</span><b id="gdtCount"></b></div>' +
         '<button type="button" class="gdt-x" data-gdt-cerrar aria-label="Cerrar">&times;</button></header>' +
       '<div class="gdt-body" id="gdtBody"></div>' +
       '<footer class="gdt-foot" id="gdtFoot"></footer>' +
@@ -566,7 +585,7 @@ function montar(){
 
   // el header ya trae el botón de carrito: se conecta, y a su lado entra la cuenta
   document.querySelectorAll('button[aria-label="Carrito"]').forEach(function(b){
-    b.classList.add('gdt-cart-btn'); b.setAttribute('aria-label', 'Su selección');
+    b.classList.add('gdt-cart-btn'); b.setAttribute('aria-label', 'Su bolsa');
     b.insertAdjacentHTML('beforeend', '<span class="gdt-badge" hidden></span>');
     b.addEventListener('click', abrir);
     b.insertAdjacentHTML('beforebegin',

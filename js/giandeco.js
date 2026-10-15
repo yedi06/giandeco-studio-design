@@ -86,7 +86,7 @@ var ILUMINACION = {
   'lara':       { nombre:'Lámpara Lara Black',   cat:'Colgante individual',precio:'S/ 480.00',   img:'images/iluminacion/lara-1.jpg',        nota:'Aro circular en estructura metálica y acrílico, 38W 165/265V. Altura regulable, luz cálida.' },
   'longer':     { nombre:'Lámpara Longer',       cat:'Colgante lineal',    precio:'S/ 1,300.00', img:'images/iluminacion/longer-1.jpg',      nota:'Paneles verticales en cascada, estructura de aluminio y silicón. Luz LED tricolor, altura regulable, acabado negro mate.' },
   'mady-white': { nombre:'Lámpara Mady White',   cat:'Colgante individual',precio:'S/ 180.00',   img:'images/iluminacion/mady-white-1.jpg', nota:'Domo en estructura metálica y capuchón de madera, socket E27 estándar. Altura regulable, color blanco bone.' },
-  'stratto':    { nombre:'Lámpara Stratto',      cat:'Colgante múltiple',  precio:'S/ 480.01',   img:'images/iluminacion/stratto-1.jpg',     nota:'Estructura metálica, 6 luces con socket E27 estándar. Incluye focos LED.' },
+  'stratto':    { nombre:'Lámpara Stratto',      cat:'Colgante múltiple',  precio:'S/ 480.00',   img:'images/iluminacion/stratto-1.jpg',     nota:'Estructura metálica, 6 luces con socket E27 estándar. Incluye focos LED.' },
   'villa':      { nombre:'Lámpara Villa',        cat:'Colgante individual',precio:'S/ 250.00',   img:'images/iluminacion/villa-1.jpg',       nota:'Farolillo en estructura metálica, incluye foco LED. Acabado negro y madera avejentada.' },
   'spazio':     { nombre:'Lámpara Spazio',       cat:'Colgante lineal',    precio:'S/ 120.00',   img:'images/iluminacion/spazio-1.jpg',      nota:'Batería de cilindros en aluminio, 8W/220V. Altura regulable, luz LED cálida y blanca.' }
 };
@@ -96,32 +96,32 @@ window.GD_ILUMINACION = ILUMINACION;
    2c. NAVIDAD — colección 2026  (fichas reales de 08_Navidad)
    -------------------------------------------------------------------------- */
 var NAVIDAD = {
-  'tren-jengibre':          { nombre:'Tren de jengibre',                    cat:'Jengibre',    precio:'S/ 72.30',  img:'images/navidad/tren-jengibre-1.png',           nota:'Pieza decorativa de temporada, colección jengibre.' },
-  'casa-jengibre':          { nombre:'Casa de jengibre',                    cat:'Jengibre',    precio:'S/ 146.90', img:'images/navidad/casa-jengibre-1.png',           nota:'Casa de jengibre iluminada, con figuras y detalles glaseados.' },
-  'cascanueces-musicales':  { nombre:'Cascanueces musicales',               cat:'Cascanueces', precio:'S/ 76.00',  img:'images/navidad/cascanueces-musicales-1.png',   nota:'Se venden por unidad. Disponible en 3 modelos.' },
-  'cascanueces-mecedores':  { nombre:'Cascanueces mecedores',               cat:'Cascanueces', precio:'S/ 58.70',  img:'images/navidad/cascanueces-mecedores-1.png',   nota:'Se venden por unidad. Disponible en 3 modelos.' },
-  'perritos-cascanueces':   { nombre:'Muñecos perritos cascanueces',        cat:'Cascanueces', precio:'S/ 54.10',  img:'images/navidad/perritos-cascanueces-1.png',    nota:'Se venden por unidad. Disponible en 3 modelos.' },
-  'reno-recostado':         { nombre:'Adorno reno navideño recostado',      cat:'Adornos',     precio:'S/ 60.20',  img:'images/navidad/reno-recostado-1.png',          nota:'Material de poliresina.' },
-  'reno-de-pie':            { nombre:'Adorno reno navideño de pie',         cat:'Adornos',     precio:'S/ 75.80',  img:'images/navidad/reno-de-pie-1.png',             nota:'Material de poliresina.' },
-  'reno-recostado-plato':   { nombre:'Adorno reno recostado con plato',     cat:'Adornos',     precio:'S/ 104.20', img:'images/navidad/reno-recostado-plato-1.png',    nota:'Material de poliresina.' },
-  'reno-de-pie-plato':      { nombre:'Adorno reno de pie con plato',        cat:'Adornos',     precio:'S/ 116.30', img:'images/navidad/reno-de-pie-plato-1.png',       nota:'Material de poliresina.' },
-  'papa-noel':              { nombre:'Papá Noel',                          cat:'Figuras',     precio:'S/ 74.00',  img:'images/navidad/papa-noel-1.png',               nota:'20 cm de alto.' },
-  'bombonera-caja-regalo':  { nombre:'Bombonera navideña caja de regalo',   cat:'Bomboneras',  precio:'S/ 48.10',  img:'images/navidad/bombonera-caja-regalo-1.png',   nota:'22 cm. Se vende por unidad, disponible en 2 modelos.' },
-  'bombonera-casita':       { nombre:'Bombonera navideña casita',           cat:'Bomboneras',  precio:'S/ 57.20',  img:'images/navidad/bombonera-casita-1.png',        nota:'28 cm. Se vende por unidad, disponible en 2 modelos.' },
-  'portavela-dorado':       { nombre:'Portavela dorado',                    cat:'Portavelas',  precio:'S/ 54.00',  img:'images/navidad/portavela-dorado-1.png',        nota:'Set de 3 unidades.' },
-  'portavela-negro':        { nombre:'Portavela negro',                    cat:'Portavelas',  precio:'S/ 54.00',  img:'images/navidad/portavela-negro-1.png',         nota:'Set de 3 unidades.' },
-  'venado-mediano':         { nombre:'Venado transparente mediano',        cat:'Adornos',     precio:'S/ 16.00',  img:'images/navidad/venado-mediano-1.png',          nota:'Se vende por unidad. Material de acrílico.' },
-  'venado-pequeno':         { nombre:'Venado transparente pequeño',        cat:'Adornos',     precio:'S/ 16.00',  img:'images/navidad/venado-pequeno-1.png',          nota:'Se vende por unidad. Material de acrílico.' },
-  'casa-musical':           { nombre:'Adorno casa musical',                cat:'Figuras',     precio:'S/ 110.50', img:'images/navidad/casa-musical-1.png',            nota:'Pieza decorativa de temporada.' },
-  'taza-cascanuez-roja':    { nombre:'Taza cascanuez roja',                cat:'Mesa',        precio:'S/ 67.90',  img:'images/navidad/taza-cascanuez-roja-1.png',     nota:'Set de tres tazas.' },
-  'taza-cascanuez':         { nombre:'Taza cascanuez',                     cat:'Mesa',        precio:'S/ 67.90',  img:'images/navidad/taza-cascanuez-1.png',          nota:'Set de tres tazas.' },
-  'arbol-iluminado':        { nombre:'Árbol navideño iluminado',           cat:'Iluminados',  precio:'S/ 62.30',  img:'images/navidad/arbol-iluminado-1.png',         nota:'Material de porcelana.' },
-  'casa-iluminada-mediana': { nombre:'Casa navideña iluminada mediana',    cat:'Iluminados',  precio:'S/ 40.80',  img:'images/navidad/casa-iluminada-mediana-1.png',  nota:'Material de porcelana.' },
-  'muneco-nieve':           { nombre:'Muñeco de nieve iluminado',          cat:'Iluminados',  precio:'S/ 30.00',  img:'images/navidad/muneco-nieve-1.png',            nota:'Material de porcelana.' },
-  'casa-iluminada-pequena': { nombre:'Casa navideña iluminada pequeña',    cat:'Iluminados',  precio:'S/ 40.80',  img:'images/navidad/casa-iluminada-pequena-1.png',  nota:'Material de porcelana.' },
-  'arreglo-pino-berries':   { nombre:'Arreglo pino y berries',             cat:'Decoración',  precio:'S/ 34.00',  img:'images/navidad/arreglo-pino-berries-1.png',    nota:'Arreglo decorativo de temporada.' },
-  'farol-124':              { nombre:'Farol 1.24 m',                       cat:'Farol',       precio:'S/ 245.00', img:'images/navidad/farol-124-1.png',               nota:'1.24 m de alto.' },
-  'farol-157':              { nombre:'Farol 1.57 m',                       cat:'Farol',       precio:'S/ 260.00', img:'images/navidad/farol-157-1.png',               nota:'1.57 m de alto.' }
+  'tren-jengibre':          { nombre:'Tren de jengibre',                    cat:'Jengibre',    precio:'S/ 72.30',  img:'images/navidad/tren-jengibre-1.jpg',           nota:'Pieza decorativa de temporada, colección jengibre.' },
+  'casa-jengibre':          { nombre:'Casa de jengibre',                    cat:'Jengibre',    precio:'S/ 146.90', img:'images/navidad/casa-jengibre-1.jpg',           nota:'Casa de jengibre iluminada, con figuras y detalles glaseados.' },
+  'cascanueces-musicales':  { nombre:'Cascanueces musicales',               cat:'Cascanueces', precio:'S/ 76.00',  img:'images/navidad/cascanueces-musicales-1.jpg',   nota:'Se venden por unidad. Disponible en 3 modelos.' },
+  'cascanueces-mecedores':  { nombre:'Cascanueces mecedores',               cat:'Cascanueces', precio:'S/ 58.70',  img:'images/navidad/cascanueces-mecedores-1.jpg',   nota:'Se venden por unidad. Disponible en 3 modelos.' },
+  'perritos-cascanueces':   { nombre:'Muñecos perritos cascanueces',        cat:'Cascanueces', precio:'S/ 54.10',  img:'images/navidad/perritos-cascanueces-1.jpg',    nota:'Se venden por unidad. Disponible en 3 modelos.' },
+  'reno-recostado':         { nombre:'Adorno reno navideño recostado',      cat:'Adornos',     precio:'S/ 60.20',  img:'images/navidad/reno-recostado-1.jpg',          nota:'Material de poliresina.' },
+  'reno-de-pie':            { nombre:'Adorno reno navideño de pie',         cat:'Adornos',     precio:'S/ 75.80',  img:'images/navidad/reno-de-pie-1.jpg',             nota:'Material de poliresina.' },
+  'reno-recostado-plato':   { nombre:'Adorno reno recostado con plato',     cat:'Adornos',     precio:'S/ 104.20', img:'images/navidad/reno-recostado-plato-1.jpg',    nota:'Material de poliresina.' },
+  'reno-de-pie-plato':      { nombre:'Adorno reno de pie con plato',        cat:'Adornos',     precio:'S/ 116.30', img:'images/navidad/reno-de-pie-plato-1.jpg',       nota:'Material de poliresina.' },
+  'papa-noel':              { nombre:'Papá Noel',                          cat:'Figuras',     precio:'S/ 74.00',  img:'images/navidad/papa-noel-1.jpg',               nota:'20 cm de alto.' },
+  'bombonera-caja-regalo':  { nombre:'Bombonera navideña caja de regalo',   cat:'Bomboneras',  precio:'S/ 48.10',  img:'images/navidad/bombonera-caja-regalo-1.jpg',   nota:'22 cm. Se vende por unidad, disponible en 2 modelos.' },
+  'bombonera-casita':       { nombre:'Bombonera navideña casita',           cat:'Bomboneras',  precio:'S/ 57.20',  img:'images/navidad/bombonera-casita-1.jpg',        nota:'28 cm. Se vende por unidad, disponible en 2 modelos.' },
+  'portavela-dorado':       { nombre:'Portavela dorado',                    cat:'Portavelas',  precio:'S/ 54.00',  img:'images/navidad/portavela-dorado-1.jpg',        nota:'Set de 3 unidades.' },
+  'portavela-negro':        { nombre:'Portavela negro',                    cat:'Portavelas',  precio:'S/ 54.00',  img:'images/navidad/portavela-negro-1.jpg',         nota:'Set de 3 unidades.' },
+  'venado-mediano':         { nombre:'Venado transparente mediano',        cat:'Adornos',     precio:'S/ 16.00',  img:'images/navidad/venado-mediano-1.jpg',          nota:'Se vende por unidad. Material de acrílico.' },
+  'venado-pequeno':         { nombre:'Venado transparente pequeño',        cat:'Adornos',     precio:'S/ 16.00',  img:'images/navidad/venado-pequeno-1.jpg',          nota:'Se vende por unidad. Material de acrílico.' },
+  'casa-musical':           { nombre:'Adorno casa musical',                cat:'Figuras',     precio:'S/ 110.50', img:'images/navidad/casa-musical-1.jpg',            nota:'Pieza decorativa de temporada.' },
+  'taza-cascanuez-roja':    { nombre:'Taza cascanuez roja',                cat:'Mesa',        precio:'S/ 67.90',  img:'images/navidad/taza-cascanuez-roja-1.jpg',     nota:'Set de tres tazas.' },
+  'taza-cascanuez':         { nombre:'Taza cascanuez',                     cat:'Mesa',        precio:'S/ 67.90',  img:'images/navidad/taza-cascanuez-1.jpg',          nota:'Set de tres tazas.' },
+  'arbol-iluminado':        { nombre:'Árbol navideño iluminado',           cat:'Iluminados',  precio:'S/ 62.30',  img:'images/navidad/arbol-iluminado-1.jpg',         nota:'Material de porcelana.' },
+  'casa-iluminada-mediana': { nombre:'Casa navideña iluminada mediana',    cat:'Iluminados',  precio:'S/ 40.80',  img:'images/navidad/casa-iluminada-mediana-1.jpg',  nota:'Material de porcelana.' },
+  'muneco-nieve':           { nombre:'Muñeco de nieve iluminado',          cat:'Iluminados',  precio:'S/ 30.00',  img:'images/navidad/muneco-nieve-1.jpg',            nota:'Material de porcelana.' },
+  'casa-iluminada-pequena': { nombre:'Casa navideña iluminada pequeña',    cat:'Iluminados',  precio:'S/ 40.80',  img:'images/navidad/casa-iluminada-pequena-1.jpg',  nota:'Material de porcelana.' },
+  'arreglo-pino-berries':   { nombre:'Arreglo pino y berries',             cat:'Decoración',  precio:'S/ 34.00',  img:'images/navidad/arreglo-pino-berries-1.jpg',    nota:'Arreglo decorativo de temporada.' },
+  'farol-124':              { nombre:'Farol 1.24 m',                       cat:'Farol',       precio:'S/ 245.00', img:'images/navidad/farol-124-1.jpg',               nota:'1.24 m de alto.' },
+  'farol-157':              { nombre:'Farol 1.57 m',                       cat:'Farol',       precio:'S/ 260.00', img:'images/navidad/farol-157-1.jpg',               nota:'1.57 m de alto.' }
 };
 window.GD_NAVIDAD = NAVIDAD;
 
@@ -376,9 +376,16 @@ Object.keys(SITIO).forEach(function(k){
   (SITIO[k].pronto || []).forEach(function(p){ INDICE.push({ label: p.label + ' (próximamente)', href:p.href }); });
 });
 PAGINAS.forEach(function(p){ INDICE.push({ label:p.label, href:p.href }); });
-Object.keys(PRODUCTOS).forEach(function(k){ INDICE.push({ label: PRODUCTOS[k].nombre + ' — ' + PRODUCTOS[k].precio, href:window.GD_URL(k) }); });
-Object.keys(ILUMINACION).forEach(function(k){ INDICE.push({ label: ILUMINACION[k].nombre + ' — ' + ILUMINACION[k].precio, href:window.GD_URL(k) }); });
-Object.keys(NAVIDAD).forEach(function(k){ INDICE.push({ label: NAVIDAD[k].nombre + ' — ' + NAVIDAD[k].precio, href:window.GD_URL(k) }); });
+[[PRODUCTOS,'Mueblería'],[ILUMINACION,'Iluminación'],[NAVIDAD,'Navidad']].forEach(function(L){
+  Object.keys(L[0]).forEach(function(k){
+    var p = L[0][k];
+    // la categoría y la línea también se buscan: "comedor", "colgante", "navidad"
+    INDICE.push({ label: p.nombre + ' — ' + p.precio, href:window.GD_URL(k), extra: p.cat + ' ' + L[1], pieza:true });
+  });
+});
+/* sin tildes ni mayúsculas: "lampara" encuentra "Lámpara" */
+function plano(s){ return String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9.]+/g, ' ').trim(); }
+INDICE.forEach(function(i){ i.texto = plano(i.label + ' ' + (i.extra || '')); });
 
 var overlay = document.getElementById('shSearchOverlay');
 var input = document.getElementById('shSearchInput');
@@ -386,9 +393,20 @@ var chips = document.getElementById('shSearchChips');
 var results = document.getElementById('shSearchResults');
 function pintarResultados(q){
   if(!results) return;
-  var t = (q || '').trim().toLowerCase();
+  var t = plano(q);
   if(!t){ results.innerHTML = '<p class="sh-search-empty">Escriba para buscar entre servicios, proyectos y productos.</p>'; return; }
-  var hits = INDICE.filter(function(i){ return i.label.toLowerCase().indexOf(t) !== -1; }).slice(0, 8);
+  // cada palabra debe aparecer; el plural también vale ("lamparas", "comedores")
+  var palabras = t.split(' ').filter(function(w){ return w.length > 1; })   // una letra suelta coincide con todo
+      .map(function(w){ return w.length > 4 ? w.replace(/(es|s)$/, '') : w; });
+  var hits = INDICE.filter(function(i){ return palabras.length && palabras.every(function(w){ return i.texto.indexOf(w) !== -1; }); })
+    .map(function(i){
+      // primero lo que coincide en el nombre visible, y antes si empieza por la búsqueda
+      var l = plano(i.label), n = palabras.every(function(w){ return l.indexOf(w) !== -1; }) ? 2 : 0;
+      return { i:i, n: n + (l.indexOf(palabras[0]) === 0 ? 1 : 0) };
+    })
+    .sort(function(a, b){ return b.n - a.n; })
+    .map(function(x){ return x.i; })
+    .slice(0, 8);
   results.innerHTML = hits.length
     ? hits.map(function(h){ return '<a class="sh-search-result" href="' + h.href + '">' + h.label + '</a>'; }).join('')
     : '<p class="sh-search-empty">Sin resultados. Escríbanos por WhatsApp y le respondemos.</p>';
@@ -415,7 +433,7 @@ document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ cerrar
 /* --------------------------------------------------------------------------
    7. REVELADO AL SCROLL + BARRA DE PROGRESO
    -------------------------------------------------------------------------- */
-var revealTargets = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale, .gd-curtain');
+var revealTargets = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale, .reveal-underline, .gd-curtain, hr.rule');
 if('IntersectionObserver' in window){
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
@@ -525,7 +543,7 @@ function montarPuntos(){
       var href   = p ? window.GD_URL(key) : (dot.getAttribute('data-href') || WA_MSG);
       // con la capa de tienda cargada, el punto también suma la pieza a la selección
       var sumar  = !window.GD_TIENDA ? '' : (p
-        ? '<button class="gd-shop-card-add" type="button" data-gdt-add="' + key + '">Añadir a mi selección</button>'
+        ? '<button class="gd-shop-card-add" type="button" data-gdt-add="' + key + '">Añadir a la bolsa</button>'
         : '<button class="gd-shop-card-add" type="button" data-gdt-add-esp="' + nombre + '" data-cat="' + cat + '">Añadir para cotizar</button>');
 
       card.innerHTML =
@@ -668,6 +686,48 @@ function montarMarcas(){
   }
 }
 montarMarcas();
+
+/* --------------------------------------------------------------------------
+   8c. DETALLE DEL MONTAJE — piezas sin foto de producto
+   En "Las piezas de este espacio", una pieza que aún no tiene foto propia
+   muestra un recorte ampliado de la fotografía del espacio, centrado en su
+   punto de compra: se ve la pieza real, montada por el estudio, en vez de
+   un recuadro vacío. Cuando la pieza tenga foto de producto, la tarjeta deja
+   de ser .is-slot y esto no la toca.
+   -------------------------------------------------------------------------- */
+function detallesDeMontaje(){
+  var foto = document.querySelector('.gd-shop .gd-shop-img');
+  var slots = document.querySelectorAll('.gd-pieza-thumb.is-slot');
+  if(!foto || !slots.length) return;
+  function pintar(){
+    var r = foto.naturalHeight / foto.naturalWidth;            // alto/ancho de la foto
+    if(!r) return;
+    var z = Math.max(3.2, 1.25 / r * 1.4);                      // ampliación: la miniatura es 4:5
+    var src = foto.currentSrc || foto.src;
+    slots.forEach(function(slot){
+      var card = slot.parentElement, b = card && card.querySelector('[data-gdt-add-esp]');
+      if(!b) return;
+      var nombre = b.getAttribute('data-gdt-add-esp'), punto = null;
+      document.querySelectorAll('.gd-shop-dot[data-nombre]').forEach(function(d){ if(d.getAttribute('data-nombre') === nombre) punto = d; });
+      if(!punto) return;
+      var px = parseFloat(punto.style.left) / 100, py = parseFloat(punto.style.top) / 100;
+      if(isNaN(px) || isNaN(py)) return;
+      // posición de fondo que deja el punto en el centro del recorte
+      var bx = Math.min(1, Math.max(0, (px * z - .5) / (z - 1)));
+      var by = Math.min(1, Math.max(0, (py * z * r - .625) / (z * r - 1.25)));
+      slot.classList.remove('is-slot'); slot.classList.add('is-detalle');
+      slot.style.backgroundImage = "url('" + src + "')";
+      slot.style.backgroundSize = (z * 100).toFixed(1) + '% auto';
+      slot.style.backgroundPosition = (bx * 100).toFixed(1) + '% ' + (by * 100).toFixed(1) + '%';
+      slot.setAttribute('role', 'img');
+      slot.setAttribute('aria-label', nombre + ', detalle de la fotografía del espacio');
+      slot.innerHTML = '<span class="gd-detalle-tag">Detalle del montaje</span>';
+    });
+  }
+  if(foto.complete && foto.naturalWidth) pintar(); else foto.addEventListener('load', pintar, { once:true });
+}
+// la grilla de piezas la arma el script de cada espacio, después de este archivo
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', detallesDeMontaje); else detallesDeMontaje();
 
 /* --------------------------------------------------------------------------
    9. BOTONES MAGNÉTICOS

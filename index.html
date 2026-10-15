@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261015k"></script>
+<script src="js/gd-acceso.js?v=20261015r"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Giandeco Studio Design</title>
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261015k">
+<title>Giandeco Studio Design · Visual merchandising e interiorismo en Lima</title>
+<meta name="description" content="Estudio de diseño comercial en Lima: visual merchandising, diseño de tiendas e interiorismo con producción y montaje propios. Para Zara, El Corte Inglés y Walon.">
+<link rel="stylesheet" href="css/giandeco.css?v=20261015r">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261015r">
 <!-- la portada del hero es el LCP: se pide ya, solo la que corresponde a la pantalla -->
 <link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-mobile.webp" media="(orientation: portrait) and (max-width: 1024px)" fetchpriority="high">
 <link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-desktop.webp" media="(orientation: landscape), (min-width: 1025px)" fetchpriority="high">
@@ -17,8 +19,8 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Giandeco Studio Design">
 <meta property="og:locale" content="es_PE">
-<meta property="og:title" content="Giandeco Studio Design">
-<meta property="og:description" content="">
+<meta property="og:title" content="Giandeco Studio Design · Visual merchandising e interiorismo en Lima">
+<meta property="og:description" content="Estudio de diseño comercial en Lima: visual merchandising, diseño de tiendas e interiorismo con producción y montaje propios. Para Zara, El Corte Inglés y Walon.">
 <meta property="og:url" content="https://giandeco.com/">
 <meta property="og:image" content="https://giandeco.com/images/posicionamiento/manifiesto.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -44,38 +46,28 @@
     --line: #2a2621;
     --text: var(--lino);
     --text-dim: #B9B3A6;
-    --text-faint: #8a8375;
+    --text-faint: #948D80;
     --accent: var(--laton);
     --accent-2: var(--bronce);
     --accent-soft: rgba(201,162,74,0.16);
 
     /* Tres familias, todas del brandbook (slide 31) */
-    --display: 'Bodoni Moda', Georgia, serif;      /* títulos y cifras grandes — nunca < 30px en pantalla */
-    --body: 'Jost', system-ui, sans-serif;         /* subtítulos y cuerpo */
-    --mono: 'Jost', system-ui, sans-serif;         /* etiquetas: mismo Jost, versalitas espaciadas */
-    --script: 'Cormorant Garamond', Georgia, serif; /* destacados — solo cursiva 300, solo citas y conceptos */
+    --display: "Bodoni Moda", Georgia, serif;      /* títulos y cifras grandes — nunca < 30px en pantalla */
+    --body: "Jost", system-ui, sans-serif;         /* subtítulos y cuerpo */
+    --mono: "Jost", system-ui, sans-serif;         /* etiquetas: mismo Jost, versalitas espaciadas */
+    --script: "Cormorant Garamond", Georgia, serif; /* destacados — solo cursiva 300, solo citas y conceptos */
     color-scheme: dark;
   }
 
-  *{ box-sizing: border-box; }
+  
 
-  html{ overflow-x: hidden; }
-  body{
-    margin: 0;
-    background: var(--bg);
-    background-image:
-      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(201,162,74,0.06), transparent),
-      repeating-linear-gradient(90deg, rgba(222,216,203,0.025) 0, rgba(222,216,203,0.025) 1px, transparent 1px, transparent 22px);
-    color: var(--text);
-    font-family: var(--body);
-    font-weight: 300;
-    -webkit-font-smoothing: antialiased;
-  }
+  
+  
 
   .page{ max-width: 1440px; margin: 0 auto; padding: clamp(28px, 6vw, 72px) clamp(18px, 5vw, 64px) 80px; }
 
-  a{ color: inherit; }
-  img{ max-width: 100%; display: block; }
+  
+  
 
   /* ---------- Header ---------- */
   .eyebrow{
@@ -119,46 +111,31 @@
   hr.rule.is-visible{ transform: scaleX(1); opacity: 1; }
 
   /* ---------- Scroll-reveal system (usado en toda la página) ---------- */
-  .scroll-progress{
-    position: fixed;
-    top: 0; left: 0;
-    height: 2px;
-    width: 100%;
-    transform: scaleX(0);
-    transform-origin: left center;
-    will-change: transform;
-    background: linear-gradient(90deg, var(--accent), #e6c688);
-    box-shadow: 0 0 10px rgba(201,162,74,0.45);
-    z-index: 80;
-  }
-  .reveal, .reveal-left, .reveal-scale{
-    opacity: 0;
-    transform: translateY(26px);
-    transition: opacity 900ms cubic-bezier(0.16,1,0.3,1), transform 900ms cubic-bezier(0.16,1,0.3,1);
-  }
-  .reveal.is-visible, .reveal-left.is-visible, .reveal-scale.is-visible{ opacity: 1; transform: none; }
-  .reveal-left{ transform: translateX(-26px); }
-  .reveal-scale{ transform: translateY(16px) scale(0.96); }
+  
+  
+  
+  
+  
   .reveal-underline{
     transform: scaleX(0);
     transform-origin: left center;
     transition: transform 700ms cubic-bezier(0.16,1,0.3,1);
   }
   .reveal-underline.is-visible{ transform: scaleX(1); }
-  .d1{ transition-delay: 110ms; }
-  .d2{ transition-delay: 220ms; }
-  .d3{ transition-delay: 330ms; }
-  .d4{ transition-delay: 440ms; }
-  .d5{ transition-delay: 550ms; }
+  
+  
+  
+  
+  
 
-  ::selection{ background: var(--laton); color: var(--ebano); }
-  ::-moz-selection{ background: var(--laton); color: var(--ebano); }
+  
+  
 
   @media (prefers-reduced-motion: reduce){
     hr.rule, .reveal, .reveal-left, .reveal-scale, .reveal-underline{
       transition: none; opacity: 1; transform: none;
     }
-    .scroll-progress{ display: none; }
+    
   }
 
   /* ---------- Demo section ---------- */
@@ -249,7 +226,7 @@
   .acc-item.is-open .acc-panel{ background-position: center 30%; }
 
   .acc-panel::before{
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: linear-gradient(180deg, rgba(8,7,5,0.32), rgba(8,7,5,0.02) 48%, rgba(8,7,5,0.4) 100%);
@@ -330,7 +307,7 @@
   .g-item.is-visible{ opacity: 1; transform: translateY(0); }
   .g-item.is-visible:hover{ transform: translateY(0) scale(1.05); }
   .g-item::before{
-    content: '';
+    content: "";
     position: absolute; inset: 0;
     background: linear-gradient(180deg, rgba(10,9,6,0.02) 55%, rgba(10,9,6,0.72));
   }
@@ -386,7 +363,7 @@
     cursor: pointer;
   }
   .shift-card::before{
-    content: '';
+    content: "";
     position: absolute; inset: 0;
     background: linear-gradient(180deg, rgba(10,9,6,0.05), rgba(10,9,6,0.15) 55%, rgba(10,9,6,0.7));
     transition: opacity .3s ease;
@@ -400,7 +377,7 @@
   /* pista de vidrio + signo "+" al centro: se nota que la imagen se puede
      abrir antes de tocarla, sin necesitar texto de instrucción */
   .shift-card::after{
-    content: '';
+    content: "";
     position: absolute; inset: 0; z-index: 1; margin: auto;
     width: 46px; height: 46px; border-radius: 50%;
     border: 1px solid rgba(222,216,203,.55);
@@ -621,61 +598,37 @@
     --ease-header: cubic-bezier(.22,.68,.24,1);
   }
 
-  html{ scroll-padding-top: var(--h-total); }
+  
 
   /* ---------- header shell ---------- */
-  .site-header{
-    position: fixed; top: 0; left: 0; right: 0; z-index: 70;
-    background: transparent;
-    border-bottom: 1px solid transparent;
-    box-shadow: none;
-    transition: background .4s var(--ease-header), border-color .4s var(--ease-header), box-shadow .4s var(--ease-header);
-  }
-  .site-header.is-solid{
-    background: var(--bg-header-solid);
-    border-bottom-color: rgba(222,216,203,0.1);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.28);
-  }
+  
+  
 
   /* ---------- fila 1: marca ---------- */
-  .sh-marca{ height: var(--h-marca); display: flex; align-items: center; }
-  @media (min-width: 1180px){ .sh-marca{ height: var(--h-marca-d); } }
+  
+  
 
-  .sh-marca-in{
-    width: 100%; max-width: var(--gd-max); margin: 0 auto; padding-inline: var(--gd-gut);
-    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem;
-  }
+  
 
-  .sh-left{ display: flex; align-items: center; gap: clamp(1rem, 2vw, 2rem); }
+  
 
-  .sh-burger{
-    display: block; width: 26px; height: 20px; position: relative;
-    background: none; border: none; padding: 0; margin: 0; cursor: pointer; flex: none;
-  }
-  .sh-burger span{
-    position: absolute; left: 0; right: 0; height: 2px; border-radius: 2px;
-    background: var(--text);
-    transition: transform .3s ease, opacity .3s ease, top .3s ease;
-  }
-  .sh-burger span:nth-child(1){ top: 0; }
-  .sh-burger span:nth-child(2){ top: 9px; }
-  .sh-burger span:nth-child(3){ top: 18px; }
-  .sh-burger.is-open span:nth-child(1){ top: 9px; transform: rotate(45deg); }
-  .sh-burger.is-open span:nth-child(2){ opacity: 0; }
-  .sh-burger.is-open span:nth-child(3){ top: 9px; transform: rotate(-45deg); }
-  .site-header:not(.is-solid) .sh-burger span{ box-shadow: 0 1px 4px rgba(0,0,0,.55); }
-  .sh-burger::after{ content:''; position:absolute; inset:-13px -10px; }
-  @media (min-width: 1180px){ .sh-burger{ display: none; } }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
-  .sh-mundos{ display: none; align-items: center; gap: clamp(1rem, 2vw, 2rem); }
-  @media (min-width: 1180px){ .sh-mundos{ display: flex; } }
-  .sh-mundo{
-    position: relative; appearance: none; background: none; border: none; padding: 0 0 4px; margin: 0; cursor: pointer;
-    font-family: var(--body); font-weight: 400; font-size: 0.82rem; color: var(--text-dim);
-    transition: color .2s ease;
-  }
-  .sh-mundo:hover, .sh-mundo:focus-visible, .sh-mundo.is-active{ color: var(--text); }
-  .site-header:not(.is-solid) .sh-mundo{ text-shadow: 0 1px 4px rgba(0,0,0,.55); }
+  
+  
+  
+  
+  
 
   /* Marca del header: isotipo real (la G del brandbook, extraída de
      GIANDECO_logo_positivo.svg) + "Giandeco" en Cormorant cursiva — el
@@ -684,248 +637,135 @@
      del script"). El lockup vertical completo no entra en una fila de
      74–96px sin caer debajo del ancho mínimo digital del manual (120px), así
      que el isotipo solo es la lectura correcta a este tamaño. */
-  .sh-brand{
-    position: relative; justify-self: center; display: flex; align-items: center; justify-content: center;
-    line-height: 1; text-decoration: none; min-height: var(--h-marca);
-  }
-  @media (min-width: 1180px){ .sh-brand{ min-height: var(--h-marca-d); } }
+  
+  
 
   /* logo grande — sólo visible arriba del todo (versión negativa, lino sobre
      ébano, lámina 24). Más alto que la fila del nav; se permite desbordar
      porque .sh-marca no recorta. Al bajar y solidificarse el header, se
      desvanece y entra el isotipo dorado compacto (.sh-brand-mini) en su lugar. */
-  .sh-brand-big{
-    height: 58px; width: auto;
-    transition: opacity .5s var(--ease-header), transform .5s var(--ease-header);
-  }
-  @media (min-width: 1180px){ .sh-brand-big{ height: 76px; } }
-  .site-header:not(.is-solid) .sh-brand-big{ filter: drop-shadow(0 1px 8px rgba(0,0,0,.5)); }
-  .site-header.is-solid .sh-brand-big{ opacity: 0; transform: translateY(-6px) scale(.94); pointer-events: none; }
+  
+  
+  
+  
 
-  .sh-brand-mini{
-    position: absolute; inset: 0; margin: auto; height: 54px; width: auto;
-    opacity: 0; transform: scale(.82); pointer-events: none;
-    transition: opacity .5s var(--ease-header), transform .5s var(--ease-header);
-  }
-  @media (min-width: 1180px){ .sh-brand-mini{ height: 70px; } }
-  .site-header.is-solid .sh-brand-mini{ opacity: 1; transform: scale(1); pointer-events: auto; }
+  
+  
+  
 
-  @media (prefers-reduced-motion: reduce){
-    .sh-brand-big, .sh-brand-mini{ transition: none; }
-  }
+  
 
-  .sh-right{ display: flex; align-items: center; justify-content: flex-end; gap: clamp(.8rem, 1.8vw, 1.5rem); }
+  
 
-  .sh-paginas{ display: none; align-items: center; gap: clamp(.9rem, 1.6vw, 1.6rem); }
-  @media (min-width: 1180px){ .sh-paginas{ display: flex; } }
-  .sh-paginas a{
-    position: relative; font-family: var(--body); font-weight: 400; font-size: 0.82rem; color: var(--text-dim);
-    text-decoration: none; padding-bottom: 4px; transition: color .2s ease;
-  }
-  .sh-paginas a:hover{ color: var(--text); }
-  .sh-paginas a::after{
-    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
-    background: var(--accent); transform: scaleX(0); transform-origin: left center;
-    transition: transform .3s cubic-bezier(.16,1,.3,1);
-  }
-  .sh-paginas a:hover::after, .sh-paginas a:focus-visible::after{ transform: scaleX(1); }
-  .site-header:not(.is-solid) .sh-paginas a{ text-shadow: 0 1px 4px rgba(0,0,0,.55); }
+  
+  
+  
+  
+  
+  
+  
 
-  .sh-icon-btn{
-    background: none; border: none; padding: .5rem; margin: 0; line-height: 0;
-    color: var(--text-dim); cursor: pointer; border-radius: 50%;
-    transition: color .2s ease, background-color .2s ease, transform .3s cubic-bezier(.22,.68,.24,1);
-  }
-  .sh-icon-btn svg{ width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.4; }
-  .sh-icon-btn:hover{ color: var(--text); background: var(--accent-soft); }
-  .sh-icon-btn:focus-visible{ color: var(--text); outline: 2px solid var(--accent); outline-offset: 2px; }
-  .site-header:not(.is-solid) .sh-icon-btn svg{ filter: drop-shadow(0 1px 4px rgba(0,0,0,.55)); }
+  
+  
+  
+  
+  
 
-  .sh-buscar-ico{ display: inline-flex; }
-  @media (min-width: 1180px){ .sh-buscar-ico{ display: none; } }
+  
+  
 
   /* toggle de tema: ícono doble sol/luna, sólo el activo se ve */
-  .sh-tema{
-    position: relative; width: 34px; height: 34px; display: grid; place-items: center;
-    background: none; border: none; padding: 0; margin: 0; color: var(--text-dim);
-    cursor: pointer; border-radius: 50%;
-    transition: color .2s ease, background-color .2s ease, transform .3s cubic-bezier(.22,.68,.24,1);
-  }
-  .sh-tema:hover{ color: var(--text); background: var(--accent-soft); }
-  .sh-tema:focus-visible{ color: var(--text); outline: 2px solid var(--accent); outline-offset: 2px; }
-  .sh-tema svg{
-    width: 18px; height: 18px; position: absolute; stroke: currentColor; fill: none; stroke-width: 1.4;
-    transition: opacity .2s ease, transform .2s ease;
-  }
-  .sh-tema .ico-luna{ opacity: 0; transform: scale(.6) rotate(-30deg); }
-  .sh-tema .ico-sol{ opacity: 1; transform: none; }
-  :root[data-tema="claro"] .sh-tema .ico-sol{ opacity: 0; transform: scale(.6) rotate(30deg); }
-  :root[data-tema="claro"] .sh-tema .ico-luna{ opacity: 1; transform: none; }
-  .site-header:not(.is-solid) .sh-tema svg{ filter: drop-shadow(0 1px 4px rgba(0,0,0,.55)); }
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
-  .sh-right > .sh-tema{ display: none; }
-  @media (min-width: 900px){ .sh-right > .sh-tema{ display: grid; } }
+  
+  
 
   /* ---------- fila 3: categorías (sólo desktop ≥1180px) ---------- */
-  .sh-categorias{ display: none; }
-  @media (min-width: 1180px){
-    .sh-categorias{
-      display: block; height: var(--h-cat-d); max-height: var(--h-cat-d); overflow: hidden;
-      border-top: 1px solid rgba(222,216,203,.08);
-      opacity: 1;
-      transition: opacity .35s ease, max-height .35s ease, border-color .35s ease;
-    }
-    .site-header:not(.is-solid) .sh-categorias{ opacity: 0; max-height: 0; border-top-color: transparent; pointer-events: none; }
-  }
-  .sh-cat-in{
-    max-width: var(--gd-max); margin: 0 auto; height: 100%; padding-inline: var(--gd-gut);
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  }
-  .sh-cat-nav{ display: flex; align-items: center; gap: clamp(1.2rem, 2vw, 2rem); flex-wrap: wrap; }
-  .sh-cat-link{
-    position: relative; appearance: none; background: none; border: none; padding: 0 0 4px; margin: 0; cursor: pointer;
-    font-family: var(--body); font-weight: 400; font-size: 0.8rem; color: var(--text-dim); text-decoration: none;
-    transition: color .2s ease;
-  }
-  .sh-cat-link:hover, .sh-cat-link:focus-visible{ color: var(--text); }
-  .sh-cat-link::after{
-    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
-    background: var(--accent); transform: scaleX(0); transform-origin: left center;
-    transition: transform .3s cubic-bezier(.16,1,.3,1);
-  }
-  .sh-cat-link:hover::after, .sh-cat-link:focus-visible::after{ transform: scaleX(1); }
-  .sh-cat-link[data-pronto]{ color: var(--accent-2); opacity: .75; }
-  .sh-cat-link[data-pronto]::after{ display: none; }
-  .sh-cat-right{
-    display: flex; align-items: center; gap: clamp(1rem, 1.8vw, 1.8rem); flex: none;
-    padding-left: clamp(1rem, 1.8vw, 1.8rem); border-left: 1px solid rgba(222,216,203,.12);
-  }
-  .sh-buscar-inline{
-    display: flex; align-items: center; gap: .4rem; background: none; border: none; cursor: pointer;
-    color: var(--text-dim); font-family: var(--body); font-size: 0.78rem; flex: none; white-space: nowrap;
-  }
-  .sh-buscar-inline svg{ width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.6; }
-  .sh-buscar-inline:hover{ color: var(--text); }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   /* ---------- mega menú (Catálogo) ---------- */
-  .sh-mega{
-    position: absolute; top: 100%; left: 0; right: 0; z-index: 65;
-    background: var(--bg-header-solid);
-    border-top: 1px solid rgba(222,216,203,.08);
-    box-shadow: 0 20px 40px rgba(0,0,0,.35);
-    opacity: 0; visibility: hidden; transform: translateY(-6px);
-    transition: opacity .25s ease, transform .25s ease, visibility 0s linear .25s;
-  }
-  .sh-mega.is-open{ opacity: 1; visibility: visible; transform: none; transition: opacity .25s ease, transform .25s ease; }
-  .sh-mega-in{ max-width: var(--gd-max); margin: 0 auto; padding: clamp(24px, 3vw, 40px) var(--gd-gut); }
-  .sh-mega-grid{
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(.8rem, 1.4vw, 1.4rem);
-    margin-bottom: 1.2rem;
-  }
-  @media (min-width: 720px){ .sh-mega-grid{ grid-template-columns: repeat(3, 1fr); } }
-  @media (min-width: 1180px){ .sh-mega-grid{ grid-template-columns: repeat(6, 1fr); } }
-  .sh-mega-item{ display: block; text-decoration: none; }
-  .sh-mega-thumb{
-    display: block; aspect-ratio: 4/5; border-radius: 2px; margin-bottom: .6rem;
-    background:
-      repeating-linear-gradient(90deg, rgba(222,216,203,.06) 0 1px, transparent 1px 22px),
-      radial-gradient(130% 130% at 15% 0%, rgba(201,162,74,.2), transparent 58%),
-      linear-gradient(155deg, #171613, #0A0A09);
-    transition: transform .4s ease;
-  }
-  .sh-mega-item:hover .sh-mega-thumb{ transform: scale(1.02); }
-  .sh-mega-name{ font-family: var(--body); font-size: 0.82rem; color: var(--text-dim); transition: color .2s ease; }
-  .sh-mega-item:hover .sh-mega-name{ color: var(--text); }
-  .sh-mega-ver{
-    display: inline-block; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--accent); text-decoration: none;
-  }
-  .sh-mega-ver:hover{ text-decoration: underline; }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   /* ---------- menú móvil ---------- */
-  .sh-scrim{
-    position: fixed; inset: 0; z-index: 85; background: rgba(10,9,6,.6);
-    opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility 0s linear .3s;
-  }
-  .sh-scrim.is-open{ opacity: 1; visibility: visible; transition: opacity .3s ease; }
+  
+  
 
-  .sh-mobile{
-    position: fixed; top: 0; left: 0; bottom: 0; width: min(400px, 88%); z-index: 90;
-    background: var(--bg-header-solid);
-    transform: translateX(-101%);
-    transition: transform .48s var(--ease-header);
-    overflow-y: auto;
-  }
-  .sh-mobile.is-open{ transform: translateX(0); }
-  @media (min-width: 1180px){ .sh-mobile, .sh-scrim{ display: none; } }
+  
+  
+  
 
-  .sh-mobile-head{
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 20px clamp(18px, 5vw, 28px); border-bottom: 1px solid var(--line);
-  }
-  .sh-mobile-logo{ font-family: var(--script); font-style: italic; font-weight: 300; font-size: 1.3rem; color: var(--text); }
-  .sh-mobile-close{ background: none; border: none; color: var(--text-dim); font-size: 1.7rem; line-height: 1; cursor: pointer; padding: .2rem .4rem; }
-  .sh-mobile-close:hover{ color: var(--text); }
+  
+  
+  
+  
 
-  .sh-mobile-body{ padding: 4px clamp(18px, 5vw, 28px) 32px; }
+  
 
-  .sh-acc{ border-bottom: 1px solid var(--line); }
-  .sh-acc-btn{
-    width: 100%; display: flex; align-items: center; justify-content: space-between;
-    background: none; border: none; padding: 16px 0; cursor: pointer;
-    font-family: var(--body); font-weight: 500; font-size: 0.95rem;
-    letter-spacing: 0.08em; text-transform: uppercase; color: var(--text);
-  }
-  .sh-acc-btn .chev{ width: 14px; height: 14px; transition: transform .3s ease; flex: none; }
-  .sh-acc.is-open .sh-acc-btn .chev{ transform: rotate(180deg); }
-  .sh-acc-panel{
-    display: grid; grid-template-columns: 1fr 1fr; gap: 2px 16px;
-    max-height: 0; overflow: hidden; padding: 0;
-    transition: max-height .35s ease, padding .35s ease;
-  }
-  .sh-acc.is-open .sh-acc-panel{ max-height: 320px; padding-bottom: 16px; }
-  .sh-acc-panel a{ font-family: var(--body); font-size: 0.86rem; color: var(--text-dim); text-decoration: none; padding: 6px 0; }
-  .sh-acc-panel a:hover{ color: var(--text); }
-  .sh-acc-panel a[data-pronto]{ color: var(--accent-2); opacity: .75; }
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
-  .sh-mobile-paginas{ display: grid; gap: 2px; padding: 16px 0; border-bottom: 1px solid var(--line); }
-  .sh-mobile-paginas a{ font-family: var(--body); font-size: 0.92rem; color: var(--text-dim); text-decoration: none; padding: 8px 0; }
-  .sh-mobile-paginas a:hover{ color: var(--text); }
+  
+  
+  
 
-  .sh-mobile-tema{ display: flex; align-items: center; justify-content: space-between; padding: 20px 0 8px; }
-  .sh-mobile-tema span{ font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); }
+  
+  
 
   /* ---------- overlay de búsqueda ---------- */
-  .sh-search-overlay{
-    position: fixed; inset: 0; z-index: 95;
-    background: rgba(20,18,14,0.97); backdrop-filter: blur(6px);
-    display: flex; flex-direction: column; align-items: center;
-    padding: clamp(80px, 12vh, 140px) clamp(20px, 6vw, 40px) 40px;
-    opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility 0s linear .3s;
-  }
-  .sh-search-overlay.is-open{ opacity: 1; visibility: visible; transition: opacity .3s ease; }
-  .sh-search-close{
-    position: absolute; top: 24px; right: clamp(20px, 5vw, 40px);
-    background: none; border: none; color: var(--text-dim); font-size: 2rem; line-height: 1; cursor: pointer;
-  }
-  .sh-search-close:hover{ color: var(--text); }
-  .sh-search-in{ width: 100%; max-width: 720px; }
-  .sh-search-input{
-    width: 100%; background: none; border: none; border-bottom: 1px solid var(--line);
-    padding: 12px 0; font-family: var(--display); font-size: clamp(1.9rem, 3.4vw, 2.4rem); color: var(--text);
-    outline: none;
-  }
-  .sh-search-input::placeholder{ color: var(--text-faint); }
-  .sh-search-chips{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-  .sh-search-chip{
-    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--text-dim); border: 1px solid var(--line); padding: 6px 12px; border-radius: 20px;
-    background: none; cursor: pointer; transition: color .2s ease, border-color .2s ease;
-  }
-  .sh-search-chip:hover{ color: var(--text); border-color: var(--accent); }
-  .sh-search-results{ margin-top: 28px; display: grid; gap: 2px; }
-  .sh-search-result{ padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--text-dim); font-size: 0.92rem; }
-  .sh-search-empty{ color: var(--text-faint); font-size: 0.85rem; margin-top: 28px; }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   /* ---------- banner / hero ---------- */
   .hero{
@@ -974,60 +814,36 @@
     --sp-8:8px; --sp-16:16px; --sp-24:24px; --sp-40:40px; --sp-64:64px; --sp-104:104px;
   }
 
-  .gd-sec{ padding-block: clamp(64px, 10vw, 128px); }
-  .gd-in{ width:100%; max-width: var(--gd-max); margin-inline:auto; padding-inline: var(--gd-gut); }
-  .gd-in-narrow{ max-width: 1080px; }
+  
+  
+  
 
   /* --- átomos tipográficos --- */
-  .gd-eyebrow{
-    font-family: var(--body); font-weight:500; font-size:.7rem;
-    letter-spacing:.2em; text-transform:uppercase; color: var(--accent);
-    margin:0 0 var(--sp-16);
-  }
-  .gd-eyebrow.is-muted{ color: var(--text-faint); }
-  .gd-h2{
-    font-family: var(--display); font-weight:400;
-    font-size: clamp(2rem, 4vw, 3rem); line-height:1.05; letter-spacing:-.01em;
-    margin:0 0 var(--sp-24); text-wrap:balance;
-  }
-  .gd-h3{
-    font-family: var(--display); font-weight:400;
-    font-size: clamp(1.5rem, 2.2vw, 1.95rem); line-height:1.1; margin:0 0 10px;
-  }
-  .gd-body{ color: var(--text-dim); font-size:1rem; line-height:1.7; max-width:62ch; margin:0 0 var(--sp-24); }
-  .gd-body.is-lead{ font-size:1.08rem; }
-  .gd-quote{
-    font-family: var(--script); font-style:italic; font-weight:300;
-    font-size: clamp(1.4rem, 2.4vw, 1.85rem); line-height:1.45; color: var(--text); margin:0;
-  }
+  
+  
+  
+  
+  
+  
+  
 
   /* filete con rombo — recurso gráfico del manual (lámina 35), un uso por pieza */
-  .gd-filete{ display:flex; align-items:center; gap:14px; margin: 0 0 var(--sp-40); }
-  .gd-filete::before, .gd-filete::after{ display:none; }
-  .gd-filete span{ display:none; }
+  
+  
+  
 
   /* --- botones --- */
-  .gd-btn{
-    display:inline-flex; align-items:center; gap:10px; cursor:pointer;
-    font-family: var(--body); font-weight:500; font-size:.78rem; letter-spacing:.1em; text-transform:uppercase;
-    padding:14px 26px; border-radius:2px; text-decoration:none; border:1px solid transparent;
-    transition: background-color .25s ease, color .25s ease, border-color .25s ease, gap .25s ease, transform .3s var(--gd-ease);
-  }
-  .gd-btn svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:1.5; flex:none; }
-  .gd-btn-primary{ background: var(--accent); color: var(--ebano); }
-  .gd-btn-primary:hover{ background:#dcb768; gap:14px; }
-  .gd-btn-ghost{ border-color: rgba(222,216,203,.28); color: var(--text); background:none; }
-  .gd-btn-ghost:hover{ border-color: var(--accent); color: var(--accent); gap:14px; }
-  .gd-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+  
+  
+  
+  
+  
+  
+  
 
-  .gd-link{
-    display:inline-flex; align-items:center; gap:8px; text-decoration:none;
-    font-family: var(--body); font-size:.76rem; letter-spacing:.1em; text-transform:uppercase;
-    color: var(--text); padding-bottom:4px; border-bottom:1px solid var(--line);
-    transition: color .25s ease, border-color .25s ease, gap .25s ease, transform .3s var(--gd-ease);
-  }
-  .gd-link svg{ width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.5; }
-  .gd-link:hover{ color: var(--accent); border-color: var(--accent); gap:12px; }
+  
+  
+  
 
   /* ==================== HERO (split editorial: ébano + lámina) ==================== */
   /* HERO BANNER: video a todo el ancho y alto, sin textos encima (solo el menú del sitio) */
@@ -1100,7 +916,7 @@
   .gd-hero-caption.is-swapping{ opacity:0; transform:translateY(4px); }
   @media (prefers-reduced-motion: reduce){ .gd-hero-video{ display:none; } .gd-hero-caption{ transition:none; } }
   .gd-hero-media::after{
-    content:''; position:absolute; inset:0; pointer-events:none;
+    content:""; position:absolute; inset:0; pointer-events:none;
     background:
       linear-gradient(to bottom, rgba(10,9,6,.62) 0, rgba(10,9,6,.30) 90px, rgba(10,9,6,.08) 170px, transparent 240px);
   }
@@ -1131,7 +947,7 @@
   .gd-manifiesto-media .gd-curtain{ position:absolute; inset:0; }
   .gd-manifiesto-media img{ width:100%; height:100%; object-fit:cover; display:block; }
   .gd-manifiesto-media::after{
-    content:''; position:absolute; inset:0;
+    content:""; position:absolute; inset:0;
     background: linear-gradient(to top, rgba(10,9,6,.92) 0%, rgba(10,9,6,.5) 34%, rgba(10,9,6,.02) 62%);
   }
   .gd-manifiesto-cap{ position:absolute; left:0; right:0; bottom:0; z-index:2; padding: clamp(20px,3vw,32px); }
@@ -1158,7 +974,7 @@
   }
   .gd-univ img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition: transform 1.1s var(--gd-ease); }
   .gd-univ::after{
-    content:''; position:absolute; inset:0;
+    content:""; position:absolute; inset:0;
     background: linear-gradient(to top, rgba(10,9,6,.94) 0%, rgba(10,9,6,.78) 20%, rgba(10,9,6,.3) 52%, rgba(10,9,6,.06) 100%);
     transition: opacity .4s ease;
   }
@@ -1227,47 +1043,30 @@
   .gd-dif p{ margin:0; color: var(--text-dim); font-size:.94rem; line-height:1.65; }
 
   /* ==================== MARCAS ==================== */
-  .gd-marcas{ background: var(--bg-raised); border-block:1px solid var(--line); }
-  .gd-marcas .gd-eyebrow, .gd-marcas .gd-h2{ text-align:center; }
-  .gd-marcas .gd-h2{ margin-bottom:0; }
-  .gd-marcas-wall{ display:flex; flex-direction:column; gap: var(--sp-24); margin-top: clamp(48px,6vw,96px); }
-  .gd-marcas-row{
-    overflow:hidden; position:relative;
-    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-  }
-  .gd-marcas-track{
-    display:flex; align-items:center; gap:0; width:max-content;
-    animation: gdMarcasLeft 42s linear infinite;
-  }
-  .gd-marcas-row--rev .gd-marcas-track{ animation-name: gdMarcasRight; animation-duration:50s; }
-  .gd-marcas-row:hover .gd-marcas-track{ animation-play-state: paused; }
+  
+  
+  
+  
+  
+  
+  
+  
   @keyframes gdMarcasLeft{ to{ transform: translateX(-50%); } }
   @keyframes gdMarcasRight{ from{ transform: translateX(-50%); } to{ transform: translateX(0); } }
-  .gd-marcas-item{
-    display:flex; align-items:center; flex:none; white-space:nowrap;
-    font-family:var(--body); font-weight:400; letter-spacing:.03em; font-size: clamp(1.15rem,2.1vw,1.65rem); color: var(--text-dim);
-    padding-inline: clamp(22px,3vw,40px);
-  }
+  
   /* cada logo vive en una casilla del mismo ancho y alto — así todos pesan
      igual visualmente sin importar si el archivo es un wordmark ancho y
      plano (Zara, Pycca) o un ícono casi cuadrado (Walon, Casacor), y la
      separación entre marcas queda pareja en vez de depender del ancho de
      cada imagen (antes dejaba huecos irregulares entre unas y otras). */
-  .gd-marcas-logo{
-    display:flex; align-items:center; justify-content:center; flex:none;
-    width: clamp(84px, 7.6vw, 116px); height: clamp(34px, 3.8vw, 46px);
-  }
-  .gd-marcas-logo img{
-    max-width:100%; max-height:100%; width:auto; height:auto; display:block;
-    filter: grayscale(1) brightness(0) invert(1); opacity:.68; transition: opacity .3s ease;
-  }
-  .gd-marcas-item:hover .gd-marcas-logo img{ opacity:1; }
+  
+  
+  
   /* El Corte Inglés ya trae blanco reservado sobre su banderín verde: forzarlo
      a blanco sólido fusionaría el texto con el fondo y lo haría ilegible. */
-  .gd-marcas-logo img.is-nativo{ filter:none; opacity:.85; }
-  .gd-marcas-item:hover .gd-marcas-logo img.is-nativo{ opacity:1; }
-  @media (prefers-reduced-motion: reduce){ .gd-marcas-track{ animation:none; } }
+  
+  
+  
 
   /* ==================== ESTUDIO ==================== */
   .gd-estudio-grid{ display:grid; grid-template-columns:1fr; gap: clamp(32px,5vw,72px); align-items:center; }
@@ -1275,7 +1074,7 @@
   .gd-estudio-foto{ position:relative; }
   .gd-estudio-foto img{ width:100%; height:auto; border-radius:2px; display:block; position:relative; z-index:2; }
   .gd-estudio-foto::before{
-    content:''; position:absolute; inset: 20px -20px -20px 20px; border:1px solid var(--accent); opacity:.42; border-radius:2px; z-index:1;
+    content:""; position:absolute; inset: 20px -20px -20px 20px; border:1px solid var(--accent); opacity:.42; border-radius:2px; z-index:1;
   }
   .gd-estudio-firma{ margin-top: var(--sp-40); padding-top: var(--sp-24); border-top:1px solid var(--line); }
   .gd-estudio-firma b{ display:block; font-family:var(--body); font-weight:500; font-size:.95rem; color: var(--lino); letter-spacing:.02em; }
@@ -1286,7 +1085,7 @@
 
   /* ==================== CATÁLOGO (lámina clara — Humo, lámina 29) ==================== */
   .gd-catalogo{ background: var(--humo); color: var(--ebano); }
-  .gd-catalogo .gd-eyebrow{ color: var(--bronce); }
+  .gd-catalogo .gd-eyebrow{ color: var(--bronce-texto); }
   .gd-catalogo .gd-h2{ color: var(--ebano); }
   .gd-catalogo .gd-body{ color: var(--grafito); }
   .gd-catalogo .gd-filete::before, .gd-catalogo .gd-filete::after{ background: rgba(10,9,6,.14); }
@@ -1298,23 +1097,23 @@
   .gd-cat-thumb{ display:block; position:relative; aspect-ratio:4/5; overflow:hidden; border-radius:2px; background:#fff; margin-bottom:14px; }
   .gd-cat-thumb img{ width:100%; height:100%; object-fit:cover; transition: transform .8s var(--gd-ease); }
   .gd-cat-item:hover .gd-cat-thumb img{ transform:scale(1.04); }
-  .gd-cat-cat{ font-family:var(--body); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color: var(--bronce); display:block; margin-bottom:5px; }
+  .gd-cat-cat{ font-family:var(--body); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color: var(--bronce-texto); display:block; margin-bottom:5px; }
   .gd-cat-name{ font-family:var(--body); font-weight:500; font-size:1rem; color: var(--ebano); display:block; margin-bottom:4px; line-height:1.25; }
   .gd-cat-price{ font-family:var(--body); font-size:.88rem; color: var(--grafito); font-variant-numeric: tabular-nums; }
-  .gd-cat-soon{ font-family:var(--body); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color: var(--bronce); opacity:.8; }
+  .gd-cat-soon{ font-family:var(--body); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color: var(--bronce-texto); opacity:.8; }
   .gd-catalogo .gd-link{ color: var(--ebano); border-color: rgba(10,9,6,.18); }
-  .gd-catalogo .gd-link:hover{ color: var(--bronce); border-color: var(--bronce); }
+  .gd-catalogo .gd-link:hover{ color: var(--bronce-texto); border-color: var(--bronce); }
 
   /* ==================== CTA ==================== */
   .gd-cta{ text-align:center; position:relative; overflow:hidden; }
   .gd-cta-media{
     position:absolute; inset:0; z-index:0;
-    background-image:url('images/shift/expodeco-showroom.jpg');
+    background-image:url("images/shift/expodeco-showroom.jpg");
     background-size:cover; background-position:68% 30%; background-attachment:fixed;
   }
   @media (max-width:900px){ .gd-cta-media{ background-attachment:scroll; } }
   .gd-cta::before{
-    content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
+    content:""; position:absolute; inset:0; pointer-events:none; z-index:1;
     background:
       radial-gradient(ellipse 760px 420px at 50% 0%, rgba(201,162,74,.16), transparent 70%),
       linear-gradient(180deg, rgba(10,9,6,.9) 0%, rgba(10,9,6,.82) 42%, rgba(10,9,6,.93) 100%);
@@ -1332,48 +1131,34 @@
   .gd-seo-texto strong{ color: var(--text-dim); font-weight:500; }
 
   /* ==================== FOOTER ==================== */
-  .gd-footer{ background: var(--bg-raised); border-top:1px solid var(--line); padding-block: clamp(48px,6vw,80px) 0; }
-  .gd-footer-grid{ display:grid; grid-template-columns: repeat(2,1fr); gap: var(--sp-40); }
-  @media (min-width: 860px){ .gd-footer-grid{ grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
-  .gd-footer-brand img{ height:78px; width:auto; margin-bottom:18px; }
-  .gd-footer-brand p{ color: var(--text-faint); font-size:.86rem; line-height:1.65; max-width:34ch; margin:0; }
-  .gd-footer-col h4{ font-family:var(--body); font-weight:500; font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color: var(--accent); margin:0 0 16px; }
-  .gd-footer-col ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px; }
-  .gd-footer-col a{ color: var(--text-dim); text-decoration:none; font-size:.88rem; transition: color .2s ease; }
-  .gd-footer-col a:hover{ color: var(--accent); }
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
-  .gd-footer-contact li a{ display:flex; align-items:flex-start; gap:10px; line-height:1.4; }
-  .gd-footer-contact svg{
-    width:15px; height:15px; margin-top:2px; flex:none;
-    stroke:currentColor; fill:none; stroke-width:1.5; opacity:.85; transition: opacity .2s ease;
-  }
-  .gd-footer-contact a:hover svg{ opacity:1; }
-  .gd-footer-social{ display:flex; gap:10px; margin-top:20px; }
-  .gd-footer-social a{
-    display:grid; place-items:center; width:36px; height:36px; border-radius:50%;
-    border:1px solid var(--line); color: var(--text-dim);
-    transition: color .25s ease, border-color .25s ease, background-color .25s ease;
-  }
-  .gd-footer-social a:hover{ color: var(--ebano); background: var(--accent); border-color: var(--accent); }
-  .gd-footer-social svg{ width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.5; }
+  
+  
+  
+  
+  
+  
+  
 
-  .gd-footer-ayuda{
-    margin-top: clamp(40px,5vw,64px); padding-top:22px; border-top:1px solid var(--line);
-    display:flex; flex-wrap:wrap; align-items:center; gap:10px 26px;
-  }
-  .gd-footer-ayuda a{ font-family: var(--body); font-size:.8rem; color: var(--text-dim); text-decoration:none; transition: color .2s ease; }
-  .gd-footer-ayuda a:hover{ color: var(--accent); }
-  .gd-footer-libro{ display:inline-flex; align-items:center; margin-left:auto; padding:3px; background:#fff; border:1px solid transparent; border-radius:6px; transition: box-shadow .25s ease; }
-  .gd-footer-libro:hover{ box-shadow:0 0 0 2px var(--accent); }
-  .gd-footer-libro img{ display:block; height:64px; width:auto; border-radius:4px; }
-  @media (max-width:720px){ .gd-footer-libro{ margin-left:0; } }
-  .gd-footer-ayuda + .gd-footer-bar{ margin-top:22px; }
-  .gd-footer-bar{
-    margin-top: clamp(40px,5vw,64px); padding-block: 22px; border-top:1px solid var(--line);
-    display:flex; flex-wrap:wrap; gap:10px 24px; justify-content:space-between;
-    font-family:var(--body); font-size:.74rem; color: var(--text-faint);
-  }
-  .gd-footer-bar em{ font-family:var(--script); font-style:italic; font-size:1rem; color: var(--accent); }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   @media (prefers-reduced-motion: reduce){
     .gd-univ img, .gd-cat-thumb img, .gd-scroll-cue i{ transition:none; animation:none; }
@@ -1393,7 +1178,7 @@
   /* ---- cortina de apertura: panel ébano con filo de latón que se retira ---- */
   .gd-curtain{ position:relative; overflow:hidden; }
   .gd-curtain::after{
-    content:''; position:absolute; inset:0; z-index:2;
+    content:""; position:absolute; inset:0; z-index:2;
     background: var(--ebano); border-right:2px solid var(--laton);
     transform-origin: right center;
     transition: transform 1150ms cubic-bezier(.76,0,.16,1) 140ms;
@@ -1416,141 +1201,21 @@
      con costo de rendimiento igual a cero: el navegador la dibuja como
      dibuja cualquier cursor nativo. Los campos de texto conservan el cursor
      de "I" para que se note que ahí sí se puede escribir. */
-  html{
-    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' viewBox='0 0 25 25'><path d='M2.2 1.8 L2.2 16.7 L6.4 12.9 L9.5 20.2 L12.4 18.9 L9.2 11.7 L15 11.7 Z' fill='%23C9A24A' stroke='%230A0A09' stroke-width='1' stroke-linejoin='miter'/></svg>") 2 2, auto;
-  }
-  input, textarea, select{ cursor: text; }
-  input[type="checkbox"], input[type="radio"]{ cursor: default; }
+  
+  
+  
 </style>
-<link rel="stylesheet" href="css/gd-movil.css?v=20261015k">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261015k">
-<script src="js/gd-tema.js?v=20261015k"></script>
+<link rel="stylesheet" href="css/gd-movil.css?v=20261015r">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261015r">
+<script src="js/gd-tema.js?v=20261015r"></script>
 
 <!-- intro de marca: se decide antes de pintar, para que nunca haya un parpadeo del telón -->
 <script>(function(){try{var f=/[?&]intro\b/.test(location.search);if(!f&&sessionStorage.getItem('gdIntro')==='1')return;if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(window.scrollY>40)return;document.documentElement.classList.add('gd-intro-on');}catch(e){}})();</script>
 <div class="gd-intro" id="heroIntro" aria-hidden="true"><img src="img/logo-dorado.svg" alt="" width="300" height="268" decoding="async"></div>
 
-<div class="scroll-progress" id="scrollProgress"></div>
 
-<!-- ======================================================================
-     HEADER, NAVEGACIÓN Y BANNER — bloque nuevo. No toca nada de lo que
-     sigue abajo (Studio Transitions queda intacto en su <div class="page">).
-     ====================================================================== -->
-<header class="site-header" id="siteHeader">
-  <div class="sh-marca">
-    <div class="sh-marca-in">
-      <div class="sh-left">
-        <button class="sh-burger" id="shBurger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="shMobile">
-          <span></span><span></span><span></span>
-        </button>
-        <nav class="sh-mundos" aria-label="Mundos">
-          <a class="sh-mundo is-active" data-mundo="retail" href="retail">Retail</a>
-          <a class="sh-mundo" data-mundo="hogar" href="hogar">Hogar</a>
-          <a class="sh-mundo" data-mundo="catalogo" href="catalogo">Catálogo</a>
-        </nav>
-      </div>
-
-      <a class="sh-brand" href="#top" aria-label="Inicio">
-        <img decoding="async" class="sh-brand-big" src="img/logo-negativo.svg" alt="Giandeco Studio Design">
-        <img decoding="async" class="sh-brand-mark sh-brand-mini" src="img/logo-positivo.svg" alt="Giandeco Studio Design">
-      </a>
-
-      <div class="sh-right">
-        <nav class="sh-paginas" aria-label="Páginas">
-          <a href="quienes-somos">Quiénes somos</a>
-          <a href="contacto">Contacto</a>
-        </nav>
-        <button class="sh-tema" id="shTemaDesktop" type="button" aria-label="Cambiar a tema claro" title="Cambiar a tema claro">
-          <svg class="ico-sol" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.4"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
-          <svg class="ico-luna" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.4"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/></svg>
-        </button>
-        <button class="sh-icon-btn sh-buscar-ico" id="shBuscarIco" type="button" aria-label="Buscar">
-          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>
-        </button>
-        <button class="sh-icon-btn" type="button" aria-label="Carrito">
-          <svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="sh-categorias">
-    <div class="sh-cat-in">
-      <nav class="sh-cat-nav" id="shCatNav" aria-label="Categorías"></nav>
-      <div class="sh-cat-right" id="shCatRight"></div>
-    </div>
-  </div>
-
-  <div class="sh-mega" id="shMega" aria-hidden="true">
-    <div class="sh-mega-in">
-      <div class="sh-mega-grid" id="shMegaGrid"></div>
-      <a class="sh-mega-ver" href="#">Ver todo →</a>
-    </div>
-  </div>
-</header>
-
-<div class="sh-scrim" id="shScrim"></div>
-<nav class="sh-mobile" id="shMobile" aria-label="Menú móvil" aria-hidden="true">
-  <div class="sh-mobile-head">
-    <span class="sh-mobile-logo">Giandeco</span>
-    <button class="sh-mobile-close" id="shMobileClose" type="button" aria-label="Cerrar menú">&times;</button>
-  </div>
-  <div class="sh-mobile-body">
-    <div class="sh-acc">
-      <button type="button" class="sh-acc-btn">Retail<svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 6l4 4 4-4"/></svg></button>
-      <div class="sh-acc-panel">
-        <a href="retail">Retail</a>
-        <a href="retail-diseno-tiendas">Diseño de tiendas</a>
-        <a href="retail-proyectos">Proyectos</a>
-        <a href="retail-blog">Blog</a>
-      </div>
-    </div>
-    <div class="sh-acc">
-      <button type="button" class="sh-acc-btn">Hogar<svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 6l4 4 4-4"/></svg></button>
-      <div class="sh-acc-panel">
-        <a href="hogar">Hogar</a>
-        <a href="hogar-diseno-interiores">Diseño de interiores</a>
-        <a href="hogar-espacios">Espacios</a>
-        <a href="hogar-proyectos">Proyectos</a>
-        <a href="hogar-blog">Blog</a>
-      </div>
-    </div>
-    <div class="sh-acc">
-      <button type="button" class="sh-acc-btn">Catálogo<svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 6l4 4 4-4"/></svg></button>
-      <div class="sh-acc-panel">
-        <a href="catalogo">Catálogo</a>
-        <a href="catalogo-navidad">Navidad</a>
-        <a href="catalogo-muebleria">Mueblería</a>
-        <a href="catalogo-iluminacion">Iluminación</a>
-        <a href="catalogo-compra-el-espacio">Compra el espacio</a>
-        <a href="proximamente-decoracion" data-pronto title="Disponible próximamente">Decoración</a>
-        <a href="proximamente-papel-mural" data-pronto title="Disponible próximamente">Papel Mural</a>
-      </div>
-    </div>
-
-    <div class="sh-mobile-paginas">
-      <a href="quienes-somos">Quiénes somos</a>
-      <a href="contacto">Contacto</a>
-    </div>
-
-    <div class="sh-mobile-tema">
-      <span>Tema</span>
-      <button class="sh-tema" id="shTemaMobile" type="button" aria-label="Cambiar a tema claro" title="Cambiar a tema claro">
-        <svg class="ico-sol" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.4"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
-        <svg class="ico-luna" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.4"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/></svg>
-      </button>
-    </div>
-  </div>
-</nav>
-
-<div class="sh-search-overlay" id="shSearchOverlay" aria-hidden="true">
-  <button class="sh-search-close" id="shSearchClose" type="button" aria-label="Cerrar búsqueda">&times;</button>
-  <div class="sh-search-in">
-    <input class="sh-search-input" id="shSearchInput" type="text" placeholder="Buscar…" autocomplete="off">
-    <div class="sh-search-chips" id="shSearchChips"></div>
-    <div class="sh-search-results" id="shSearchResults"></div>
-  </div>
-</div>
+<!-- encabezado común del sitio: lo monta js/giandeco.js, igual que en todas las páginas -->
+<div id="gdHeader"></div>
 
 <section class="gd-hero" id="top">
   <h1 class="gd-hero-h1">Giandeco Studio Design · Espacios que saben vender: interiores y visual merchandising para marcas retail en Lima, Perú</h1>
@@ -1587,7 +1252,7 @@
     </div>
     <div class="gd-manifiesto-media reveal-scale d2">
       <div class="gd-curtain">
-        <img decoding="async" class="gd-kb-img" src="images/posicionamiento/manifiesto.jpg" alt="Equipo Giandeco instalando papel mural en un stand de feria, con la chaqueta de marca del estudio">
+        <img loading="lazy" decoding="async" class="gd-kb-img" src="images/posicionamiento/manifiesto.jpg" alt="Equipo Giandeco instalando papel mural en un stand de feria, con la chaqueta de marca del estudio">
       </div>
       <div class="gd-manifiesto-cap">
         <p class="gd-eyebrow is-muted">En cifras</p>
@@ -1607,7 +1272,7 @@
 
     <div class="gd-univ-grid">
       <a class="gd-univ gd-univ--main reveal-scale" href="retail-proyectos" data-cursor="Ver">
-        <img decoding="async" src="images/universos/retail.jpg" alt="Isla de exhibición en tienda departamental con maniquíes y piezas escultóricas">
+        <img loading="lazy" decoding="async" src="images/universos/retail.jpg" alt="Isla de exhibición en tienda departamental con maniquíes y piezas escultóricas">
         <div class="gd-univ-body">
           <h3 class="gd-univ-title">Retail</h3>
           <p class="gd-univ-desc">Tiendas departamentales, boutiques, córners y campañas estacionales. Layout, mobiliario, iluminación y vitrina decididos en la misma mesa.</p>
@@ -1617,7 +1282,7 @@
 
       <div class="gd-univ-col">
         <a class="gd-univ gd-univ--sub reveal-scale d1" href="hogar-espacios" data-cursor="Ver">
-          <img decoding="async" src="images/universos/hogar.jpg" alt="Sala de estar con techo azul profundo, zócalo verde oliva y arte de gran formato">
+          <img loading="lazy" decoding="async" src="images/universos/hogar.jpg" alt="Sala de estar con techo azul profundo, zócalo verde oliva y arte de gran formato">
           <div class="gd-univ-body">
             <h3 class="gd-univ-title">Hogar</h3>
             <p class="gd-univ-desc">Interiorismo residencial con la misma lógica: primero el recorrido, después el estilo.</p>
@@ -1625,7 +1290,7 @@
           </div>
         </a>
         <a class="gd-univ gd-univ--sub reveal-scale d2" href="catalogo" data-cursor="Ver">
-          <img decoding="async" src="images/universos/catalogo.jpg" alt="Ambientación navideña con árbol decorado y mesa servida">
+          <img loading="lazy" decoding="async" src="images/universos/catalogo.jpg" alt="Ambientación navideña con árbol decorado y mesa servida">
           <div class="gd-univ-body">
             <h3 class="gd-univ-title">Catálogo</h3>
             <p class="gd-univ-desc">Navidad y mueblería propia disponibles ahora. Decoración, papel mural e iluminación, muy pronto.</p>
@@ -1652,17 +1317,17 @@
 
     <div class="accordion reveal-scale" id="accordion">
       <div class="acc-item is-open" data-index="0">
-        <button class="acc-panel" style="background-image: url('images/proceso/expodeco-tecnico.jpg');">
+        <button class="acc-panel" data-bg="images/proceso/expodeco-tecnico.jpg">
           <span class="acc-media-title">01 — Boceto</span>
         </button>
       </div>
       <div class="acc-item" data-index="1">
-        <button class="acc-panel" style="background-image: url('images/proceso/expodeco-boceto.jpg');">
+        <button class="acc-panel" data-bg="images/proceso/expodeco-boceto.jpg">
           <span class="acc-media-title">02 — Acuarela</span>
         </button>
       </div>
       <div class="acc-item" data-index="2">
-        <button class="acc-panel" style="background-image: url('images/proceso/expodeco-obra.jpg');">
+        <button class="acc-panel" data-bg="images/proceso/expodeco-obra.jpg">
           <span class="acc-media-title">03 — Proyecto</span>
         </button>
       </div>
@@ -1695,8 +1360,8 @@
     </div>
 
     <div class="gd-ba-frame reveal-scale" id="baFrame">
-      <img decoding="async" id="baImgA" src="images/proceso/zonatienda-boceto.jpg" alt="Boceto en acuarela de la zona de tienda">
-      <img decoding="async" id="baImgB" class="gd-ba-after" src="images/proceso/zonatienda-obra.jpg" alt="Zona de tienda ya montada">
+      <img loading="lazy" decoding="async" id="baImgA" src="images/proceso/zonatienda-boceto.jpg" alt="Boceto en acuarela de la zona de tienda">
+      <img loading="lazy" decoding="async" id="baImgB" class="gd-ba-after" src="images/proceso/zonatienda-obra.jpg" alt="Zona de tienda ya montada">
       <span class="gd-ba-tag is-a">Boceto</span>
       <span class="gd-ba-tag is-b">Obra</span>
       <input class="gd-ba-range" id="baRange" type="range" min="0" max="100" value="50" step="0.5"
@@ -1792,7 +1457,7 @@
   <div class="gd-in">
     <div class="gd-estudio-grid">
       <div class="gd-estudio-foto reveal-scale">
-        <img decoding="async" src="images/estudio/gian.jpg" alt="Gian Jiménez, fundador y director de diseño de Giandeco">
+        <img loading="lazy" decoding="async" src="images/estudio/gian.jpg" alt="Gian Jiménez, fundador y director de diseño de Giandeco">
       </div>
       <div>
         <p class="gd-eyebrow reveal">Autoría</p>
@@ -1831,25 +1496,25 @@
 
     <div class="gd-cat-grid">
       <a class="gd-cat-item reveal" href="catalogo-muebleria#centro-deluxe" data-cursor="Ver">
-        <span class="gd-cat-thumb"><img decoding="async" src="images/catalogo/centro-tv.jpg" alt="Centro de entretenimiento Deluxe Nature en madera con LED integrado"></span>
+        <span class="gd-cat-thumb"><img loading="lazy" decoding="async" src="images/catalogo/centro-tv.jpg" alt="Centro de entretenimiento Deluxe Nature en madera con LED integrado"></span>
         <span class="gd-cat-cat">Mueblería</span>
         <span class="gd-cat-name">Centro Deluxe Nature</span>
         <span class="gd-cat-price">S/ 1,179.00</span>
       </a>
       <a class="gd-cat-item reveal d1" href="catalogo-muebleria#comoda-flow" data-cursor="Ver">
-        <span class="gd-cat-thumb"><img decoding="async" src="images/catalogo/comoda.jpg" alt="Cómoda Flow blanca de cuatro cajones con patas de madera"></span>
+        <span class="gd-cat-thumb"><img loading="lazy" decoding="async" src="images/catalogo/comoda.jpg" alt="Cómoda Flow blanca de cuatro cajones con patas de madera"></span>
         <span class="gd-cat-cat">Mueblería</span>
         <span class="gd-cat-name">Cómoda Flow 1.37</span>
         <span class="gd-cat-price">S/ 879.00</span>
       </a>
       <a class="gd-cat-item reveal d2" href="catalogo-navidad" data-cursor="Ver">
-        <span class="gd-cat-thumb"><img decoding="async" src="images/catalogo/navidad.jpg" alt="Árbol de navidad decorado en tonos cálidos"></span>
+        <span class="gd-cat-thumb"><img loading="lazy" decoding="async" src="images/catalogo/navidad.jpg" alt="Árbol de navidad decorado en tonos cálidos"></span>
         <span class="gd-cat-cat">Navidad</span>
         <span class="gd-cat-name">Ambientación de temporada</span>
         <span class="gd-cat-soon">Colección 2026</span>
       </a>
       <a class="gd-cat-item reveal d3" href="proximamente-decoracion" data-cursor="Ver">
-        <span class="gd-cat-thumb"><img decoding="async" src="images/catalogo/mesa-servida.jpg" alt="Mesa servida con vajilla artesanal y textiles bordados"></span>
+        <span class="gd-cat-thumb"><img loading="lazy" decoding="async" src="images/catalogo/mesa-servida.jpg" alt="Mesa servida con vajilla artesanal y textiles bordados"></span>
         <span class="gd-cat-cat">Decoración</span>
         <span class="gd-cat-name">Mesa y objeto</span>
         <span class="gd-cat-soon">Piezas únicas</span>
@@ -1887,79 +1552,8 @@
 </section>
 
 <!-- ==================== FOOTER ==================== -->
-<footer class="gd-footer">
-  <div class="gd-in">
-    <div class="gd-footer-grid">
-      <div class="gd-footer-brand">
-        <img decoding="async" src="img/logo-positivo.svg" alt="Giandeco Studio Design">
-        <p>Estudio de diseño de interiores y visual merchandising para espacios comerciales. Proyecto y ejecución bajo una sola dirección.</p>
-      </div>
-      <div class="gd-footer-col">
-        <h4>Universos</h4>
-        <ul>
-          <li><a href="retail">Retail</a></li>
-          <li><a href="hogar">Hogar</a></li>
-          <li><a href="catalogo">Catálogo</a></li>
-          <li><a href="catalogo-muebleria">Mueblería</a></li>
-        </ul>
-      </div>
-      <div class="gd-footer-col">
-        <h4>Estudio</h4>
-        <ul>
-          <li><a href="quienes-somos">Quiénes somos</a></li>
-          <li><a href="#metodo">Método</a></li>
-          <li><a href="#servicios">Servicios</a></li>
-          <li><a href="retail-proyectos">Proyectos</a></li>
-        </ul>
-      </div>
-      <div class="gd-footer-col">
-        <h4>Contacto</h4>
-        <ul class="gd-footer-contact">
-          <li>
-            <a href="https://wa.me/51920775559" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12C22 17.5228 17.5228 22 12 22C10.1786 22 8.47087 21.513 7 20.6622L2 21.5L2.83209 16C2.29689 14.7751 2 13.4222 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"/><path d="M12.9604 13.8683L15.0399 13.4624L17 14.2149V16.0385C17 16.6449 16.4783 17.1073 15.8901 16.9783C14.3671 16.6444 11.5997 15.8043 9.67826 13.8683C7.84859 12.0248 7.22267 9.45734 7.01039 8.04128C6.92535 7.47406 7.3737 7 7.94306 7H9.83707L10.572 8.96888L10.1832 11.0701"/></svg>
-              +51 920 775 559
-            </a>
-          </li>
-          <li>
-            <a href="mailto:contacto@giandeco.com">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
-              contacto@giandeco.com
-            </a>
-          </li>
-          <li>
-            <a href="https://www.google.com/maps/search/?api=1&amp;query=Ca.+Las+Bell%C3%ADsimas+170%2C+Urb.+Vipol%2C+Callao+07036" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.7 7-11.5A7 7 0 0 0 5 9.5C5 14.3 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.4"/></svg>
-              Ca. Las Bellísimas 170, Urb. Vipol — Callao 07036
-            </a>
-          </li>
-        </ul>
-        <div class="gd-footer-social">
-          <a href="https://www.instagram.com/giandeco.studio/" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </a>
-          <a href="https://www.facebook.com/profile.php?id=61593540694016" target="_blank" rel="noopener" aria-label="Facebook">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-    <nav class="gd-footer-ayuda" aria-label="Ayuda y condiciones">
-      <a href="compra-segura">Compra segura</a>
-      <a href="envios-y-entregas">Envíos y entregas</a>
-      <a href="cambios-y-garantia">Cambios y garantía</a>
-      <a href="preguntas-frecuentes">Preguntas frecuentes</a>
-      <a href="opiniones">Opiniones de clientes</a>
-      <a href="terminos-y-condiciones">Términos y condiciones</a>
-      <a href="politica-de-privacidad">Privacidad</a>
-      <a class="gd-footer-libro" href="libro-de-reclamaciones" aria-label="Libro de Reclamaciones"><img src="images/legal/libro-reclamaciones.svg" alt="Libro de Reclamaciones" width="204" height="128" decoding="async"></a>
-    </nav>
-    <div class="gd-footer-bar">
-      <span>© 2026 Giandeco Studio Design. Todos los derechos reservados.</span>
-      <em>Espacios que saben vender</em>
-    </div>
-  </div>
-</footer>
+<!-- pie común del sitio: lo monta js/giandeco.js -->
+<div id="gdFooter"></div>
 
 <script>
 (function(){
@@ -2026,7 +1620,7 @@
     if(!el) return;
     el.innerHTML = items.map(function(it){
       var ratio = it[3][0] + ' / ' + it[3][1];
-      return '<a class="g-item" href="' + it[5] + '" data-cursor="Ver" style="aspect-ratio: ' + ratio + '; background-image:url(\'' + it[2] + '\'); background-position: ' + it[4] + ';">' +
+      return '<a class="g-item" href="' + it[5] + '" data-cursor="Ver" data-bg="' + it[2] + '" style="aspect-ratio: ' + ratio + '; background-position: ' + it[4] + ';">' +
         '<div class="g-cap"><span class="gt">' + it[0] + '</span><span class="gg">' + it[1] + '</span></div>' +
       '</a>';
     }).join('');
@@ -2070,350 +1664,12 @@
     for(var rs = 0; rs < REPES_SHIFT; rs++) sBase = sBase.concat(shiftItems);
     var sList = sBase.concat(sBase);
     shiftTrack.innerHTML = sList.map(function(it, i){
-      return '<div class="shift-card" style="background-image:url(\'' + it[1] + '\'); background-position: ' + it[2] + ';" data-idx="' + (i % shiftItems.length) + '" data-cursor="Ver" tabindex="0" role="button" aria-label="Ampliar: ' + it[0] + '">' +
+      return '<div class="shift-card" data-bg="' + it[1] + '" style="background-position: ' + it[2] + ';" data-idx="' + (i % shiftItems.length) + '" data-cursor="Ver" tabindex="0" role="button" aria-label="Ampliar: ' + it[0] + '">' +
         '<div class="fc2">' + it[0] + '</div>' +
       '</div>';
     }).join('');
   }
 
-  // ---- Marcas: muro de logos reales con movimiento continuo en dos filas ----
-  // Todos se pintan en blanco sólido (filtro CSS) para que contrasten parejo
-  // sobre el fondo ébano, sin importar el color original de cada logo.
-  // Excepción: El Corte Inglés ya trae blanco reservado dentro de su banderín
-  // verde — forzarlo a blanco sólido fusiona el texto con el fondo y lo hace
-  // ilegible, así que ese conserva sus colores de marca (nativo:true).
-  var marcasFila1 = [
-    { nombre: 'El Corte Inglés', logo: 'images/marcas/el-corte-ingles.png', nativo: true },
-    { nombre: 'Pycca', logo: 'images/marcas/pycca.png' },
-    { nombre: 'Enchantée Paris', logo: 'images/marcas/enchantee-paris.png' },
-    { nombre: 'Zara', logo: 'images/marcas/zara.png' },
-    { nombre: 'Walon', logo: 'images/marcas/walon.png' },
-    { nombre: 'Baby Club Chic', logo: 'images/marcas/baby-club-chic.png' }
-  ];
-  var marcasFila2 = [
-    { nombre: 'Hotel Unión Cusco', logo: 'images/marcas/hotel-union-cusco.png' },
-    { nombre: 'Mássimo Café', logo: 'images/marcas/massimo-cafe.png' },
-    { nombre: 'Casa Grande', logo: 'images/marcas/casa-grande.png' },
-    { nombre: 'Casacor', logo: 'images/marcas/casacor.png' },
-    { nombre: 'Expodeco', logo: 'images/marcas/expodeco.png' }
-  ];
-  function pintarFilaMarcas(el, items){
-    if(!el) return;
-    // El loop infinito mueve la fila con translateX(-50%): para que nunca se
-    // vea el final (hueco vacío en monitores anchos), una "mitad" de la pista
-    // tiene que ser más ancha que cualquier pantalla razonable. Con solo 5
-    // logos no alcanza en monitores grandes, así que se repite la lista antes
-    // de duplicarla para el loop.
-    var REPETICIONES = 6;
-    var base = [];
-    for (var r = 0; r < REPETICIONES; r++) base = base.concat(items);
-    var doble = base.concat(base); // se duplica esa base para que el loop sea perfecto
-    el.innerHTML = doble.map(function(it){
-      var contenido = it.logo
-        ? '<span class="gd-marcas-logo"><img decoding="async" src="' + it.logo + '" alt="' + it.nombre + '" loading="lazy"' + (it.nativo ? ' class="is-nativo"' : '') + '></span>'
-        : it.nombre;
-      return '<span class="gd-marcas-item">' + contenido + '</span>';
-    }).join('');
-  }
-  pintarFilaMarcas(document.getElementById('marcasTrack1'), marcasFila1);
-  pintarFilaMarcas(document.getElementById('marcasTrack2'), marcasFila2);
-
-  // ---- Scroll-reveal general: un solo observer para toda la página ----
-  var revealTargets = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale, .reveal-underline, .gd-curtain, hr.rule');
-  if('IntersectionObserver' in window){
-    var revealIO = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('is-visible');
-          revealIO.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-    revealTargets.forEach(function(el){ revealIO.observe(el); });
-  } else {
-    revealTargets.forEach(function(el){ el.classList.add('is-visible'); });
-  }
-
-  // ---- Barra de progreso de lectura ----
-  var progressEl = document.getElementById('scrollProgress');
-  if(progressEl){
-    var ticking = false;
-    function updateProgress(){
-      var scrollTop = window.scrollY || window.pageYOffset || 0;
-      var scrollHeight = Math.max(
-        document.documentElement.scrollHeight,
-        document.body ? document.body.scrollHeight : 0
-      );
-      var max = scrollHeight - window.innerHeight;
-      var pct = max > 0 ? (scrollTop / max) * 100 : 0;
-      pct = Math.min(100, Math.max(0, pct));
-      progressEl.style.transform = 'scaleX(' + (pct / 100) + ')';
-      ticking = false;
-    }
-    updateProgress();
-    window.addEventListener('scroll', function(){
-      if(!ticking){ window.requestAnimationFrame(updateProgress); ticking = true; }
-    }, { passive: true });
-    window.addEventListener('resize', updateProgress);
-  }
-})();
-</script>
-
-<!-- ================ script del header / navegación / banner (independiente) ================ -->
-<script>
-(function(){
-  var pointerFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  var header = document.getElementById('siteHeader');
-  var htmlEl = document.documentElement;
-
-  // ---- 1. sólido al bajar ----
-  function setSolid(){ header.classList.toggle('is-solid', window.scrollY > 40); }
-  if(header){ setSolid(); window.addEventListener('scroll', setSolid, { passive: true }); }
-
-  // ---- 2. árbol de navegación ----
-  var MUNDOS = {
-    retail: { label: 'Retail', cats: [
-      { label: 'Retail', href: 'retail' },
-      { label: 'Diseño de tiendas', href: 'retail-diseno-tiendas' },
-      { label: 'Proyectos', href: 'retail-proyectos' },
-      { label: 'Blog', href: 'retail-blog' }
-    ]},
-    hogar: { label: 'Hogar', cats: [
-      { label: 'Hogar', href: 'hogar' },
-      { label: 'Diseño de interiores', href: 'hogar-diseno-interiores' },
-      { label: 'Espacios', href: 'hogar-espacios' },
-      { label: 'Proyectos', href: 'hogar-proyectos' },
-      { label: 'Blog', href: 'hogar-blog' }
-    ]},
-    catalogo: {
-      label: 'Catálogo',
-      activos: [
-        { key: 'navidad', label: 'Navidad', subs: ['Árboles','Adornos','Guirnaldas','Velas','Textiles','Regalos'] }
-      ],
-      simples: [
-        { label: 'Catálogo', href: 'catalogo' },
-        { label: 'Mueblería', href: 'catalogo-muebleria' },
-        { label: 'Iluminación', href: 'catalogo-iluminacion' },
-        { label: 'Compra el espacio', href: 'catalogo-compra-el-espacio' }
-      ],
-      pronto: [
-        { label: 'Decoración', href: 'proximamente-decoracion' },
-        { label: 'Papel Mural', href: 'proximamente-papel-mural' }
-      ]
-    }
-  };
-
-  var catNav = document.getElementById('shCatNav');
-  var catRight = document.getElementById('shCatRight');
-  var megaEl = document.getElementById('shMega');
-  var megaGrid = megaEl ? document.getElementById('shMegaGrid') : null;
-  var megaVer = megaEl ? megaEl.querySelector('.sh-mega-ver') : null;
-  var megaCloseTimer = null;
-
-  function openMega(catKey){
-    var cat = null;
-    MUNDOS.catalogo.activos.forEach(function(c){ if(c.key === catKey) cat = c; });
-    if(!cat || !megaEl) return;
-    megaGrid.innerHTML = cat.subs.map(function(s){
-      return '<a class="sh-mega-item" href="catalogo-navidad"><span class="sh-mega-thumb"></span><span class="sh-mega-name">' + s + '</span></a>';
-    }).join('');
-    if(megaVer){
-      megaVer.textContent = 'Ver todo en ' + cat.label + ' →';
-      megaVer.href = 'catalogo-' + cat.key + '.html';
-    }
-    megaEl.dataset.current = catKey;
-    megaEl.classList.add('is-open');
-    megaEl.setAttribute('aria-hidden', 'false');
-  }
-  function closeMega(){
-    if(!megaEl) return;
-    megaEl.classList.remove('is-open');
-    megaEl.setAttribute('aria-hidden', 'true');
-    delete megaEl.dataset.current;
-  }
-  function scheduleCloseMega(){ clearTimeout(megaCloseTimer); megaCloseTimer = setTimeout(closeMega, 150); }
-  function cancelCloseMega(){ clearTimeout(megaCloseTimer); }
-
-  function renderCategorias(mundoKey){
-    var m = MUNDOS[mundoKey];
-    if(!m || !catNav) return;
-    var html = '', rightHtml = '';
-    // en ambas ramas se omite la entrada que repite el nombre del mundo
-    // (ej. "Retail" dentro de la fila de Retail) — ya está marcada como
-    // activa arriba, en la fila de mundos; repetirla aquí es redundante.
-    if(mundoKey === 'catalogo'){
-      m.activos.forEach(function(c){
-        html += '<button type="button" class="sh-cat-link" data-cat="' + c.key + '">' + c.label + '</button>';
-      });
-      m.simples.filter(function(s){ return s.label !== m.label; }).forEach(function(s){
-        html += '<a class="sh-cat-link" href="' + s.href + '">' + s.label + '</a>';
-      });
-      m.pronto.forEach(function(p){
-        rightHtml += '<a class="sh-cat-link" data-pronto href="' + p.href + '" title="Disponible próximamente">' + p.label + '</a>';
-      });
-      rightHtml += '<button type="button" class="sh-buscar-inline" id="shBuscarInline"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>Buscar</button>';
-    } else {
-      m.cats.filter(function(c){ return c.label !== m.label; }).forEach(function(c){
-        html += '<a class="sh-cat-link" href="' + c.href + '">' + c.label + '</a>';
-      });
-    }
-    catNav.innerHTML = html;
-    if(catRight) catRight.innerHTML = rightHtml;
-
-    if(mundoKey === 'catalogo'){
-      var activoEls = catNav.querySelectorAll('[data-cat]');
-      activoEls.forEach(function(btn){
-        if(pointerFine){
-          btn.addEventListener('mouseenter', function(){ cancelCloseMega(); openMega(btn.dataset.cat); });
-          btn.addEventListener('focus', function(){ cancelCloseMega(); openMega(btn.dataset.cat); });
-          btn.addEventListener('mouseleave', scheduleCloseMega);
-        } else {
-          btn.addEventListener('click', function(e){
-            e.preventDefault();
-            if(megaEl.classList.contains('is-open') && megaEl.dataset.current === btn.dataset.cat){ closeMega(); }
-            else { openMega(btn.dataset.cat); }
-          });
-        }
-      });
-      var inlineSearch = document.getElementById('shBuscarInline');
-      if(inlineSearch) inlineSearch.addEventListener('click', openSearch);
-    } else {
-      closeMega();
-    }
-  }
-
-  if(megaEl && pointerFine){
-    megaEl.addEventListener('mouseenter', cancelCloseMega);
-    megaEl.addEventListener('mouseleave', scheduleCloseMega);
-  }
-  if(header && pointerFine){
-    header.addEventListener('mouseleave', scheduleCloseMega);
-  }
-  document.addEventListener('click', function(e){
-    if(megaEl && megaEl.classList.contains('is-open') && !megaEl.contains(e.target) && !e.target.closest('[data-cat]')){
-      closeMega();
-    }
-  });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMega(); });
-
-  var mundoBtns = document.querySelectorAll('.sh-mundo');
-  mundoBtns.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      mundoBtns.forEach(function(b){ b.classList.toggle('is-active', b === btn); });
-      renderCategorias(btn.dataset.mundo);
-    });
-  });
-  renderCategorias('retail');
-
-  // ---- 3. toggle de tema (sol/luna, sin localStorage) ----
-  function themeSwap(){
-    var current = htmlEl.getAttribute('data-tema') || 'oscuro';
-    var next = current === 'oscuro' ? 'claro' : 'oscuro';
-    htmlEl.setAttribute('data-tema', next);
-    var meta = document.getElementById('metaThemeColor');
-    if(meta) meta.setAttribute('content', next === 'oscuro' ? '#0A0A09' : '#F4F1EA');
-    var futuro = next === 'oscuro' ? 'claro' : 'oscuro';
-    var msg = 'Cambiar a tema ' + futuro;
-    document.querySelectorAll('.sh-tema').forEach(function(b){
-      b.setAttribute('aria-label', msg);
-      b.setAttribute('title', msg);
-    });
-  }
-  document.querySelectorAll('.sh-tema').forEach(function(btn){
-    btn.addEventListener('click', themeSwap);
-  });
-
-  // ---- menú móvil ----
-  var burger = document.getElementById('shBurger');
-  var mobilePanel = document.getElementById('shMobile');
-  var scrim = document.getElementById('shScrim');
-  function openMobile(){
-    if(!mobilePanel) return;
-    mobilePanel.classList.add('is-open');
-    scrim.classList.add('is-open');
-    burger.classList.add('is-open');
-    burger.setAttribute('aria-expanded', 'true');
-    mobilePanel.setAttribute('aria-hidden', 'false');
-  }
-  function closeMobile(){
-    if(!mobilePanel) return;
-    mobilePanel.classList.remove('is-open');
-    scrim.classList.remove('is-open');
-    burger.classList.remove('is-open');
-    burger.setAttribute('aria-expanded', 'false');
-    mobilePanel.setAttribute('aria-hidden', 'true');
-  }
-  if(burger) burger.addEventListener('click', function(){
-    if(mobilePanel.classList.contains('is-open')) closeMobile(); else openMobile();
-  });
-  if(scrim) scrim.addEventListener('click', closeMobile);
-  var mobileClose = document.getElementById('shMobileClose');
-  if(mobileClose) mobileClose.addEventListener('click', closeMobile);
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMobile(); });
-
-  document.querySelectorAll('.sh-acc-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var acc = btn.closest('.sh-acc');
-      var wasOpen = acc.classList.contains('is-open');
-      document.querySelectorAll('.sh-acc.is-open').forEach(function(a){ a.classList.remove('is-open'); });
-      if(!wasOpen) acc.classList.add('is-open');
-    });
-  });
-
-  // ---- 4. buscador ----
-  var FRECUENTES = ['Navidad', 'Mueblería', 'Compra el espacio', 'Diseño de interiores'];
-  var SEARCH_INDEX = [
-    'Navidad','Mueblería','Compra el espacio','Iluminación','Decoración','Papel Mural',
-    'Diseño de tiendas','Diseño de interiores','Espacios','Proyectos','Blog','Contacto','Quiénes somos'
-  ];
-  var searchOverlay = document.getElementById('shSearchOverlay');
-  var searchInput = document.getElementById('shSearchInput');
-  var searchChips = document.getElementById('shSearchChips');
-  var searchResults = document.getElementById('shSearchResults');
-
-  function renderChips(){
-    if(!searchChips) return;
-    searchChips.innerHTML = FRECUENTES.map(function(f){ return '<button type="button" class="sh-search-chip">' + f + '</button>'; }).join('');
-    searchChips.querySelectorAll('.sh-search-chip').forEach(function(chip){
-      chip.addEventListener('click', function(){
-        searchInput.value = chip.textContent;
-        runSearch(chip.textContent);
-        searchInput.focus();
-      });
-    });
-  }
-  function runSearch(q){
-    q = (q || '').trim().toLowerCase();
-    if(!searchResults) return;
-    if(!q){ searchResults.innerHTML = ''; return; }
-    var matches = SEARCH_INDEX.filter(function(item){ return item.toLowerCase().indexOf(q) > -1; });
-    if(matches.length){
-      searchResults.innerHTML = matches.map(function(m){ return '<div class="sh-search-result">' + m + '</div>'; }).join('');
-    } else {
-      searchResults.innerHTML = '<div class="sh-search-empty">Sin resultados para “' + q + '”.</div>';
-    }
-  }
-  function openSearch(){
-    if(!searchOverlay) return;
-    renderChips();
-    if(searchResults) searchResults.innerHTML = '';
-    if(searchInput) searchInput.value = '';
-    searchOverlay.classList.add('is-open');
-    searchOverlay.setAttribute('aria-hidden', 'false');
-    setTimeout(function(){ if(searchInput) searchInput.focus(); }, 50);
-  }
-  function closeSearch(){
-    if(!searchOverlay) return;
-    searchOverlay.classList.remove('is-open');
-    searchOverlay.setAttribute('aria-hidden', 'true');
-  }
-  if(searchInput) searchInput.addEventListener('input', function(){ runSearch(searchInput.value); });
-  var searchCloseBtn = document.getElementById('shSearchClose');
-  if(searchCloseBtn) searchCloseBtn.addEventListener('click', closeSearch);
-  if(searchOverlay) searchOverlay.addEventListener('click', function(e){ if(e.target === searchOverlay) closeSearch(); });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeSearch(); });
-  var searchIcoBtn = document.getElementById('shBuscarIco');
-  if(searchIcoBtn) searchIcoBtn.addEventListener('click', openSearch);
 })();
 </script>
 
@@ -2535,27 +1791,6 @@
 
     loadProyecto(0);
   }
-})();
-</script>
-
-<!-- ==================== BOTONES MAGNÉTICOS ==================== -->
-<script>
-(function(){
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  if(reduced || !finePointer) return;
-
-  // ---- botones magnéticos: un tirón sutil hacia el puntero ----
-  var magnets = document.querySelectorAll('.gd-btn, .gd-link, .intro-cta, .sh-icon-btn, .sh-tema');
-  magnets.forEach(function(el){
-    el.addEventListener('mousemove', function(e){
-      var r = el.getBoundingClientRect();
-      var relX = e.clientX - (r.left + r.width / 2);
-      var relY = e.clientY - (r.top + r.height / 2);
-      el.style.transform = 'translate(' + (relX * 0.28).toFixed(1) + 'px,' + (relY * 0.32).toFixed(1) + 'px)';
-    });
-    el.addEventListener('mouseleave', function(){ el.style.transform = ''; });
-  });
 })();
 </script>
 
@@ -2736,6 +1971,29 @@
   document.addEventListener('visibilitychange', function(){ if(document.hidden) v.pause(); else if(loadedFor){ var p = v.play(); if(p && p.catch) p.catch(function(){}); } });
 })();
 </script>
-<script src="js/gd-tienda.js?v=20261015k" defer></script>
-<script src="js/gd-movil.js?v=20261015k" defer></script>
-<script src="js/gd-chat.js?v=20261015k" defer></script>
+<script>
+/* Fondos diferidos: las fotos de proceso, galería y "Diseñamos el cambio" son
+   fondos CSS, que el navegador descarga aunque estén lejos de la pantalla.
+   Cada sección pide los suyos cuando está a una pantalla de distancia, todos
+   juntos, para que el carrusel no muestre tarjetas vacías al girar. */
+(function(){
+  function poner(sec){ sec.querySelectorAll('[data-bg]').forEach(function(el){ el.style.backgroundImage = "url('" + el.getAttribute('data-bg') + "')"; el.removeAttribute('data-bg'); }); }
+  function iniciar(){
+    var secciones = [];
+    document.querySelectorAll('[data-bg]').forEach(function(el){
+      var s = el.closest('section') || el.parentElement;
+      if(secciones.indexOf(s) === -1) secciones.push(s);
+    });
+    if(!('IntersectionObserver' in window)){ secciones.forEach(poner); return; }
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ poner(e.target); io.unobserve(e.target); } });
+    }, { rootMargin:'100% 0px' });
+    secciones.forEach(function(s){ io.observe(s); });
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar); else iniciar();
+})();
+</script>
+<script src="js/giandeco.js?v=20261015r"></script>
+<script src="js/gd-tienda.js?v=20261015r" defer></script>
+<script src="js/gd-movil.js?v=20261015r" defer></script>
+<script src="js/gd-chat.js?v=20261015r" defer></script>

@@ -16,6 +16,10 @@
   /* --- paleta oficial --- */
   --ebano:#0A0A09; --laton:#C9A24A; --bronce:#8A6F3C;
   --lino:#DED8CB; --humo:#F4F1EA; --grafito:#4A4844;
+  /* bronce para TEXTO sobre fondos claros: mismo matiz y saturación que el
+     Bronce oficial, un punto más profundo para leerse con holgura (WCAG AA,
+     4,5:1 o más sobre humo y lino). El Bronce #8A6F3C sigue en líneas y rellenos. */
+  --bronce-texto:#715B31;
 
   /* --- tema oscuro (base del sitio) --- */
   --bg: var(--ebano);
@@ -25,7 +29,7 @@
   --line:#2a2621;
   --text: var(--lino);
   --text-dim:#B9B3A6;
-  --text-faint:#8a8375;
+  --text-faint:#948D80;   /* 4,8:1 o más sobre todos los paneles oscuros */
   --accent: var(--laton);
   --accent-2: var(--bronce);
   --accent-soft: rgba(201,162,74,.16);
@@ -452,11 +456,18 @@ img{ max-width:100%; display:block; }
 }
 .gd-hero-pie b{ color: var(--text-dim); font-weight:400; }
 
-/* en mobile/tablet, la foto sola llena la pantalla — es lo primero que se
-   ve al entrar. El panel de texto viene justo después, en el siguiente
-   gesto de scroll (natural, no forzado a compartir el primer pantallazo). */
-.gd-hero-media{ position:relative; order:1; min-height:100svh; overflow:hidden; }
+/* en mobile/tablet la foto ocupa algo más de media pantalla y el título entra
+   en el primer pantallazo: quien llega desde Google o un anuncio ve dónde está
+   y qué ofrece la página sin tener que bajar. El escritorio no cambia. */
+.gd-hero-media{ position:relative; order:1; min-height:max(300px, 54svh); overflow:hidden; }
 @media (min-width:900px){ .gd-hero-media{ order:2; min-height:auto; } }
+@media (max-width:899px){
+  .gd-hero{ min-height:0; }
+  .gd-hero-panel{ justify-content:flex-start; padding-top:28px; padding-bottom:48px; }
+  .gd-hero-eyebrow{ margin-bottom:14px; }
+  .gd-hero h1{ margin-bottom:18px; }
+  .gd-hero-panel > p{ margin-bottom:28px; }
+}
 .gd-hero-media .gd-curtain{ position:absolute; inset:0; }
 .gd-hero-media img{ width:100%; height:100%; object-fit:cover; display:block; }
 .gd-hero-media::after{
@@ -658,7 +669,7 @@ img{ max-width:100%; display:block; }
 .gd-prod-name{ display:block; font-family: var(--body); font-weight:500; font-size:1rem; color: var(--lino); line-height:1.3; margin-bottom:4px; }
 .gd-prod-price{ display:block; font-family: var(--body); font-size:.9rem; color: var(--text-dim); font-variant-numeric: tabular-nums; }
 .gd-prod-badge{
-  position:absolute; top:10px; left:10px; z-index:2; background: rgba(10,9,6,.78); color: var(--accent);
+  position:absolute; top:10px; left:10px; z-index:2; background: rgba(10,9,6,.9); color: var(--accent);
   font-family: var(--body); font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; padding:5px 9px; border-radius:2px;
 }
 
@@ -686,12 +697,12 @@ img{ max-width:100%; display:block; }
 .gd-claro{ background: var(--humo); color: var(--ebano); }
 .gd-claro .gd-h2, .gd-claro .gd-h1{ color: var(--ebano); }
 .gd-claro .gd-body{ color: var(--grafito); }
-.gd-claro .gd-eyebrow{ color: var(--bronce); }
+.gd-claro .gd-eyebrow{ color: var(--bronce-texto); }
 .gd-claro .gd-prod-name{ color: var(--ebano); }
-.gd-claro .gd-prod-cat{ color: var(--bronce); }
+.gd-claro .gd-prod-cat{ color: var(--bronce-texto); }
 .gd-claro .gd-prod-price{ color: var(--grafito); }
 .gd-claro .gd-link{ color: var(--ebano); border-color: rgba(10,9,6,.18); }
-.gd-claro .gd-link:hover{ color: var(--bronce); border-color: var(--bronce); }
+.gd-claro .gd-link:hover{ color: var(--bronce-texto); border-color: var(--bronce); }
 .gd-claro .gd-filete::before, .gd-claro .gd-filete::after{ background: rgba(10,9,6,.14); }
 .gd-claro .gd-filete span::before{ border-color: var(--bronce); }
 .gd-claro .gd-serv{ border-top-color: rgba(10,9,6,.12); }
@@ -699,7 +710,7 @@ img{ max-width:100%; display:block; }
 .gd-claro .gd-serv p{ color: var(--grafito); }
 /* el botón secundario es claro sobre oscuro: en láminas claras quedaba casi invisible */
 .gd-claro .gd-btn-ghost{ border-color: rgba(10,9,6,.32); color: var(--ebano); }
-.gd-claro .gd-btn-ghost:hover{ border-color: var(--bronce); color: var(--bronce); }
+.gd-claro .gd-btn-ghost:hover{ border-color: var(--bronce); color: var(--bronce-texto); }
 
 /* ==========================================================================
    ESPACIOS — modelo de dos niveles: un índice de tarjetas y, dentro de cada
@@ -745,6 +756,14 @@ img{ max-width:100%; display:block; }
     radial-gradient(130% 130% at 20% 0%, rgba(201,162,74,.13), transparent 62%),
     linear-gradient(155deg, #1c1a16, #0A0A09);
 }
+/* sin foto de producto: recorte de la fotografía del espacio (js/giandeco.js, 8c) */
+.gd-pieza-thumb.is-detalle{ background-color:#171613; background-repeat:no-repeat; }
+.gd-pieza-thumb.is-detalle::after{ content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(10,9,6,.55), transparent 38%); pointer-events:none; }
+.gd-detalle-tag{
+  position:absolute; left:10px; bottom:10px; z-index:1; font-family:var(--body); font-size:.62rem; font-weight:500;
+  letter-spacing:.14em; text-transform:uppercase; color:#DED8CB;
+}
+@media (max-width:899px){ .gd-detalle-tag{ font-size:11px; left:8px; bottom:8px; } }
 .gd-pieza-thumb.is-slot span{ font-family:var(--body); font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint); }
 .gd-pieza-cat{ display:block; font-family:var(--body); font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:5px; }
 .gd-pieza-nombre{ display:block; font-family:var(--body); font-weight:500; font-size:.94rem; color:var(--lino); line-height:1.3; margin-bottom:4px; }
