@@ -36,35 +36,22 @@ var CFG = {
      y paga el flete a la agencia al recibir o al recoger */
   AGENCIA: {
     titulo: 'Por agencia · a cargo del cliente',
-    nota: 'Despachamos por agencia de transporte a todo el Perú. El flete lo cobra la agencia al recibir o al recoger su pedido.',
+    nota: 'Por agencia a todo el Perú. El flete se paga a la agencia al recibir o recoger.',
     lista: ['Shalom', 'Olva Courier', 'Marvisur', 'Cruz del Sur Cargo']
   },
-  /* Medios de pago. activo:false lo quita del checkout sin tocar nada más.
-     · solo:        zonas de envío donde aplica
-     · soloRecojo / soloFactura: aparece únicamente en ese caso
-     Tarjeta, cuotas y PagoEfectivo se cobran con el enlace de pago de la
-     pasarela que contrate el estudio; esta web nunca recibe datos de tarjeta.
-     · notaEnLinea: texto que se muestra cuando la pasarela está activa y ese
-       medio se cobra al registrar el pedido (js/gd-pago.js).
-     PagoEfectivo queda apagado hasta integrar la generación del código CIP. */
+  /* Medios de pago: Giandeco cobra SOLO de dos formas.
+     · culqi:   en línea con la pasarela Culqi (tarjeta de crédito o débito, en
+                cuotas si el banco lo permite, y Yape cuando el servidor lo
+                habilita). Esta web nunca recibe datos de tarjeta (js/gd-pago.js).
+     · directo: depósito o transferencia a las cuentas de Giandeco
+                (PAGO_DIRECTO) y envío del comprobante por WhatsApp.
+     activo:false lo quita del checkout; el panel también puede apagarlos. */
   PAGO: [
-    { key:'yape',     activo:true, grupo:'Billeteras digitales', label:'Yape', logos:['yape'], nota:'Paga con QR o al número de Giandeco. Se lo enviamos por WhatsApp al confirmar el pedido.',
-      notaEnLinea:'Con su celular Yape y el código de aprobación de la app. Hasta S/ 2,000.' },
-    { key:'plin',     activo:false, grupo:'Billeteras digitales', label:'Plin', logos:['plin'], nota:'Desde la app de su banco afiliado a Plin, con QR o número.' },
-    { key:'tarjeta',  activo:true, grupo:'Tarjetas', label:'Tarjeta de crédito o débito', marcas:'Visa · Mastercard · American Express · Diners Club', logos:['visa','mastercard','amex','diners'], nota:'Paga en un enlace seguro de la pasarela. Sus datos de tarjeta no pasan por esta web.',
-      notaEnLinea:'Crédito o débito. Con tarjeta de crédito puede pagar en cuotas.' },
-    { key:'cuotas',   activo:true, grupo:'Tarjetas', label:'Cuotas con tarjeta de crédito', logos:['visa','mastercard'], nota:'Elige el número de cuotas en el mismo enlace seguro, según las condiciones de su banco.',
-      notaEnLinea:'Paga ahora y elige el número de cuotas en el formulario, según las condiciones de su banco.' },
-    { key:'transf',   activo:false, grupo:'Banca', label:'Transferencia o depósito bancario', nota:'Le enviamos el número de cuenta en soles y el CCI para transferencias interbancarias.' },
-    { key:'pagoefectivo', activo:false, grupo:'Banca', label:'PagoEfectivo', nota:'Recibe un código CIP y paga desde su banca por internet o en agentes y bodegas.' },
-    /* Pago directo: el cliente paga por su cuenta a los medios del estudio (PAGO_DIRECTO) y envía
-       el comprobante por WhatsApp. Sustituye a Plin, transferencia y adelanto como opciones sueltas. */
-    { key:'directo',  activo:true, grupo:'Pago directo', label:'Pago directo a Giandeco', logos:['yape'],
-      nota:'Yape o transferencia a la cuenta BCP de Giandeco, sin pasarela. Al registrar el pedido verá el QR y las cuentas, y enviará su comprobante por WhatsApp.' },
-    { key:'contra',   activo:true, grupo:'Al recibir', label:'Pago contra entrega', nota:'Paga al recibir su pedido, en efectivo, con Yape o con tarjeta. Solo en Lima y Callao.', solo:['lima','callao'] },
-    { key:'enestudio',activo:false, grupo:'Al recibir', label:'Pago al recoger en Giandeco', nota:'Paga al recoger, en efectivo, con Yape, Plin o tarjeta.', soloRecojo:true },
-    { key:'adelanto', activo:false, grupo:'Proyectos y empresas', label:'Adelanto y saldo', nota:'Para piezas por encargo o pedidos de proyecto: una parte al confirmar y el saldo antes de la entrega. Giandeco le indica los montos.' },
-    { key:'empresa',  activo:true, grupo:'Proyectos y empresas', label:'Orden de compra de empresa', nota:'Para compras con factura: coordinamos orden de compra y condiciones de pago.', soloFactura:true }
+    { key:'culqi',   activo:true, label:'Pago en línea con Culqi', logos:['visa','mastercard','amex','diners','yape'],
+      nota:'Tarjeta de crédito o débito, también en cuotas, o Yape. Su pedido queda confirmado al pagar.',
+      notaOff:'No disponible en este momento. Puede pagar por depósito.' },
+    { key:'directo', activo:true, label:'Depósito y envío de comprobante',
+      nota:'Al registrar el pedido verá la cuenta de Giandeco. Paga, nos envía el comprobante por WhatsApp y confirmamos.' }
   ],
   /* Códigos de descuento:  { 'BIENVENIDA': { pct:10 } }  o  { 'ENVIO': { monto:30 } }.
      Vacío = el campo de cupón no se muestra. */
