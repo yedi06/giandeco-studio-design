@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261015l"></script>
+<script src="js/gd-acceso.js?v=20261015m"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Finalizar pedido — Giandeco Studio Design</title>
 <meta name="robots" content="noindex">
@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261015l">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261015l">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261015l">
-<script src="js/gd-tema.js?v=20261015l"></script>
+<link rel="stylesheet" href="css/giandeco.css?v=20261015m">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261015m">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261015m">
+<script src="js/gd-tema.js?v=20261015m"></script>
 </head>
 <!-- data-home: el checkout no lleva el menú del sitio. Tiene su propia cabecera,
      sin nada que distraiga de terminar la compra. -->
@@ -36,9 +36,9 @@
   <a href="libro-de-reclamaciones" target="_blank">Libro de reclamaciones</a>
 </footer>
 
-<script src="js/giandeco.js?v=20261015l"></script>
-<script src="js/gd-tienda.js?v=20261015l"></script>
-<script src="js/gd-pago.js?v=20261015l"></script>
+<script src="js/giandeco.js?v=20261015m"></script>
+<script src="js/gd-tienda.js?v=20261015m"></script>
+<script src="js/gd-pago.js?v=20261015m"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc, C = T.CFG, P = window.GD_PAGO;
@@ -76,7 +76,7 @@
   /* ==================== SELECCIÓN VACÍA ==================== */
   var lineas = T.carrito.lineas();
   if(!lineas.length){
-    root.innerHTML = '<h1>Su selección está vacía</h1>' +
+    root.innerHTML = '<h1>Su bolsa está vacía</h1>' +
       '<p class="co-lead">Añada piezas del catálogo o toque un punto sobre la foto de un espacio para empezar.</p>' +
       '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="catalogo">Ver el catálogo' + T.FLECHA + '</a>' +
       '<a class="gd-btn gd-btn-ghost" href="catalogo-compra-el-espacio">Compra el espacio</a></div>' +
@@ -176,14 +176,14 @@
     '<form class="co-grid" id="coForm" novalidate>' +
     '<div>' + pasoDatos + pasoEntrega + pasoPago + pasoFinal + '</div>' +
     '<aside class="co-res" aria-label="Resumen">' +
-      '<h2>Su selección</h2><ul class="gdt-lines">' + lineas.map(function(x){
+      '<h2>Su bolsa</h2><ul class="gdt-lines">' + lineas.map(function(x){
         return '<li class="gdt-line">' + (x.img ? '<span class="gdt-line-img"><img decoding="async" src="' + esc(x.img) + '" alt=""></span>' : '<span class="gdt-line-img is-vacia" aria-hidden="true">G</span>') +
           '<div class="gdt-line-body"><span class="gdt-line-cat">' + esc(x.cat) + '</span><span class="gdt-line-name">' + esc(x.nombre) + '</span>' +
           '<div class="gdt-line-row"><span class="gdt-qty"><b>' + x.qty + '</b></span><span class="gdt-line-price">' + (x.valor === null ? 'A cotizar' : T.fmt(x.valor * x.qty)) + '</span></div></div></li>';
       }).join('') + '</ul>' +
       (hayCupones && !soloCot ? '<div class="co-cupon"><input id="coCupon" type="text" placeholder="Código de descuento" aria-label="Código de descuento" autocomplete="off"><button type="button" id="coCuponBtn">Aplicar</button></div><p class="gdt-err" id="coCuponMsg" style="margin:0 0 8px;"></p>' : '') +
       '<dl class="co-tot" id="coTot"></dl>' +
-      '<p class="co-res-nota"><a href="#" data-gdt-abrir style="color:var(--text-dim);">Editar la selección</a></p>' +
+      '<p class="co-res-nota"><a href="#" data-gdt-abrir style="color:var(--text-dim);">Editar la bolsa</a></p>' +
       '<ul class="co-conf">' +
         '<li id="coConfPago"></li>' +
         '<li>Boleta o factura electrónica a su correo.</li>' +

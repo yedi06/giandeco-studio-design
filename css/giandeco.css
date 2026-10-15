@@ -452,11 +452,18 @@ img{ max-width:100%; display:block; }
 }
 .gd-hero-pie b{ color: var(--text-dim); font-weight:400; }
 
-/* en mobile/tablet, la foto sola llena la pantalla — es lo primero que se
-   ve al entrar. El panel de texto viene justo después, en el siguiente
-   gesto de scroll (natural, no forzado a compartir el primer pantallazo). */
-.gd-hero-media{ position:relative; order:1; min-height:100svh; overflow:hidden; }
+/* en mobile/tablet la foto ocupa algo más de media pantalla y el título entra
+   en el primer pantallazo: quien llega desde Google o un anuncio ve dónde está
+   y qué ofrece la página sin tener que bajar. El escritorio no cambia. */
+.gd-hero-media{ position:relative; order:1; min-height:max(300px, 54svh); overflow:hidden; }
 @media (min-width:900px){ .gd-hero-media{ order:2; min-height:auto; } }
+@media (max-width:899px){
+  .gd-hero{ min-height:0; }
+  .gd-hero-panel{ justify-content:flex-start; padding-top:28px; padding-bottom:48px; }
+  .gd-hero-eyebrow{ margin-bottom:14px; }
+  .gd-hero h1{ margin-bottom:18px; }
+  .gd-hero-panel > p{ margin-bottom:28px; }
+}
 .gd-hero-media .gd-curtain{ position:absolute; inset:0; }
 .gd-hero-media img{ width:100%; height:100%; object-fit:cover; display:block; }
 .gd-hero-media::after{

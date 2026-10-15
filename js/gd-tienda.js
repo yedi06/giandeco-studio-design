@@ -468,7 +468,7 @@ function card(key, o){
       '<span class="gd-prod-price">' + esc(p.precio) + '</span>' +
     '</a>' +
     (o.porque ? '<p class="gdt-card-why">' + esc(o.porque) + '</p>' : '') +
-    (o.sinBoton ? '' : p.stock <= 0 ? '<span class="gdt-quick es-agotado">Agotado</span>' : '<button type="button" class="gdt-quick" data-gdt-add="' + key + '">' + (p.valor === null ? 'Añadir para cotizar' : 'Añadir a mi selección') + '</button>') +
+    (o.sinBoton ? '' : p.stock <= 0 ? '<span class="gdt-quick es-agotado">Agotado</span>' : '<button type="button" class="gdt-quick" data-gdt-add="' + key + '">' + (p.valor === null ? 'Añadir para cotizar' : 'Añadir a la bolsa') + '</button>') +
   '</article>';
 }
 
@@ -504,7 +504,7 @@ function pintarCajon(){
   cajon.querySelector('#gdtCount').textContent = t.piezas ? (t.piezas + (t.piezas === 1 ? ' pieza' : ' piezas')) : '';
   var cuerpo = cajon.querySelector('#gdtBody'), pie = cajon.querySelector('#gdtFoot');
   if(!l.length){
-    cuerpo.innerHTML = '<div class="gdt-vacio"><p class="gdt-vacio-t">Su selección está vacía</p>' +
+    cuerpo.innerHTML = '<div class="gdt-vacio"><p class="gdt-vacio-t">Su bolsa está vacía</p>' +
       '<p>Añada piezas del catálogo o toque un punto sobre la foto de un espacio.</p>' +
       '<a class="gd-btn gd-btn-primary" href="catalogo">Ver el catálogo' + FLECHA + '</a>' +
       '<a class="gd-link" href="catalogo-compra-el-espacio">Compra el espacio' + FLECHA + '</a></div>';
@@ -555,8 +555,8 @@ function montar(){
   }
   document.body.insertAdjacentHTML('beforeend',
     '<div class="gdt-scrim" id="gdtScrim"></div>' +
-    '<aside class="gdt-drawer" id="gdtDrawer" role="dialog" aria-modal="true" aria-label="Su selección" aria-hidden="true">' +
-      '<header class="gdt-head"><div><span class="gdt-eyebrow">Su selección</span><b id="gdtCount"></b></div>' +
+    '<aside class="gdt-drawer" id="gdtDrawer" role="dialog" aria-modal="true" aria-label="Su bolsa" aria-hidden="true">' +
+      '<header class="gdt-head"><div><span class="gdt-eyebrow">Su bolsa</span><b id="gdtCount"></b></div>' +
         '<button type="button" class="gdt-x" data-gdt-cerrar aria-label="Cerrar">&times;</button></header>' +
       '<div class="gdt-body" id="gdtBody"></div>' +
       '<footer class="gdt-foot" id="gdtFoot"></footer>' +
@@ -566,7 +566,7 @@ function montar(){
 
   // el header ya trae el botón de carrito: se conecta, y a su lado entra la cuenta
   document.querySelectorAll('button[aria-label="Carrito"]').forEach(function(b){
-    b.classList.add('gdt-cart-btn'); b.setAttribute('aria-label', 'Su selección');
+    b.classList.add('gdt-cart-btn'); b.setAttribute('aria-label', 'Su bolsa');
     b.insertAdjacentHTML('beforeend', '<span class="gdt-badge" hidden></span>');
     b.addEventListener('click', abrir);
     b.insertAdjacentHTML('beforebegin',

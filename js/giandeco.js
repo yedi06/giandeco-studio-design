@@ -543,7 +543,7 @@ function montarPuntos(){
       var href   = p ? window.GD_URL(key) : (dot.getAttribute('data-href') || WA_MSG);
       // con la capa de tienda cargada, el punto también suma la pieza a la selección
       var sumar  = !window.GD_TIENDA ? '' : (p
-        ? '<button class="gd-shop-card-add" type="button" data-gdt-add="' + key + '">Añadir a mi selección</button>'
+        ? '<button class="gd-shop-card-add" type="button" data-gdt-add="' + key + '">Añadir a la bolsa</button>'
         : '<button class="gd-shop-card-add" type="button" data-gdt-add-esp="' + nombre + '" data-cat="' + cat + '">Añadir para cotizar</button>');
 
       card.innerHTML =

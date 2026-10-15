@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261015l"></script>
+<script src="js/gd-acceso.js?v=20261015m"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cómoda Flow 1.37 — Mueblería · Giandeco Studio Design</title>
 <meta name="description" content="Cómoda Flow 1.37 · Dormitorio · S/ 879.00. 4 cajones con correderas telescópicas de apertura por presión. Patas de madera maciza. Entrega en Lima y Callao.">
@@ -23,11 +23,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261015l">
-<link rel="stylesheet" href="css/gd-movil.css?v=20261015l">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261015l">
-<script src="js/gd-tema.js?v=20261015l"></script>
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261015l">
+<link rel="stylesheet" href="css/giandeco.css?v=20261015m">
+<link rel="stylesheet" href="css/gd-movil.css?v=20261015m">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261015m">
+<script src="js/gd-tema.js?v=20261015m"></script>
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261015m">
 </head>
 <body data-mundo="catalogo" data-seccion="producto" data-p="comoda-flow">
 
@@ -36,8 +36,8 @@
 <main id="pdp"><section class="pdp-top"><div class="gd-in"><p class="gd-migas"><a href="catalogo">Catálogo</a> / <a href="catalogo-muebleria">Mueblería</a> / <span>Dormitorio</span></p><h1 class="gd-h1">Cómoda Flow 1.37</h1><p class="gd-body">S/ 879.00</p><p class="gd-body">4 cajones con correderas telescópicas de apertura por presión. Patas de madera maciza.</p><img src="images/mobiliario/comoda-flow-1.webp" alt="Cómoda Flow 1.37" width="600"></div></section></main>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=20261015l"></script>
-<script src="js/gd-tienda.js?v=20261015l"></script>
+<script src="js/giandeco.js?v=20261015m"></script>
+<script src="js/gd-tienda.js?v=20261015m"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc;
@@ -140,7 +140,7 @@
       (p.stock <= 0 ? '<div class="pdp-acc" id="pdpAcc"><a class="gd-btn gd-btn-primary" target="_blank" rel="noopener" href="' + T.wa('Hola Giandeco, avísenme cuando vuelva a estar disponible: ' + p.nombre + '.') + '">Avíseme cuando vuelva' + T.FLECHA + '</a></div><div hidden>' : '') +
       '<div class="pdp-acc" id="pdpAcc">' +
         '<span class="gdt-qty" role="group" aria-label="Cantidad"><button type="button" data-pdp-qty="-1" aria-label="Quitar una">−</button><b id="pdpQty">1</b><button type="button" data-pdp-qty="1" aria-label="Añadir una">+</button></span>' +
-        '<button type="button" class="gd-btn gd-btn-primary" id="pdpAdd" data-gdt-add="' + key + '" data-qty="1">' + (consulta ? 'Añadir para cotizar' : 'Añadir a mi selección') + T.FLECHA + '</button>' +
+        '<button type="button" class="gd-btn gd-btn-primary" id="pdpAdd" data-gdt-add="' + key + '" data-qty="1">' + (consulta ? 'Añadir para cotizar' : 'Añadir a la bolsa') + T.FLECHA + '</button>' +
         (consulta ? '<a class="gd-btn gd-btn-ghost" href="' + waPieza + '" target="_blank" rel="noopener">Consultar por WhatsApp</a>'
                   : '<button type="button" class="gd-btn gd-btn-ghost" id="pdpYa">Comprar ahora</button>') +
       '</div>' +
@@ -251,7 +251,7 @@
       caja = '<div class="op-caja"><p class="pdp-h3">¿Ya la tiene en casa?</p><p>Las opiniones se habilitan después de la compra, desde el pedido en su cuenta.</p>' +
         '<a class="gd-link" href="cuenta#pedidos">Ir a mis pedidos' + T.FLECHA + '</a></div>';
     }
-    return '<div class="op-grid"><div><p class="gd-eyebrow">Opiniones verificadas</p><h2 class="gd-h2" style="font-size:clamp(1.9rem,3vw,2.4rem);">Solo opina quien compró</h2>' +
+    return '<div class="op-grid' + (pub.length ? '' : ' sin-opiniones') + '"><div><p class="gd-eyebrow">Opiniones verificadas</p><h2 class="gd-h2" style="font-size:clamp(1.9rem,3vw,2.4rem);">Solo opina quien compró</h2>' +
         '<ul class="op-regla"><li>Cada opinión está vinculada a un número de pedido.</li><li>Se califica lo que importa en una pieza para su espacio: acabado, fidelidad a la foto, entrega y atención.</li><li>El estudio la revisa antes de publicarla y no edita su contenido.</li></ul></div>' +
       '<div>' + (res || '<p class="gd-body">Esta pieza todavía no tiene opiniones publicadas.</p>') + caja + '</div></div>';
   }
@@ -274,11 +274,11 @@
   var sim = T.similares(key, 4);
   var simHTML = sim.length ? '<section class="gdt-sec"><div class="gdt-sec-head"><div><p class="gd-eyebrow">' + L.label + '</p><h2 class="gd-h2">También en esta línea</h2></div>' +
     '<a class="gd-link" href="' + L.href + '">Ver la colección' + T.FLECHA + '</a></div>' +
-    '<div class="gd-grid">' + sim.map(function(k){ return T.card(k); }).join('') + '</div></section>' : '';
+    '<div class="gd-grid es-carrusel">' + sim.map(function(k){ return T.card(k); }).join('') + '</div></section>' : '';
 
   var vis = T.vistos.lista().filter(function(k){ return k !== key && sim.indexOf(k) === -1; }).slice(0, 4);
   var visHTML = vis.length ? '<section class="gdt-sec"><div class="gdt-sec-head"><div><p class="gd-eyebrow is-muted">Su recorrido</p><h2 class="gd-h2">Vistas hace poco</h2></div></div>' +
-    '<div class="gd-grid">' + vis.map(function(k){ return T.card(k, { sinBoton:true }); }).join('') + '</div></section>' : '';
+    '<div class="gd-grid es-carrusel">' + vis.map(function(k){ return T.card(k, { sinBoton:true }); }).join('') + '</div></section>' : '';
   T.vistos.marcar(key);
 
   root.innerHTML = top + '<div class="gd-in">' + ficha + guia + set + estudio +
@@ -383,7 +383,7 @@
   if(location.hash === '#opiniones') document.getElementById('opiniones').scrollIntoView();
 })();
 </script>
-<script src="js/gd-movil.js?v=20261015l" defer></script>
-<script src="js/gd-chat.js?v=20261015l" defer></script>
+<script src="js/gd-movil.js?v=20261015m" defer></script>
+<script src="js/gd-chat.js?v=20261015m" defer></script>
 </body>
 </html>
