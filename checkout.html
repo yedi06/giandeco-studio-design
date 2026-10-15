@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261015n"></script>
+<script src="js/gd-acceso.js?v=20261015o"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Finalizar pedido — Giandeco Studio Design</title>
 <meta name="robots" content="noindex">
@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261015n">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261015n">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261015n">
-<script src="js/gd-tema.js?v=20261015n"></script>
+<link rel="stylesheet" href="css/giandeco.css?v=20261015o">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261015o">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261015o">
+<script src="js/gd-tema.js?v=20261015o"></script>
 </head>
 <!-- data-home: el checkout no lleva el menú del sitio. Tiene su propia cabecera,
      sin nada que distraiga de terminar la compra. -->
@@ -36,9 +36,9 @@
   <a href="libro-de-reclamaciones" target="_blank">Libro de reclamaciones</a>
 </footer>
 
-<script src="js/giandeco.js?v=20261015n"></script>
-<script src="js/gd-tienda.js?v=20261015n"></script>
-<script src="js/gd-pago.js?v=20261015n"></script>
+<script src="js/giandeco.js?v=20261015o"></script>
+<script src="js/gd-tienda.js?v=20261015o"></script>
+<script src="js/gd-pago.js?v=20261015o"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc, C = T.CFG, P = window.GD_PAGO;
@@ -173,9 +173,11 @@
 
   root.innerHTML =
     '<ol class="co-ruta" id="coRuta">' + PASOS.map(function(p, i){ return '<li data-ir="' + i + '"><i>' + (i + 1) + '</i><span>' + p + '</span></li>'; }).join('') + '</ol>' +
+    // teléfono: el resumen queda debajo del formulario; esta barra muestra el total en cada paso y lleva a él
+    '<button type="button" class="co-mini" id="coMini" aria-controls="coRes"><span>Su bolsa · ' + lineas.reduce(function(a, x){ return a + x.qty; }, 0) + (lineas.reduce(function(a, x){ return a + x.qty; }, 0) === 1 ? ' pieza' : ' piezas') + '</span><b id="coMiniTot"></b><em>Ver detalle</em></button>' +
     '<form class="co-grid" id="coForm" novalidate>' +
     '<div>' + pasoDatos + pasoEntrega + pasoPago + pasoFinal + '</div>' +
-    '<aside class="co-res" aria-label="Resumen">' +
+    '<aside class="co-res" id="coRes" aria-label="Resumen">' +
       '<h2>Su bolsa</h2><ul class="gdt-lines">' + lineas.map(function(x){
         return '<li class="gdt-line">' + (x.img ? '<span class="gdt-line-img"><img decoding="async" src="' + esc(x.img) + '" alt=""></span>' : '<span class="gdt-line-img is-vacia" aria-hidden="true">G</span>') +
           '<div class="gdt-line-body"><span class="gdt-line-cat">' + esc(x.cat) + '</span><span class="gdt-line-name">' + esc(x.nombre) + '</span>' +
@@ -281,6 +283,7 @@
       if(C.PRECIOS_CON_IGV) h += '<div class="es-igv"><dt>Incluye IGV (18 %)</dt><dd>' + T.fmt(total * 18 / 118) + '</dd></div>';
     }
     $('coTot').innerHTML = h;
+    $('coMiniTot').textContent = soloCot ? 'A cotizar' : T.fmt(tot.subtotal - desc + (envio || 0));
   }
   function entregaTexto(){
     return radio('ent') === 'recojo' ? 'Recojo en ' + C.RECOJO.lugar + ' — ' + C.RECOJO.dir
@@ -358,6 +361,7 @@
     condicionales();
   });
   $('coCel').addEventListener('input', function(){ this.value = this.value.replace(/\D/g, ''); });
+  $('coMini').addEventListener('click', function(){ $('coRes').scrollIntoView({ behavior:'smooth', block:'start' }); });
   var cBtn = $('coCuponBtn');
   if(cBtn) cBtn.addEventListener('click', function(){
     var k = g('coCupon').toUpperCase(), msg = $('coCuponMsg');
