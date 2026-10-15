@@ -59,8 +59,8 @@ var CFG = {
     { key:'pagoefectivo', activo:false, grupo:'Banca', label:'PagoEfectivo', nota:'Recibe un código CIP y paga desde su banca por internet o en agentes y bodegas.' },
     /* Pago directo: el cliente paga por su cuenta a los medios del estudio (PAGO_DIRECTO) y envía
        el comprobante por WhatsApp. Sustituye a Plin, transferencia y adelanto como opciones sueltas. */
-    { key:'directo',  activo:true, grupo:'Pago directo', label:'Pago directo a Giandeco', logos:['yape','plin'],
-      nota:'Yape, Plin o transferencia a las cuentas de Giandeco. Al registrar el pedido ve los datos y envía su comprobante por WhatsApp.' },
+    { key:'directo',  activo:true, grupo:'Pago directo', label:'Pago directo a Giandeco', logos:['yape'],
+      nota:'Yape o transferencia a la cuenta BCP de Giandeco, sin pasarela. Al registrar el pedido verá el QR y las cuentas, y enviará su comprobante por WhatsApp.' },
     { key:'contra',   activo:true, grupo:'Al recibir', label:'Pago contra entrega', nota:'Paga al recibir su pedido, en efectivo, con Yape o con tarjeta. Solo en Lima y Callao.', solo:['lima','callao'] },
     { key:'enestudio',activo:false, grupo:'Al recibir', label:'Pago al recoger en Giandeco', nota:'Paga al recoger, en efectivo, con Yape, Plin o tarjeta.', soloRecojo:true },
     { key:'adelanto', activo:false, grupo:'Proyectos y empresas', label:'Adelanto y saldo', nota:'Para piezas por encargo o pedidos de proyecto: una parte al confirmar y el saldo antes de la entrega. Giandeco le indica los montos.' },
@@ -69,9 +69,14 @@ var CFG = {
   /* Códigos de descuento:  { 'BIENVENIDA': { pct:10 } }  o  { 'ENVIO': { monto:30 } }.
      Vacío = el campo de cupón no se muestra. */
   CUPONES: {},
-  /* Medios del estudio para el pago directo. Se llenan en el panel (Ajustes);
-     lo que esté vacío no se muestra. qr = imagen del código QR. */
-  PAGO_DIRECTO: { yape:{ numero:'', titular:'', qr:'' }, plin:{ numero:'', titular:'', qr:'' }, banco:{ banco:'', cuenta:'', cci:'', titular:'' } },
+  /* Medios del estudio para el pago directo (sin pasarela). El panel puede
+     cambiarlos en Ajustes; lo que esté vacío no se muestra. qr = imagen del
+     código QR (el de Yape se verificó: decodifica igual que el original). */
+  PAGO_DIRECTO: {
+    yape:  { numero:'921 433 741', titular:'Luis Giancarlo Jiménez Sánchez', qr:'images/pago/yape-qr-giandeco.png' },
+    plin:  { numero:'', titular:'', qr:'' },
+    banco: { banco:'BCP · Banco de Crédito del Perú', cuenta:'191-00733854-0-65', cci:'002-191-100733854065-55', titular:'Luis Giancarlo Jiménez Sánchez' }
+  },
   /* Datos legales del estudio. Lo que esté vacío se muestra como
      "por confirmar" en las páginas de ayuda y en el libro de reclamaciones. */
   EMPRESA: { razon:'Luis Giancarlo Jiménez Sánchez', ruc:'10452729691', dir:'Ca. Las Bellísimas 170, Urb. Vipol — Callao 07036', correo:'contacto@giandeco.com', tel:'+51 920 775 559' },
@@ -103,7 +108,11 @@ var CFG = {
   if(o.RECOJO_ACTIVO !== undefined) CFG.RECOJO.activo = o.RECOJO_ACTIVO;
   if(o.ENVIO) CFG.ENVIO.forEach(function(z){ if(o.ENVIO[z.key] !== undefined) z.tarifa = o.ENVIO[z.key]; });
   if(o.PAGO) CFG.PAGO.forEach(function(m){ if(o.PAGO[m.key] === false) m.activo = false; });
-  if(o.PAGO_DIRECTO) ['yape', 'plin', 'banco'].forEach(function(k){ if(o.PAGO_DIRECTO[k]) CFG.PAGO_DIRECTO[k] = o.PAGO_DIRECTO[k]; });
+  // campo a campo: un dato vacío en el panel no borra el que trae el sitio
+  if(o.PAGO_DIRECTO) ['yape', 'plin', 'banco'].forEach(function(k){
+    var src = o.PAGO_DIRECTO[k]; if(!src) return;
+    Object.keys(src).forEach(function(f){ if(src[f]) CFG.PAGO_DIRECTO[k][f] = src[f]; });
+  });
 })(db('config'));
 
 /* --------------------------------------------------------------------------

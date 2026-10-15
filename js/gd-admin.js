@@ -291,7 +291,7 @@ V.ajustes = function(){
       '<h2 style="margin-top:28px;">Medios de pago</h2>' +
       C.PAGO.filter(function(m){ return m.activo || pg[m.key] === false; }).map(function(m){ return '<label class="ad-check"><input type="checkbox" name="pago-' + m.key + '"' + (pg[m.key] === false ? '' : ' checked') + '> ' + m.label + '</label>'; }).join('') + '</section></div>' +
     (function(){
-      var D = c.PAGO_DIRECTO || {}, y = D.yape || {}, pl = D.plin || {}, b = D.banco || {};
+      var D = T.CFG.PAGO_DIRECTO || {}, y = D.yape || {}, pl = D.plin || {}, b = D.banco || {};   // los vigentes: los del sitio más lo que cambió el panel
       function qr(k, v){ return '<label>Código QR (imagen)<input type="file" accept="image/*" data-qr="' + k + '"></label><input type="hidden" name="pd-' + k + '-qr" value="' + esc(v || '') + '">' +
         '<div class="ad-qr" data-qr-vista="' + k + '">' + (v ? '<img src="' + esc(v) + '" alt="QR"><button type="button" class="ad-btn" data-a="quitar-qr" data-v="' + k + '">Quitar</button>' : '<span>Sin imagen</span>') + '</div>'; }
       return '<section class="ad-caja" style="margin-top:20px;"><h2>Pago directo al estudio</h2>' +

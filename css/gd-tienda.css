@@ -724,3 +724,6 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 #coAgBox[hidden]{ display:none; }
 #coAgBox .co-etq{ margin:0; }
 .gd-field select:disabled{ opacity:.55; cursor:not-allowed; }
+/* listas de pasos ocultas: .co-pasos{display:grid} anulaba el atributo hidden
+   (en el pago directo se veía una segunda lista de pasos que no corresponde) */
+.co-pasos[hidden]{ display:none; }
