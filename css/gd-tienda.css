@@ -594,3 +594,4 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 .lr-sello .es-claro{ display:none; }
 :root[data-tema="claro"] .lr-sello .es-oscuro{ display:none; }
 :root[data-tema="claro"] .lr-sello .es-claro{ display:block; }
+.lg-prosa.es-libro{ max-width:1040px; }   /* el libro es un formulario: aprovecha el ancho, el texto legal no */
