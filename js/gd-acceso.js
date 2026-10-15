@@ -11,6 +11,10 @@
    está protegido de verdad son los datos, en la base de datos.
    ========================================================================== */
 (function(){
+  // todo el sitio va siempre por https (respaldo por si el servidor no lo fuerza)
+  if(location.protocol === 'http:' && /(^|\.)giandeco\.com$/.test(location.hostname)){
+    location.replace('https://giandeco.com' + location.pathname + location.search + location.hash); return;
+  }
   var EN_MANTENIMIENTO = false;
   var LOCAL = ['127.0.0.1', 'localhost', ''];
   var SESION = 'sb-vsivmdfmecqxeumepyea-auth-token';   // la que deja el acceso de /admin
