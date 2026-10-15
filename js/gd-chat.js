@@ -206,7 +206,15 @@
   + '.gdc-compose svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}'
   + '.gdc-pie{flex:none;margin:0 0 10px;text-align:center;font-size:.7rem;color:#4A4844}'
   + '.gdc-pie a{color:#C9A24A;text-decoration:none}'
-  + '@media (max-width:560px){.gdc-panel{height:min(78dvh,620px);border-radius:16px}}';
+  /* celular: hoja inferior a todo el ancho, sin salirse de la pantalla */
+  + '@media (max-width:560px){'
+  +   '.gdc-panel{left:10px!important;right:10px!important;top:auto!important;bottom:calc(10px + env(safe-area-inset-bottom,0px))!important;'
+  +     'width:auto!important;max-width:none!important;height:min(76dvh,600px);max-height:calc(100dvh - 20px - env(safe-area-inset-bottom,0px));padding:0!important;border-radius:16px}'
+  +   '.gdc-head{padding:12px 10px 12px 14px}.gdc-who small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}'
+  +   '.gdc-body{padding:16px 12px 10px}.gdc-chips{padding-left:0}.gdc-msg{max-width:94%}'
+  +   '.gdc-compose{margin:8px 10px 6px}.gdc-compose input{font-size:16px}'   /* 16 px: iPhone no hace zoom al escribir */
+  +   '.gdc.is-open{opacity:0;pointer-events:none}'                          /* la hoja tapa la burbuja: se cierra con su X */
+  + '}';
 
   + ':root[data-tema="claro"] .gdc-grip i{background:#6F6A63}';
   var st = document.createElement('style');
