@@ -227,7 +227,11 @@ function pintar(nota){
 root.addEventListener('click', function(e){
   var t = e.target;
   var v = t.closest('[data-v]'); if(v){ e.preventDefault(); irA(v.getAttribute('data-v')); return; }
-  if(t.closest('#cxGoogle')){ A.google(); return; }
+  if(t.closest('#cxGoogle')){
+    var gb = t.closest('#cxGoogle'); gb.disabled = true;
+    A.google().then(function(r){ gb.disabled = false; if(r && !r.ok){ if(document.getElementById('cxMsg')) error(r.error); else pintar(r.error); } });
+    return;
+  }
   var ojo = t.closest('[data-ojo]');
   if(ojo){ var inp = document.getElementById(ojo.getAttribute('data-ojo')), ver = inp.type === 'password'; inp.type = ver ? 'text' : 'password';
     ojo.innerHTML = ver ? I.ojoNo : I.ojo; ojo.setAttribute('aria-label', ver ? 'Ocultar la clave' : 'Mostrar la clave'); return; }

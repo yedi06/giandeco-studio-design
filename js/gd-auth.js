@@ -127,7 +127,16 @@ window.GD_AUTH = {
       r.confirmar = true; return r;
     });
   },
-  google: function(){ location.href = API + '/authorize?provider=google&redirect_to=' + encodeURIComponent(volver()); },
+  /* antes de salir hacia Google se confirma que el proveedor está activo:
+     si no, Supabase mostraría su propia página de error */
+  google: function(){
+    return pedir('/settings').then(function(r){
+      if(r.ok && r.data && r.data.external && r.data.external.google === false) return { ok:false, error:MSG.google };
+      if(!r.ok && r.error === MSG.red) return r;
+      location.href = API + '/authorize?provider=google&redirect_to=' + encodeURIComponent(volver());
+      return { ok:true };
+    });
+  },
   recuperar: function(email){ return pedir('/recover?redirect_to=' + encodeURIComponent(volver()), { body:{ email:email } }); },
   nuevaClave: function(clave){
     var s = leer(); if(!s) return Promise.resolve({ ok:false, error:MSG.vencido });
