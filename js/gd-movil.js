@@ -7,9 +7,20 @@
 (function(){
   var pie = document.querySelector('.gd-footer');
   if(!pie) return;
+  var mq = window.matchMedia('(max-width:859px)');
+
+  // en móvil, los enlaces de ayuda van plegados como un bloque más (en escritorio, la fila de siempre)
+  var grid = pie.querySelector('.gd-footer-grid'), ayuda = pie.querySelector('.gd-footer-ayuda');
+  if(grid && ayuda){
+    var col = document.createElement('div');
+    col.className = 'gd-footer-col gd-footer-col-ayuda';
+    col.innerHTML = '<h4>Ayuda</h4><ul>' + Array.prototype.map.call(ayuda.querySelectorAll('a:not(.gd-footer-libro)'), function(a){
+      return '<li><a href="' + a.getAttribute('href') + '">' + a.textContent + '</a></li>'; }).join('') + '</ul>';
+    grid.appendChild(col);
+  }
+
   var cols = Array.prototype.slice.call(pie.querySelectorAll('.gd-footer-col'));
   if(!cols.length) return;
-  var mq = window.matchMedia('(max-width:859px)');
 
   cols.forEach(function(col, i){
     var h = col.querySelector('h4');
@@ -34,10 +45,11 @@
     });
   });
 
-  // el último bloque (Contacto) empieza abierto: es lo que más se busca en el pie
-  cols[cols.length - 1].classList.add('is-open');
+  // las redes suben junto al logo en móvil: el pie queda corto y todo plegado
+  var marca = pie.querySelector('.gd-footer-brand'), redes = pie.querySelector('.gd-footer-social'), suyo = redes && redes.parentNode;
 
   function aplicar(){
+    if(marca && redes) (mq.matches ? marca : suyo).appendChild(redes);
     cols.forEach(function(col){
       if(!col._h) return;
       if(mq.matches){

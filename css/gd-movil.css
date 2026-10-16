@@ -54,17 +54,22 @@
    PIE DE PÁGINA EN MÓVIL: desplegables
    Solo se pliega si el script marcó el pie con .gd-acc (sin JS queda abierto).
    -------------------------------------------------------------------------- */
+.gd-footer-col-ayuda{ display:none; }
 @media (max-width:859px){
+  .gd-footer.gd-acc{ padding-top:32px; padding-bottom:84px; }   /* abajo, espacio para el botón flotante del chat */
   .gd-footer.gd-acc .gd-footer-grid{ grid-template-columns:1fr; gap:0; }
-  .gd-footer.gd-acc .gd-footer-brand{ padding-bottom:30px; }
-  .gd-footer.gd-acc .gd-footer-brand img{ height:64px; }
-  .gd-footer.gd-acc .gd-footer-brand p{ max-width:40ch; }
+  /* logo y redes en una sola fila; la frase larga queda para escritorio */
+  .gd-footer.gd-acc .gd-footer-brand{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding-bottom:22px; }
+  .gd-footer.gd-acc .gd-footer-brand img{ height:48px; margin:0; }
+  .gd-footer.gd-acc .gd-footer-brand p{ display:none; }
+  .gd-footer.gd-acc .gd-footer-brand .gd-footer-social{ margin:0; gap:4px; }
+  .gd-footer.gd-acc .gd-footer-col-ayuda{ display:block; }
 
   .gd-footer.gd-acc .gd-footer-col{ border-top:1px solid var(--line); }
   .gd-footer.gd-acc .gd-footer-col:last-child{ border-bottom:1px solid var(--line); }
   .gd-footer.gd-acc .gd-footer-col h4{
     display:flex; align-items:center; justify-content:space-between; gap:16px;
-    margin:0; padding:19px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;
+    margin:0; padding:15px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;
     transition: color .3s ease;
   }
   .gd-footer.gd-acc .gd-footer-col h4:focus-visible{ outline:1px solid var(--accent); outline-offset:-1px; }
@@ -90,7 +95,14 @@
   .gd-footer.gd-acc .gd-footer-col li a{ display:flex; padding:9px 2px; font-size:.94rem; }
   .gd-footer.gd-acc .gd-footer-social{ margin-top:14px; }
 
-  .gd-footer.gd-acc .gd-footer-bar{ flex-direction:column; align-items:flex-start; gap:8px; margin-top:28px; }
+  /* cierre: Libro de Reclamaciones (siempre visible) al lado del copyright */
+  .gd-footer.gd-acc > .gd-in{ display:grid; grid-template-columns:auto 1fr; align-items:center; column-gap:16px; }
+  .gd-footer.gd-acc .gd-footer-grid{ grid-column:1 / -1; }
+  .gd-footer.gd-acc .gd-footer-ayuda{ margin:0; padding:20px 0; border:0; }
+  .gd-footer.gd-acc .gd-footer-ayuda > a:not(.gd-footer-libro){ display:none; }
+  .gd-footer.gd-acc .gd-footer-libro img{ height:46px; }
+  .gd-footer.gd-acc .gd-footer-bar{ flex-direction:column; align-items:flex-end; text-align:right; gap:2px; margin:0; padding:20px 0; border:0; font-size:.7rem; line-height:1.4; }
+  .gd-footer.gd-acc .gd-footer-bar em{ font-size:.92rem; }
 }
 @media (prefers-reduced-motion:reduce){
   .sh-burger span, .gd-footer-panel, .gd-footer-col h4::after{ transition:none !important; }
