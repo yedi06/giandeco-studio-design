@@ -73,10 +73,8 @@ var TITULO = { entrar:'Bienvenido', crear:'Cree su cuenta', olvido:'Recuperar cl
 function acceso(){
   document.getElementById('cx').classList.remove('es-panel');
   root.innerHTML = '<div class="cx-auth"><div class="cx-card" id="cxCard" data-vista="' + vista + '">' +
-    '<span class="cx-cota" aria-hidden="true"><i></i><b>Mi cuenta</b><i></i></span>' +
-    '<span class="cx-esq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>' +
     '<img class="cx-logo" src="img/logo-dorado.svg" width="300" height="268" alt="Giandeco Studio Design">' +
-    '<h1 class="cx-titulo">' + TITULO[vista] + '</h1><span class="cx-rombo" aria-hidden="true">◆</span>' +
+    '<p class="cx-rotulo">Mi cuenta</p><h1 class="cx-titulo">' + TITULO[vista] + '</h1>' +
     (vista === 'olvido' || vista === 'nueva' || vista === 'enviado' ? '' : '') +
     tarjeta() +
     (vista === 'olvido' || vista === 'nueva' ? '<button type="button" class="cx-atras" data-v="entrar">← Volver a iniciar sesión</button>' : '') +
