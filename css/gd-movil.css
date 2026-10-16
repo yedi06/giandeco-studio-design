@@ -107,3 +107,12 @@
 @media (prefers-reduced-motion:reduce){
   .sh-burger span, .gd-footer-panel, .gd-footer-col h4::after{ transition:none !important; }
 }
+
+/* --------------------------------------------------------------------------
+   MÓVIL: del hero al contenido sin un hueco doble (panel + sección)
+   -------------------------------------------------------------------------- */
+@media (max-width:899px){
+  .gd-hero-panel{ padding-bottom:36px; }
+  .gd-hero-panel > :last-child{ margin-bottom:0; }
+  .gd-hero + .gd-sec{ padding-top:40px; }
+}

@@ -1,8 +1,24 @@
 # Changelog UX/UI
 
+## 2026-10-16 (tarde) — Páginas de servicio, menos texto, pie compacto
+
+### Nuevo
+- `js/gd-servicios.js`: fuente única de los servicios de Retail y Hogar (textos que ya publicaba el sitio).
+- 7 páginas de servicio generadas por `hacer-proyectos.js`: `retail-escaparatismo`, `retail-remodelacion-de-locales`, `retail-visual-merchandising`, `retail-grafica-y-viniles`, `hogar-decoracion-y-ambientacion`, `hogar-mobiliario-a-medida`, `hogar-ambientacion-de-temporada`. Cada una: portada con título, el servicio en un párrafo, qué incluye, dónde lo hicimos (fichas de proyecto), enlaces útiles, cotizar por WhatsApp y los otros servicios.
+- Tarjeta de servicio (foto + título): el detalle se lee al entrar.
+
+### Cambiado
+- Retail, Hogar y `retail-diseno-tiendas` (ahora «Servicios» en el menú): las tarjetas de servicio muestran solo foto y título y llevan a su página.
+- `retail-diseno-tiendas`: los cuatro bloques largos pasan a las páginas de servicio; el glosario muestra el término y se despliega al tocarlo.
+- `hogar-diseno-interiores`: enlaces a Decoración y a Mobiliario a medida, «Más servicios para su casa» al final y sin el hueco «FOTO PENDIENTE».
+- Espacios (`hogar-espacios`, `catalogo-compra-el-espacio` y fichas de espacio): tarjetas solo con título; «en camino» como fila de nombres sin cajas punteadas; sin línea antes de los botones.
+- Móvil: del hero al contenido sin hueco doble (de 104 a 76 px en Espacios).
+- Pie en móvil: logo y redes en una fila, Estudio / Catálogo / Contacto / Ayuda plegados, Libro de Reclamaciones junto al copyright. De 959 a 478 px de alto (iPhone 13).
+- Sitemap con 100 direcciones.
+
 ## 2026-10-16 — Arquitectura de proyectos y Navidad para retail
 
-Rama `claude/vibrant-gates-sabblr`. **No publicado**: ni en la versión de prueba ni en giandeco.com (requiere autorización).
+Publicado en giandeco.com con yedi06/giandeco-studio-design#9.
 
 ### Nuevo
 - `js/gd-proyectos.js`: fuente única de los 14 proyectos (textos reales ya publicados), con tipos, líneas, destacados, Navidad, relacionados y marca `provisional` (oculta lo no confirmado).

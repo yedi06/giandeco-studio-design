@@ -802,6 +802,14 @@ a.gd-slot .gd-slot-cta{
 }
 a.gd-slot:hover .gd-slot-cta{ opacity:1; transform:none; }
 .gd-slot-nota{ margin-top: var(--sp-16); font-size:.8rem; color: var(--text-faint); line-height:1.6; }
+/* ambientes «en camino»: una fila de nombres que se tocan para pedir aviso, sin cajas punteadas */
+.gd-slots.es-lista{ display:flex; flex-wrap:wrap; gap:8px; }
+.gd-slots.es-lista .gd-slot{ aspect-ratio:auto; border:0; background:var(--bg-raised); padding:11px 16px; border-radius:999px; display:inline-flex; place-items:normal; }
+.gd-slots.es-lista .gd-slot > span{ font-size:0; letter-spacing:0; line-height:1; display:inline-flex; align-items:center; gap:10px; }
+.gd-slots.es-lista .gd-slot b{ margin:0; font-size:.8rem; letter-spacing:.04em; text-transform:none; color:var(--lino); font-weight:400; }
+.gd-slots.es-lista .gd-slot .gd-slot-cta{ margin:0; opacity:1; transform:none; font-size:.6rem; letter-spacing:.14em; }
+.gd-slots.es-lista .gd-slot:hover{ background:rgba(201,162,74,.12); }
+.gd-piezas-head.es-suelta{ border-top:0; padding-top:0; margin-top:var(--sp-64); }
 
 /* ==========================================================================
    FORMULARIO
@@ -1054,3 +1062,27 @@ input[type="checkbox"], input[type="radio"]{ cursor: default; }
 .nr-fechas li{ display:grid; gap:6px; }
 .nr-fechas span{ font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--text-faint); }
 .nr-fechas b{ font-family:var(--display); font-weight:400; font-size:clamp(1.4rem,2.4vw,1.9rem); line-height:1.15; color:var(--lino); }
+
+/* ==========================================================================
+   SERVICIOS — tarjeta (foto + título) y página de servicio (gd-proyectos-ui.js)
+   ========================================================================== */
+.sv-incluye{ list-style:none; margin:0; padding:0; display:grid; gap:12px; }
+.sv-incluye li{ position:relative; padding-left:20px; color:var(--lino); font-size:.98rem; line-height:1.5; }
+.sv-incluye li::before{ content:''; position:absolute; left:0; top:.62em; width:8px; height:1px; background:var(--accent); }
+.sv-enlaces{ display:flex; flex-wrap:wrap; gap:14px 36px; margin-top:clamp(36px,5vw,56px); }
+.pj-intro + .pj-cta{ padding-top:0; }
+.sv-otros{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:var(--sp-40); }
+.sv-otros a{ padding:10px 16px; border-radius:999px; background:var(--bg-raised); color:var(--text-dim); text-decoration:none; font-size:.82rem; transition:color .2s ease, background-color .2s ease; }
+.sv-otros a:hover{ color:var(--lino); background:rgba(201,162,74,.12); }
+.sv-grid{ display:grid; gap:20px 14px; grid-template-columns:1fr 1fr; margin-top:var(--sp-40); }
+@media (min-width:900px){ .sv-grid{ grid-template-columns:repeat(var(--sv-n, 4), minmax(0,1fr)); gap:20px; } }
+@media (min-width:900px){ .pj-grid.es-2{ grid-template-columns:1fr 1fr; } .pj-grid.es-2 .pj-card-img{ aspect-ratio:16/11; } }
+.sv-card{ display:grid; gap:12px; color:inherit; text-decoration:none; }
+.sv-card .pj-card-img{ aspect-ratio:4/5; }
+.sv-card:hover .pj-card-img img{ transform:scale(1.04); }
+.sv-card-txt{ display:flex; align-items:baseline; gap:10px; font-family:var(--body); font-weight:500; font-size:clamp(.92rem,1.3vw,1.05rem); color:var(--lino); line-height:1.3; }
+.sv-card-txt b{ font-weight:500; font-size:.64rem; letter-spacing:.16em; color:var(--accent); }
+.sv-card-txt svg{ width:14px; height:14px; margin-left:auto; flex:none; stroke:var(--accent); fill:none; stroke-width:1.4; transition:transform .3s ease; }
+.sv-card:hover .sv-card-txt svg{ transform:translateX(3px); }
+.sv-card:focus-visible{ outline:2px solid var(--accent); outline-offset:4px; }
+@media (max-width:899px){ .sv-grid > .sv-card:last-child:nth-child(odd){ grid-column:1 / -1; } .sv-grid > .sv-card:last-child:nth-child(odd) .pj-card-img{ aspect-ratio:16/9; } }
