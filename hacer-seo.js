@@ -106,7 +106,7 @@ var ORG = { '@context':'https://schema.org', '@type':'HomeAndConstructionBusines
   telephone:'+51920775559', email:'contacto@giandeco.com',
   address:{ '@type':'PostalAddress', streetAddress:'Ca. Las Bellísimas 170, Urb. Vipol', addressLocality:'Callao', postalCode:'07036', addressCountry:'PE' },
   areaServed:{ '@type':'Country', name:'Perú' },
-  sameAs:['https://www.instagram.com/giandeco.studio/', 'https://www.facebook.com/profile.php?id=61593540694016'] };
+  sameAs:['https://www.instagram.com/giandeco.studio/', 'https://www.facebook.com/profile.php?id=61593540694016', 'https://www.tiktok.com/@giandeco_studio'] };
 var SITIO = { '@context':'https://schema.org', '@type':'WebSite', name:'Giandeco Studio Design', url:DOMINIO + '/', inLanguage:'es-PE' };
 
 var paginas = [];

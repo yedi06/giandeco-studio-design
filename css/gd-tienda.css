@@ -414,7 +414,8 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
    ========================================================================== */
 .lg-lead{ color:var(--text-dim); font-size:1.05rem; line-height:1.7; max-width:60ch; margin:0; }
 .lg-solo{ margin-top:var(--sp-40); }
-.lg-prosa{ max-width:74ch; min-width:0; }
+/* ayuda y legales: el texto usa todo el ancho de la columna, como el libro de reclamaciones */
+.lg-prosa{ max-width:none; min-width:0; }
 .lg-prosa.is-ancha{ max-width:none; }
 .lg-prosa h2{ font-family:var(--body); font-weight:500; font-size:1.2rem; color:var(--lino); margin:var(--sp-64) 0 var(--sp-16); letter-spacing:.01em; }
 .lg-prosa > h2:first-child{ margin-top:0; }
