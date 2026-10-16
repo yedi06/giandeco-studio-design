@@ -17,18 +17,17 @@ var SITIO = {
     secciones:[
       { key:'home',      label:'Retail',              href:'retail' },
       { key:'diseno',    label:'Diseño de tiendas',   href:'retail-diseno-tiendas' },
-      { key:'proyectos', label:'Proyectos',           href:'retail-proyectos' },
-      { key:'blog',      label:'Blog',                href:'retail-blog' }
+      { key:'navidad',   label:'Navidad',             href:'retail-navidad' },
+      { key:'proyectos', label:'Proyectos',           href:'retail-proyectos' }
     ]
   },
   hogar: {
     label:'Hogar', home:'hogar',
     secciones:[
       { key:'home',      label:'Hogar',                 href:'hogar' },
-      { key:'diseno',    label:'Diseño de interiores',  href:'hogar-diseno-interiores' },
-      { key:'espacios',  label:'Espacios',              href:'hogar-espacios' },
+      { key:'diseno',    label:'Interiorismo',          href:'hogar-diseno-interiores' },
       { key:'proyectos', label:'Proyectos',             href:'hogar-proyectos' },
-      { key:'blog',      label:'Blog',                  href:'hogar-blog' }
+      { key:'espacios',  label:'Espacios',              href:'hogar-espacios' }
     ]
   },
   catalogo: {
@@ -294,7 +293,9 @@ function footerHTML(){
         '<img src="img/logo-positivo.svg" alt="Giandeco Studio Design">' +
         '<p>Visual merchandising y diseño de espacios comerciales. Remodelamos su local, montamos la campaña y ejecutamos la obra bajo una sola dirección.</p>' +
       '</div>' +
-      col('Retail', SITIO.retail.secciones.map(function(s){ return { label:s.key==='home'?'Retail':s.label, href:s.href }; })) +
+      // el blog sale del menú y queda aquí, junto al resto del estudio
+      col('Estudio', [{ label:'Retail', href:'retail' }, { label:'Navidad para retail', href:'retail-navidad' }, { label:'Hogar', href:'hogar' },
+        { label:'Proyectos', href:'retail-proyectos' }, { label:'Quiénes somos', href:'quienes-somos' }, { label:'Blog', href:'retail-blog' }]) +
       col('Catálogo', SITIO.catalogo.secciones.map(function(s){ return { label:s.key==='home'?'Ver catálogo':s.label, href:s.href }; })) +
       '<div class="gd-footer-col"><h4>Contacto</h4>' +
         '<ul class="gd-footer-contact">' +
@@ -378,6 +379,8 @@ Object.keys(SITIO).forEach(function(k){
   (SITIO[k].pronto || []).forEach(function(p){ INDICE.push({ label: p.label + ' (próximamente)', href:p.href }); });
 });
 PAGINAS.forEach(function(p){ INDICE.push({ label:p.label, href:p.href }); });
+// el blog ya no está en el menú, pero se sigue encontrando en la búsqueda
+INDICE.push({ label:'Retail · Blog', href:'retail-blog' }, { label:'Hogar · Blog', href:'hogar-blog' });
 [[PRODUCTOS,'Mueblería'],[ILUMINACION,'Iluminación'],[NAVIDAD,'Navidad']].forEach(function(L){
   Object.keys(L[0]).forEach(function(k){
     var p = L[0][k];
@@ -496,6 +499,7 @@ function ampliarFoto(img){
   document.documentElement.style.overflow = 'hidden';
   luz.querySelector('.gd-luz-x').focus();
 }
+window.GD_AMPLIAR = ampliarFoto;   // galerías de proyecto
 function cerrarFoto(){
   var luz = document.getElementById('gdLuz');
   if(!luz || !luz.classList.contains('is-open')) return;

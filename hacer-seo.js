@@ -12,6 +12,7 @@
 'use strict';
 var fs = require('fs');
 
+require('./hacer-proyectos.js');   // primero las fichas de proyecto, para que entren al sitemap
 var DOMINIO = 'https://giandeco.com';
 var OG_POR_DEFECTO = 'images/espacios/zara-sala-1.jpg';
 var NO_INDEXAR = ['producto.html', 'checkout.html', 'cuenta.html', 'seguimiento.html', '404.html', 'material-pendiente.html', 'admin.html', 'mantenimiento.html'];
@@ -114,11 +115,11 @@ fijas.forEach(function(f){
   var html = leer(f);
   if(NO_INDEXAR.indexOf(f) !== -1 || /<meta name="robots" content="noindex/.test(html)) return;
   var esHome = f === 'index.html', url = esHome ? DOMINIO + '/' : pub(f);
-  var img = dato(html, /class="gd-kb-img" src="([^"?]+)/) || OG_POR_DEFECTO;
+  var img = dato(html, /data-og="([^"?]+)/) || dato(html, /class="gd-kb-img" src="([^"?]+)/) || OG_POR_DEFECTO;
   html = ponerBloque(html, bloque({ url:url, titulo:dato(html, /<title>([\s\S]*?)<\/title>/), desc:dato(html, /<meta name="description" content="([^"]*)"/),
                                     img:abs(img), ld: esHome ? [ORG, SITIO] : [] }));
   fs.writeFileSync(f, html);
-  paginas.push({ f:f, url:url, prio: esHome ? '1.0' : /^(catalogo|retail|hogar)/.test(f) ? '0.8' : '0.5' });
+  paginas.push({ f:f, url:url, prio: esHome ? '1.0' : /^(catalogo|retail|hogar)/.test(f) ? '0.8' : /^proyecto-/.test(f) ? '0.7' : '0.5' });
 });
 
 /* ---- 3. sitemap y robots ---- */
