@@ -64,7 +64,8 @@
   
   
 
-  .page{ max-width: 1440px; margin: 0 auto; padding: clamp(28px, 6vw, 72px) clamp(18px, 5vw, 64px) 80px; }
+  /* mismo ancho y medianil que .gd-in: los bordes de todas las secciones quedan en la misma línea */
+  .page{ max-width: var(--gd-max, 1840px); margin: 0 auto; padding: clamp(28px, 6vw, 72px) var(--gd-gut, clamp(20px, 4.2vw, 80px)) 80px; }
 
   
   

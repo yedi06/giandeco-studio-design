@@ -149,8 +149,8 @@
         '<button type="button" data-gdt-fav="' + key + '" class="' + (T.favs.es(key) ? 'is-on' : '') + '" aria-pressed="' + (T.favs.es(key) ? 'true' : 'false') + '">' + I.cora + 'Guardar</button>' +
         (consulta ? '' : '<a href="' + waPieza + '" target="_blank" rel="noopener">' + I.chat + 'Hablar con un diseñador</a>') +
       '</div>' +
-      // compra segura: plegada por defecto; a la vista solo el sello y los medios de pago
-      '<details class="pdp-confianza">' +
+      // compra segura: abierta por defecto; el cliente puede plegarla
+      '<details class="pdp-confianza" open>' +
         '<summary><span class="pdp-confianza-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span>' +
           '<span class="pdp-confianza-t"><b>Compra segura</b><small>Envío a todo el Perú · pago con Culqi o depósito</small></span>' +
           T.logosPago(['visa', 'mastercard', 'amex', 'diners', 'yape']) + '<i class="pdp-confianza-mas" aria-hidden="true"></i></summary>' +
