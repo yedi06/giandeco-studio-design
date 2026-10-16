@@ -6,7 +6,9 @@ Cuatro niveles como máximo. Las URL públicas van sin `.html` (el servidor las 
 Nivel 1   Inicio  /
           │
 Nivel 2   ├── Retail  /retail
-          │   ├── Diseño de tiendas      /retail-diseno-tiendas
+          │   ├── Servicios              /retail-diseno-tiendas   (tarjetas + glosario)
+          │   │     ├── /retail-escaparatismo · /retail-remodelacion-de-locales
+          │   │     └── /retail-visual-merchandising · /retail-grafica-y-viniles
 Nivel 3   │   ├── Navidad para retail    /retail-navidad          ← nueva
           │   │     └── proyectos de temporada → fichas (nivel 4)
           │   └── Proyectos retail       /retail-proyectos        (rejilla + filtros por tipo)
@@ -14,6 +16,8 @@ Nivel 4   │         └── Ficha            /proyecto-<slug>         ← nu
           │
           ├── Hogar  /hogar
           │   ├── Interiorismo           /hogar-diseno-interiores
+          │   ├── Servicios hogar        /hogar-decoracion-y-ambientacion · /hogar-mobiliario-a-medida
+          │   │                          /hogar-ambientacion-de-temporada
           │   ├── Proyectos hogar        /hogar-proyectos         (rejilla + filtros por tipo)
           │   │     └── Ficha            /proyecto-<slug>  ·  /evento-walon35  ·  /proceso-expodeco
           │   └── Espacios               /hogar-espacios → /espacio-<nombre>
@@ -32,7 +36,7 @@ ayuda y condiciones, Libro de Reclamaciones, Mi cuenta, checkout.
 
 | Línea | Secciones (antes) | Secciones (ahora) |
 |-------|-------------------|-------------------|
-| Retail | Retail · Diseño de tiendas · Proyectos · Blog | Retail · Diseño de tiendas · **Navidad** · Proyectos |
+| Retail | Retail · Diseño de tiendas · Proyectos · Blog | Retail · **Servicios** · **Navidad** · Proyectos |
 | Hogar | Hogar · Diseño de interiores · Espacios · Proyectos · Blog | Hogar · **Interiorismo** · Proyectos · Espacios |
 | Catálogo | sin cambios | Catálogo · Navidad · Mueblería · Iluminación · Compra el espacio |
 
@@ -58,6 +62,12 @@ Quién consume los datos:
 | `proyecto-<slug>` | portada, encargo, ficha técnica, galería con ampliación, proceso, qué hicimos, resultado, relacionados, CTA |
 
 Proyectos con página propia más completa (`href` en los datos): `walon-35-anos` → `evento-walon35`, `expodeco-2024` → `proceso-expodeco`. Para ellos no se genera ficha.
+
+## Servicios: un solo origen de datos
+
+`js/gd-servicios.js` define los servicios de cada línea. Las tarjetas (foto + título) salen de ahí en Retail, Hogar, Servicios e Interiorismo; `hacer-proyectos.js` genera una página por servicio. Los servicios con página propia (`href`: Navidad → `retail-navidad`, Diseño de interiores → `hogar-diseno-interiores`) no generan página.
+
+Página de servicio: portada con título → el servicio y qué incluye → dónde lo hicimos (fichas) → enlaces útiles → cotizar por WhatsApp y los otros servicios.
 
 ## Ficha de proyecto (plantilla)
 

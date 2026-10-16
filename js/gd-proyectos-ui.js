@@ -79,7 +79,37 @@ function ficha(D, p){
   return h;
 }
 
-var API = { esc:esc, card:card, rejilla:rejilla, migas:migas, ficha:ficha };
+/* ---------- página de servicio: título primero, el detalle debajo ---------- */
+function servicio(D, SV, s){
+  var L = D.LINEAS[s.linea], portada = s.portada;
+  // los proyectos donde se hizo este trabajo; sin repetir la foto de portada
+  var pro = (s.proyectos || []).map(D.get).filter(function(p){ return p && p.galeria[0].src !== portada.src; });
+  var otros = SV.de(s.linea).filter(function(x){ return x.slug !== s.slug; });
+  var msg = WA + encodeURIComponent('Hola Giandeco, quiero cotizar: ' + s.nombre + '.');
+  var h = '';
+  h += '<section class="pj-hero"><img src="' + esc(portada.src) + '" alt="' + esc(portada.alt) + '" fetchpriority="high" decoding="async">' +
+    '<div class="gd-in pj-hero-txt">' + migas([['Inicio', './'], [L.label, L.href], [s.nombre]]) +
+      '<p class="gd-eyebrow">Servicio · ' + esc(L.label) + '</p><h1>' + esc(s.nombre) + '</h1><p class="pj-hero-sub">' + esc(s.frase) + '</p></div></section>';
+  h += '<section class="gd-sec pj-intro"><div class="gd-in pj-intro-grid">' +
+    '<div><p class="pj-etq">El servicio</p><p class="pj-lead">' + esc(s.intro) + '</p></div>' +
+    '<div><p class="pj-etq">Incluye</p><ul class="sv-incluye">' + s.incluye.map(function(i){ return '<li>' + esc(i) + '</li>'; }).join('') + '</ul></div></div>' +
+    (s.enlaces && s.enlaces.length ? '<div class="gd-in sv-enlaces">' + s.enlaces.map(function(e){ return '<a class="gd-link" href="' + e.href + '">' + esc(e.label) + FLECHA + '</a>'; }).join('') + '</div>' : '') +
+    '</section>';
+  if(pro.length) h += '<section class="gd-sec pj-rel"><div class="gd-in"><div class="pj-rel-head"><h2 class="pj-h2">Dónde lo hicimos</h2><a class="gd-link" href="' + L.proyectos + '">Todos los proyectos' + FLECHA + '</a></div>' +
+    '<div class="pj-grid ' + (pro.length >= 4 ? 'es-4' : pro.length === 3 ? 'es-3' : 'es-2') + '">' + pro.map(function(p){ return card(D, p); }).join('') + '</div></div></section>';
+  h += '<section class="gd-sec pj-cta"><div class="gd-in"><h2 class="pj-h2">¿Lo necesita para su ' + (s.linea === 'retail' ? 'local' : 'casa') + '?</h2>' +
+    '<div class="pj-cta-acc"><a class="gd-btn gd-btn-primary" href="' + msg + '" target="_blank" rel="noopener">Cotizar ' + esc(s.nombre.toLowerCase()) + FLECHA + '</a></div>' +
+    '<nav class="sv-otros" aria-label="Otros servicios">' + otros.map(function(x){ return '<a href="' + SV.url(x) + '">' + esc(x.nombre) + '</a>'; }).join('') + '</nav></div></section>';
+  return h;
+}
+
+/* ---------- tarjeta de servicio: foto y título; el resto, al entrar ---------- */
+function tarjetaServicio(SV, s, i){
+  return '<a class="sv-card" href="' + SV.url(s) + '"><span class="pj-card-img"><img src="' + esc(s.portada.src) + '" alt="' + esc(s.portada.alt) + '" loading="lazy" decoding="async"></span>' +
+    '<span class="sv-card-txt"><b>0' + (i + 1) + '</b><span>' + esc(s.nombre) + '</span>' + FLECHA + '</span></a>';
+}
+
+var API = { esc:esc, card:card, rejilla:rejilla, migas:migas, ficha:ficha, servicio:servicio, tarjetaServicio:tarjetaServicio };
 if(typeof module !== 'undefined' && module.exports) module.exports = API;
 if(raiz) raiz.GD_PJ = API;
 

@@ -16,7 +16,7 @@ var SITIO = {
     label:'Retail', home:'retail',
     secciones:[
       { key:'home',      label:'Retail',              href:'retail' },
-      { key:'diseno',    label:'Diseño de tiendas',   href:'retail-diseno-tiendas' },
+      { key:'diseno',    label:'Servicios',           href:'retail-diseno-tiendas' },
       { key:'navidad',   label:'Navidad',             href:'retail-navidad' },
       { key:'proyectos', label:'Proyectos',           href:'retail-proyectos' }
     ]
