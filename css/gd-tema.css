@@ -46,7 +46,7 @@
   .gd-caso, .gd-univ, .gd-shop, .gd-shop-card, .gd-slot, .gd-pieza-thumb.is-slot, .gd-prod-badge,
   .sh-search-overlay, .gd-cta, .gd-light, .gd-ba, .acc-panel, .g-item, .shift-card,
   .gd-manifiesto-media, .ce-stage, .ce-showcase, .pr-media, .hp-media, .px-cta,
-  .rt-serv, .gd-ba-frame, .qs-foto, .gd-nav-foto,
+  .rt-serv, .gd-ba-frame, .qs-foto, .gd-nav-foto, .cx,
   .gd-oscuro
 ){
   --bg:#0A0A09; --bg-raised:#171613; --panel:#1c1a16; --panel-2:#262319; --line:#2a2621;

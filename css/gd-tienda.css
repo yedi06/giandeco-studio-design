@@ -774,3 +774,35 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 .gdt-ops > *{ min-width:0; }
 .gdt-ops.en-fila{ grid-template-columns:repeat(2, minmax(0,1fr)); }
 @media (max-width:379px){ .gdt-ops.en-fila{ grid-template-columns:1fr; } }
+
+/* ==========================================================================
+   FICHA · COMPRA SEGURA PLEGABLE (cerrada por defecto)
+   ========================================================================== */
+.pdp-confianza{ margin:28px 0 0; border:1px solid var(--line); border-radius:2px; background:linear-gradient(180deg, rgba(201,162,74,.05), transparent 60%); transition:border-color .3s ease, background-color .3s ease; }
+.pdp-confianza[open]{ border-color:rgba(201,162,74,.45); }
+.pdp-confianza summary{ display:flex; align-items:center; gap:14px; min-height:64px; padding:12px 16px; cursor:pointer; list-style:none; }
+.pdp-confianza summary::-webkit-details-marker{ display:none; }
+.pdp-confianza summary:hover{ background:rgba(201,162,74,.04); }
+.pdp-confianza summary:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+.pdp-confianza-ico{ flex:none; display:grid; place-items:center; width:36px; height:36px; border-radius:50%; border:1px solid rgba(201,162,74,.45); background:rgba(201,162,74,.08); }
+.pdp-confianza-ico svg{ width:18px; height:18px; stroke:var(--accent); fill:none; stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; }
+.pdp-confianza-t{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+.pdp-confianza-t b{ font-weight:500; font-size:.92rem; color:var(--lino); }
+.pdp-confianza-t small{ font-size:.76rem; color:var(--text-faint); line-height:1.4; }
+.pdp-confianza summary .gdt-logos{ flex:none; gap:4px; }
+.pdp-confianza summary .gdt-logos img{ width:30px; height:19px; }
+.pdp-confianza-mas{ flex:none; position:relative; width:18px; height:18px; }
+.pdp-confianza-mas::before, .pdp-confianza-mas::after{ content:''; position:absolute; left:3px; right:3px; top:50%; height:1px; background:var(--accent); transition:transform .3s var(--gd-ease, ease); }
+.pdp-confianza-mas::after{ transform:rotate(90deg); }
+.pdp-confianza[open] .pdp-confianza-mas::after{ transform:rotate(0deg); }
+.pdp-confianza-in{ padding:4px 16px 18px; animation:pdpAbre .35s var(--gd-ease, ease); }
+@keyframes pdpAbre{ from{ opacity:0; transform:translateY(-6px); } to{ opacity:1; transform:none; } }
+.pdp-confianza .pdp-seg{ margin:0; padding:16px 0 0; }
+.pdp-confianza .pdp-pagos{ margin:18px 0 0; }
+.pdp-confianza .pdp-conf{ margin:16px 0 0; padding-top:16px; }
+/* teléfono: los logos bajan para que el título no se apriete */
+@media (max-width:519px){
+  .pdp-confianza summary{ flex-wrap:wrap; row-gap:10px; }
+  .pdp-confianza summary .gdt-logos{ order:4; flex-basis:100%; padding-left:50px; }
+}
+@media (prefers-reduced-motion: reduce){ .pdp-confianza-in{ animation:none; } .pdp-confianza-mas::before, .pdp-confianza-mas::after{ transition:none; } }
