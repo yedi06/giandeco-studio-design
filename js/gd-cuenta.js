@@ -46,21 +46,21 @@ function tarjeta(){
       '<button type="button" role="tab" data-v="crear" aria-selected="' + (vista === 'crear') + '">Crear cuenta</button><i class="cx-seg-luz" aria-hidden="true"></i></div>' +
       '<button type="button" class="cx-google" id="cxGoogle">' + GOOGLE + '<span>Continuar con Google</span></button>' +
       '<div class="cx-o"><span>o con su correo</span></div>'
-    : '<button type="button" class="cx-atras" data-v="entrar">← Volver</button>';
+    : '';
   var cuerpo = {
     entrar: f('cxCorreo', 'Correo', 'email', 'autocomplete="email" required') + f('cxClave', 'Clave', 'password', 'autocomplete="current-password" required') +
       '<button type="button" class="cx-link" data-v="olvido">¿Olvidó su clave?</button>',
     crear: f('cxNombre', 'Nombre y apellido', 'text', 'autocomplete="name" required') + f('cxCorreo', 'Correo', 'email', 'autocomplete="email" required') +
       f('cxClave', 'Clave · mínimo 8 caracteres', 'password', 'autocomplete="new-password" minlength="8" required') +
       '<div class="cx-fuerza" aria-hidden="true"><i></i><i></i><i></i><i></i></div>',
-    olvido: '<h2 class="cx-t">Recuperar clave</h2><p class="cx-sub">Le enviamos un enlace para crear una nueva.</p>' + f('cxCorreo', 'Correo', 'email', 'autocomplete="email" required'),
-    nueva: '<h2 class="cx-t">Nueva clave</h2>' + f('cxClave', 'Nueva clave · mínimo 8', 'password', 'autocomplete="new-password" minlength="8" required') +
+    olvido: '<p class="cx-sub">Le enviamos un enlace para crear una nueva.</p>' + f('cxCorreo', 'Correo', 'email', 'autocomplete="email" required'),
+    nueva: f('cxClave', 'Nueva clave · mínimo 8', 'password', 'autocomplete="new-password" minlength="8" required') +
       '<div class="cx-fuerza" aria-hidden="true"><i></i><i></i><i></i><i></i></div>' + f('cxClave2', 'Repita la clave', 'password', 'autocomplete="new-password" required'),
     enviado: ''
   }[vista];
   var boton = { entrar:'Entrar', crear:'Crear cuenta', olvido:'Enviar enlace', nueva:'Guardar clave' }[vista];
   if(vista === 'enviado'){
-    return '<div class="cx-enviado"><span class="cx-enviado-ico">' + I.correo + '</span><h2 class="cx-t">Revise su correo</h2><p class="cx-sub">' + esc(aviso || '') + '</p>' +
+    return '<div class="cx-enviado"><span class="cx-enviado-ico">' + I.correo + '</span><p class="cx-sub">' + esc(aviso || '') + '</p>' +
       '<button type="button" class="cx-btn" data-v="entrar"><span>Volver a iniciar sesión</span></button></div>';
   }
   return cab + '<form class="cx-form" id="cxForm" novalidate>' + cuerpo +
@@ -68,11 +68,19 @@ function tarjeta(){
     '<button type="submit" class="cx-btn"><span>' + boton + '</span><i class="cx-giro" aria-hidden="true"></i></button></form>' +
     (vista === 'crear' ? '<p class="cx-legal">Al crear su cuenta acepta los <a href="terminos-y-condiciones">términos</a> y la <a href="politica-de-privacidad">privacidad</a>.</p>' : '');
 }
+/* la lámina de acceso: monograma, título, cota de plano y el formulario, centrados */
+var TITULO = { entrar:'Bienvenido', crear:'Cree su cuenta', olvido:'Recuperar clave', nueva:'Nueva clave', enviado:'Revise su correo' };
 function acceso(){
-  root.innerHTML = '<div class="cx-auth">' +
-    '<div class="cx-intro"><p class="gd-eyebrow">Mi cuenta</p><h1>Su espacio <em>Giandeco</em></h1>' +
-      '<ul class="cx-chips"><li>' + I.pedidos + 'Pedidos</li><li>' + I.favoritos + 'Guardados</li><li>' + I.proyectos + 'Proyectos</li></ul></div>' +
-    '<div class="cx-card" id="cxCard" data-vista="' + vista + '">' + tarjeta() + '</div></div>';
+  document.getElementById('cx').classList.remove('es-panel');
+  root.innerHTML = '<div class="cx-auth"><div class="cx-card" id="cxCard" data-vista="' + vista + '">' +
+    '<span class="cx-cota" aria-hidden="true"><i></i><b>Mi cuenta</b><i></i></span>' +
+    '<span class="cx-esq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>' +
+    '<img class="cx-logo" src="img/logo-dorado.svg" width="300" height="268" alt="Giandeco Studio Design">' +
+    '<h1 class="cx-titulo">' + TITULO[vista] + '</h1><span class="cx-rombo" aria-hidden="true">◆</span>' +
+    (vista === 'olvido' || vista === 'nueva' || vista === 'enviado' ? '' : '') +
+    tarjeta() +
+    (vista === 'olvido' || vista === 'nueva' ? '<button type="button" class="cx-atras" data-v="entrar">← Volver a iniciar sesión</button>' : '') +
+    '</div></div>';
   aviso = null;
 }
 function irA(v, msg){ vista = v; aviso = msg || null; acceso(); var x = root.querySelector('.cx-card input'); if(x) x.focus({ preventScroll:true }); }
@@ -199,6 +207,7 @@ function campo(id, label, attrs, err, val){
 function iniciales(n){ return String(n || '').split(/\s+/).filter(Boolean).slice(0, 2).map(function(x){ return x[0]; }).join('').toUpperCase() || 'G'; }
 
 function panel(s, nota){
+  document.getElementById('cx').classList.add('es-panel');
   var tab = (location.hash || '').slice(1); if(!PANEL[tab]) tab = 'resumen';
   var cuenta = { pedidos:T.pedidos.lista().length, favoritos:T.favs.lista().filter(function(k){ return T.CAT[k]; }).length };
   var conCuenta = !!A.actual();
