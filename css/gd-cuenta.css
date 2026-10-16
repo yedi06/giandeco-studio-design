@@ -241,3 +241,35 @@
   .cx-panel, .cx-giro, .cx-cargando i{ animation:none; }
   .cx-seg-luz, .cx-f::after, .cx-tabs a::after{ transition:none; }
 }
+
+/* ==========================================================================
+   ACCESO CON MENOS LÍNEAS: sin cota, sin escuadras, sin filetes decorativos.
+   Quedan solo las líneas que sirven: la de cada campo y la de la pestaña activa.
+   ========================================================================== */
+.cx-card{ border:none; background:rgba(14,13,11,.92); box-shadow:0 30px 80px -30px rgba(0,0,0,.85); }
+.cx-cota, .cx-esq, .cx-rombo{ display:none; }
+.cx-rotulo{ margin:0 0 6px; font-family:var(--body); font-weight:500; font-size:.64rem; letter-spacing:.28em; text-transform:uppercase; color:#C9A24A; }
+.cx-titulo{ margin-bottom:22px; }
+.cx-seg{ border-bottom:none; gap:6px; margin-bottom:18px; }
+.cx-seg-luz{ left:22%; width:6%; height:2px; bottom:4px; transition:left .45s var(--gd-ease, ease); }
+.cx-card[data-vista="crear"] .cx-seg-luz{ transform:none; left:72%; }
+.cx-o::before, .cx-o::after{ display:none; }
+.cx-o{ justify-content:center; margin:14px 0 2px; }
+.cx-f input{ border-bottom-color:rgba(222,216,203,.16); }
+.cx-link{ border-bottom:none; }
+.cx-link:hover{ text-decoration:underline; text-underline-offset:4px; }
+@media (max-width:599px){ .cx{ padding-top:calc(var(--h-marca, 62px) + 24px); } }
+
+/* campos rellenos, sin líneas; Google sin borde */
+.cx-f input{ height:52px; padding:20px 14px 6px; border:none; border-radius:2px; background:rgba(222,216,203,.06); transition:background-color .25s ease, box-shadow .25s ease; }
+.cx-f.es-clave input{ padding-right:48px; }
+.cx-f span{ left:14px; top:17px; }
+.cx-f input:focus + span, .cx-f input:not(:placeholder-shown) + span{ transform:translateY(-11px) scale(.72); }
+.cx-f input:focus{ background:rgba(222,216,203,.09); box-shadow:inset 0 0 0 1px rgba(201,162,74,.55); }
+.cx-f::after{ display:none; }
+.cx-f.is-mal input{ box-shadow:inset 0 0 0 1px #B05A46; }
+.cx-ojo{ right:4px; top:4px; }
+.cx-form{ gap:10px; }
+.cx-google{ border:none; background:#1c1b19; }
+.cx-google:hover{ background:#262420; }
+.cx-fuerza{ margin-top:0; }
