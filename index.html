@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261015t"></script>
+<script src="js/gd-acceso.js?v=20261016a"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Giandeco Studio Design · Visual merchandising e interiorismo en Lima</title>
 <meta name="description" content="Estudio de diseño comercial en Lima: visual merchandising, diseño de tiendas e interiorismo con producción y montaje propios. Para Zara, El Corte Inglés y Walon.">
-<link rel="stylesheet" href="css/giandeco.css?v=20261015t">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261015t">
+<link rel="stylesheet" href="css/giandeco.css?v=20261016a">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261016a">
 <!-- la portada del hero es el LCP: se pide ya, solo la que corresponde a la pantalla -->
 <link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-mobile.webp" media="(orientation: portrait) and (max-width: 1024px)" fetchpriority="high">
 <link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-desktop.webp" media="(orientation: landscape), (min-width: 1025px)" fetchpriority="high">
@@ -1221,9 +1221,16 @@
 
   /* --- tres universos --- */
   .gd-universos{ padding-top:clamp(48px,7vw,96px); }
-  .gd-univ-head{ max-width:52ch; margin-bottom:var(--sp-40); }
-  .gd-univ-head .gd-h2{ margin-bottom:12px; }
-  .gd-univ-head .gd-body{ margin-bottom:0; }
+  /* el título respira a todo el ancho: una línea en escritorio, dos en el teléfono */
+  .gd-univ-head{ margin-bottom:var(--sp-40); }
+  .gd-univ-head .gd-h2{ margin-bottom:14px; max-width:none; }
+  .gd-univ-head .gd-body{ margin-bottom:0; max-width:60ch; }
+  @media (min-width:900px){
+    .gd-univ-head{ display:grid; grid-template-columns:auto 1fr; column-gap:clamp(40px,5vw,96px); align-items:end; }
+    .gd-univ-head .gd-eyebrow{ grid-column:1 / -1; }
+    .gd-univ-head .gd-h2{ margin-bottom:0; white-space:nowrap; }
+    .gd-univ-head .gd-body{ justify-self:end; text-align:right; max-width:44ch; }
+  }
   .gd-univ-tag{ display:block; font-family:var(--body); font-weight:500; font-size:.64rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:10px; }
   @media (min-width:860px){ .gd-univ--main{ aspect-ratio:4/3.1; } }
   @media (max-width:859px){
@@ -1356,9 +1363,9 @@
     .gd-estudio-foto img{ aspect-ratio:1/1; object-fit:cover; object-position:50% 22%; }
   }
 </style>
-<link rel="stylesheet" href="css/gd-movil.css?v=20261015t">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261015t">
-<script src="js/gd-tema.js?v=20261015t"></script>
+<link rel="stylesheet" href="css/gd-movil.css?v=20261016a">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261016a">
+<script src="js/gd-tema.js?v=20261016a"></script>
 
 <!-- intro de marca: se decide antes de pintar, para que nunca haya un parpadeo del telón -->
 <script>(function(){try{var f=/[?&]intro\b/.test(location.search);if(!f&&sessionStorage.getItem('gdIntro')==='1')return;if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(window.scrollY>40)return;document.documentElement.classList.add('gd-intro-on');}catch(e){}})();</script>
@@ -1420,13 +1427,13 @@
             <span class="gd-univ-more">Ver espacios <i></i></span>
           </div>
         </a>
-        <a class="gd-univ gd-univ--sub reveal-scale d2" href="catalogo" data-cursor="Ver">
+        <a class="gd-univ gd-univ--sub reveal-scale d2" href="catalogo-compra-el-espacio" data-cursor="Ver">
           <img loading="lazy" decoding="async" src="images/espacios/mesa-servida-navidad.jpg" style="object-position:72% 50%;" alt="Comedor ambientado con la colección Navidad 2026 de Giandeco: árbol, farol iluminado y repisas con piezas de temporada">
           <div class="gd-univ-body">
             <span class="gd-univ-tag">Catálogo</span>
-            <h3 class="gd-univ-title">Tienda</h3>
-            <p class="gd-univ-desc">Navidad, mueblería e iluminación con precio.</p>
-            <span class="gd-univ-more">Comprar <i></i></span>
+            <h3 class="gd-univ-title">Espacio</h3>
+            <p class="gd-univ-desc">Ambientes montados con piezas que puede comprar.</p>
+            <span class="gd-univ-more">Comprar el espacio <i></i></span>
           </div>
         </a>
       </div>
@@ -2130,7 +2137,7 @@
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar); else iniciar();
 })();
 </script>
-<script src="js/giandeco.js?v=20261015t"></script>
+<script src="js/giandeco.js?v=20261016a"></script>
 <script>
 /* Home: piezas reales del catálogo en la campaña de Navidad y en la fila de mueblería e iluminación */
 document.addEventListener('DOMContentLoaded', function(){
@@ -2168,6 +2175,6 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 
-<script src="js/gd-tienda.js?v=20261015t" defer></script>
-<script src="js/gd-movil.js?v=20261015t" defer></script>
-<script src="js/gd-chat.js?v=20261015t" defer></script>
+<script src="js/gd-tienda.js?v=20261016a" defer></script>
+<script src="js/gd-movil.js?v=20261016a" defer></script>
+<script src="js/gd-chat.js?v=20261016a" defer></script>
