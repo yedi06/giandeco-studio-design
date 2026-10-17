@@ -516,7 +516,7 @@ function montarPuntos(){
     dots.forEach(function(dot){
       dot.innerHTML = '<b aria-hidden="true"></b><i aria-hidden="true"></i>';
       var key = dot.getAttribute('data-prod');
-      var p = PRODUCTOS[key] || NAVIDAD[key];
+      var p = PRODUCTOS[key] || NAVIDAD[key] || ILUMINACION[key];
       var nombre = p ? p.nombre : (dot.getAttribute('data-nombre') || 'Pieza');
       dot.setAttribute('aria-label', 'Ver ' + nombre);
       dot.setAttribute('type', 'button');
@@ -541,7 +541,7 @@ function montarPuntos(){
 
     function abrir(dot){
       var key = dot.getAttribute('data-prod');
-      var p = PRODUCTOS[key] || NAVIDAD[key];
+      var p = PRODUCTOS[key] || NAVIDAD[key] || ILUMINACION[key];
       var nombre = p ? p.nombre : (dot.getAttribute('data-nombre') || 'Pieza del espacio');
       var cat    = p ? p.cat    : (dot.getAttribute('data-cat') || 'Giandeco');
       var precio = p ? p.precio : (dot.getAttribute('data-precio') || 'Consultar');
