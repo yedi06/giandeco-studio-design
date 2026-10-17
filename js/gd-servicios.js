@@ -15,7 +15,6 @@
      proyectos  slugs de js/gd-proyectos.js donde se hizo este trabajo
      enlaces    [{ label, href }] otras páginas útiles (espacios, catálogo…)
      href       si el servicio ya tiene página propia, la tarjeta lleva ahí
-     gamas      gamas del catálogo a las que pertenece (p. ej. ['navidad'])
    ========================================================================== */
 (function(){
 'use strict';
@@ -26,7 +25,7 @@ var S = [
    intro:'El escaparate es la venta silenciosa: muestra lo que vende su marca y cuenta una historia — un outfit, una escena, una temporada. Trabajamos las dos formas: la vitrina hacia la calle y el display interior.',
    incluye:['Concepto de temporada y guion visual', 'Styling de maniquíes: outfits, capas y accesorios', 'Ángulos de lectura desde el flujo peatonal', 'Utilería, pódiums e iluminación focalizada'],
    proyectos:['walon-figuritas', 'enchantee-paris', 'el-corte-ingles'] },
- { slug:'retail-navidad', linea:'retail', nombre:'Campañas y Navidad', href:'retail-navidad', gamas:['navidad'],
+ { slug:'retail-navidad', linea:'retail', nombre:'Campañas y Navidad', href:'retail-navidad',
    frase:'Navidad y temporadas, replicables en toda la red.',
    portada:{ src:'images/work/pycca.jpg', alt:'Campaña estacional navideña montada en tienda' } },
  { slug:'retail-remodelacion-de-locales', linea:'retail', nombre:'Remodelación de locales',
@@ -58,14 +57,14 @@ var S = [
    incluye:['Paleta de materiales y color', 'Selección de piezas y textiles', 'Curaduría de arte y luz de acento', 'Montaje: dejamos el espacio listo para habitar'],
    proyectos:['convivir-con-el-arte', 'casacor-2025', 'casa-grande'],
    enlaces:[{ label:'Espacios que puede comprar', href:'hogar-espacios' }] },
- { slug:'hogar-mobiliario-a-medida', linea:'hogar', nombre:'Mobiliario a medida', gamas:['muebleria'],
+ { slug:'hogar-mobiliario-a-medida', linea:'hogar', nombre:'Mobiliario a medida',
    frase:'La pieza que el catálogo no resuelve.',
    portada:{ src:'images/proyectos/casagrande-2.jpg', alt:'Ambiente de dormitorio con mobiliario y textiles en piso de venta' },
    intro:'Seleccionamos pieza por pieza y, cuando el catálogo no resuelve, la diseñamos: material, medida y acabado especificados por el estudio, no dejados al criterio del carpintero.',
    incluye:['Pieza diseñada a la medida del espacio', 'Material, medida y acabado especificados', 'Precio y plazo de entrega cerrados', 'Instalación en obra'],
    proyectos:['hotel-union-cusco', 'casa-grande'],
    enlaces:[{ label:'Mueblería con precio', href:'catalogo-muebleria' }] },
- { slug:'hogar-ambientacion-de-temporada', linea:'hogar', nombre:'Ambientación de temporada', gamas:['navidad'],
+ { slug:'hogar-ambientacion-de-temporada', linea:'hogar', nombre:'Ambientación de temporada',
    frase:'Navidad y fechas especiales, montadas en casa.',
    portada:{ src:'images/espacios/mesa-servida-navidad.jpg', alt:'Mesa servida navideña con mantelería, vajilla y centro de mesa' },
    intro:'El mismo montaje de campaña que hacemos en tienda, ambientado para su casa. Se contrata por pieza o completo, y se retira en fecha.',

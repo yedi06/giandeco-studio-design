@@ -312,26 +312,13 @@ function recomendados(max){
   return out;
 }
 
-/* espacios montados por el estudio. Fuente única: la ficha de producto los
-   sugiere por `lineas` y el catálogo global los lista con el resto.
-     lineas  en qué fichas de producto se sugiere el espacio
-     gamas   líneas de producto que aparecen en la escena (según sus puntos)
-     tipo    tipo de espacio · ambito  hogar | retail · piezas  puntos de la escena */
+/* espacios montados por el estudio, como inspiración por línea */
 var ESPACIOS = [
-  { nombre:'Sala de estar · paleta dorada', meta:'Producción Giandeco', img:'images/espacios/zara-sala-1.jpg',        href:'espacio-sala-dorada',      lineas:['muebleria','iluminacion'],
-    alt:'Sala con sofá curvo en lino y mesa de centro dorada', tipo:'Sala', ambito:['hogar'], gamas:['muebleria','iluminacion'], piezas:7 },
-  { nombre:'Comedor de exterior',           meta:'Producción Giandeco', img:'images/espacios/zara-comedor-1.jpg',     href:'espacio-comedor-exterior', lineas:['muebleria'],
-    alt:'Comedor exterior con vajilla artesanal y cristalería turquesa', tipo:'Comedor', ambito:['hogar'], gamas:['muebleria'], piezas:6 },
-  { nombre:'Sala Casacor 2025',             meta:'Feria Casacor 2025',  img:'images/proyectos/casacor-3.jpg',         href:'espacio-casacor',          lineas:['iluminacion','muebleria'],
-    alt:'Sala presentada en Casacor 2025 con cornisa azul y galería de cuadros', tipo:'Sala', ambito:['hogar'], gamas:['muebleria'], piezas:7 },
-  { nombre:'Mesa servida · campaña navideña', meta:'Campaña estacional', img:'images/espacios/zara-navidad-1.jpg?v=2', href:'espacio-mesa-navidena',   lineas:['navidad'],
-    alt:'Mesa servida navideña con árbol decorado y candelabro de plata', tipo:'Comedor', ambito:['hogar'], gamas:['navidad','iluminacion'], piezas:6 },
-  { nombre:'Lounge Mássimo Café',           meta:'Gastronomía',         img:'images/work/massimo.jpg',                href:'espacio-massimo',          lineas:['iluminacion','navidad'],
-    alt:'Muro rojo de cuadros y sofá de terciopelo en Mássimo Café', tipo:'Gastronomía', ambito:['retail'], gamas:['muebleria','iluminacion'], piezas:6 },
-  { nombre:'Bazar Ferrehome',               meta:'Retail',              img:'images/proyectos/ferrehome-1.jpg',       href:'espacio-ferrehome',        lineas:[],
-    alt:'Mesa de bazar Ferrehome con cojines y objetos decorativos', tipo:'Tienda', ambito:['retail'], gamas:[], piezas:7 },
-  { nombre:'Comedor de Navidad',            meta:'Colección Navidad 2026', img:'images/espacios/mesa-servida-navidad.jpg', href:'catalogo-navidad#comedor', lineas:[],
-    alt:'Comedor navideño con aparador, casa de jengibre, cascanueces y renos dorados de la colección 2026', tipo:'Comedor', ambito:['hogar'], gamas:['navidad'], piezas:26 }
+  { nombre:'Sala de estar · paleta dorada', meta:'Producción Giandeco', img:'images/espacios/zara-sala-1.jpg',        href:'espacio-sala-dorada',      lineas:['muebleria','iluminacion'] },
+  { nombre:'Comedor de exterior',           meta:'Producción Giandeco', img:'images/espacios/zara-comedor-1.jpg',     href:'espacio-comedor-exterior', lineas:['muebleria'] },
+  { nombre:'Sala Casacor 2025',             meta:'Feria Casacor 2025',  img:'images/proyectos/casacor-3.jpg',         href:'espacio-casacor',          lineas:['iluminacion','muebleria'] },
+  { nombre:'Mesa servida · campaña navideña', meta:'Campaña estacional', img:'images/espacios/zara-navidad-1.jpg?v=2', href:'espacio-mesa-navidena',   lineas:['navidad'] },
+  { nombre:'Lounge Mássimo Café',           meta:'Gastronomía',         img:'images/work/massimo.jpg',                href:'espacio-massimo',          lineas:['iluminacion','navidad'] }
 ];
 function espaciosDe(key){
   var p = CAT[key]; if(!p) return [];
@@ -648,7 +635,7 @@ function montar(){
 }
 
 window.GD_TIENDA = {
-  CFG:CFG, CAT:CAT, LINEAS:LINEAS, ESPACIOS:ESPACIOS, COND:COND, CRITERIOS:CRITERIOS, ESTADOS:ESTADOS, FLECHA:FLECHA,
+  CFG:CFG, CAT:CAT, LINEAS:LINEAS, COND:COND, CRITERIOS:CRITERIOS, ESTADOS:ESTADOS, FLECHA:FLECHA,
   esc:esc, fmt:fmt, wa:wa, logosPago:logosPago, pagoDirectoHTML:pagoDirectoHTML, url:url, db:db, card:card, NUBE:NUBE, nube:nube, rpc:rpc, uid:uid,
   familia:familia, complementos:complementos, similares:similares, espaciosDe:espaciosDe, recomendados:recomendados,
   carrito:carrito, favs:favs, vistos:vistos, sesion:sesion, pedidos:pedidos, opiniones:opiniones,
