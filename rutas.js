@@ -89,7 +89,7 @@ function rutaProducto(gama, slug){ return 'catalogo/' + gama + '/' + slug; }
 function rutaProyecto(slug){ return 'proyectos/' + slug; }
 /* <base> para que los enlaces relativos valgan a cualquier profundidad.
    En producción es «/»; en el sitio de prueba (github.io/<repo>/) lo corrige el script. */
-var BASE_HTML = "<base href=\"/\"><script>if(/\\.github\\.io$/.test(location.hostname))document.querySelector(\"base\").href=\"/\"+location.pathname.split(\"/\")[1]+\"/\";document.addEventListener(\"click\",function(e){var a=e.target.closest&&e.target.closest(\"a[href^='#']\");if(a&&a.getAttribute(\"href\").length>1){e.preventDefault();location.hash=a.getAttribute(\"href\")}})</script>";
+var BASE_HTML = "<base href=\"/\"><script>if(/\\.github\\.io$/.test(location.hostname))document.querySelector(\"base\").href=\"/\"+location.pathname.split(\"/\")[1]+\"/\";window.addEventListener(\"click\",function(e){if(e.defaultPrevented)return;var a=e.target.closest&&e.target.closest(\"a[href^='#']\");if(a&&a.getAttribute(\"href\").length>1){e.preventDefault();location.hash=a.getAttribute(\"href\")}})</script>";
 
 /* el catálogo (js/giandeco.js) leído desde Node: { muebleria:{clave:pieza}, iluminacion:…, navidad:… } */
 function slug(nombre){ return nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }

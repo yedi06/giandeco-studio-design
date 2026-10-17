@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<base href="/"><script>if(/\.github\.io$/.test(location.hostname))document.querySelector("base").href="/"+location.pathname.split("/")[1]+"/";document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href^='#']");if(a&&a.getAttribute("href").length>1){e.preventDefault();location.hash=a.getAttribute("href")}})</script>
+<base href="/"><script>if(/\.github\.io$/.test(location.hostname))document.querySelector("base").href="/"+location.pathname.split("/")[1]+"/";window.addEventListener("click",function(e){if(e.defaultPrevented)return;var a=e.target.closest&&e.target.closest("a[href^='#']");if(a&&a.getAttribute("href").length>1){e.preventDefault();location.hash=a.getAttribute("href")}})</script>
 <script src="js/gd-acceso.js?v=20261017e"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Iluminación — Catálogo Giandeco Studio Design</title>
@@ -16,7 +16,7 @@
 <meta property="og:title" content="Iluminación — Catálogo Giandeco Studio Design">
 <meta property="og:description" content="Iluminación Giandeco: colgantes individuales, múltiples y lineales con ficha técnica y precio. Envío a todo el Perú.">
 <meta property="og:url" content="https://giandeco.com/catalogo/iluminacion/">
-<meta property="og:image" content="https://giandeco.com/images/iluminacion/amaris-banner.jpg">
+<meta property="og:image" content="https://giandeco.com/images/espacios/zara-sala-1.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <!-- /seo -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,54 +26,48 @@
 <link rel="stylesheet" href="css/gd-tienda.css?v=20261017e">
 <link rel="stylesheet" href="css/gd-movil.css?v=20261017e">
 <link rel="stylesheet" href="css/gd-tema.css?v=20261017e">
+<link rel="stylesheet" href="css/gd-catalogo.css?v=20261017e">
 <script src="js/gd-tema.js?v=20261017e"></script>
-<style>
-  .mb-filtros{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:var(--sp-40); }
-  .mb-filtro{
-    appearance:none; background:none; cursor:pointer; border:1px solid rgba(10,9,6,.16); border-radius:2px;
-    padding:9px 16px; font-family:var(--body); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--grafito); transition:border-color .25s ease, color .25s ease, background-color .25s ease;
-  }
-  .mb-filtro:hover{ border-color:var(--bronce); color:var(--bronce-texto); }
-  .mb-filtro.is-active{ background:var(--ebano); border-color:var(--ebano); color:var(--humo); }
-  .mb-vacio{ color:var(--grafito); font-size:.92rem; }
-</style>
 </head>
 <body data-mundo="catalogo" data-seccion="iluminacion">
 
 <div id="gdHeader"></div>
 
-<section class="gd-hero is-corto">
-  <div class="gd-hero-panel">
-    <p class="gd-hero-eyebrow reveal-left"><i></i>Luz con ficha técnica</p>
-    <h1 class="reveal-left d1">Iluminación</h1>
-    <p class="reveal-left d2">Nueve colgantes con ficha técnica y precio. Individuales, múltiples y lineales — la luz que ya especificamos en obra.</p>
-  </div>
-  <div class="gd-hero-media">
-    <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/iluminacion/amaris-banner.jpg" alt="Lámpara LED Amaris instalada sobre una mesa de comedor"></div>
-    <div class="gd-hero-cap">
-      <span><b>Colgante lineal</b><span>Lámpara LED Amaris</span></span>
-      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+<!-- ==================== BANNER: empieza bajo el header transparente ==================== -->
+<section class="ctb" aria-label="Iluminación Giandeco">
+  <div class="ctb-d">
+    <div class="gd-shop">
+      <img class="gd-shop-img" decoding="async" fetchpriority="high" src="images/campana/iluminacion-2026-1920.webp" srcset="images/campana/iluminacion-2026-1280.webp 1280w, images/campana/iluminacion-2026-1920.webp 1920w, images/campana/iluminacion-2026-2560.webp 2560w" sizes="100vw" width="1920" height="1080" alt="Comedor al anochecer con la lámpara colgante Lara Black de aro LED encendida sobre la mesa Sara de madera">
+      <button class="gd-shop-dot" style="left:70%; top:33%" data-prod="lara"></button>
+      <button class="gd-shop-dot" style="left:70%; top:70%" data-prod="mesa-sara-canela"></button>
     </div>
   </div>
+  <div class="ctb-m">
+    <div class="gd-shop">
+      <img class="gd-shop-img" decoding="async" src="images/campana/iluminacion-movil-2026-780.webp" srcset="images/campana/iluminacion-movil-2026-780.webp 780w, images/campana/iluminacion-movil-2026-1280.webp 1280w" sizes="100vw" width="1280" height="964" alt="Lámpara Lara Black de aro LED encendida sobre la mesa redonda Sara en un comedor de muros verdes">
+      <button class="gd-shop-dot" style="left:51%; top:39%" data-prod="lara"></button>
+      <button class="gd-shop-dot" style="left:51%; top:74%" data-prod="mesa-sara-canela"></button>
+    </div>
+    <p class="ctb-tip">Toque un punto para ver la pieza</p>
+  </div>
+  <div class="ctb-shade"></div>
+  <div class="ctb-txt"><div class="gd-in">
+    <p class="ctb-eyebrow">Iluminación · Luz con ficha técnica</p>
+    <h1>La luz que <em>especificamos en obra</em></h1>
+    <div class="ctb-cta">
+      <a class="gd-btn gd-btn-primary" href="#piezas"><span data-cat-total data-pre="Ver las " data-post=" lámparas">Ver las lámparas</span></a>
+      <a class="gd-btn gd-btn-ghost" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20asesor%C3%ADa%20de%20iluminaci%C3%B3n." target="_blank" rel="noopener">Asesoría de iluminación</a>
+    </div>
+  </div></div>
 </section>
 
-<section class="gd-sec gd-claro">
-  <div class="gd-in">
-    <div class="cl-barra" id="mbBarra"></div>
-    <div class="mb-filtros" id="mbFiltros"></div>
-    <div class="cl-estado" id="mbEstado"></div>
-    <div class="gd-grid" id="mbGrid"></div>
-  </div>
-</section>
+<!-- ==================== CATÁLOGO CON FILTROS (lo arma js/gd-catalogo.js) ==================== -->
+<div id="gdCat" data-linea="iluminacion"></div>
 
 <div id="gdFooter"></div>
 <script src="js/giandeco.js?v=20261017e"></script>
-<script src="js/gd-coleccion.js?v=20261017e"></script>
-<script>
-GD_COLECCION.montar({ datos:window.GD_ILUMINACION, grid:'mbGrid', filtros:'mbFiltros', barra:'mbBarra', estado:'mbEstado', chip:'mb-filtro', vacio:'mb-vacio', tienda:false });
-</script>
 <script src="js/gd-tienda.js?v=20261017e" defer></script>
+<script src="js/gd-catalogo.js?v=20261017e" defer></script>
 <script src="js/gd-movil.js?v=20261017e" defer></script>
 <script src="js/gd-chat.js?v=20261017e" defer></script>
 </body>

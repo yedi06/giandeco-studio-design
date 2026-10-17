@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<base href="/"><script>if(/\.github\.io$/.test(location.hostname))document.querySelector("base").href="/"+location.pathname.split("/")[1]+"/";document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href^='#']");if(a&&a.getAttribute("href").length>1){e.preventDefault();location.hash=a.getAttribute("href")}})</script>
+<base href="/"><script>if(/\.github\.io$/.test(location.hostname))document.querySelector("base").href="/"+location.pathname.split("/")[1]+"/";window.addEventListener("click",function(e){if(e.defaultPrevented)return;var a=e.target.closest&&e.target.closest("a[href^='#']");if(a&&a.getAttribute("href").length>1){e.preventDefault();location.hash=a.getAttribute("href")}})</script>
 <script src="js/gd-acceso.js?v=20261017e"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Navidad — Catálogo Giandeco Studio Design</title>
@@ -16,7 +16,7 @@
 <meta property="og:title" content="Navidad — Catálogo Giandeco Studio Design">
 <meta property="og:description" content="Campaña de Navidad Giandeco: montaje completo para tiendas y casas, más 26 piezas de la colección 2026 con ficha y precio. Envío a todo el Perú.">
 <meta property="og:url" content="https://giandeco.com/catalogo/navidad/">
-<meta property="og:image" content="https://giandeco.com/images/campana/navidad-mosaico.jpg">
+<meta property="og:image" content="https://giandeco.com/images/espacios/zara-sala-1.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <!-- /seo -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,8 +26,11 @@
 <link rel="stylesheet" href="css/gd-tienda.css?v=20261017e">
 <link rel="stylesheet" href="css/gd-movil.css?v=20261017e">
 <link rel="stylesheet" href="css/gd-tema.css?v=20261017e">
+<link rel="stylesheet" href="css/gd-catalogo.css?v=20261017e">
+<link rel="preload" as="image" href="images/campana/navidad-movil-2026-780.webp" media="(max-width: 899px)">
 <script src="js/gd-tema.js?v=20261017e"></script>
 <style>
+  /* secciones conservadas: campaña y comedor con 26 puntos */
   .nv-oferta{ display:grid; gap:var(--sp-24); grid-template-columns:1fr; }
   @media (min-width:720px){ .nv-oferta{ grid-template-columns:1fr 1fr; } }
   @media (min-width:1080px){ .nv-oferta{ grid-template-columns:repeat(4,1fr); } }
@@ -35,44 +38,9 @@
   .nv-card b{ display:block; font-family:var(--body); font-size:.64rem; letter-spacing:.2em; color:var(--accent); margin-bottom:12px; }
   .nv-card h3{ font-family:var(--body); font-weight:500; font-size:1.05rem; color:var(--lino); margin:0 0 8px; }
   .nv-card p{ margin:0; color:var(--text-dim); font-size:.9rem; line-height:1.6; }
-
-  .nv-slots{ display:grid; gap:var(--sp-16); grid-template-columns:repeat(2,1fr); }
-  @media (min-width:720px){ .nv-slots{ grid-template-columns:repeat(3,1fr); } }
-  .nv-slot{
-    position:relative; aspect-ratio:4/5; border-radius:2px; overflow:hidden;
-    border:1px dashed rgba(201,162,74,.35);
-    background:
-      repeating-linear-gradient(90deg, rgba(222,216,203,.05) 0 1px, transparent 1px 22px),
-      radial-gradient(130% 130% at 20% 0%, rgba(201,162,74,.16), transparent 62%),
-      linear-gradient(155deg, #1c1a16, #0A0A09);
-    display:grid; place-items:center; text-align:center; padding:18px;
-  }
-  .nv-slot span{ font-family:var(--body); font-size:.64rem; letter-spacing:.18em; text-transform:uppercase; color:var(--text-faint); line-height:1.8; }
-  .nv-slot b{ display:block; color:var(--accent); font-weight:500; font-size:.8rem; margin-bottom:8px; letter-spacing:.12em; }
   .nv-tiempo{ display:flex; flex-wrap:wrap; gap:10px 24px; margin-top:var(--sp-24); }
   .nv-tiempo div{ font-family:var(--body); font-size:.82rem; color:var(--text-dim); }
   .nv-tiempo b{ color:var(--accent); font-weight:500; }
-
-  /* ============ colección 2026 — catálogo real de piezas ============ */
-  .nv-filtros{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:var(--sp-40); }
-  .nv-filtro{
-    appearance:none; background:none; cursor:pointer; border:1px solid var(--line); border-radius:2px;
-    padding:9px 16px; font-family:var(--body); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--text-dim); transition:border-color .25s ease, color .25s ease, background-color .25s ease;
-  }
-  .nv-filtro:hover{ border-color:var(--accent); color:var(--lino); }
-  .nv-filtro.is-active{ background:var(--accent); border-color:var(--accent); color:var(--ebano); }
-  .nv-vacio{ color:var(--text-dim); font-size:.92rem; }
-  .nv-piezas{ background:var(--bg-raised); color:var(--text); }
-  .nv-piezas .gd-h2{ margin-bottom:var(--sp-24); }
-  .nv-piezas-acc{ margin-top:var(--sp-64); padding-top:var(--sp-40); border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:12px; }
-  /* en el teléfono los filtros se deslizan en una sola fila */
-  @media (max-width:719px){
-    .nv-filtros{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; margin-inline:calc(var(--gd-gut) * -1); padding-inline:var(--gd-gut); margin-bottom:var(--sp-24); }
-    .nv-filtros::-webkit-scrollbar{ display:none; }
-    .nv-filtro{ flex:none; min-height:40px; }
-  }
-  /* comedor de la colección: 26 puntos, más finos; en móvil se recorre deslizando */
   .nv-shop-tip{ display:none; }
   @media (max-width:719px){
     .nv-shop-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; margin-inline:calc(var(--gd-gut) * -1); padding-inline:var(--gd-gut); scrollbar-width:none; }
@@ -86,50 +54,60 @@
 
 <div id="gdHeader"></div>
 
-<section class="gd-hero is-corto">
-  <div class="gd-hero-panel">
-    <p class="gd-hero-eyebrow reveal-left"><i></i>Colección Navidad 2026</p>
-    <h1 class="reveal-left d1">Navidad, <em>pieza por pieza</em></h1>
-    <p class="reveal-left d2">Veintiséis piezas con precio y ficha. Y si lo necesita, el montaje completo de su campaña.</p>
-    <div class="gd-hero-cta reveal-left d3"><a class="gd-btn gd-btn-primary" href="#piezas">Ver las piezas
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-      <a class="gd-btn gd-btn-ghost" href="#campana">Montaje de campaña</a></div>
-  </div>
-  <div class="gd-hero-media">
-    <div class="gd-curtain"><picture>
-      <source media="(max-width: 899px)" srcset="images/campana/navidad-mosaico-movil.jpg" width="1200" height="820">
-      <img decoding="async" fetchpriority="high" class="gd-kb-img" src="images/campana/navidad-mosaico.jpg" width="1470" height="1800" alt="Piezas de la colección Navidad 2026: casa de jengibre, cascanueces musicales, farol de 1.57 m y reno dorado con plato">
-    </picture></div>
-    <div class="gd-hero-cap">
-      <span><b>Colección Navidad 2026</b><span>Piezas reales, con precio</span></span>
-      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+<!-- ==================== BANNER: empieza bajo el header transparente ==================== -->
+<section class="ctb" aria-label="Colección Navidad 2026">
+  <div class="ctb-d">
+    <div class="gd-shop">
+      <img class="gd-shop-img" decoding="async" fetchpriority="high" src="images/campana/navidad-comedor-2026-1920.webp" srcset="images/campana/navidad-comedor-2026-1280.webp 1280w, images/campana/navidad-comedor-2026-1920.webp 1920w, images/campana/navidad-comedor-2026-2560.webp 2560w" sizes="100vw" width="1920" height="1072" alt="Comedor de Navidad ambientado por Giandeco con piezas reales de la colección 2026: portavelas dorados, reno recostado, bombonera casita, casa de jengibre, cascanueces musicales y reno con plato sobre el aparador; farol de 1.24 m y arreglo de pino y berries">
+      <button class="gd-shop-dot" style="left:32.9%; top:39%" data-prod="farol-124"></button>
+      <button class="gd-shop-dot" style="left:39.6%; top:47%" data-prod="portavela-dorado"></button>
+      <button class="gd-shop-dot" style="left:45.6%; top:51.5%" data-prod="reno-recostado"></button>
+      <button class="gd-shop-dot" style="left:51.6%; top:50%" data-prod="bombonera-casita"></button>
+      <button class="gd-shop-dot" style="left:58.1%; top:50%" data-prod="casa-jengibre"></button>
+      <button class="gd-shop-dot" style="left:65%; top:49%" data-prod="cascanueces-musicales"></button>
+      <button class="gd-shop-dot" style="left:71.8%; top:47%" data-prod="reno-de-pie-plato"></button>
+      <button class="gd-shop-dot" style="left:39.1%; top:72%" data-prod="arreglo-pino-berries"></button>
     </div>
   </div>
+  <div class="ctb-m">
+    <div class="gd-shop">
+      <img class="gd-shop-img" decoding="async" src="images/campana/navidad-movil-2026-780.webp" srcset="images/campana/navidad-movil-2026-780.webp 780w, images/campana/navidad-movil-2026-1280.webp 1280w" sizes="100vw" width="1280" height="964" alt="Aparador navideño con bombonera casita, casa de jengibre, cascanueces musicales y reno dorado con plato de la colección Navidad 2026">
+      <button class="gd-shop-dot" style="left:20.4%; top:56%" data-prod="bombonera-casita"></button>
+      <button class="gd-shop-dot" style="left:48.6%; top:49%" data-prod="casa-jengibre"></button>
+      <button class="gd-shop-dot" style="left:71.8%; top:49%" data-prod="cascanueces-musicales"></button>
+      <button class="gd-shop-dot" style="left:89.6%; top:47%" data-prod="reno-de-pie-plato"></button>
+    </div>
+    <p class="ctb-tip">Toque un punto para ver la pieza</p>
+  </div>
+  <div class="ctb-shade"></div>
+  <div class="ctb-txt"><div class="gd-in">
+    <p class="ctb-eyebrow">Colección Navidad 2026</p>
+    <h1>El aparador y la mesa, <em>pieza por pieza</em></h1>
+    <div class="ctb-cta">
+      <a class="gd-btn gd-btn-primary" href="#piezas"><span data-cat-total data-pre="Ver las " data-post=" piezas">Ver las 26 piezas</span></a>
+      <a class="gd-btn gd-btn-ghost" href="#aparador" data-ed-link><span data-ed-total data-pre="Comprar el aparador · ">Comprar el aparador · S/ 510.60</span></a>
+    </div>
+  </div></div>
 </section>
 
+<!-- ==================== CATÁLOGO CON FILTROS (lo arma js/gd-catalogo.js) ==================== -->
+<div id="gdCat" data-linea="navidad"></div>
 
-
-
-<!-- ==================== COLECCIÓN 2026 — PIEZAS CON PRECIO ==================== -->
-<section class="gd-sec nv-piezas" id="piezas">
-  <div class="gd-in">
-    <h2 class="gd-h2 reveal" style="color:var(--lino);">Veintiséis piezas, precio y ficha</h2>
-
-    <div class="cl-barra" id="nvBarra"></div>
-    <div class="nv-filtros" id="nvFiltros" role="group" aria-label="Filtrar por categoría"></div>
-    <div class="cl-estado" id="nvEstado"></div>
-    <div class="gd-grid" id="nvGrid"></div>
-
-    <div class="nv-piezas-acc">
-      <a class="gd-btn gd-btn-primary" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20la%20colecci%C3%B3n%20Navidad%202026%20completa." target="_blank" rel="noopener">Cotizar la colección completa
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-      <a class="gd-btn gd-btn-ghost" href="catalogo/compra-espacio/">Ver otros ambientes</a>
+<!-- bloque editorial que entra en la grilla después de la 8.ª pieza (precios y total salen del catálogo) -->
+<template id="gdCatEditorial">
+  <div id="aparador" class="ctl-ed">
+    <div class="ctl-ed-img"><img loading="lazy" decoding="async" src="images/campana/navidad-comedor-2026-1280.webp" alt="Aparador navideño con seis piezas de la colección 2026"></div>
+    <div class="ctl-ed-body">
+      <p class="ctl-ed-k">Visto en el banner</p>
+      <h2>El aparador completo</h2>
+      <ol data-ed-keys="portavela-dorado,reno-recostado,bombonera-casita,casa-jengibre,cascanueces-musicales,reno-de-pie-plato"></ol>
+      <button type="button" class="gd-btn gd-btn-primary" data-act="set-aparador" data-keys="portavela-dorado,reno-recostado,bombonera-casita,casa-jengibre,cascanueces-musicales,reno-de-pie-plato" data-wa="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20el%20aparador%20completo%20de%20Navidad%202026."><span data-ed-total data-pre="Añadir las 6 piezas · ">Añadir las 6 piezas · S/ 510.60</span></button>
     </div>
   </div>
-</section>
+</template>
 
 <!-- ==================== ESPACIO CON PUNTOS ==================== -->
-<section class="gd-sec" id="comedor">
+<section class="gd-sec" id="comedor" style="border-top:1px solid var(--line);">
   <div class="gd-in">
     <p class="gd-eyebrow reveal">La colección 2026, ambientada</p>
     <h2 class="gd-h2 reveal d1" style="font-size:clamp(1.9rem,3vw,2.4rem);">Comedor de Navidad, pieza por pieza</h2>
@@ -197,11 +175,8 @@
 
 <div id="gdFooter"></div>
 <script src="js/giandeco.js?v=20261017e"></script>
-<script src="js/gd-coleccion.js?v=20261017e"></script>
-<script>
-GD_COLECCION.montar({ datos:window.GD_NAVIDAD, grid:'nvGrid', filtros:'nvFiltros', barra:'nvBarra', estado:'nvEstado', chip:'nv-filtro', vacio:'nv-vacio', tienda:true });
-</script>
 <script src="js/gd-tienda.js?v=20261017e" defer></script>
+<script src="js/gd-catalogo.js?v=20261017e" defer></script>
 <script src="js/gd-movil.js?v=20261017e" defer></script>
 <script src="js/gd-chat.js?v=20261017e" defer></script>
 </body>
