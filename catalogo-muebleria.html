@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261016f"></script>
+<script src="js/gd-acceso.js?v=20261017b"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mueblería — Catálogo Giandeco Studio Design</title>
 <meta name="description" content="Mueblería Giandeco: comedores, roperos, cómodas y centros de TV con ficha técnica y precio. Envío a todo el Perú.">
@@ -21,11 +21,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-movil.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261016f">
-<script src="js/gd-tema.js?v=20261016f"></script>
+<link rel="stylesheet" href="css/giandeco.css?v=20261017b">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261017b">
+<link rel="stylesheet" href="css/gd-movil.css?v=20261017b">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261017b">
+<script src="js/gd-tema.js?v=20261017b"></script>
 <style>
   .mb-filtros{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:var(--sp-40); }
   .mb-filtro{
@@ -63,61 +63,21 @@
 
 <section class="gd-sec gd-claro">
   <div class="gd-in">
-    <div class="mb-filtros reveal" id="mbFiltros"></div>
+    <div class="cl-barra" id="mbBarra"></div>
+    <div class="mb-filtros" id="mbFiltros"></div>
+    <div class="cl-estado" id="mbEstado"></div>
     <div class="gd-grid" id="mbGrid"></div>
   </div>
 </section>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=20261016f"></script>
+<script src="js/giandeco.js?v=20261017b"></script>
+<script src="js/gd-coleccion.js?v=20261017b"></script>
 <script>
-(function(){
-  var P = window.GD_PRODUCTOS || {};
-  var keys = Object.keys(P);
-  var grid = document.getElementById('mbGrid');
-  var filtros = document.getElementById('mbFiltros');
-  if(!grid) return;
-
-  var cats = ['Todo'];
-  keys.forEach(function(k){ if(cats.indexOf(P[k].cat) === -1) cats.push(P[k].cat); });
-
-  filtros.innerHTML = cats.map(function(c, i){
-    return '<button type="button" class="mb-filtro' + (i === 0 ? ' is-active' : '') + '" data-cat="' + c + '">' + c + '</button>';
-  }).join('');
-
-  function pintar(cat){
-    var lista = keys.filter(function(k){ return cat === 'Todo' || P[k].cat === cat; });
-    grid.innerHTML = lista.length ? lista.map(function(k, i){
-      var p = P[k];
-      var d = i < 4 ? '' : (i < 8 ? ' d1' : ' d2');
-      return '<a class="gd-prod reveal' + d + '" href="' + GD_URL(k) + '" data-cursor="Ver">' +
-        '<span class="gd-prod-thumb">' +
-          (p.precio === 'Consultar' ? '<span class="gd-prod-badge">A consultar</span>' : '') +
-          '<img decoding="async" src="' + p.img + '" alt="' + p.nombre + '" loading="lazy">' +
-        '</span>' +
-        '<span class="gd-prod-cat">' + p.cat + '</span>' +
-        '<span class="gd-prod-name">' + p.nombre + '</span>' +
-        '<span class="gd-prod-price">' + p.precio + '</span>' +
-      '</a>';
-    }).join('') : '<p class="mb-vacio">Sin piezas en esta categoría por ahora.</p>';
-    grid.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('is-visible'); });
-  }
-
-  filtros.addEventListener('click', function(e){
-    var b = e.target.closest('.mb-filtro'); if(!b) return;
-    filtros.querySelectorAll('.mb-filtro').forEach(function(x){ x.classList.remove('is-active'); });
-    b.classList.add('is-active');
-    pintar(b.dataset.cat);
-  });
-
-
-  pintar('Todo');
-  var hash = (location.hash || '').replace('#','');
-  if(hash && P[hash]) location.replace(GD_URL(hash));
-})();
+GD_COLECCION.montar({ datos:window.GD_PRODUCTOS, grid:'mbGrid', filtros:'mbFiltros', barra:'mbBarra', estado:'mbEstado', chip:'mb-filtro', vacio:'mb-vacio', tienda:false });
 </script>
-<script src="js/gd-tienda.js?v=20261016f" defer></script>
-<script src="js/gd-movil.js?v=20261016f" defer></script>
-<script src="js/gd-chat.js?v=20261016f" defer></script>
+<script src="js/gd-tienda.js?v=20261017b" defer></script>
+<script src="js/gd-movil.js?v=20261017b" defer></script>
+<script src="js/gd-chat.js?v=20261017b" defer></script>
 </body>
 </html>

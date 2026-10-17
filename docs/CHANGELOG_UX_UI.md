@@ -1,5 +1,13 @@
 # Changelog UX/UI
 
+## 2026-10-17 — Filtros en cada colección y fotos enteras
+
+El catálogo global (yedi06/giandeco-studio-design#11) se revirtió a pedido del cliente (yedi06/giandeco-studio-design#12). En su lugar se mejoró lo que ya existía, sin cambiar el diseño de las páginas:
+
+- `js/gd-coleccion.js`: un solo componente para Navidad, Mueblería e Iluminación (antes, tres scripts casi iguales). Conserva los chips por categoría y las tarjetas de cada página, y suma buscador (sin tildes, por nombre, nota o referencia), precio por tramos (solo si hay más de uno), orden, contador, filtros activos que se quitan uno a uno, «Limpiar», aviso sin resultados y estado en la URL (`?cat=…&q=…&precio=…&orden=…`).
+- Fotos enteras: si una foto de producto no tiene la forma de su marco (las lámparas y muebles son cuadrados; las tarjetas, 4:5), se muestra completa y el espacio sobrante se llena con la misma foto difuminada. Aplica a todas las tarjetas de producto y a la foto principal de la ficha (`encajarFoto` en `js/giandeco.js`).
+- Versión de recursos `20261017b`.
+
 ## 2026-10-16 (tarde) — Páginas de servicio, menos texto, pie compacto
 
 ### Nuevo

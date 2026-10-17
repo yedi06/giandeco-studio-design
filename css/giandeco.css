@@ -1086,3 +1086,12 @@ input[type="checkbox"], input[type="radio"]{ cursor: default; }
 .sv-card:hover .sv-card-txt svg{ transform:translateX(3px); }
 .sv-card:focus-visible{ outline:2px solid var(--accent); outline-offset:4px; }
 @media (max-width:899px){ .sv-grid > .sv-card:last-child:nth-child(odd){ grid-column:1 / -1; } .sv-grid > .sv-card:last-child:nth-child(odd) .pj-card-img{ aspect-ratio:16/9; } }
+
+/* foto entera dentro de su marco (js/giandeco.js, encajarFoto): la pieza no se
+   recorta; el espacio que sobra lo llena la misma foto, difuminada */
+.gd-prod-thumb.es-entera, .pdp-plate.es-entera{ isolation:isolate; }
+.gd-prod-thumb.es-entera::before, .pdp-plate.es-entera::before{
+  content:''; position:absolute; inset:-24px; z-index:-1;
+  background:var(--fondo) center / cover no-repeat; filter:blur(28px) saturate(1.05); opacity:.9;
+}
+.gd-prod-thumb.es-entera img, .pdp-plate.es-entera img{ object-fit:contain; }

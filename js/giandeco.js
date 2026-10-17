@@ -500,6 +500,22 @@ function ampliarFoto(img){
   luz.querySelector('.gd-luz-x').focus();
 }
 window.GD_AMPLIAR = ampliarFoto;   // galerías de proyecto
+
+/* fotos de producto enteras: si la foto no tiene la forma del marco (una
+   lámpara cuadrada en una tarjeta 4:5), se muestra completa y el espacio que
+   sobra se rellena con la misma foto difuminada, en vez de recortarla */
+var MARCOS = '.gd-prod-thumb img, .pdp-plate img';
+function encajarFoto(img){
+  var caja = img.parentElement;
+  if(!caja || !img.naturalWidth || !caja.clientWidth || !caja.clientHeight) return;
+  var r = img.naturalWidth / img.naturalHeight, rc = caja.clientWidth / caja.clientHeight;
+  var entera = Math.abs(r - rc) / rc > 0.04;
+  caja.classList.toggle('es-entera', entera);
+  if(entera) caja.style.setProperty('--fondo', 'url("' + (img.currentSrc || img.src).replace(/"/g, '%22') + '")');
+}
+document.addEventListener('load', function(e){ if(e.target.matches && e.target.matches(MARCOS)) encajarFoto(e.target); }, true);
+document.querySelectorAll(MARCOS).forEach(function(img){ if(img.complete) encajarFoto(img); });
+window.GD_ENCAJAR = encajarFoto;
 function cerrarFoto(){
   var luz = document.getElementById('gdLuz');
   if(!luz || !luz.classList.contains('is-open')) return;

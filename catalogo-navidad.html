@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261016f"></script>
+<script src="js/gd-acceso.js?v=20261017b"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Navidad — Catálogo Giandeco Studio Design</title>
 <meta name="description" content="Campaña de Navidad Giandeco: montaje completo para tiendas y casas, más 26 piezas de la colección 2026 con ficha y precio. Envío a todo el Perú.">
@@ -21,11 +21,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-movil.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261016f">
-<script src="js/gd-tema.js?v=20261016f"></script>
+<link rel="stylesheet" href="css/giandeco.css?v=20261017b">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261017b">
+<link rel="stylesheet" href="css/gd-movil.css?v=20261017b">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261017b">
+<script src="js/gd-tema.js?v=20261017b"></script>
 <style>
   .nv-oferta{ display:grid; gap:var(--sp-24); grid-template-columns:1fr; }
   @media (min-width:720px){ .nv-oferta{ grid-template-columns:1fr 1fr; } }
@@ -115,7 +115,9 @@
   <div class="gd-in">
     <h2 class="gd-h2 reveal" style="color:var(--lino);">Veintiséis piezas, precio y ficha</h2>
 
+    <div class="cl-barra" id="nvBarra"></div>
     <div class="nv-filtros" id="nvFiltros" role="group" aria-label="Filtrar por categoría"></div>
+    <div class="cl-estado" id="nvEstado"></div>
     <div class="gd-grid" id="nvGrid"></div>
 
     <div class="nv-piezas-acc">
@@ -194,53 +196,13 @@
 </section>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=20261016f"></script>
+<script src="js/giandeco.js?v=20261017b"></script>
+<script src="js/gd-coleccion.js?v=20261017b"></script>
 <script>
-(function(){
-  var P = window.GD_NAVIDAD || {};
-  var keys = Object.keys(P);
-  var grid = document.getElementById('nvGrid');
-  var filtros = document.getElementById('nvFiltros');
-  if(!grid) return;
-
-  var cats = ['Todo'];
-  keys.forEach(function(k){ if(cats.indexOf(P[k].cat) === -1) cats.push(P[k].cat); });
-
-  filtros.innerHTML = cats.map(function(c, i){
-    return '<button type="button" class="nv-filtro' + (i === 0 ? ' is-active' : '') + '" data-cat="' + c + '">' + c + '</button>';
-  }).join('');
-
-  function pintar(cat){
-    var lista = keys.filter(function(k){ return cat === 'Todo' || P[k].cat === cat; });
-    var T = window.GD_TIENDA;
-    grid.innerHTML = lista.length ? lista.map(function(k){
-      if(T) return T.card(k);
-      var p = P[k];
-      return '<article class="gdt-card"><a class="gd-prod" href="' + GD_URL(k) + '" data-cursor="Ver">' +
-        '<span class="gd-prod-thumb"><img decoding="async" src="' + p.img + '" alt="' + p.nombre + '" loading="lazy"></span>' +
-        '<span class="gd-prod-cat">' + p.cat + '</span><span class="gd-prod-name">' + p.nombre + '</span><span class="gd-prod-price">' + p.precio + '</span></a></article>';
-    }).join('') : '<p class="nv-vacio">Sin piezas en esta categoría por ahora.</p>';
-    filtros.querySelectorAll('.nv-filtro').forEach(function(x){ var on = x.dataset.cat === cat; x.classList.toggle('is-active', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
-  }
-
-  filtros.addEventListener('click', function(e){
-    var b = e.target.closest('.nv-filtro'); if(!b) return;
-    pintar(b.dataset.cat);
-  });
-
-
-  // la home enlaza por categoría: catalogo-navidad?cat=Jengibre#piezas
-  var pedida = new URLSearchParams(location.search).get('cat');
-  var inicial = cats.indexOf(pedida) !== -1 ? pedida : 'Todo';
-  pintar(inicial);
-  // con la capa de tienda cargada, las tarjetas pasan a las del sistema (añadir a la bolsa, agotado)
-  document.addEventListener('DOMContentLoaded', function(){ var a = filtros.querySelector('.nv-filtro.is-active'); pintar(a ? a.dataset.cat : inicial); });
-  var hash = (location.hash || '').replace('#','');
-  if(hash && P[hash]) location.replace(GD_URL(hash));
-})();
+GD_COLECCION.montar({ datos:window.GD_NAVIDAD, grid:'nvGrid', filtros:'nvFiltros', barra:'nvBarra', estado:'nvEstado', chip:'nv-filtro', vacio:'nv-vacio', tienda:true });
 </script>
-<script src="js/gd-tienda.js?v=20261016f" defer></script>
-<script src="js/gd-movil.js?v=20261016f" defer></script>
-<script src="js/gd-chat.js?v=20261016f" defer></script>
+<script src="js/gd-tienda.js?v=20261017b" defer></script>
+<script src="js/gd-movil.js?v=20261017b" defer></script>
+<script src="js/gd-chat.js?v=20261017b" defer></script>
 </body>
 </html>
