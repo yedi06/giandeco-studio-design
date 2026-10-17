@@ -1,6 +1,6 @@
 /* ==========================================================================
    GIANDECO — COMPONENTES DE PROYECTO
-   Tarjeta, rejilla con filtros, migas y ficha completa. Solo arman HTML a
+   Tarjeta, rejilla con filtros y ficha completa. Solo arman HTML a
    partir de GD_PROYECTOS, así sirven en el navegador (listados) y en Node
    (hacer-proyectos.js escribe las fichas ya renderizadas, buenas para SEO).
    ========================================================================== */
@@ -84,13 +84,6 @@ function rejilla(D, lista, o){
   return filtros + '<div class="pj-grid">' + lista.map(function(p, i){ return card(D, p, { grande:o.destacarPrimero && i === 0, sub:o.sub, usadas:usadas }); }).join('') + '</div>';
 }
 
-/* ---------- migas ---------- */
-function migas(items){
-  return '<nav class="gd-migas pj-migas" aria-label="Ruta">' + items.map(function(it, i){
-    return i === items.length - 1 ? '<span aria-current="page">' + esc(it[0]) + '</span>' : '<a href="' + it[1] + '">' + esc(it[0]) + '</a>';
-  }).join(' / ') + '</nav>';
-}
-
 /* ---------- ficha de proyecto ---------- */
 function ficha(D, p){
   var L = D.LINEAS[p.lineas[0]], portada = p.galeria[0], resto = p.galeria.slice(1);
@@ -101,14 +94,14 @@ function ficha(D, p){
   var h = '';
   // 1. portada
   h += '<section class="pj-hero"><img src="' + esc(portada.src) + '" alt="' + esc(portada.alt) + '" fetchpriority="high" decoding="async">' +
-    '<div class="gd-in pj-hero-txt">' + migas([['Inicio', './'], [L.label, L.href], ['Proyectos', L.proyectos], [p.nombre]]) +
+    '<div class="gd-in pj-hero-txt">' +
       '<p class="gd-eyebrow">' + esc(p.cat) + '</p><h1>' + esc(p.nombre) + '</h1>' + (p.sub ? '<p class="pj-hero-sub">' + esc(p.sub) + '</p>' : '') + '</div></section>';
   // 2. contexto: el encargo, en una frase, y la ficha técnica
   h += '<section class="gd-sec pj-intro"><div class="gd-in pj-intro-grid">' +
     '<div><p class="pj-etq">El encargo</p><p class="pj-lead">' + esc(p.reto) + '</p></div>' +
     '<dl class="pj-datos"><div><dt>Línea</dt><dd>' + p.lineas.map(function(l){ return '<a href="' + D.LINEAS[l].href + '">' + D.LINEAS[l].label + '</a>'; }).join(' · ') + '</dd></div>' +
       '<div><dt>Tipo</dt><dd>' + esc(D.TIPOS[p.tipo]) + '</dd></div>' +
-      (p.navidad ? '<div><dt>Temporada</dt><dd><a href="retail-navidad">Navidad</a></dd></div>' : '') + '</dl></div></section>';
+      (p.navidad ? '<div><dt>Temporada</dt><dd><a href="retail/navidad">Navidad</a></dd></div>' : '') + '</dl></div></section>';
   // 3. galería (si hay más de una foto)
   if(resto.length) h += '<section class="pj-galeria" aria-label="Galería"><div class="gd-in"><div class="pj-gal pj-gal-' + Math.min(resto.length, 3) + '">' +
     resto.map(function(g){ return '<button type="button" class="pj-foto" data-ampliar aria-label="Ampliar: ' + esc(g.alt) + '"><img src="' + esc(g.src) + '" alt="' + esc(g.alt) + '" loading="lazy" decoding="async"></button>'; }).join('') + '</div></div></section>';
@@ -143,7 +136,7 @@ function servicio(D, SV, s){
   var msg = WA + encodeURIComponent('Hola Giandeco, quiero cotizar: ' + s.nombre + '.');
   var h = '';
   h += '<section class="pj-hero"><img src="' + esc(portada.src) + '" alt="' + esc(portada.alt) + '" fetchpriority="high" decoding="async">' +
-    '<div class="gd-in pj-hero-txt">' + migas([['Inicio', './'], [L.label, L.href], [s.nombre]]) +
+    '<div class="gd-in pj-hero-txt">' +
       '<p class="gd-eyebrow">Servicio · ' + esc(L.label) + '</p><h1>' + esc(s.nombre) + '</h1><p class="pj-hero-sub">' + esc(s.frase) + '</p></div></section>';
   h += '<section class="gd-sec pj-intro"><div class="gd-in pj-intro-grid">' +
     '<div><p class="pj-etq">El servicio</p><p class="pj-lead">' + esc(s.intro) + '</p></div>' +
@@ -164,7 +157,7 @@ function tarjetaServicio(SV, s, i, usadas){
     '<span class="sv-card-txt"><b>0' + (i + 1) + '</b><span>' + esc(s.nombre) + '</span>' + FLECHA + '</span></a>';
 }
 
-var API = { esc:esc, vistas:vistas, elegir:elegir, card:card, rejilla:rejilla, migas:migas, ficha:ficha, servicio:servicio, tarjetaServicio:tarjetaServicio };
+var API = { esc:esc, vistas:vistas, elegir:elegir, card:card, rejilla:rejilla, ficha:ficha, servicio:servicio, tarjetaServicio:tarjetaServicio };
 if(typeof module !== 'undefined' && module.exports) module.exports = API;
 if(raiz) raiz.GD_PJ = API;
 

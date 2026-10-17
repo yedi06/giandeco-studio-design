@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261017d"></script>
+<base href="/"><script>if(/\.github\.io$/.test(location.hostname))document.querySelector("base").href="/"+location.pathname.split("/")[1]+"/";document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href^='#']");if(a&&a.getAttribute("href").length>1){e.preventDefault();location.hash=a.getAttribute("href")}})</script>
+<script src="js/gd-acceso.js?v=20261017e"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Giandeco Studio Design · Visual merchandising e interiorismo en Lima</title>
 <meta name="description" content="Estudio de diseño comercial en Lima: visual merchandising, diseño de tiendas e interiorismo con producción y montaje propios. Para Zara, El Corte Inglés y Walon.">
-<link rel="stylesheet" href="css/giandeco.css?v=20261017d">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261017d">
+<link rel="stylesheet" href="css/giandeco.css?v=20261017e">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261017e">
 <!-- la portada del hero es el LCP: se pide ya, solo la que corresponde a la pantalla -->
 <link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-mobile.webp" media="(orientation: portrait) and (max-width: 1024px)" fetchpriority="high">
 <link rel="preload" as="image" type="image/webp" href="images/hero/hero-home-poster-desktop.webp" media="(orientation: landscape), (min-width: 1025px)" fetchpriority="high">
@@ -1363,9 +1364,9 @@
     .gd-estudio-foto img{ aspect-ratio:1/1; object-fit:cover; object-position:50% 22%; }
   }
 </style>
-<link rel="stylesheet" href="css/gd-movil.css?v=20261017d">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261017d">
-<script src="js/gd-tema.js?v=20261017d"></script>
+<link rel="stylesheet" href="css/gd-movil.css?v=20261017e">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261017e">
+<script src="js/gd-tema.js?v=20261017e"></script>
 
 <!-- intro de marca: se decide antes de pintar, para que nunca haya un parpadeo del telón -->
 <script>(function(){try{var f=/[?&]intro\b/.test(location.search);if(!f&&sessionStorage.getItem('gdIntro')==='1')return;if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(window.scrollY>40)return;document.documentElement.classList.add('gd-intro-on');}catch(e){}})();</script>
@@ -1407,7 +1408,7 @@
     </div>
 
     <div class="gd-univ-grid">
-      <a class="gd-univ gd-univ--main reveal-scale" href="retail-proyectos" data-cursor="Ver">
+      <a class="gd-univ gd-univ--main reveal-scale" href="retail/proyectos" data-cursor="Ver">
         <img loading="lazy" decoding="async" src="images/universos/retail.jpg" alt="Isla de exhibición en tienda departamental con maniquíes y piezas escultóricas">
         <div class="gd-univ-body">
           <span class="gd-univ-tag">Retail</span>
@@ -1418,7 +1419,7 @@
       </a>
 
       <div class="gd-univ-col">
-        <a class="gd-univ gd-univ--sub reveal-scale d1" href="hogar-espacios" data-cursor="Ver">
+        <a class="gd-univ gd-univ--sub reveal-scale d1" href="hogar/espacios" data-cursor="Ver">
           <img loading="lazy" decoding="async" src="images/universos/hogar.jpg" alt="Sala de estar con techo azul profundo, zócalo verde oliva y arte de gran formato">
           <div class="gd-univ-body">
             <span class="gd-univ-tag">Hogar</span>
@@ -1427,7 +1428,7 @@
             <span class="gd-univ-more">Ver espacios <i></i></span>
           </div>
         </a>
-        <a class="gd-univ gd-univ--sub reveal-scale d2" href="catalogo-compra-el-espacio" data-cursor="Ver">
+        <a class="gd-univ gd-univ--sub reveal-scale d2" href="catalogo/compra-espacio/" data-cursor="Ver">
           <img loading="lazy" decoding="async" src="images/espacios/mesa-servida-navidad.jpg" style="object-position:72% 50%;" alt="Comedor ambientado con la colección Navidad 2026 de Giandeco: árbol, farol iluminado y repisas con piezas de temporada">
           <div class="gd-univ-body">
             <span class="gd-univ-tag">Catálogo</span>
@@ -1457,14 +1458,14 @@
       <div class="gd-grid es-carrusel" id="navProds"></div>
     </div>
 
-    <a class="gd-nav-foto reveal-scale" href="catalogo-navidad#comedor" data-cursor="Ver">
+    <a class="gd-nav-foto reveal-scale" href="catalogo/navidad/#comedor" data-cursor="Ver">
       <img loading="lazy" decoding="async" src="images/campana/navidad-comedor.jpg" width="1273" height="1500" alt="Comedor navideño ambientado por Giandeco con piezas de la colección 2026: aparador con casa de jengibre, cascanueces, Papá Noel y renos dorados, guirnalda iluminada y velas">
       <span class="gd-nav-foto-cap"><span class="gd-eyebrow">Compre el espacio</span><b>El comedor de la colección</b><span class="gd-nav-foto-mas">Las 26 piezas, en un solo ambiente →</span></span>
     </a>
 
     <div class="gd-nav-acc">
-      <a class="gd-btn gd-btn-primary" href="catalogo-navidad#piezas">Ver toda la colección<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-      <a class="gd-link" href="retail-navidad">Navidad para tiendas: montaje de campaña<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-primary" href="catalogo/navidad/#piezas">Ver toda la colección<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-link" href="retail/navidad">Navidad para tiendas: montaje de campaña<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
     </div>
   </div>
 </section>
@@ -1509,7 +1510,7 @@
         <p class="gd-eyebrow reveal">Método</p>
         <h2 class="gd-h2 reveal d1" style="margin-bottom:12px;">Del boceto a la obra</h2>
         <p class="gd-body reveal d2" style="margin-bottom:0;">Cada proyecto se dibuja en acuarela antes de levantarse. Lo que se aprueba en papel es lo que se monta en obra.</p>
-        <a class="gd-link reveal d2" href="proceso-expodeco" style="margin-top:18px;">Ver un proceso completo<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <a class="gd-link reveal d2" href="proyectos/expodeco-2024" style="margin-top:18px;">Ver un proceso completo<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
       </div>
       <div class="reveal d2" style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
         <div class="gd-ba-tabs" role="tablist" aria-label="Proyectos">
@@ -1603,7 +1604,7 @@
 <!-- ==================== HOGAR ==================== -->
 <section class="gd-sec gd-hogar" id="hogar">
   <div class="gd-in gd-hogar-grid">
-    <a class="gd-hogar-media reveal-scale" href="hogar-espacios" data-cursor="Ver" tabindex="-1" aria-hidden="true">
+    <a class="gd-hogar-media reveal-scale" href="hogar/espacios" data-cursor="Ver" tabindex="-1" aria-hidden="true">
       <img loading="lazy" decoding="async" src="images/espacios/zara-sala-2.jpg" width="640" height="960" alt="">
     </a>
     <div class="gd-hogar-txt">
@@ -1611,8 +1612,8 @@
       <h2 class="gd-h2 reveal d1">Su casa, con el mismo criterio</h2>
       <p class="gd-body reveal d2">Interiorismo residencial: primero el recorrido, después el estilo. Si un ambiente le gusta, compre sus piezas.</p>
       <div class="gd-hogar-acc reveal d3">
-        <a class="gd-btn gd-btn-ghost" href="hogar-espacios">Ver espacios</a>
-        <a class="gd-link" href="catalogo-compra-el-espacio">Compra el espacio<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <a class="gd-btn gd-btn-ghost" href="hogar/espacios">Ver espacios</a>
+        <a class="gd-link" href="catalogo/compra-espacio/">Compra el espacio<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
       </div>
     </div>
   </div>
@@ -1628,7 +1629,7 @@
         <h2 class="gd-h2 reveal d1" style="margin-bottom:12px;">Mueblería e iluminación</h2>
         <p class="gd-body reveal d2" style="margin-bottom:0;">Lo que especificamos en obra, por pieza y con precio.</p>
       </div>
-      <a class="gd-link reveal d2" href="catalogo">
+      <a class="gd-link reveal d2" href="catalogo/">
         Ver todo el catálogo
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
@@ -1742,17 +1743,17 @@
 
   // ---- Pattern 2: build the static editorial grid ----
   var galleryColA = [
-    ['El Corte Inglés', 'Retail departamental', 'images/work/corteingles.jpg', [997, 1080], '50% 35%', 'proyecto-el-corte-ingles'],
-    ['Convivir con el Arte', 'Arte e interiorismo', 'images/work/convivir.jpg', [1200, 1800], '50% 40%', 'proyecto-convivir-con-el-arte'],
-    ['Mássimo Café', 'Gastronomía · concepto', 'images/work/massimo.jpg', [997, 482], '50% 40%', 'proyecto-massimo-cafe'],
-    ['Walon — Figuritas del Barrio', 'Campaña nacional', 'images/work/walonfiguritas.jpg', [997, 1080], '50% 40%', 'proyecto-walon-figuritas'],
-    ['Zara — Sala', 'Visual merchandising · departamento hogar', 'images/work/zarasala.jpg', [960, 640], '50% 45%', 'espacio-sala-dorada']
+    ['El Corte Inglés', 'Retail departamental', 'images/work/corteingles.jpg', [997, 1080], '50% 35%', 'proyectos/el-corte-ingles'],
+    ['Convivir con el Arte', 'Arte e interiorismo', 'images/work/convivir.jpg', [1200, 1800], '50% 40%', 'proyectos/convivir-con-el-arte'],
+    ['Mássimo Café', 'Gastronomía · concepto', 'images/work/massimo.jpg', [997, 482], '50% 40%', 'proyectos/massimo-cafe'],
+    ['Walon — Figuritas del Barrio', 'Campaña nacional', 'images/work/walonfiguritas.jpg', [997, 1080], '50% 40%', 'proyectos/walon-figuritas'],
+    ['Zara — Sala', 'Visual merchandising · departamento hogar', 'images/work/zarasala.jpg', [960, 640], '50% 45%', 'catalogo/compra-espacio/sala-estar']
   ];
   var galleryColB = [
-    ['Pycca Ecuador', 'Campaña estacional', 'images/work/pycca.jpg', [997, 1081], '50% 40%', 'proyecto-pycca-ecuador'],
-    ['Hotel Unión Cusco', 'Hotelería · restaurante', 'images/work/unioncusco.jpg', [997, 548], '50% 45%', 'proyecto-hotel-union-cusco'],
-    ['Enchantée Paris', 'Moda · vitrinismo', 'images/work/enchantee.jpg', [996, 1080], '50% 38%', 'proyecto-enchantee-paris'],
-    ['Baby Club', 'Boutique infantil', 'images/work/babyclub.jpg', [997, 1080], '50% 45%', 'proyecto-baby-club']
+    ['Pycca Ecuador', 'Campaña estacional', 'images/work/pycca.jpg', [997, 1081], '50% 40%', 'proyectos/pycca-ecuador'],
+    ['Hotel Unión Cusco', 'Hotelería · restaurante', 'images/work/unioncusco.jpg', [997, 548], '50% 45%', 'proyectos/hotel-union-cusco'],
+    ['Enchantée Paris', 'Moda · vitrinismo', 'images/work/enchantee.jpg', [996, 1080], '50% 38%', 'proyectos/enchantee-paris'],
+    ['Baby Club', 'Boutique infantil', 'images/work/babyclub.jpg', [997, 1080], '50% 45%', 'proyectos/baby-club']
   ];
 
   function buildGalleryColumn(el, items){
@@ -1791,11 +1792,11 @@
   // esa foto — "Curaduría de objeto" no tiene una categoría propia, así que
   // en el lightbox se queda solo como imagen, sin enlace inventado.
   var shiftItems = [
-    ['Papel mural — instalación en obra', 'images/shift/mural.jpg', '50% 45%', 'proximamente-papel-mural', 'Ver Papel Mural'],
-    ['Expodeco 2024 — stand', 'images/shift/expodeco-stand.jpg', '50% 50%', 'hogar-proyectos', 'Ver el proyecto'],
-    ['Zona de tienda — montaje', 'images/shift/zonatienda.jpg', '50% 40%', 'retail-diseno-tiendas', 'Ver este servicio'],
-    ['Expodeco 2024 — showroom', 'images/shift/expodeco-showroom.jpg', '50% 45%', 'hogar-proyectos', 'Ver el proyecto'],
-    ['Casacor 2025 — detalle de material', 'images/shift/casacor-detalle.jpg', '50% 40%', 'hogar-proyectos', 'Ver el proyecto'],
+    ['Papel mural — instalación en obra', 'images/shift/mural.jpg', '50% 45%', 'catalogo/papel-mural', 'Ver Papel Mural'],
+    ['Expodeco 2024 — stand', 'images/shift/expodeco-stand.jpg', '50% 50%', 'hogar/proyectos', 'Ver el proyecto'],
+    ['Zona de tienda — montaje', 'images/shift/zonatienda.jpg', '50% 40%', 'retail/servicios/', 'Ver este servicio'],
+    ['Expodeco 2024 — showroom', 'images/shift/expodeco-showroom.jpg', '50% 45%', 'hogar/proyectos', 'Ver el proyecto'],
+    ['Casacor 2025 — detalle de material', 'images/shift/casacor-detalle.jpg', '50% 40%', 'hogar/proyectos', 'Ver el proyecto'],
     ['Curaduría de objeto', 'images/shift/detalle-arte.jpg', '45% 55%', null, null]
   ];
   window.shiftItems = shiftItems; // el lightbox (script aparte, al final) lo necesita
@@ -2137,7 +2138,7 @@
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar); else iniciar();
 })();
 </script>
-<script src="js/giandeco.js?v=20261017d"></script>
+<script src="js/giandeco.js?v=20261017e"></script>
 <script>
 /* Home: piezas reales del catálogo en la campaña de Navidad y en la fila de mueblería e iluminación */
 document.addEventListener('DOMContentLoaded', function(){
@@ -2156,7 +2157,7 @@ document.addEventListener('DOMContentLoaded', function(){
     var cats = [];
     navKeys.forEach(function(k){ var c = N[k].cat, f = cats.filter(function(x){ return x[0] === c; })[0]; if(f) f[1]++; else cats.push([c, 1]); });
     chips.innerHTML = cats.map(function(c){
-      return '<a class="gd-nav-chip" href="catalogo-navidad?cat=' + encodeURIComponent(c[0]) + '#piezas">' + T.esc(c[0]) + ' <span>' + c[1] + '</span></a>';
+      return '<a class="gd-nav-chip" href="catalogo/navidad/?cat=' + encodeURIComponent(c[0]) + '#piezas">' + T.esc(c[0]) + ' <span>' + c[1] + '</span></a>';
     }).join('');
   }
   var nav = document.getElementById('navProds');
@@ -2175,6 +2176,6 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 
-<script src="js/gd-tienda.js?v=20261017d" defer></script>
-<script src="js/gd-movil.js?v=20261017d" defer></script>
-<script src="js/gd-chat.js?v=20261017d" defer></script>
+<script src="js/gd-tienda.js?v=20261017e" defer></script>
+<script src="js/gd-movil.js?v=20261017e" defer></script>
+<script src="js/gd-chat.js?v=20261017e" defer></script>

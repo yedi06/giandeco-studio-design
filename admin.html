@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261017d"></script>
+<base href="/"><script>if(/\.github\.io$/.test(location.hostname))document.querySelector("base").href="/"+location.pathname.split("/")[1]+"/";document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href^='#']");if(a&&a.getAttribute("href").length>1){e.preventDefault();location.hash=a.getAttribute("href")}})</script>
+<script src="js/gd-acceso.js?v=20261017e"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Administración — Giandeco Studio Design</title>
 <meta name="robots" content="noindex, nofollow">
@@ -10,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/gd-admin.css?v=20261017d">
+<link rel="stylesheet" href="css/gd-admin.css?v=20261017e">
 </head>
 <!-- data-home evita que giandeco.js monte el header y el footer del sitio -->
 <body data-home="true">
@@ -21,15 +22,15 @@
     <p class="ad-rol">Administración</p>
     <nav class="ad-nav" id="adNav" aria-label="Secciones"></nav>
     <p class="ad-modo"><span id="adQuien"></span><button type="button" id="adRefrescar">Actualizar datos</button><button type="button" id="adSalir">Cerrar sesión</button></p>
-    <a class="ad-salir" href="catalogo" target="_blank">Ver la tienda →</a>
+    <a class="ad-salir" href="catalogo/" target="_blank">Ver la tienda →</a>
   </aside>
   <main class="ad-main" id="adMain"></main>
 </div>
 <div class="ad-aviso" id="adAviso" role="status"></div>
 
-<script src="js/giandeco.js?v=20261017d"></script>
-<script src="js/gd-tienda.js?v=20261017d"></script>
+<script src="js/giandeco.js?v=20261017e"></script>
+<script src="js/gd-tienda.js?v=20261017e"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/gd-admin.js?v=20261017d"></script>
+<script src="js/gd-admin.js?v=20261017e"></script>
 </body>
 </html>

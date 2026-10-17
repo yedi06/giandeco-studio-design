@@ -66,7 +66,7 @@ function tarjeta(){
   return cab + '<form class="cx-form" id="cxForm" novalidate>' + cuerpo +
     '<p class="cx-msg" id="cxMsg" role="alert"' + (aviso ? '' : ' hidden') + '>' + esc(aviso || '') + '</p>' +
     '<button type="submit" class="cx-btn"><span>' + boton + '</span><i class="cx-giro" aria-hidden="true"></i></button></form>' +
-    (vista === 'crear' ? '<p class="cx-legal">Al crear su cuenta acepta los <a href="terminos-y-condiciones">términos</a> y la <a href="politica-de-privacidad">privacidad</a>.</p>' : '');
+    (vista === 'crear' ? '<p class="cx-legal">Al crear su cuenta acepta los <a href="legal/terminos-y-condiciones">términos</a> y la <a href="legal/politica-de-privacidad">privacidad</a>.</p>' : '');
 }
 /* la lámina de acceso: monograma, título, cota de plano y el formulario, centrados */
 var TITULO = { entrar:'Bienvenido', crear:'Cree su cuenta', olvido:'Recuperar clave', nueva:'Nueva clave', enviado:'Revise su correo' };

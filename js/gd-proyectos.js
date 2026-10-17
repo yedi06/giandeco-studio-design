@@ -26,7 +26,7 @@ var TIPOS = {
   tiendas:'Tiendas', campanas:'Campañas', navidad:'Navidad', gastronomia:'Gastronomía y hotelería',
   mobiliario:'Mobiliario y decoración', interiorismo:'Interiorismo', eventos:'Eventos', ferias:'Ferias de diseño'
 };
-var LINEAS = { retail:{ label:'Retail', href:'retail', proyectos:'retail-proyectos' }, hogar:{ label:'Hogar', href:'hogar', proyectos:'hogar-proyectos' } };
+var LINEAS = { retail:{ label:'Retail', href:'retail/', proyectos:'retail/proyectos' }, hogar:{ label:'Hogar', href:'hogar/', proyectos:'hogar/proyectos' } };
 var P = [
  {
   "nombre": "El Corte Inglés",
@@ -164,7 +164,7 @@ var P = [
     "alt": "Exhibición de decoración en Ferrehome"
    }
   ],
-  "espacio": "espacio-ferrehome"
+  "espacio": "catalogo/compra-espacio/bazar-ferrehome"
  },
  {
   "nombre": "Mássimo Café",
@@ -193,7 +193,7 @@ var P = [
     "alt": "Salón de Mássimo Café con concepto Esencia Bohemia"
    }
   ],
-  "espacio": "espacio-massimo"
+  "espacio": "catalogo/compra-espacio/lounge-massimo"
  },
  {
   "nombre": "Hotel Unión Cusco",
@@ -295,7 +295,7 @@ var P = [
    "hogar"
   ],
   "tipo": "eventos",
-  "href": "evento-walon35",
+  "href": "proyectos/walon-35-anos",
   "galeria": [
    {
     "src": "images/proyectos/walon35-salon.jpg",
@@ -346,7 +346,7 @@ var P = [
     "etapa": "Obra terminada"
    }
   ],
-  "espacio": "espacio-casacor"
+  "espacio": "catalogo/compra-espacio/sala-casacor"
  },
  {
   "nombre": "Expodeco 2024",
@@ -360,7 +360,7 @@ var P = [
    "hogar"
   ],
   "tipo": "ferias",
-  "href": "proceso-expodeco",
+  "href": "proyectos/expodeco-2024",
   "galeria": [
    {
     "src": "images/espacios/expodeco-1.jpg",
@@ -370,7 +370,7 @@ var P = [
  }
 ];
 P = P.filter(function(p){ return !p.provisional; });
-function url(p){ return p.href || ('proyecto-' + p.slug); }
+function url(p){ return p.href || ('proyectos/' + p.slug); }
 function de(linea){ return P.filter(function(p){ return p.lineas.indexOf(linea) !== -1; }); }
 /* relacionados: misma línea y mismo tipo primero, luego el resto de la línea */
 function relacionados(p, n){

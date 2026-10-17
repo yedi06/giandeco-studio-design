@@ -10,9 +10,11 @@
    3. Escribe sitemap.xml y robots.txt.
    ========================================================================== */
 'use strict';
-var fs = require('fs');
+var fs = require('fs'), path = require('path');
+var RUTAS = require('./rutas.js');
 
-require('./hacer-proyectos.js');   // primero las fichas de proyecto, para que entren al sitemap
+require('./hacer-proyectos.js');   // primero las fichas de proyecto y de servicio, para que entren al sitemap
+require('./hacer-rutas.js');       // y las redirecciones de las URL antiguas (no entran al sitemap)
 var DOMINIO = 'https://giandeco.com';
 var OG_POR_DEFECTO = 'images/espacios/zara-sala-1.jpg';
 var NO_INDEXAR = ['producto.html', 'checkout.html', 'cuenta.html', 'seguimiento.html', '404.html', 'material-pendiente.html', 'admin.html', 'mantenimiento.html'];
@@ -20,8 +22,20 @@ var NO_INDEXAR = ['producto.html', 'checkout.html', 'cuenta.html', 'seguimiento.
 function leer(f){ return fs.readFileSync(f, 'utf8'); }
 function esc(s){ return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 function abs(ruta){ return DOMINIO + '/' + ruta.replace(/\?.*$/, '').split('/').map(encodeURIComponent).join('/'); }
-/* dirección pública de una página: sin .html */
-function pub(archivo){ return DOMINIO + '/' + archivo.replace(/\.html$/, ''); }
+/* dirección pública de una página a partir de su archivo:
+   catalogo/navidad/index.html -> /catalogo/navidad/ · retail/navidad.html -> /retail/navidad */
+function pub(archivo){ return DOMINIO + '/' + RUTAS.rutaDe(archivo); }
+/* dirección pública de una ruta de rutas.js (con o sin barra final) */
+function pubRuta(ruta){ return DOMINIO + '/' + ruta; }
+/* todos los .html del proyecto escritos a mano o generados (sin respaldos, docs ni dependencias) */
+function recorrer(dir, out){
+  fs.readdirSync(dir || '.', { withFileTypes:true }).forEach(function(e){
+    var p = dir ? dir + '/' + e.name : e.name;
+    if(e.isDirectory()){ if(!/^(node_modules|docs|backend|images|img|css|js|\.git|pruebas)$/.test(e.name)) recorrer(p, out); }
+    else if(/\.html$/.test(e.name)) out.push(p);
+  });
+  return out;
+}
 /* misma regla que GD_URL en js/giandeco.js */
 function ruta(nombre){ return nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
 function num(precio){ var n = parseFloat(String(precio).replace(/[^0-9.]/g, '')); return isNaN(n) ? null : n; }
@@ -34,9 +48,9 @@ function objeto(nombre){
   return (new Function('return ' + m[1]))();
 }
 var LINEAS = [
-  { key:'muebleria',   label:'Mueblería',   href:'catalogo-muebleria.html',   datos:objeto('PRODUCTOS') },
-  { key:'iluminacion', label:'Iluminación', href:'catalogo-iluminacion.html', datos:objeto('ILUMINACION') },
-  { key:'navidad',     label:'Navidad',     href:'catalogo-navidad.html',     datos:objeto('NAVIDAD') }
+  { key:'muebleria',   label:'Mueblería',   href:'catalogo/muebleria/',   datos:objeto('PRODUCTOS') },
+  { key:'iluminacion', label:'Iluminación', href:'catalogo/iluminacion/', datos:objeto('ILUMINACION') },
+  { key:'navidad',     label:'Navidad',     href:'catalogo/navidad/',     datos:objeto('NAVIDAD') }
 ];
 
 /* ---- bloque <!-- seo --> … <!-- /seo --> dentro del <head> ---- */
@@ -66,22 +80,24 @@ var plantilla = leer('producto.html');
 var productos = [];
 // las páginas generadas se reconocen por data-p; se rehacen todas en cada pasada
 function esGenerada(f){ return / data-p="/.test(leer(f)); }
-var fijas = fs.readdirSync('.').filter(function(f){ return /\.html$/.test(f); });
+function esRedireccion(f){ return /data-redireccion/.test(leer(f)); }
+var fijas = recorrer('', []);
 fijas.filter(esGenerada).forEach(function(f){ fs.unlinkSync(f); });
-fijas = fijas.filter(function(f){ return fs.existsSync(f); });
+fijas = fijas.filter(function(f){ return fs.existsSync(f) && !esRedireccion(f); });
 
 LINEAS.forEach(function(L){
   Object.keys(L.datos).forEach(function(k){
-    var p = L.datos[k], archivo = ruta(p.nombre) + '.html', url = pub(archivo), valor = num(p.precio);
+    var p = L.datos[k], slug = ruta(p.nombre), archivo = RUTAS.archivoDe(RUTAS.rutaProducto(L.key, slug)), url = pub(archivo), valor = num(p.precio);
     if(fijas.indexOf(archivo) !== -1 || productos.indexOf(archivo) !== -1) throw new Error('La ruta ' + archivo + ' ya existe: cambie el nombre de la pieza ' + k);
+    fs.mkdirSync(path.dirname(archivo), { recursive:true });
     var titulo = p.nombre + ' — ' + L.label + ' · Giandeco Studio Design';
     var desc = p.nombre + ' · ' + p.cat + ' · ' + p.precio + '. ' + p.nota + ' Envío a todo el Perú.';
     var ld = { '@context':'https://schema.org', '@type':'Product', name:p.nombre, sku:k, category:p.cat, description:p.nota,
                image:[abs(p.img)], brand:{ '@type':'Brand', name:'Giandeco' } };
     if(valor !== null) ld.offers = { '@type':'Offer', priceCurrency:'PEN', price:valor.toFixed(2), url:url, seller:{ '@type':'Organization', name:'Giandeco Studio Design' } };
     var migas = { '@context':'https://schema.org', '@type':'BreadcrumbList', itemListElement:[
-      { '@type':'ListItem', position:1, name:'Catálogo', item:pub('catalogo.html') },
-      { '@type':'ListItem', position:2, name:L.label, item:pub(L.href) },
+      { '@type':'ListItem', position:1, name:'Catálogo', item:pubRuta('catalogo/') },
+      { '@type':'ListItem', position:2, name:L.label, item:pubRuta(L.href) },
       { '@type':'ListItem', position:3, name:p.nombre, item:url }] };
 
     var html = plantilla
@@ -91,7 +107,6 @@ LINEAS.forEach(function(L){
       .replace('<body data-mundo="catalogo" data-seccion="producto">', '<body data-mundo="catalogo" data-seccion="producto" data-p="' + k + '">')
       // contenido legible sin JavaScript; la ficha completa lo reemplaza al cargar
       .replace('<main id="pdp"></main>', '<main id="pdp"><section class="pdp-top"><div class="gd-in">' +
-        '<p class="gd-migas"><a href="catalogo">Catálogo</a> / <a href="' + L.href.replace('.html', '') + '">' + L.label + '</a> / <span>' + esc(p.cat) + '</span></p>' +
         '<h1 class="gd-h1">' + esc(p.nombre) + '</h1><p class="gd-body">' + esc(p.precio) + '</p><p class="gd-body">' + esc(p.nota) + '</p>' +
         '<img src="' + p.img + '" alt="' + esc(p.nombre) + '" width="600"></div></section></main>');
     html = ponerBloque(html, bloque({ url:url, titulo:titulo, desc:desc, img:abs(p.img), tipo:'product', ld:[ld, migas] }));
@@ -119,7 +134,7 @@ fijas.forEach(function(f){
   html = ponerBloque(html, bloque({ url:url, titulo:dato(html, /<title>([\s\S]*?)<\/title>/), desc:dato(html, /<meta name="description" content="([^"]*)"/),
                                     img:abs(img), ld: esHome ? [ORG, SITIO] : [] }));
   fs.writeFileSync(f, html);
-  paginas.push({ f:f, url:url, prio: esHome ? '1.0' : /^(catalogo|retail|hogar)/.test(f) ? '0.8' : /^proyecto-/.test(f) ? '0.7' : '0.5' });
+  paginas.push({ f:f, url:url, prio: esHome ? '1.0' : /^(catalogo|retail|hogar)/.test(f) ? '0.8' : /^proyectos\//.test(f) ? '0.7' : '0.5' });
 });
 
 /* ---- 3. sitemap y robots ---- */

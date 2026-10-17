@@ -13,35 +13,35 @@
    -------------------------------------------------------------------------- */
 var SITIO = {
   retail: {
-    label:'Retail', home:'retail',
+    label:'Retail', home:'retail/',
     secciones:[
-      { key:'home',      label:'Retail',              href:'retail' },
-      { key:'diseno',    label:'Servicios',           href:'retail-diseno-tiendas' },
-      { key:'navidad',   label:'Navidad',             href:'retail-navidad' },
-      { key:'proyectos', label:'Proyectos',           href:'retail-proyectos' }
+      { key:'home',      label:'Retail',              href:'retail/' },
+      { key:'diseno',    label:'Servicios',           href:'retail/servicios/' },
+      { key:'navidad',   label:'Navidad',             href:'retail/navidad' },
+      { key:'proyectos', label:'Proyectos',           href:'retail/proyectos' }
     ]
   },
   hogar: {
-    label:'Hogar', home:'hogar',
+    label:'Hogar', home:'hogar/',
     secciones:[
-      { key:'home',      label:'Hogar',                 href:'hogar' },
-      { key:'diseno',    label:'Interiorismo',          href:'hogar-diseno-interiores' },
-      { key:'proyectos', label:'Proyectos',             href:'hogar-proyectos' },
-      { key:'espacios',  label:'Espacios',              href:'hogar-espacios' }
+      { key:'home',      label:'Hogar',                 href:'hogar/' },
+      { key:'diseno',    label:'Interiorismo',          href:'hogar/interiorismo/' },
+      { key:'proyectos', label:'Proyectos',             href:'hogar/proyectos' },
+      { key:'espacios',  label:'Espacios',              href:'hogar/espacios' }
     ]
   },
   catalogo: {
-    label:'Catálogo', home:'catalogo',
+    label:'Catálogo', home:'catalogo/',
     secciones:[
-      { key:'home',       label:'Catálogo',           href:'catalogo' },
-      { key:'navidad',    label:'Navidad',            href:'catalogo-navidad' },
-      { key:'muebleria',  label:'Mueblería',          href:'catalogo-muebleria' },
-      { key:'iluminacion',label:'Iluminación',        href:'catalogo-iluminacion' },
-      { key:'espacio',    label:'Compra el espacio',  href:'catalogo-compra-el-espacio' }
+      { key:'home',       label:'Catálogo',           href:'catalogo/' },
+      { key:'navidad',    label:'Navidad',            href:'catalogo/navidad/' },
+      { key:'muebleria',  label:'Mueblería',          href:'catalogo/muebleria/' },
+      { key:'iluminacion',label:'Iluminación',        href:'catalogo/iluminacion/' },
+      { key:'espacio',    label:'Compra el espacio',  href:'catalogo/compra-espacio/' }
     ],
     pronto:[
-      { label:'Decoración',  href:'proximamente-decoracion' },
-      { label:'Papel Mural', href:'proximamente-papel-mural' }
+      { label:'Decoración',  href:'catalogo/decoracion' },
+      { label:'Papel Mural', href:'catalogo/papel-mural' }
     ]
   }
 };
@@ -160,14 +160,14 @@ window.GD_NAVIDAD = NAVIDAD;
 
 /* --------------------------------------------------------------------------
    2e. RUTAS DE PRODUCTO
-   Cada pieza vive en una dirección con su nombre: /lampara-led-amaris.
+   Cada pieza vive en una dirección con su gama y su nombre: /catalogo/iluminacion/lampara-led-amaris.
    hacer-seo.js genera esas páginas con la misma regla. Las piezas añadidas
    desde el panel, que aún no tienen página, usan la ficha genérica.
    -------------------------------------------------------------------------- */
 var RUTAS = {};
-[PRODUCTOS, ILUMINACION, NAVIDAD].forEach(function(c){
-  Object.keys(c).forEach(function(k){
-    RUTAS[k] = c[k].nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+[['muebleria', PRODUCTOS], ['iluminacion', ILUMINACION], ['navidad', NAVIDAD]].forEach(function(g){
+  Object.keys(g[1]).forEach(function(k){
+    RUTAS[k] = 'catalogo/' + g[0] + '/' + g[1][k].nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   });
 });
 window.GD_URL = function(k){
@@ -294,8 +294,8 @@ function footerHTML(){
         '<p>Visual merchandising y diseño de espacios comerciales. Remodelamos su local, montamos la campaña y ejecutamos la obra bajo una sola dirección.</p>' +
       '</div>' +
       // el blog sale del menú y queda aquí, junto al resto del estudio
-      col('Estudio', [{ label:'Retail', href:'retail' }, { label:'Navidad para retail', href:'retail-navidad' }, { label:'Hogar', href:'hogar' },
-        { label:'Proyectos', href:'retail-proyectos' }, { label:'Quiénes somos', href:'quienes-somos' }, { label:'Blog', href:'retail-blog' }]) +
+      col('Estudio', [{ label:'Retail', href:'retail/' }, { label:'Navidad para retail', href:'retail/navidad' }, { label:'Hogar', href:'hogar/' },
+        { label:'Proyectos', href:'retail/proyectos' }, { label:'Quiénes somos', href:'quienes-somos' }, { label:'Blog', href:'retail/blog' }]) +
       col('Catálogo', SITIO.catalogo.secciones.map(function(s){ return { label:s.key==='home'?'Ver catálogo':s.label, href:s.href }; })) +
       '<div class="gd-footer-col"><h4>Contacto</h4>' +
         '<ul class="gd-footer-contact">' +
@@ -317,10 +317,10 @@ function footerHTML(){
       '</div>' +
     '</div>' +
     '<nav class="gd-footer-ayuda" aria-label="Ayuda y condiciones">' +
-      [['compra-segura','Compra segura'], ['envios-y-entregas','Envíos y entregas'], ['cambios-y-garantia','Cambios y garantía'],
-       ['preguntas-frecuentes','Preguntas frecuentes'], ['opiniones','Opiniones de clientes'], ['terminos-y-condiciones','Términos y condiciones'],
-       ['politica-de-privacidad','Privacidad']].map(function(l){ return '<a href="' + l[0] + '">' + l[1] + '</a>'; }).join('') +
-      '<a class="gd-footer-libro" href="libro-de-reclamaciones" aria-label="Libro de Reclamaciones">' +
+      [['ayuda/compra-segura','Compra segura'], ['ayuda/envios-y-entregas','Envíos y entregas'], ['ayuda/cambios-y-garantia','Cambios y garantía'],
+       ['ayuda/preguntas-frecuentes','Preguntas frecuentes'], ['ayuda/opiniones','Opiniones de clientes'], ['legal/terminos-y-condiciones','Términos y condiciones'],
+       ['legal/politica-de-privacidad','Privacidad']].map(function(l){ return '<a href="' + l[0] + '">' + l[1] + '</a>'; }).join('') +
+      '<a class="gd-footer-libro" href="legal/libro-de-reclamaciones" aria-label="Libro de Reclamaciones">' +
         '<img src="images/legal/libro-reclamaciones.svg" alt="Libro de Reclamaciones" width="204" height="128" decoding="async"></a>' +
     '</nav>' +
     '<div class="gd-footer-bar">' +
@@ -380,7 +380,7 @@ Object.keys(SITIO).forEach(function(k){
 });
 PAGINAS.forEach(function(p){ INDICE.push({ label:p.label, href:p.href }); });
 // el blog ya no está en el menú, pero se sigue encontrando en la búsqueda
-INDICE.push({ label:'Retail · Blog', href:'retail-blog' }, { label:'Hogar · Blog', href:'hogar-blog' });
+INDICE.push({ label:'Retail · Blog', href:'retail/blog' }, { label:'Hogar · Blog', href:'hogar/blog' });
 [[PRODUCTOS,'Mueblería'],[ILUMINACION,'Iluminación'],[NAVIDAD,'Navidad']].forEach(function(L){
   Object.keys(L[0]).forEach(function(k){
     var p = L[0][k];
@@ -536,6 +536,10 @@ function encajarFoto(img){
 document.addEventListener('load', function(e){ if(e.target.matches && e.target.matches(MARCOS)) encajarFoto(e.target); }, true);
 document.querySelectorAll(MARCOS).forEach(function(img){ if(img.complete) encajarFoto(img); });
 window.GD_ENCAJAR = encajarFoto;
+/* foto de puntos muy ancha: se marca para dar puntos más pequeños en móvil */
+function marcarAncha(img){ var s = img.closest && img.closest('.gd-shop'); if(s && img.naturalWidth) s.classList.toggle('is-ancha', img.naturalWidth / img.naturalHeight >= 1.6); }
+document.addEventListener('load', function(e){ if(e.target.matches && e.target.matches('.gd-shop-img')) marcarAncha(e.target); }, true);
+document.querySelectorAll('.gd-shop-img').forEach(function(img){ if(img.complete) marcarAncha(img); });
 function cerrarFoto(){
   var luz = document.getElementById('gdLuz');
   if(!luz || !luz.classList.contains('is-open')) return;

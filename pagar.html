@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261017d"></script>
+<base href="/"><script>if(/\.github\.io$/.test(location.hostname))document.querySelector("base").href="/"+location.pathname.split("/")[1]+"/";document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href^='#']");if(a&&a.getAttribute("href").length>1){e.preventDefault();location.hash=a.getAttribute("href")}})</script>
+<script src="js/gd-acceso.js?v=20261017e"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pagar mi pedido — Giandeco Studio Design</title>
 <meta name="robots" content="noindex">
@@ -11,10 +12,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261017d">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261017d">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261017d">
-<script src="js/gd-tema.js?v=20261017d"></script>
+<link rel="stylesheet" href="css/giandeco.css?v=20261017e">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261017e">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261017e">
+<script src="js/gd-tema.js?v=20261017e"></script>
 </head>
 <!-- Misma cabecera sobria del checkout: nada que distraiga de pagar. -->
 <body data-home="true" class="co-body">
@@ -28,17 +29,17 @@
 <main class="co-top"><div class="gd-in"><div class="pg" id="pg" aria-live="polite"></div></div></main>
 
 <footer class="co-foot">
-  <a href="compra-segura" target="_blank">Compra segura</a>
-  <a href="envios-y-entregas" target="_blank">Envíos</a>
-  <a href="cambios-y-garantia" target="_blank">Cambios y garantía</a>
-  <a href="terminos-y-condiciones" target="_blank">Términos</a>
-  <a href="politica-de-privacidad" target="_blank">Privacidad</a>
-  <a href="libro-de-reclamaciones" target="_blank">Libro de reclamaciones</a>
+  <a href="ayuda/compra-segura" target="_blank">Compra segura</a>
+  <a href="ayuda/envios-y-entregas" target="_blank">Envíos</a>
+  <a href="ayuda/cambios-y-garantia" target="_blank">Cambios y garantía</a>
+  <a href="legal/terminos-y-condiciones" target="_blank">Términos</a>
+  <a href="legal/politica-de-privacidad" target="_blank">Privacidad</a>
+  <a href="legal/libro-de-reclamaciones" target="_blank">Libro de reclamaciones</a>
 </footer>
 
-<script src="js/giandeco.js?v=20261017d"></script>
-<script src="js/gd-tienda.js?v=20261017d"></script>
-<script src="js/gd-pago.js?v=20261017d"></script>
+<script src="js/giandeco.js?v=20261017e"></script>
+<script src="js/gd-tienda.js?v=20261017e"></script>
+<script src="js/gd-pago.js?v=20261017e"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, P = window.GD_PAGO, esc = T.esc;

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<base href="/"><script>if(/\.github\.io$/.test(location.hostname))document.querySelector("base").href="/"+location.pathname.split("/")[1]+"/";document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href^='#']");if(a&&a.getAttribute("href").length>1){e.preventDefault();location.hash=a.getAttribute("href")}})</script>
+<script src="js/gd-acceso.js?v=20261017e"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Navidad — Catálogo Giandeco Studio Design</title>
+<meta name="description" content="Campaña de Navidad Giandeco: montaje completo para tiendas y casas, más 26 piezas de la colección 2026 con ficha y precio. Envío a todo el Perú.">
+<meta name="theme-color" content="#0A0A09">
+<!-- seo -->
+<link rel="canonical" href="https://giandeco.com/catalogo/navidad/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Giandeco Studio Design">
+<meta property="og:locale" content="es_PE">
+<meta property="og:title" content="Navidad — Catálogo Giandeco Studio Design">
+<meta property="og:description" content="Campaña de Navidad Giandeco: montaje completo para tiendas y casas, más 26 piezas de la colección 2026 con ficha y precio. Envío a todo el Perú.">
+<meta property="og:url" content="https://giandeco.com/catalogo/navidad/">
+<meta property="og:image" content="https://giandeco.com/images/campana/navidad-mosaico.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<!-- /seo -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/giandeco.css?v=20261017e">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261017e">
+<link rel="stylesheet" href="css/gd-movil.css?v=20261017e">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261017e">
+<script src="js/gd-tema.js?v=20261017e"></script>
+<style>
+  .nv-oferta{ display:grid; gap:var(--sp-24); grid-template-columns:1fr; }
+  @media (min-width:720px){ .nv-oferta{ grid-template-columns:1fr 1fr; } }
+  @media (min-width:1080px){ .nv-oferta{ grid-template-columns:repeat(4,1fr); } }
+  .nv-card{ border-top:1px solid var(--line); padding-top:var(--sp-24); }
+  .nv-card b{ display:block; font-family:var(--body); font-size:.64rem; letter-spacing:.2em; color:var(--accent); margin-bottom:12px; }
+  .nv-card h3{ font-family:var(--body); font-weight:500; font-size:1.05rem; color:var(--lino); margin:0 0 8px; }
+  .nv-card p{ margin:0; color:var(--text-dim); font-size:.9rem; line-height:1.6; }
+
+  .nv-slots{ display:grid; gap:var(--sp-16); grid-template-columns:repeat(2,1fr); }
+  @media (min-width:720px){ .nv-slots{ grid-template-columns:repeat(3,1fr); } }
+  .nv-slot{
+    position:relative; aspect-ratio:4/5; border-radius:2px; overflow:hidden;
+    border:1px dashed rgba(201,162,74,.35);
+    background:
+      repeating-linear-gradient(90deg, rgba(222,216,203,.05) 0 1px, transparent 1px 22px),
+      radial-gradient(130% 130% at 20% 0%, rgba(201,162,74,.16), transparent 62%),
+      linear-gradient(155deg, #1c1a16, #0A0A09);
+    display:grid; place-items:center; text-align:center; padding:18px;
+  }
+  .nv-slot span{ font-family:var(--body); font-size:.64rem; letter-spacing:.18em; text-transform:uppercase; color:var(--text-faint); line-height:1.8; }
+  .nv-slot b{ display:block; color:var(--accent); font-weight:500; font-size:.8rem; margin-bottom:8px; letter-spacing:.12em; }
+  .nv-tiempo{ display:flex; flex-wrap:wrap; gap:10px 24px; margin-top:var(--sp-24); }
+  .nv-tiempo div{ font-family:var(--body); font-size:.82rem; color:var(--text-dim); }
+  .nv-tiempo b{ color:var(--accent); font-weight:500; }
+
+  /* ============ colección 2026 — catálogo real de piezas ============ */
+  .nv-filtros{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:var(--sp-40); }
+  .nv-filtro{
+    appearance:none; background:none; cursor:pointer; border:1px solid var(--line); border-radius:2px;
+    padding:9px 16px; font-family:var(--body); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--text-dim); transition:border-color .25s ease, color .25s ease, background-color .25s ease;
+  }
+  .nv-filtro:hover{ border-color:var(--accent); color:var(--lino); }
+  .nv-filtro.is-active{ background:var(--accent); border-color:var(--accent); color:var(--ebano); }
+  .nv-vacio{ color:var(--text-dim); font-size:.92rem; }
+  .nv-piezas{ background:var(--bg-raised); color:var(--text); }
+  .nv-piezas .gd-h2{ margin-bottom:var(--sp-24); }
+  .nv-piezas-acc{ margin-top:var(--sp-64); padding-top:var(--sp-40); border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:12px; }
+  /* en el teléfono los filtros se deslizan en una sola fila */
+  @media (max-width:719px){
+    .nv-filtros{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; margin-inline:calc(var(--gd-gut) * -1); padding-inline:var(--gd-gut); margin-bottom:var(--sp-24); }
+    .nv-filtros::-webkit-scrollbar{ display:none; }
+    .nv-filtro{ flex:none; min-height:40px; }
+  }
+  /* comedor de la colección: 26 puntos, más finos; en móvil se recorre deslizando */
+  .nv-shop-tip{ display:none; }
+  @media (max-width:719px){
+    .nv-shop-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; margin-inline:calc(var(--gd-gut) * -1); padding-inline:var(--gd-gut); scrollbar-width:none; }
+    .nv-shop-wrap::-webkit-scrollbar{ display:none; }
+    .nv-shop{ width:1000px; max-width:none; }
+    .nv-shop-tip{ display:block; margin-top:10px; font-family:var(--body); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint); }
+  }
+</style>
+</head>
+<body data-mundo="catalogo" data-seccion="navidad">
+
+<div id="gdHeader"></div>
+
+<section class="gd-hero is-corto">
+  <div class="gd-hero-panel">
+    <p class="gd-hero-eyebrow reveal-left"><i></i>Colección Navidad 2026</p>
+    <h1 class="reveal-left d1">Navidad, <em>pieza por pieza</em></h1>
+    <p class="reveal-left d2">Veintiséis piezas con precio y ficha. Y si lo necesita, el montaje completo de su campaña.</p>
+    <div class="gd-hero-cta reveal-left d3"><a class="gd-btn gd-btn-primary" href="#piezas">Ver las piezas
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-ghost" href="#campana">Montaje de campaña</a></div>
+  </div>
+  <div class="gd-hero-media">
+    <div class="gd-curtain"><picture>
+      <source media="(max-width: 899px)" srcset="images/campana/navidad-mosaico-movil.jpg" width="1200" height="820">
+      <img decoding="async" fetchpriority="high" class="gd-kb-img" src="images/campana/navidad-mosaico.jpg" width="1470" height="1800" alt="Piezas de la colección Navidad 2026: casa de jengibre, cascanueces musicales, farol de 1.57 m y reno dorado con plato">
+    </picture></div>
+    <div class="gd-hero-cap">
+      <span><b>Colección Navidad 2026</b><span>Piezas reales, con precio</span></span>
+      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- ==================== COLECCIÓN 2026 — PIEZAS CON PRECIO ==================== -->
+<section class="gd-sec nv-piezas" id="piezas">
+  <div class="gd-in">
+    <h2 class="gd-h2 reveal" style="color:var(--lino);">Veintiséis piezas, precio y ficha</h2>
+
+    <div class="cl-barra" id="nvBarra"></div>
+    <div class="nv-filtros" id="nvFiltros" role="group" aria-label="Filtrar por categoría"></div>
+    <div class="cl-estado" id="nvEstado"></div>
+    <div class="gd-grid" id="nvGrid"></div>
+
+    <div class="nv-piezas-acc">
+      <a class="gd-btn gd-btn-primary" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20la%20colecci%C3%B3n%20Navidad%202026%20completa." target="_blank" rel="noopener">Cotizar la colección completa
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="gd-btn gd-btn-ghost" href="catalogo/compra-espacio/">Ver otros ambientes</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ESPACIO CON PUNTOS ==================== -->
+<section class="gd-sec" id="comedor">
+  <div class="gd-in">
+    <p class="gd-eyebrow reveal">La colección 2026, ambientada</p>
+    <h2 class="gd-h2 reveal d1" style="font-size:clamp(1.9rem,3vw,2.4rem);">Comedor de Navidad, pieza por pieza</h2>
+    <p class="gd-body reveal d2">Las veintiséis piezas de la colección en un mismo comedor: mesa, chimenea, aparador y repisa. Toque cada punto para ver la ficha y el precio.</p>
+
+    <div class="nv-shop-wrap reveal-scale" style="margin-top:var(--sp-24);">
+      <div class="gd-shop nv-shop is-fino">
+        <img decoding="async" class="gd-shop-img" src="images/espacios/mesa-servida-navidad.jpg?v=4" width="1920" height="1084" alt="Comedor navideño ambientado por Giandeco con las 26 piezas de la colección Navidad 2026: mesa servida con arreglo de pino y berries, portavelas, renos dorados y taza cascanuez; chimenea con casitas, árbol y muñeco de nieve de porcelana iluminados; aparador con cascanueces, casa de jengibre, Papá Noel y bomboneras; repisa con tren de jengibre y cascanueces; faroles y venados transparentes junto al árbol">
+        <button class="gd-shop-dot" style="left:20.4%; top:28.4%" data-prod="casa-iluminada-pequena"></button>
+        <button class="gd-shop-dot" style="left:16.4%; top:18.0%" data-prod="arbol-iluminado"></button>
+        <button class="gd-shop-dot" style="left:20.3%; top:19.0%" data-prod="muneco-nieve"></button>
+        <button class="gd-shop-dot" style="left:16.3%; top:27.2%" data-prod="casa-iluminada-mediana"></button>
+        <button class="gd-shop-dot" style="left:18.1%; top:37.0%" data-prod="tren-jengibre"></button>
+        <button class="gd-shop-dot" style="left:82.6%; top:27.6%" data-prod="cascanueces-mecedores"></button>
+        <button class="gd-shop-dot" style="left:82.9%; top:18.2%" data-prod="casa-musical"></button>
+        <button class="gd-shop-dot" style="left:73.6%; top:71.6%" data-prod="venado-pequeno"></button>
+        <button class="gd-shop-dot" style="left:60.3%; top:46.2%" data-prod="cascanueces-musicales"></button>
+        <button class="gd-shop-dot" style="left:80.0%; top:71.0%" data-prod="venado-mediano"></button>
+        <button class="gd-shop-dot" style="left:37.4%; top:49.6%" data-prod="bombonera-casita"></button>
+        <button class="gd-shop-dot" style="left:45.9%; top:52.2%" data-prod="reno-recostado"></button>
+        <button class="gd-shop-dot" style="left:40.9%; top:45.2%" data-prod="reno-de-pie"></button>
+        <button class="gd-shop-dot" style="left:94.4%; top:33.5%" data-prod="farol-157"></button>
+        <button class="gd-shop-dot" style="left:50.6%; top:47.0%" data-prod="casa-jengibre"></button>
+        <button class="gd-shop-dot" style="left:82.9%; top:36.0%" data-prod="perritos-cascanueces"></button>
+        <button class="gd-shop-dot" style="left:66.6%; top:46.6%" data-prod="reno-de-pie-plato"></button>
+        <button class="gd-shop-dot" style="left:6.6%; top:45.0%" data-prod="farol-124"></button>
+        <button class="gd-shop-dot" style="left:80.6%; top:46.4%" data-prod="taza-cascanuez"></button>
+        <button class="gd-shop-dot" style="left:55.0%; top:50.2%" data-prod="papa-noel"></button>
+        <button class="gd-shop-dot" style="left:32.9%; top:42.5%" data-prod="portavela-dorado"></button>
+        <button class="gd-shop-dot" style="left:33.1%; top:77.0%" data-prod="portavela-negro"></button>
+        <button class="gd-shop-dot" style="left:18.3%; top:46.0%" data-prod="bombonera-caja-regalo"></button>
+        <button class="gd-shop-dot" style="left:84.6%; top:46.4%" data-prod="taza-cascanuez-roja"></button>
+        <button class="gd-shop-dot" style="left:63.4%; top:52.4%" data-prod="reno-recostado-plato"></button>
+        <button class="gd-shop-dot" style="left:69.4%; top:84.5%" data-prod="arreglo-pino-berries"></button>
+      </div>
+    </div>
+    <p class="nv-shop-tip">Deslice la imagen para recorrer el espacio</p>
+
+  </div>
+</section>
+
+<!-- ==================== QUÉ MONTAMOS ==================== -->
+<section class="gd-sec" id="campana" style="background:var(--bg-raised);">
+  <div class="gd-in">
+    <div class="gd-filete is-left reveal"><span aria-hidden="true">◆</span></div>
+    <p class="gd-eyebrow reveal">Para tiendas y casas · montaje de campaña</p>
+    <h2 class="gd-h2 reveal d1">Cuatro piezas de campaña</h2>
+    <p class="gd-body reveal d2">Se contratan por separado o como campaña completa. En tienda, además, formamos a su equipo para mantenerla durante toda la temporada.</p>
+
+    <div class="nv-oferta" style="margin-top:var(--sp-40);">
+      <div class="nv-card reveal"><b>01</b><h3>Árbol y decoración</h3><p>Árbol curado por paleta, esferas, estrellas y luz cálida. Se instala y se retira en fecha.</p></div>
+      <div class="nv-card reveal d1"><b>02</b><h3>Mesa servida</h3><p>Mantelería, vajilla, cristalería y centro de mesa. El montaje que se fotografía.</p></div>
+      <div class="nv-card reveal d2"><b>03</b><h3>Coronas y accesos</h3><p>Coronas naturales, guirnaldas y recibimiento de entrada para local o vivienda.</p></div>
+      <div class="nv-card reveal d3"><b>04</b><h3>Vitrina de temporada</h3><p>Escaparate navideño completo: concepto, utilería, iluminación y gráfica.</p></div>
+    </div>
+    <div class="nv-tiempo reveal" style="margin-top:var(--sp-40);">
+      <div><b>Reservas:</b> desde septiembre</div>
+      <div><b>Montaje en tienda:</b> octubre – noviembre</div>
+      <div><b>Retiro:</b> primera semana de enero</div>
+    </div>
+
+    <div class="gd-hero-cta" style="margin-top:var(--sp-40);"><a class="gd-btn gd-btn-primary" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20una%20campa%C3%B1a%20de%20Navidad." target="_blank" rel="noopener">Cotizar campaña<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a><a class="gd-btn gd-btn-ghost" href="retail/navidad">Navidad para tiendas</a></div>
+  </div>
+</section>
+
+<div id="gdFooter"></div>
+<script src="js/giandeco.js?v=20261017e"></script>
+<script src="js/gd-coleccion.js?v=20261017e"></script>
+<script>
+GD_COLECCION.montar({ datos:window.GD_NAVIDAD, grid:'nvGrid', filtros:'nvFiltros', barra:'nvBarra', estado:'nvEstado', chip:'nv-filtro', vacio:'nv-vacio', tienda:true });
+</script>
+<script src="js/gd-tienda.js?v=20261017e" defer></script>
+<script src="js/gd-movil.js?v=20261017e" defer></script>
+<script src="js/gd-chat.js?v=20261017e" defer></script>
+</body>
+</html>

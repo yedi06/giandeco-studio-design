@@ -20,10 +20,10 @@
 
 | # | Dónde | Formato | Qué falta | Tipo |
 |---|-------|---------|-----------|------|
-| 1 | `evento-walon35` · momento 03 «El show» | 16:9 | Plano general del show central: pantalla LED con la marca, pista iluminada y mesas en primer plano, desde el fondo del salón. | **Foto real** del evento |
-| 2 | `proceso-expodeco` · resultado, detalle | 4:3 | Primer plano de los paneles de revestimiento y la consola dorada del stand Decopapel. | **Foto real** del stand |
-| 3 | `proyecto-casacor-2025` · proceso, «Obra terminada» | 4:3 | La sala terminada desde **otro ángulo** que la portada: esquina opuesta, con la cornisa azul y la galería de cuadros. | **Foto real** de Casacor |
-| 4 | `retail` · tarjeta «Remodelación de locales» | 4:5 | Imagen propia del servicio (la de hoy se repite con el paso 04 del método). | Se puede generar (ilustrativa) |
+| 1 | `/proyectos/walon-35-anos` · momento 03 «El show» | 16:9 | Plano general del show central: pantalla LED con la marca, pista iluminada y mesas en primer plano, desde el fondo del salón. | **Foto real** del evento |
+| 2 | `/proyectos/expodeco-2024` · resultado, detalle | 4:3 | Primer plano de los paneles de revestimiento y la consola dorada del stand Decopapel. | **Foto real** del stand |
+| 3 | `/proyectos/casacor-2025` · proceso, «Obra terminada» | 4:3 | La sala terminada desde **otro ángulo** que la portada: esquina opuesta, con la cornisa azul y la galería de cuadros. | **Foto real** de Casacor |
+| 4 | `/retail/` · tarjeta «Remodelación de locales» | 4:5 | Imagen propia del servicio (la de hoy se repite con el paso 04 del método). | Se puede generar (ilustrativa) |
 
 **Prompt para Krea (fondo 4):**
 
