@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261017b"></script>
+<script src="js/gd-acceso.js?v=20261017c"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Catálogo — Giandeco Studio Design</title>
 <meta name="description" content="Catálogo Giandeco: colección Navidad, mueblería a medida, iluminación y ambientes completos para comprar pieza por pieza. Lo que especificamos en obra, disponible para su espacio.">
@@ -21,11 +21,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261017b">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261017b">
-<link rel="stylesheet" href="css/gd-movil.css?v=20261017b">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261017b">
-<script src="js/gd-tema.js?v=20261017b"></script>
+<link rel="stylesheet" href="css/giandeco.css?v=20261017c">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261017c">
+<link rel="stylesheet" href="css/gd-movil.css?v=20261017c">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261017c">
+<script src="js/gd-tema.js?v=20261017c"></script>
 <style>
   /* bloque destacado — mismo tratamiento para Navidad, Mueblería y Compra el
      espacio: banner grande + productos reales debajo. .is-flip pasa la foto
@@ -104,9 +104,6 @@
   @media (min-width:960px){ .ce-tab{ width:auto; } }
   .ce-tab:hover{ background:rgba(201,162,74,.06); }
   .ce-tab.is-active{ border-left-color:var(--accent); background:rgba(201,162,74,.09); }
-  .ce-tab-thumb{ width:52px; height:52px; border-radius:2px; overflow:hidden; flex:none; }
-  .ce-tab-thumb img{ width:100%; height:100%; object-fit:cover; filter:saturate(.55) brightness(.7); transition:filter .35s ease, transform .5s ease; }
-  .ce-tab.is-active .ce-tab-thumb img, .ce-tab:hover .ce-tab-thumb img{ filter:none; transform:scale(1.08); }
   .ce-tab-num{ display:block; font-family:var(--display); font-size:.7rem; color:var(--text-faint); margin-bottom:2px; }
   .ce-tab.is-active .ce-tab-num{ color:var(--accent); }
   .ce-tab-name{ display:block; font-family:var(--body); font-weight:500; font-size:.9rem; color:var(--text-dim); line-height:1.28; }
@@ -193,7 +190,7 @@
     <div class="ct-feature is-flip reveal-scale">
       <div class="ct-feature-grid">
         <div class="ct-feature-media gd-curtain">
-          <img decoding="async" class="gd-kb-img" src="images/mobiliario/centro-deluxe-1.webp" alt="Centro de entretenimiento Deluxe Nature en madera con LED integrado">
+          <img decoding="async" class="gd-kb-img" src="images/espacios/zara-sala-2.jpg" alt="Sala con mobiliario de líneas suaves en una sola paleta">
         </div>
         <div class="ct-feature-body">
           <span class="ct-feature-badge is-bronce"><i></i> Catálogo permanente</span>
@@ -304,15 +301,12 @@
         <div>
           <div class="ce-tabs" id="ceTabs">
             <button class="ce-tab is-active" type="button" data-tab="0">
-              <span class="ce-tab-thumb"><img decoding="async" src="images/espacios/zara-navidad-1.jpg?v=2" alt=""></span>
               <span><span class="ce-tab-num">01</span><span class="ce-tab-name">Mesa servida navideña</span><span class="ce-tab-meta">6 piezas</span></span>
             </button>
             <button class="ce-tab" type="button" data-tab="1">
-              <span class="ce-tab-thumb"><img decoding="async" src="images/espacios/zara-sala-1.jpg" alt=""></span>
               <span><span class="ce-tab-num">02</span><span class="ce-tab-name">Sala · paleta dorada</span><span class="ce-tab-meta">7 piezas</span></span>
             </button>
             <button class="ce-tab" type="button" data-tab="2">
-              <span class="ce-tab-thumb"><img decoding="async" src="images/espacios/zara-comedor-1.jpg" alt=""></span>
               <span><span class="ce-tab-num">03</span><span class="ce-tab-name">Comedor de exterior</span><span class="ce-tab-meta">6 piezas</span></span>
             </button>
           </div>
@@ -338,7 +332,7 @@
 </section>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=20261017b"></script>
+<script src="js/giandeco.js?v=20261017c"></script>
 <script>
 (function(){
   var P = window.GD_NAVIDAD || {};
@@ -450,8 +444,8 @@
   });
 })();
 </script>
-<script src="js/gd-tienda.js?v=20261017b" defer></script>
-<script src="js/gd-movil.js?v=20261017b" defer></script>
-<script src="js/gd-chat.js?v=20261017b" defer></script>
+<script src="js/gd-tienda.js?v=20261017c" defer></script>
+<script src="js/gd-movil.js?v=20261017c" defer></script>
+<script src="js/gd-chat.js?v=20261017c" defer></script>
 </body>
 </html>

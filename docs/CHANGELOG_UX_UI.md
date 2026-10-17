@@ -6,7 +6,11 @@ El catálogo global (yedi06/giandeco-studio-design#11) se revirtió a pedido del
 
 - `js/gd-coleccion.js`: un solo componente para Navidad, Mueblería e Iluminación (antes, tres scripts casi iguales). Conserva los chips por categoría y las tarjetas de cada página, y suma buscador (sin tildes, por nombre, nota o referencia), precio por tramos (solo si hay más de uno), orden, contador, filtros activos que se quitan uno a uno, «Limpiar», aviso sin resultados y estado en la URL (`?cat=…&q=…&precio=…&orden=…`).
 - Fotos enteras: si una foto de producto no tiene la forma de su marco (las lámparas y muebles son cuadrados; las tarjetas, 4:5), se muestra completa y el espacio sobrante se llena con la misma foto difuminada. Aplica a todas las tarjetas de producto y a la foto principal de la ficha (`encajarFoto` en `js/giandeco.js`).
-- Versión de recursos `20261017b`.
+- Fotos de producto enteras sobre **fondo liso del color del borde de la propia foto** (no se usa ninguna foto como relleno).
+- **Ninguna foto se repite dentro de una misma página.** Las tarjetas de proyecto y servicio comprueban qué fotos ya se ven (también las que son la misma foto con otro nombre, comparadas por contenido) y, si se repetiría, muestran el **fondo de marca** `.gd-fondo`. Las portadas de Retail y Hogar eligen primero proyectos con foto propia.
+- Servicios con foto propia que estaba sin uso (vitrina, detalle de arte); Mássimo Café suma boceto y obra del lounge; Ferrehome ya no repite Casacor en «otros espacios»; Walon 35, Expodeco, Espacios, Blog retail, Proyectos retail, Interiorismo, Catálogo e Iluminación sin fotos repetidas. Las pestañas del escaparate «Compra el espacio» pierden la miniatura (repetía la foto grande).
+- `docs/PROPUESTA_IMAGENES.md`: qué imagen va en cada fondo, encuadre, formato y prompt para Krea; reglas (proyectos solo con fotos reales; productos nunca como relleno) y la lista de archivos duplicados con otro nombre.
+- Versión de recursos `20261017c`.
 
 ## 2026-10-16 (tarde) — Páginas de servicio, menos texto, pie compacto
 

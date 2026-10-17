@@ -179,6 +179,10 @@ var P = [
   ],
   "tipo": "gastronomia",
   "destacado": true,
+  "proceso": [
+   { "src": "images/proceso/lounge-boceto.jpg", "alt": "Boceto del lounge de Mássimo Café", "etapa": "Boceto del lounge" },
+   { "src": "images/proceso/lounge-obra.jpg", "alt": "Lounge de Mássimo Café terminado, con muro de cuadros y sofá de terciopelo", "etapa": "Lounge terminado" }
+  ],
   "galeria": [
    {
     "src": "images/work/massimo-mezzanine.jpg",

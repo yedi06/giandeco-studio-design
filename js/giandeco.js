@@ -502,16 +502,29 @@ function ampliarFoto(img){
 window.GD_AMPLIAR = ampliarFoto;   // galerías de proyecto
 
 /* fotos de producto enteras: si la foto no tiene la forma del marco (una
-   lámpara cuadrada en una tarjeta 4:5), se muestra completa y el espacio que
-   sobra se rellena con la misma foto difuminada, en vez de recortarla */
+   lámpara cuadrada en una tarjeta 4:5), se muestra completa sobre fondo liso
+   en vez de recortarla */
 var MARCOS = '.gd-prod-thumb img, .pdp-plate img';
+/* el fondo liso toma el color del borde de la foto, para que continúe sin corte */
+function colorDeBorde(img){
+  try{
+    var c = document.createElement('canvas'), n = 12; c.width = c.height = n;
+    var x = c.getContext('2d'); x.drawImage(img, 0, 0, n, n);
+    var d = x.getImageData(0, 0, n, n).data, r = 0, g = 0, b = 0, k = 0;
+    for(var i = 0; i < n; i++) for(var j = 0; j < n; j++){
+      if(i && j && i < n - 1 && j < n - 1) continue;   // solo el contorno
+      var p = (j * n + i) * 4; r += d[p]; g += d[p + 1]; b += d[p + 2]; k++;
+    }
+    return 'rgb(' + Math.round(r / k) + ',' + Math.round(g / k) + ',' + Math.round(b / k) + ')';
+  }catch(e){ return ''; }
+}
 function encajarFoto(img){
   var caja = img.parentElement;
   if(!caja || !img.naturalWidth || !caja.clientWidth || !caja.clientHeight) return;
   var r = img.naturalWidth / img.naturalHeight, rc = caja.clientWidth / caja.clientHeight;
   var entera = Math.abs(r - rc) / rc > 0.04;
   caja.classList.toggle('es-entera', entera);
-  if(entera) caja.style.setProperty('--fondo', 'url("' + (img.currentSrc || img.src).replace(/"/g, '%22') + '")');
+  if(entera) caja.style.backgroundColor = colorDeBorde(img);
 }
 document.addEventListener('load', function(e){ if(e.target.matches && e.target.matches(MARCOS)) encajarFoto(e.target); }, true);
 document.querySelectorAll(MARCOS).forEach(function(img){ if(img.complete) encajarFoto(img); });

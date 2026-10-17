@@ -1088,10 +1088,26 @@ input[type="checkbox"], input[type="radio"]{ cursor: default; }
 @media (max-width:899px){ .sv-grid > .sv-card:last-child:nth-child(odd){ grid-column:1 / -1; } .sv-grid > .sv-card:last-child:nth-child(odd) .pj-card-img{ aspect-ratio:16/9; } }
 
 /* foto entera dentro de su marco (js/giandeco.js, encajarFoto): la pieza no se
-   recorta; el espacio que sobra lo llena la misma foto, difuminada */
-.gd-prod-thumb.es-entera, .pdp-plate.es-entera{ isolation:isolate; }
-.gd-prod-thumb.es-entera::before, .pdp-plate.es-entera::before{
-  content:''; position:absolute; inset:-24px; z-index:-1;
-  background:var(--fondo) center / cover no-repeat; filter:blur(28px) saturate(1.05); opacity:.9;
-}
+   recorta y el espacio que sobra es fondo liso (nunca otra foto de producto) */
+.gd-prod-thumb.es-entera{ background:#fff; }
+.pdp-plate.es-entera{ background:#fff; }
 .gd-prod-thumb.es-entera img, .pdp-plate.es-entera img{ object-fit:contain; }
+
+/* ==========================================================================
+   FONDO EN ESPERA DE FOTO — .gd-fondo
+   Donde una foto se repetiría, va este fondo de marca (ébano, luz bronce y el
+   monograma) hasta que el estudio produzca la imagen propuesta en
+   docs/PROPUESTA_IMAGENES.md. No lleva líneas ni textos internos.
+   ========================================================================== */
+.gd-fondo{ position:absolute; inset:0; display:grid; place-items:center; overflow:hidden;
+  background:
+    radial-gradient(120% 90% at 18% 0%, rgba(201,162,74,.20), transparent 58%),
+    radial-gradient(90% 70% at 100% 100%, rgba(138,111,60,.18), transparent 62%),
+    linear-gradient(160deg, #1d1a15 0%, #0E0D0B 100%); }
+.gd-fondo::before{ content:'G'; font-family:var(--display); font-weight:400; font-size:clamp(64px, 14vw, 150px); line-height:1;
+  color:transparent; background:linear-gradient(170deg, rgba(222,196,140,.42), rgba(201,162,74,.08)); -webkit-background-clip:text; background-clip:text; }
+.gd-fondo::after{ content:''; position:absolute; inset:0;
+  background:repeating-linear-gradient(90deg, rgba(222,216,203,.025) 0 1px, transparent 1px 26px); }
+.pj-card-img .gd-fondo, .gd-esp-thumb .gd-fondo{ border-radius:inherit; }
+.gd-esp-thumb:has(.gd-fondo), .pj-card-img:has(.gd-fondo){ background:#0E0D0B; }
+.pj-foto-fondo{ position:relative; aspect-ratio:4/3; cursor:default; }
