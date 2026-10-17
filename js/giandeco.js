@@ -505,8 +505,15 @@ window.GD_AMPLIAR = ampliarFoto;   // galerías de proyecto
    lámpara cuadrada en una tarjeta 4:5), se muestra completa sobre fondo liso
    en vez de recortarla */
 var MARCOS = '.gd-prod-thumb img, .pdp-plate img';
-/* el fondo liso toma el color del borde de la foto, para que continúe sin corte */
+/* el fondo liso toma el color del borde de la foto, para que continúe sin corte.
+   Se calcula una vez por foto: al volver a pintar una rejilla se reutiliza */
+var COLOR_BORDE = {};
 function colorDeBorde(img){
+  var k = img.currentSrc || img.src;
+  if(k in COLOR_BORDE) return COLOR_BORDE[k];
+  return (COLOR_BORDE[k] = medirBorde(img));
+}
+function medirBorde(img){
   try{
     var c = document.createElement('canvas'), n = 12; c.width = c.height = n;
     var x = c.getContext('2d'); x.drawImage(img, 0, 0, n, n);

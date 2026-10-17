@@ -10,7 +10,8 @@ El catálogo global (yedi06/giandeco-studio-design#11) se revirtió a pedido del
 - **Ninguna foto se repite dentro de una misma página.** Las tarjetas de proyecto y servicio comprueban qué fotos ya se ven (también las que son la misma foto con otro nombre, comparadas por contenido) y, si se repetiría, muestran el **fondo de marca** `.gd-fondo`. Las portadas de Retail y Hogar eligen primero proyectos con foto propia.
 - Servicios con foto propia que estaba sin uso (vitrina, detalle de arte); Mássimo Café suma boceto y obra del lounge; Ferrehome ya no repite Casacor en «otros espacios»; Walon 35, Expodeco, Espacios, Blog retail, Proyectos retail, Interiorismo, Catálogo e Iluminación sin fotos repetidas. Las pestañas del escaparate «Compra el espacio» pierden la miniatura (repetía la foto grande).
 - `docs/PROPUESTA_IMAGENES.md`: qué imagen va en cada fondo, encuadre, formato y prompt para Krea; reglas (proyectos solo con fotos reales; productos nunca como relleno) y la lista de archivos duplicados con otro nombre.
-- Versión de recursos `20261017c`.
+- El color del borde se calcula una vez por foto (al filtrar en móvil, la rejilla tardaba hasta ~0,7 s en redibujarse).
+- Versión de recursos `20261017d`.
 
 ## 2026-10-16 (tarde) — Páginas de servicio, menos texto, pie compacto
 
