@@ -349,9 +349,7 @@ if(!esHome){
    6. INTERACCIONES DEL HEADER
    -------------------------------------------------------------------------- */
 var header = document.getElementById('siteHeader');
-// páginas sin foto de portada (body data-cabecera="solida"): la cabecera es sólida desde el inicio
-var cabeceraSolida = body.getAttribute('data-cabecera') === 'solida';
-function setSolid(){ if(header) header.classList.toggle('is-solid', cabeceraSolida || window.scrollY > 40); }
+function setSolid(){ if(header) header.classList.toggle('is-solid', window.scrollY > 40); }
 setSolid();
 window.addEventListener('scroll', setSolid, { passive:true });
 

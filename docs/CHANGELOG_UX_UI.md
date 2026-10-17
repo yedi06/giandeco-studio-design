@@ -1,24 +1,6 @@
 # Changelog UX/UI
 
-## 2026-10-17 — Catálogo global con filtros
-
-Detalle completo en `docs/CATALOGO.md`.
-
-### Nuevo
-- `/catalogo` pasa a ser el catálogo global: 77 elementos (47 productos, 9 servicios, 14 proyectos, 7 espacios) en una rejilla uniforme, con pestañas por tipo, accesos por gama, buscador, orden, contador, chips de filtros activos y estados de carga, error y vacío.
-- Filtros que dependen del tipo (categoría, ámbito, subcategoría, tipo de intervención, tipo de espacio, precio; disponibilidad y novedades cuando hay datos). Barra lateral en escritorio y panel inferior en móvil.
-- Estado en la URL; al volver de una ficha se conservan filtros y altura.
-- `js/gd-catalogo.js` (motor), `js/gd-catalogo-ui.js` (interfaz) y `pruebas/catalogo.test.js` (18 pruebas).
-
-### Cambiado
-- `ESPACIOS` en `js/gd-tienda.js`: 7 espacios con tipo, ámbito, gamas y piezas (fuente única para la ficha de producto y el catálogo).
-- `js/gd-servicios.js`: campo `gamas`.
-- Cabecera sólida opcional (`data-cabecera="solida"`), usada en el catálogo.
-- Versión de recursos `20261017a`.
-
 ## 2026-10-16 (tarde) — Páginas de servicio, menos texto, pie compacto
-
-Publicado en giandeco.com con yedi06/giandeco-studio-design#10.
 
 ### Nuevo
 - `js/gd-servicios.js`: fuente única de los servicios de Retail y Hogar (textos que ya publicaba el sitio).

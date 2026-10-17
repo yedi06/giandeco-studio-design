@@ -22,7 +22,7 @@ Nivel 4   │         └── Ficha            /proyecto-<slug>         ← nu
           │   │     └── Ficha            /proyecto-<slug>  ·  /evento-walon35  ·  /proceso-expodeco
           │   └── Espacios               /hogar-espacios → /espacio-<nombre>
           │
-          └── Catálogo  /catalogo   (catálogo global: productos, servicios, proyectos y espacios con filtros; ver docs/CATALOGO.md)
+          └── Catálogo  /catalogo
               ├── Navidad                /catalogo-navidad → /<pieza>
               ├── Mueblería              /catalogo-muebleria → /<pieza>
               ├── Iluminación            /catalogo-iluminacion → /<pieza>
