@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261016f"></script>
+<script src="js/gd-acceso.js?v=20261017a"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mueblería — Catálogo Giandeco Studio Design</title>
 <meta name="description" content="Mueblería Giandeco: comedores, roperos, cómodas y centros de TV con ficha técnica y precio. Envío a todo el Perú.">
@@ -15,109 +15,59 @@
 <meta property="og:title" content="Mueblería — Catálogo Giandeco Studio Design">
 <meta property="og:description" content="Mueblería Giandeco: comedores, roperos, cómodas y centros de TV con ficha técnica y precio. Envío a todo el Perú.">
 <meta property="og:url" content="https://giandeco.com/catalogo-muebleria">
-<meta property="og:image" content="https://giandeco.com/images/campana/muebleria-mosaico.jpg">
+<meta property="og:image" content="https://giandeco.com/images/campana/muebleria-2026-1920.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <!-- /seo -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-movil.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261016f">
-<script src="js/gd-tema.js?v=20261016f"></script>
-<style>
-  .mb-filtros{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:var(--sp-40); }
-  .mb-filtro{
-    appearance:none; background:none; cursor:pointer; border:1px solid rgba(10,9,6,.16); border-radius:2px;
-    padding:9px 16px; font-family:var(--body); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--grafito); transition:border-color .25s ease, color .25s ease, background-color .25s ease;
-  }
-  .mb-filtro:hover{ border-color:var(--bronce); color:var(--bronce-texto); }
-  .mb-filtro.is-active{ background:var(--ebano); border-color:var(--ebano); color:var(--humo); }
-  .mb-vacio{ color:var(--grafito); font-size:.92rem; }
-</style>
+<link rel="stylesheet" href="css/giandeco.css?v=20261017a">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261017a">
+<link rel="stylesheet" href="css/gd-movil.css?v=20261017a">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261017a">
+<link rel="stylesheet" href="css/gd-catalogo.css?v=20261017a">
+<script src="js/gd-tema.js?v=20261017a"></script>
 </head>
 <body data-mundo="catalogo" data-seccion="muebleria">
 
 <div id="gdHeader"></div>
 
-<section class="gd-hero is-corto">
-  <div class="gd-hero-panel">
-    <p class="gd-migas reveal-left"><a href="./">Inicio</a> / <a href="catalogo">Catálogo</a> / <span>Mueblería</span></p>
-    <p class="gd-hero-eyebrow reveal-left"><i></i>Especificado, no improvisado</p>
-    <h1 class="reveal-left d1">Mueblería</h1>
-    <p class="reveal-left d2">Doce piezas con ficha técnica y precio. Las mismas que especificamos cuando el catálogo del mercado no exhibe bien el producto.</p>
-  </div>
-  <div class="gd-hero-media">
-    <div class="gd-curtain"><picture>
-      <source media="(max-width: 899px)" srcset="images/campana/muebleria-mosaico-movil.jpg" width="1200" height="820">
-      <img decoding="async" fetchpriority="high" class="gd-kb-img" src="images/campana/muebleria-mosaico.jpg" width="1470" height="1800" alt="Mueblería Giandeco: centro de TV Burnie, cómoda Flow, ropero Bilbao y centro Deluxe Nature">
-    </picture></div>
-    <div class="gd-hero-cap">
-      <span><b>Mueblería Giandeco</b><span>Piezas con ficha y precio</span></span>
-      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
+<!-- ==================== BANNER: empieza bajo el header transparente ==================== -->
+<section class="ctb" aria-label="Mueblería Giandeco">
+  <div class="ctb-d">
+    <div class="gd-shop">
+      <img class="gd-shop-img" decoding="async" fetchpriority="high" src="images/campana/muebleria-2026-1920.webp" srcset="images/campana/muebleria-2026-1280.webp 1280w, images/campana/muebleria-2026-1920.webp 1920w, images/campana/muebleria-2026-2560.webp 2560w" sizes="100vw" width="1920" height="1080" alt="Sala comedor ambientada con el centro de TV Burnie en madera y el comedor City de mesa ovalada con sillas tapizadas">
+      <button class="gd-shop-dot" style="left:58%; top:45%" data-prod="centro-burnie"></button>
+      <button class="gd-shop-dot" style="left:80%; top:68%" data-prod="comedor-city180"></button>
     </div>
   </div>
+  <div class="ctb-m">
+    <div class="gd-shop">
+      <img class="gd-shop-img" decoding="async" src="images/campana/muebleria-movil-2026-780.webp" srcset="images/campana/muebleria-movil-2026-780.webp 780w, images/campana/muebleria-movil-2026-1280.webp 1280w" sizes="100vw" width="1280" height="964" alt="Centro de TV Burnie y comedor City de mesa ovalada en una sala comedor de muros verde oliva">
+      <button class="gd-shop-dot" style="left:26%; top:50%" data-prod="centro-burnie"></button>
+      <button class="gd-shop-dot" style="left:77%; top:72%" data-prod="comedor-city180"></button>
+    </div>
+    <p class="ctb-tip">Toque un punto para ver la pieza</p>
+  </div>
+  <div class="ctb-shade"></div>
+  <div class="ctb-txt"><div class="gd-in">
+    <p class="ctb-eyebrow">Mueblería · Catálogo permanente</p>
+    <h1>Muebles con ficha, <em>listos para su espacio</em></h1>
+    <div class="ctb-cta">
+      <a class="gd-btn gd-btn-primary" href="#piezas"><span data-cat-total data-pre="Ver las " data-post=" piezas">Ver las piezas</span></a>
+      <a class="gd-btn gd-btn-ghost" href="https://wa.me/51920775559?text=Hola%20Giandeco%2C%20quiero%20cotizar%20muebles%20a%20medida." target="_blank" rel="noopener">Cotizar a medida</a>
+    </div>
+  </div></div>
 </section>
 
-<section class="gd-sec gd-claro">
-  <div class="gd-in">
-    <div class="mb-filtros reveal" id="mbFiltros"></div>
-    <div class="gd-grid" id="mbGrid"></div>
-  </div>
-</section>
+<!-- ==================== CATÁLOGO CON FILTROS (lo arma js/gd-catalogo.js) ==================== -->
+<div id="gdCat" data-linea="muebleria"></div>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=20261016f"></script>
-<script>
-(function(){
-  var P = window.GD_PRODUCTOS || {};
-  var keys = Object.keys(P);
-  var grid = document.getElementById('mbGrid');
-  var filtros = document.getElementById('mbFiltros');
-  if(!grid) return;
-
-  var cats = ['Todo'];
-  keys.forEach(function(k){ if(cats.indexOf(P[k].cat) === -1) cats.push(P[k].cat); });
-
-  filtros.innerHTML = cats.map(function(c, i){
-    return '<button type="button" class="mb-filtro' + (i === 0 ? ' is-active' : '') + '" data-cat="' + c + '">' + c + '</button>';
-  }).join('');
-
-  function pintar(cat){
-    var lista = keys.filter(function(k){ return cat === 'Todo' || P[k].cat === cat; });
-    grid.innerHTML = lista.length ? lista.map(function(k, i){
-      var p = P[k];
-      var d = i < 4 ? '' : (i < 8 ? ' d1' : ' d2');
-      return '<a class="gd-prod reveal' + d + '" href="' + GD_URL(k) + '" data-cursor="Ver">' +
-        '<span class="gd-prod-thumb">' +
-          (p.precio === 'Consultar' ? '<span class="gd-prod-badge">A consultar</span>' : '') +
-          '<img decoding="async" src="' + p.img + '" alt="' + p.nombre + '" loading="lazy">' +
-        '</span>' +
-        '<span class="gd-prod-cat">' + p.cat + '</span>' +
-        '<span class="gd-prod-name">' + p.nombre + '</span>' +
-        '<span class="gd-prod-price">' + p.precio + '</span>' +
-      '</a>';
-    }).join('') : '<p class="mb-vacio">Sin piezas en esta categoría por ahora.</p>';
-    grid.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('is-visible'); });
-  }
-
-  filtros.addEventListener('click', function(e){
-    var b = e.target.closest('.mb-filtro'); if(!b) return;
-    filtros.querySelectorAll('.mb-filtro').forEach(function(x){ x.classList.remove('is-active'); });
-    b.classList.add('is-active');
-    pintar(b.dataset.cat);
-  });
-
-
-  pintar('Todo');
-  var hash = (location.hash || '').replace('#','');
-  if(hash && P[hash]) location.replace(GD_URL(hash));
-})();
-</script>
-<script src="js/gd-tienda.js?v=20261016f" defer></script>
-<script src="js/gd-movil.js?v=20261016f" defer></script>
-<script src="js/gd-chat.js?v=20261016f" defer></script>
+<script src="js/giandeco.js?v=20261017a"></script>
+<script src="js/gd-tienda.js?v=20261017a" defer></script>
+<script src="js/gd-catalogo.js?v=20261017a" defer></script>
+<script src="js/gd-movil.js?v=20261017a" defer></script>
+<script src="js/gd-chat.js?v=20261017a" defer></script>
 </body>
 </html>
