@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261016f"></script>
+<base href="/"><script>if(/\.github\.io$/.test(location.hostname))document.querySelector("base").href="/"+location.pathname.split("/")[1]+"/";window.addEventListener("click",function(e){if(e.defaultPrevented)return;var a=e.target.closest&&e.target.closest("a[href^='#']");if(a&&a.getAttribute("href").length>1){e.preventDefault();location.hash=a.getAttribute("href")}})</script>
+<script src="js/gd-acceso.js?v=20261017e"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Seguir mi pedido — Giandeco Studio Design</title>
 <meta name="description" content="Consulte el estado de su pedido de Giandeco con su número de pedido.">
@@ -11,9 +12,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-movil.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261016f">
+<link rel="stylesheet" href="css/giandeco.css?v=20261017e">
+<link rel="stylesheet" href="css/gd-movil.css?v=20261017e">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261017e">
 </head>
 <body data-pagina="ayuda">
 
@@ -24,7 +25,7 @@
   <h1>Seguir mi pedido</h1>
   <p class="lg-lead">Escriba su número de pedido. Lo encuentra en la pantalla de confirmación y en el mensaje que envió al estudio.</p>
   <div class="cu-grid">
-    <nav class="cu-nav" aria-label="Centro de ayuda"><a href="compra-segura">Compra segura</a><a href="envios-y-entregas">Envíos y entregas</a><a href="cambios-y-garantia">Cambios y garantía</a><a href="preguntas-frecuentes">Preguntas frecuentes</a><a href="seguimiento" class="is-active" aria-current="page">Seguir mi pedido</a><a href="opiniones">Opiniones de clientes</a><a href="terminos-y-condiciones">Términos y condiciones</a><a href="politica-de-privacidad">Privacidad</a><a href="libro-de-reclamaciones">Libro de reclamaciones</a></nav>
+    <nav class="cu-nav" aria-label="Centro de ayuda"><a href="ayuda/compra-segura">Compra segura</a><a href="ayuda/envios-y-entregas">Envíos y entregas</a><a href="ayuda/cambios-y-garantia">Cambios y garantía</a><a href="ayuda/preguntas-frecuentes">Preguntas frecuentes</a><a href="seguimiento" class="is-active" aria-current="page">Seguir mi pedido</a><a href="ayuda/opiniones">Opiniones de clientes</a><a href="legal/terminos-y-condiciones">Términos y condiciones</a><a href="legal/politica-de-privacidad">Privacidad</a><a href="legal/libro-de-reclamaciones">Libro de reclamaciones</a></nav>
     <article class="lg-prosa">
       <form class="gd-form" id="sgForm" novalidate style="max-width:520px;">
         <div class="gd-field"><label for="sgN">Número de pedido</label><input id="sgN" type="text" placeholder="GD-000000-0000" autocomplete="off"><span class="gdt-err">Escriba el número completo, por ejemplo GD-261007-1234.</span></div>
@@ -45,9 +46,9 @@
 </div></main>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=20261016f"></script>
-<script src="js/gd-movil.js?v=20261016f" defer></script>
-<script src="js/gd-tienda.js?v=20261016f"></script>
+<script src="js/giandeco.js?v=20261017e"></script>
+<script src="js/gd-movil.js?v=20261017e" defer></script>
+<script src="js/gd-tienda.js?v=20261017e"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, out = document.getElementById('sgOut'), inp = document.getElementById('sgN');
@@ -79,6 +80,6 @@
   if(q) consultar();
 })();
 </script>
-<script src="js/gd-chat.js?v=20261016f" defer></script>
+<script src="js/gd-chat.js?v=20261017e" defer></script>
 </body>
 </html>

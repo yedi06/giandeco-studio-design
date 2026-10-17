@@ -1,35 +1,30 @@
 # Arquitectura de información
 
-Cuatro niveles como máximo. Las URL públicas van sin `.html` (el servidor las resuelve).
+Cuatro niveles como máximo. Cada URL dice dónde está la página; el detalle, el mapa de redirecciones y cómo añadir páginas están en [`docs/URLS.md`](URLS.md). Las migas de pan ya no se muestran: la jerarquía está en la dirección.
 
 ```
-Nivel 1   Inicio  /
-          │
-Nivel 2   ├── Retail  /retail
-          │   ├── Servicios              /retail-diseno-tiendas   (tarjetas + glosario)
-          │   │     ├── /retail-escaparatismo · /retail-remodelacion-de-locales
-          │   │     └── /retail-visual-merchandising · /retail-grafica-y-viniles
-Nivel 3   │   ├── Navidad para retail    /retail-navidad          ← nueva
-          │   │     └── proyectos de temporada → fichas (nivel 4)
-          │   └── Proyectos retail       /retail-proyectos        (rejilla + filtros por tipo)
-Nivel 4   │         └── Ficha            /proyecto-<slug>         ← nuevas (12)
-          │
-          ├── Hogar  /hogar
-          │   ├── Interiorismo           /hogar-diseno-interiores
-          │   ├── Servicios hogar        /hogar-decoracion-y-ambientacion · /hogar-mobiliario-a-medida
-          │   │                          /hogar-ambientacion-de-temporada
-          │   ├── Proyectos hogar        /hogar-proyectos         (rejilla + filtros por tipo)
-          │   │     └── Ficha            /proyecto-<slug>  ·  /evento-walon35  ·  /proceso-expodeco
-          │   └── Espacios               /hogar-espacios → /espacio-<nombre>
-          │
-          └── Catálogo  /catalogo
-              ├── Navidad                /catalogo-navidad → /<pieza>
-              ├── Mueblería              /catalogo-muebleria → /<pieza>
-              ├── Iluminación            /catalogo-iluminacion → /<pieza>
-              └── Compra el espacio      /catalogo-compra-el-espacio
-
-Fuera del menú principal (pie de página): Quiénes somos, Contacto, Blog (retail y hogar),
-ayuda y condiciones, Libro de Reclamaciones, Mi cuenta, checkout.
+/                                      inicio
+├── retail/                            línea Retail
+│   ├── servicios/                     hub de servicios
+│   │   └── escaparatismo · remodelacion-de-locales · visual-merchandising · grafica-y-viniles
+│   ├── navidad                        Navidad para retail
+│   ├── proyectos                      proyectos de Retail
+│   └── blog
+├── hogar/                             línea Hogar
+│   ├── interiorismo/                  hub de interiorismo
+│   │   └── decoracion-y-ambientacion · mobiliario-a-medida · ambientacion-de-temporada
+│   ├── espacios · proyectos · blog
+├── proyectos/                         todos los proyectos
+│   └── <proyecto>                     p. ej. /proyectos/pycca-ecuador
+├── catalogo/                          catálogo
+│   ├── navidad/ · muebleria/ · iluminacion/      gamas
+│   │   └── <pieza>                    p. ej. /catalogo/iluminacion/lampara-led-amaris
+│   ├── compra-espacio/                escaparate de espacios
+│   │   └── mesa-servida · sala-estar · comedor-exterior · sala-casacor · bazar-ferrehome · lounge-massimo
+│   └── decoracion · papel-mural       próximas categorías
+├── ayuda/   compra-segura · envios-y-entregas · cambios-y-garantia · preguntas-frecuentes · opiniones
+├── legal/   terminos-y-condiciones · politica-de-privacidad · libro-de-reclamaciones
+└── contacto · quienes-somos
 ```
 
 ## Menú

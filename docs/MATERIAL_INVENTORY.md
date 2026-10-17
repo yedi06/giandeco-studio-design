@@ -24,14 +24,14 @@ Para incorporarla: subir los archivos al repositorio (por ejemplo a `images/proy
 | Casa Grande | Retail + Hogar | 2 | — | Proceso del mobiliario a medida |
 | Convivir con el Arte | Hogar | 2 | 2 (plano técnico, estudio de color) | — (ficha completa) |
 | Casacor 2025 | Hogar | 4 | 2 (boceto, obra) | — (ficha completa) |
-| Walon 35 años | Hogar · eventos | página propia `evento-walon35` | — | — |
-| Expodeco 2024 | Hogar · ferias | página propia `proceso-expodeco` | — | — |
+| Walon 35 años | Hogar · eventos | página propia `/proyectos/walon-35-anos` | — | — |
+| Expodeco 2024 | Hogar · ferias | página propia `/proyectos/expodeco-2024` | — | — |
 
 Material que existe en el repositorio y no está asignado a un proyecto: `images/proceso/lounge-*`, `salon-*`, `zonatienda-*` (se usan en el método de Retail y en la sección de proceso de la home). No se asignaron a ningún cliente porque no consta a cuál pertenecen.
 
 ## Navidad para retail — material necesario
 
-La landing `retail-navidad` funciona hoy con un solo proyecto real (Pycca). Para que la sección crezca:
+La landing `/retail/navidad` funciona hoy con un solo proyecto real (Pycca). Para que la sección crezca:
 
 1. Fotos de campañas navideñas en tienda ya ejecutadas (mínimo 3 por proyecto: general, vitrina, detalle).
 2. Nombre del cliente **con autorización** para mostrarlo, año y ciudad.
@@ -40,7 +40,7 @@ La landing `retail-navidad` funciona hoy con un solo proyecto real (Pycca). Para
 
 Pendiente de confirmar: en `images/espacios/` hay tres fotos `zara-navidad-*.jpg` que se usan en «Compra el espacio» (Mesa navideña). El nombre del archivo sugiere un trabajo para Zara, pero en el sitio no se presenta como proyecto de esa marca. **No se creó un proyecto «Zara Navidad»**: hace falta que el estudio confirme el trabajo y la autorización de la marca.
 
-## Imágenes usadas en `retail-navidad`
+## Imágenes usadas en `/retail/navidad`
 
 | Imagen | Uso | Origen |
 |--------|-----|--------|

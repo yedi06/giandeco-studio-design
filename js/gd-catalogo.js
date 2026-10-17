@@ -19,13 +19,13 @@ var LINEA_PAGINA = raiz.getAttribute('data-linea') || 'todo';
 /* colecciones: clave, nombre, página.  Las que vengan (Decoración, Papel mural)
    se agregan aquí y aparecen solas en el selector. */
 var LINEAS = [
-  { k:'todo',        n:'Todo el catálogo', href:'catalogo' },
-  { k:'navidad',     n:'Navidad',          href:'catalogo-navidad' },
-  { k:'muebleria',   n:'Mueblería',        href:'catalogo-muebleria' },
-  { k:'iluminacion', n:'Iluminación',      href:'catalogo-iluminacion' }
+  { k:'todo',        n:'Todo el catálogo', href:'catalogo/' },
+  { k:'navidad',     n:'Navidad',          href:'catalogo/navidad/' },
+  { k:'muebleria',   n:'Mueblería',        href:'catalogo/muebleria/' },
+  { k:'iluminacion', n:'Iluminación',      href:'catalogo/iluminacion/' }
 ];
 /* enlace aparte al final del selector (página sin filtros: ambientes completos) */
-var EXTRA = { n:'Compra el espacio', d:'Ambientes completos', href:'catalogo-compra-el-espacio' };
+var EXTRA = { n:'Compra el espacio', d:'Ambientes completos', href:'catalogo/compra-espacio/' };
 var USOS = [ ['mesa','Mesa servida'], ['aparador','Aparador o repisa'], ['vitrina','Vitrina de tienda'], ['entrada','Entrada'],
              ['sala','Sala'], ['comedor','Comedor'], ['dormitorio','Dormitorio'] ];
 var TONOS = [ ['dorado','Dorado','#C39A45'], ['rojo','Rojo','#B3262C'], ['blanco','Blanco','#EFE9DC'], ['verde','Verde','#3F6B3A'],

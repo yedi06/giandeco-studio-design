@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261016f"></script>
+<base href="/"><script>if(/\.github\.io$/.test(location.hostname))document.querySelector("base").href="/"+location.pathname.split("/")[1]+"/";window.addEventListener("click",function(e){if(e.defaultPrevented)return;var a=e.target.closest&&e.target.closest("a[href^='#']");if(a&&a.getAttribute("href").length>1){e.preventDefault();location.hash=a.getAttribute("href")}})</script>
+<script src="js/gd-acceso.js?v=20261017e"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Finalizar pedido — Giandeco Studio Design</title>
 <meta name="robots" content="noindex">
@@ -10,17 +11,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261016f">
-<script src="js/gd-tema.js?v=20261016f"></script>
+<link rel="stylesheet" href="css/giandeco.css?v=20261017e">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261017e">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261017e">
+<script src="js/gd-tema.js?v=20261017e"></script>
 </head>
 <!-- data-home: el checkout no lleva el menú del sitio. Tiene su propia cabecera,
      sin nada que distraiga de terminar la compra. -->
 <body data-home="true" class="co-body">
 
 <header class="co-head">
-  <a class="co-head-volver" href="catalogo"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg>Seguir viendo</a>
+  <a class="co-head-volver" href="catalogo/"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg>Seguir viendo</a>
   <a class="co-head-logo" href="./" aria-label="Giandeco Studio Design"><img src="img/logo-negativo.svg" alt="Giandeco Studio Design"></a>
   <span class="co-head-seguro"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Compra segura</span>
 </header>
@@ -28,18 +29,18 @@
 <main class="co-top"><div class="gd-in" id="co"></div></main>
 
 <footer class="co-foot">
-  <a href="compra-segura" target="_blank">Compra segura</a>
-  <a href="envios-y-entregas" target="_blank">Envíos</a>
-  <a href="cambios-y-garantia" target="_blank">Cambios y garantía</a>
-  <a href="terminos-y-condiciones" target="_blank">Términos</a>
-  <a href="politica-de-privacidad" target="_blank">Privacidad</a>
-  <a href="libro-de-reclamaciones" target="_blank">Libro de reclamaciones</a>
+  <a href="ayuda/compra-segura" target="_blank">Compra segura</a>
+  <a href="ayuda/envios-y-entregas" target="_blank">Envíos</a>
+  <a href="ayuda/cambios-y-garantia" target="_blank">Cambios y garantía</a>
+  <a href="legal/terminos-y-condiciones" target="_blank">Términos</a>
+  <a href="legal/politica-de-privacidad" target="_blank">Privacidad</a>
+  <a href="legal/libro-de-reclamaciones" target="_blank">Libro de reclamaciones</a>
 </footer>
 
-<script src="js/giandeco.js?v=20261016f"></script>
-<script src="js/gd-tienda.js?v=20261016f"></script>
-<script src="js/gd-pago.js?v=20261016f"></script>
-<script src="js/gd-ubigeo.js?v=20261016f"></script>
+<script src="js/giandeco.js?v=20261017e"></script>
+<script src="js/gd-tienda.js?v=20261017e"></script>
+<script src="js/gd-pago.js?v=20261017e"></script>
+<script src="js/gd-ubigeo.js?v=20261017e"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc, C = T.CFG, P = window.GD_PAGO;
@@ -79,8 +80,8 @@
   if(!lineas.length){
     root.innerHTML = '<h1>Su bolsa está vacía</h1>' +
       '<p class="co-lead">Añada piezas del catálogo o toque un punto sobre la foto de un espacio para empezar.</p>' +
-      '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="catalogo">Ver el catálogo' + T.FLECHA + '</a>' +
-      '<a class="gd-btn gd-btn-ghost" href="catalogo-compra-el-espacio">Compra el espacio</a></div>' +
+      '<div class="co-ok-acc"><a class="gd-btn gd-btn-primary" href="catalogo/">Ver el catálogo' + T.FLECHA + '</a>' +
+      '<a class="gd-btn gd-btn-ghost" href="catalogo/compra-espacio/">Compra el espacio</a></div>' +
       '<section class="gdt-sec" style="margin-top:var(--sp-64);"><div class="gdt-sec-head"><div><p class="gd-eyebrow">Selección Giandeco</p><h2 class="gd-h2">Por dónde empezar</h2></div></div>' +
         '<div class="gd-grid">' + T.recomendados(4).map(function(k){ return T.card(k); }).join('') + '</div></section>';
     return;

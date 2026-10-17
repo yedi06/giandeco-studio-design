@@ -2,82 +2,15 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<script src="js/gd-acceso.js?v=20261016f"></script>
+<base href="/"><script>if(/\.github\.io$/.test(location.hostname))document.querySelector("base").href="/"+location.pathname.split("/")[1]+"/";window.addEventListener("click",function(e){if(e.defaultPrevented)return;var a=e.target.closest&&e.target.closest("a[href^='#']");if(a&&a.getAttribute("href").length>1){e.preventDefault();location.hash=a.getAttribute("href")}})</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Proyectos de hogar — Giandeco Studio Design</title>
-<meta name="description" content="Proyectos residenciales, de arte y eventos: Convivir con el Arte, Casa Grande, Hotel Unión Cusco, Walon 35 años, Casacor 2025 y Expodeco 2024.">
-<meta name="theme-color" content="#0A0A09">
-<!-- seo -->
-<link rel="canonical" href="https://giandeco.com/hogar-proyectos">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Giandeco Studio Design">
-<meta property="og:locale" content="es_PE">
-<meta property="og:title" content="Proyectos de hogar — Giandeco Studio Design">
-<meta property="og:description" content="Proyectos residenciales, de arte y eventos: Convivir con el Arte, Casa Grande, Hotel Unión Cusco, Walon 35 años, Casacor 2025 y Expodeco 2024.">
-<meta property="og:url" content="https://giandeco.com/hogar-proyectos">
-<meta property="og:image" content="https://giandeco.com/images/espacios/casacor-1.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<!-- /seo -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-movil.css?v=20261016f">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261016f">
-<script src="js/gd-tema.js?v=20261016f"></script>
+<title>Esta página cambió de dirección — Giandeco Studio Design</title>
+<link rel="canonical" href="https://giandeco.com/hogar/proyectos">
+<meta http-equiv="refresh" content="0; url=hogar/proyectos">
+<script>location.replace("hogar/proyectos" + location.search + location.hash)</script>
 </head>
-<body data-mundo="hogar" data-seccion="proyectos">
-
-<div id="gdHeader"></div>
-
-<section class="gd-hero is-corto">
-  <div class="gd-hero-panel">
-    <p class="gd-migas reveal-left"><a href="./">Inicio</a> / <a href="hogar">Hogar</a> / <span>Proyectos</span></p>
-    <p class="gd-hero-eyebrow reveal-left"><i></i>Visual para hogar</p>
-    <h1 class="reveal-left d1">Proyectos <em>hogar</em></h1>
-    <p class="reveal-left d2">Interiorismo, ferias de diseño y eventos. Elija un proyecto para ver fotos, proceso y resultado.</p>
-  </div>
-  <div class="gd-hero-media">
-    <div class="gd-curtain"><img decoding="async" class="gd-kb-img" src="images/espacios/casacor-1.jpg?v=2" alt="Ambiente presentado en Casacor 2025"></div>
-    <div class="gd-hero-cap">
-      <span><b>Ambiente de feria</b><span>Casacor 2025</span></span>
-      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
-    </div>
-  </div>
-</section>
-
-<section class="gd-sec">
-  <div class="gd-in" id="prLista"></div>
-</section>
-
-<section class="gd-sec gd-claro" style="padding-block:clamp(48px,6vw,80px);">
-  <div class="gd-in" style="text-align:center;">
-    <h2 class="gd-h2 reveal" style="margin-inline:auto; max-width:22ch;">¿Empezamos por su espacio?</h2>
-    <div class="reveal d1" style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:var(--sp-24);">
-      <a class="gd-btn gd-btn-primary" href="contacto">Agendar visita técnica
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-      <a class="gd-btn gd-btn-ghost" href="hogar-espacios">Ver espacios</a>
-    </div>
-  </div>
-</section>
-
-<div id="gdFooter"></div>
-<script src="js/giandeco.js?v=20261016f"></script>
-<script src="js/gd-proyectos.js?v=20261016f"></script>
-<script src="js/gd-proyectos-ui.js?v=20261016f"></script>
-<script>
-(function(){
-  var D = window.GD_PROYECTOS, UI = window.GD_PJ, L = D.de('hogar');
-  // enlaces antiguos con ancla (…-proyectos#slug) llevan a la ficha del proyecto
-  var h = decodeURIComponent((location.hash || '').slice(1)), viejo = { 'casa-grande':'casa-grande', 'hotel-union-cusco':'hotel-union-cusco' };
-  var p = h && (D.get(h) || D.lista.filter(function(x){ return x.slug.indexOf(h) === 0 || h.indexOf(x.slug) === 0; })[0]);
-  if(p){ location.replace(D.url(p)); return; }
-  document.getElementById('prLista').innerHTML = UI.rejilla(D, L, { filtros:true });
-})();
-</script>
-<script src="js/gd-tienda.js?v=20261016f" defer></script>
-<script src="js/gd-movil.js?v=20261016f" defer></script>
-<script src="js/gd-chat.js?v=20261016f" defer></script>
+<body data-redireccion style="font-family:sans-serif;background:#0A0A09;color:#DED8CB;padding:40px;">
+<!-- generado por hacer-rutas.js: no editar a mano -->
+<p>Esta página cambió de dirección: <a style="color:#C9A24A" href="hogar/proyectos">ir a la nueva</a>.</p>
 </body>
 </html>

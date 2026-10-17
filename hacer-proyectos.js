@@ -6,7 +6,8 @@
    depender de JavaScript). Los que tienen `href` propio no generan página.
    Lo ejecuta hacer-seo.js; también puede correrse solo: node hacer-proyectos.js
    ========================================================================== */
-var fs = require('fs');
+var fs = require('fs'), path = require('path');
+var RUTAS = require('./rutas.js');
 global.window = global.window || {};
 eval(fs.readFileSync(__dirname + '/js/gd-proyectos.js', 'utf8'));
 eval(fs.readFileSync(__dirname + '/js/gd-servicios.js', 'utf8'));
@@ -18,7 +19,7 @@ var DOMINIO = 'https://giandeco.com';
 function documento(o){
   var ld = { '@context':'https://schema.org', '@type':'BreadcrumbList', itemListElement:o.migas.map(function(m, i){
     return { '@type':'ListItem', position:i + 1, name:m[0], item:DOMINIO + '/' + m[1] }; }) };
-  return '<!DOCTYPE html>\n<html lang="es">\n<head>\n<meta charset="UTF-8">\n' +
+  return '<!DOCTYPE html>\n<html lang="es">\n<head>\n<meta charset="UTF-8">\n' + RUTAS.BASE_HTML + '\n' +
     '<script src="js/gd-acceso.js?v=' + V + '"></script>\n' +
     '<meta name="viewport" content="width=device-width, initial-scale=1">\n' +
     '<title>' + UI.esc(o.titulo) + '</title>\n' +
@@ -46,7 +47,7 @@ function pagina(p){
   var L = D.LINEAS[p.lineas[0]];
   return documento({ titulo:titular(p.nombre, p.cat), desc:(p.reto + ' ' + p.res).replace(/\s+/g, ' ').slice(0, 158),
     img:p.galeria[0].src, mundo:p.lineas[0], seccion:'proyectos', cuerpo:UI.ficha(D, p),
-    migas:[['Inicio', ''], [L.label, L.href], ['Proyectos', L.proyectos], [p.nombre, 'proyecto-' + p.slug]] });
+    migas:[['Inicio', ''], [L.label, L.href], ['Proyectos', L.proyectos], [p.nombre, RUTAS.rutaProyecto(p.slug)]] });
 }
 function paginaServicio(s){
   var L = D.LINEAS[s.linea];
@@ -54,21 +55,46 @@ function paginaServicio(s){
     img:s.portada.src, mundo:s.linea, seccion:'diseno', cuerpo:UI.servicio(D, SV, s),
     migas:[['Inicio', ''], [L.label, L.href], [s.nombre, s.slug]] });
 }
-var hechas = [];
-// borra fichas de proyectos que ya no existen o pasaron a tener página propia
-fs.readdirSync(__dirname).filter(function(f){ return /^proyecto-.+\.html$/.test(f); }).forEach(function(f){
-  var s = f.slice(9, -5), p = D.get(s);
-  if(!p || p.href) fs.unlinkSync(__dirname + '/' + f);
-});
+/* «Todos los proyectos»: la sección /proyectos/ que contiene las fichas */
+function paginaIndice(){
+  var WA = 'https://wa.me/51920775559?text=' + encodeURIComponent('Hola Giandeco, vi sus proyectos y quiero conversar sobre el mío.');
+  var cuerpo = '<section class="gd-sec gd-esp-pg"><div class="gd-in">' +
+    '<p class="gd-eyebrow">Proyectos</p><h1 class="pj-h1">Todos los proyectos</h1>' +
+    '<p class="pj-p" style="margin-bottom:var(--sp-40);">Tiendas, campañas, gastronomía, interiorismo, eventos y ferias, de Retail y de Hogar.</p>' +
+    UI.rejilla(D, D.lista, { filtros:true }) + '</div></section>' +
+    '<section class="gd-sec pj-cta"><div class="gd-in"><h2 class="pj-h2">¿Un proyecto así para su marca o su casa?</h2><div class="pj-cta-acc">' +
+    '<a class="gd-btn gd-btn-primary" href="' + WA + '" target="_blank" rel="noopener">Hablemos de su proyecto' +
+    '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div></div></section>';
+  var d = D.lista.filter(function(p){ return p.destacado; })[0] || D.lista[0];
+  return documento({ titulo:'Proyectos — Giandeco Studio Design', desc:'Tiendas, campañas, gastronomía, interiorismo, eventos y ferias de Giandeco, de Retail y de Hogar: fotos, proceso y resultado.',
+    img:d.galeria[0].src, mundo:'retail', seccion:'proyectos', cuerpo:cuerpo,
+    migas:[['Inicio', ''], ['Proyectos', 'proyectos/']] });
+}
+
+function escribir(archivo, contenido){
+  fs.mkdirSync(path.dirname(__dirname + '/' + archivo), { recursive:true });
+  fs.writeFileSync(__dirname + '/' + archivo, contenido);
+}
+var MARCA = /generado por hacer-proyectos\.js/;
+var hechas = [], escritas = {};
 D.lista.filter(function(p){ return !p.href; }).forEach(function(p){
-  fs.writeFileSync(__dirname + '/proyecto-' + p.slug + '.html', pagina(p)); hechas.push(p.slug);
+  var archivo = RUTAS.archivoDe(RUTAS.rutaProyecto(p.slug)); escribir(archivo, pagina(p)); escritas[archivo] = 1; hechas.push(p.slug);
 });
+escribir('proyectos/index.html', paginaIndice()); escritas['proyectos/index.html'] = 1;
 var servicios = SV.lista.filter(function(s){ return !s.href; });
 servicios.forEach(function(s){
-  var f = __dirname + '/' + s.slug + '.html';
+  var archivo = s.slug + '.html', f = __dirname + '/' + archivo;
   // nunca pisa una página hecha a mano con el mismo nombre
-  if(fs.existsSync(f) && !/generado por hacer-proyectos\.js/.test(fs.readFileSync(f, 'utf8'))) throw new Error(s.slug + '.html ya existe y no es generada');
-  fs.writeFileSync(f, paginaServicio(s));
+  if(fs.existsSync(f) && !MARCA.test(fs.readFileSync(f, 'utf8'))) throw new Error(archivo + ' ya existe y no es generada');
+  escribir(archivo, paginaServicio(s)); escritas[archivo] = 1;
 });
-console.log(hechas.length + ' fichas de proyecto · ' + servicios.length + ' páginas de servicio');
+// borra lo generado antes que ya no corresponde (un proyecto que se quitó o que pasó a tener página propia)
+['proyectos', 'retail/servicios', 'hogar/interiorismo'].forEach(function(dir){
+  if(!fs.existsSync(__dirname + '/' + dir)) return;
+  fs.readdirSync(__dirname + '/' + dir).forEach(function(n){
+    var archivo = dir + '/' + n;
+    if(/\.html$/.test(n) && !escritas[archivo] && MARCA.test(fs.readFileSync(__dirname + '/' + archivo, 'utf8'))) fs.unlinkSync(__dirname + '/' + archivo);
+  });
+});
+console.log(hechas.length + ' fichas de proyecto · ' + servicios.length + ' páginas de servicio · índice de proyectos');
 module.exports = hechas;

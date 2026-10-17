@@ -502,10 +502,6 @@ img{ max-width:100%; display:block; }
 @media (prefers-reduced-motion: reduce){ .gd-scroll-cue i{ animation:none; } }
 
 /* miga de pan — vive dentro del panel del hero */
-.gd-migas{ display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; font-family: var(--body); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color: var(--text-faint); margin:0 0 20px; }
-.gd-migas a{ color: var(--text-faint); text-decoration:none; transition: color .2s ease; }
-.gd-migas a:hover{ color: var(--accent); }
-.gd-migas span{ color: var(--text-dim); }
 
 /* ==========================================================================
    PUNTOS DE COMPRA SOBRE FOTOGRAFÍA  (shoppable hotspots)
@@ -989,11 +985,9 @@ input[type="checkbox"], input[type="radio"]{ cursor: default; }
 .pj-hero > img{ position:absolute; inset:0; z-index:-2; width:100%; height:100%; object-fit:cover; }
 .pj-hero::after{ content:''; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg, rgba(10,10,9,.55) 0, rgba(10,10,9,0) 30%, rgba(10,10,9,.15) 55%, rgba(10,10,9,.9) 100%); }
 .pj-hero-txt{ padding-bottom:clamp(36px,6vw,72px); }
-.pj-hero h1{ font-family:var(--display); font-weight:400; color:#DED8CB; font-size:clamp(2.6rem,7vw,5.4rem); line-height:1; letter-spacing:-.01em; margin:6px 0 10px; }
+.pj-hero h1{ font-family:var(--display); font-weight:400; color:#DED8CB; font-size:clamp(2rem,4.2vw,3.75rem); line-height:1.04; letter-spacing:-.01em; margin:6px 0 10px; max-width:20ch; }
 .pj-hero .gd-eyebrow{ color:#C9A24A; margin:0; }
 .pj-hero-sub{ margin:0; font-family:var(--script); font-style:italic; font-weight:300; font-size:clamp(1.15rem,2vw,1.5rem); color:rgba(222,216,203,.85); }
-.pj-migas{ margin-bottom:clamp(16px,3vw,28px); color:rgba(222,216,203,.7); }
-.pj-migas a{ color:rgba(222,216,203,.7); }
 @media (max-width:719px){ .pj-hero{ min-height:72svh; } }
 .pj-etq{ margin:0 0 10px; font-family:var(--body); font-weight:500; font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); }
 .pj-h2{ font-family:var(--display); font-weight:400; font-size:clamp(1.9rem,3.6vw,2.6rem); color:var(--lino); line-height:1.08; margin:0 0 24px; }
@@ -1086,3 +1080,51 @@ input[type="checkbox"], input[type="radio"]{ cursor: default; }
 .sv-card:hover .sv-card-txt svg{ transform:translateX(3px); }
 .sv-card:focus-visible{ outline:2px solid var(--accent); outline-offset:4px; }
 @media (max-width:899px){ .sv-grid > .sv-card:last-child:nth-child(odd){ grid-column:1 / -1; } .sv-grid > .sv-card:last-child:nth-child(odd) .pj-card-img{ aspect-ratio:16/9; } }
+
+/* foto entera dentro de su marco (js/giandeco.js, encajarFoto): la pieza no se
+   recorta y el espacio que sobra es fondo liso (nunca otra foto de producto) */
+.gd-prod-thumb.es-entera{ background:#fff; }
+.pdp-plate.es-entera{ background:#fff; }
+.gd-prod-thumb.es-entera img, .pdp-plate.es-entera img{ object-fit:contain; }
+
+/* ==========================================================================
+   FONDO EN ESPERA DE FOTO — .gd-fondo
+   Donde una foto se repetiría, va este fondo de marca (ébano, luz bronce y el
+   monograma) hasta que el estudio produzca la imagen propuesta en
+   docs/PROPUESTA_IMAGENES.md. No lleva líneas ni textos internos.
+   ========================================================================== */
+.gd-fondo{ position:absolute; inset:0; display:grid; place-items:center; overflow:hidden;
+  background:
+    radial-gradient(120% 90% at 18% 0%, rgba(201,162,74,.20), transparent 58%),
+    radial-gradient(90% 70% at 100% 100%, rgba(138,111,60,.18), transparent 62%),
+    linear-gradient(160deg, #1d1a15 0%, #0E0D0B 100%); }
+.gd-fondo::before{ content:'G'; font-family:var(--display); font-weight:400; font-size:clamp(64px, 14vw, 150px); line-height:1;
+  color:transparent; background:linear-gradient(170deg, rgba(222,196,140,.42), rgba(201,162,74,.08)); -webkit-background-clip:text; background-clip:text; }
+.gd-fondo::after{ content:''; position:absolute; inset:0;
+  background:repeating-linear-gradient(90deg, rgba(222,216,203,.025) 0 1px, transparent 1px 26px); }
+.pj-card-img .gd-fondo, .gd-esp-thumb .gd-fondo{ border-radius:inherit; }
+.gd-esp-thumb:has(.gd-fondo), .pj-card-img:has(.gd-fondo){ background:#0E0D0B; }
+.pj-foto-fondo{ position:relative; aspect-ratio:4/3; cursor:default; }
+
+/* ==========================================================================
+   PÁGINA DE ESPACIO — la foto empieza justo bajo la cabecera.
+   Móvil: de borde a borde, sin margen ni vacío arriba. La altura de la
+   cabecera, arriba del todo, mide una franja: --h-marca hasta 1179px y --h-marca-d después
+   (la segunda fila aparece al bajar y se superpone, como en el resto del sitio).
+   ========================================================================== */
+.gd-esp-pg{ padding-top:var(--h-marca); }
+@media (min-width:720px){ .gd-esp-pg{ padding-top:calc(var(--h-marca) + 24px); } }
+@media (min-width:1180px){ .gd-esp-pg{ padding-top:calc(var(--h-marca-d) + 24px); } }
+@media (max-width:719px){
+  .gd-esp-head{ gap:0; }
+  .gd-esp-head .gd-shop{ width:auto; margin-inline:calc(var(--gd-gut) * -1); border-radius:0; }
+  .gd-esp-info{ padding-top:var(--sp-24); }
+}
+
+/* fotos muy anchas (más de 1,6:1) en móvil: puntos más pequeños para que no tapen ni se salgan */
+@media (max-width:719px){ .gd-shop.is-ancha .gd-shop-dot{ width:26px; height:26px; } .gd-shop.is-ancha .gd-shop-dot i::before{ inset:4px; } .gd-shop.is-ancha .gd-shop-dot i::after{ inset:9px; } }
+
+.pj-h1{ font-family:var(--display); font-weight:400; font-size:clamp(2.2rem,4.4vw,3.4rem); line-height:1.05; color:var(--lino); margin:6px 0 14px; }
+/* página de espacio: el texto arranca a la altura de la foto; la pista de los puntos, sin tanto espaciado en móvil */
+.gd-esp-info .gd-eyebrow{ line-height:1; }
+@media (max-width:719px){ .gd-shop-hint{ letter-spacing:.08em; } }

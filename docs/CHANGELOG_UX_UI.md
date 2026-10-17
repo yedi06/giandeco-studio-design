@@ -1,5 +1,39 @@
 # Changelog UX/UI
 
+## 2026-10-17 (noche) — URLs ordenadas, sin migas y espacios pegados arriba
+
+### Cambiado
+- **Orden de URL en todo el sitio.** Cada dirección dice dónde está la página: `/catalogo/compra-espacio/mesa-servida`, `/catalogo/compra-espacio/sala-estar`, `/catalogo/navidad/tren-de-jengibre`, `/retail/servicios/escaparatismo`, `/hogar/interiorismo/…`, `/proyectos/pycca-ecuador`, `/ayuda/…`, `/legal/…`. Mapa completo y cómo añadir páginas en `docs/URLS.md`; una sola fuente en `rutas.js`.
+- Las 102 direcciones antiguas siguen funcionando: cada una conserva una página que lleva a la nueva (con consulta y ancla) y declara la nueva como canónica (`hacer-rutas.js`). Los carritos guardados y los enlaces compartidos no se rompen.
+- `<base href="/">` en todas las páginas (con ajuste automático en el sitio de prueba) y un manejador de los enlaces `#ancla`, que con `<base>` apuntarían a la portada.
+- `hacer-seo.js` y `hacer-proyectos.js` recorren carpetas; canónicas y sitemap con las rutas nuevas (101 direcciones, solo páginas reales). Nuevo `/proyectos/` con todos los proyectos.
+- Siguen en la raíz sin cambio: `/cuenta`, `/checkout`, `/pagar`, `/seguimiento`, `/admin`, `/mantenimiento`, `/producto`, `/404` (los usan Supabase, Culqi y los correos).
+- `previsualizar.py` imita las rutas de GitHub Pages (carpetas con `index.html`, barra final).
+
+### Quitado
+- **Migas de pan visibles** («INICIO / COMPRA EL ESPACIO / …») en las 92 páginas y en las fichas de producto, proyecto y servicio. Queda el dato estructurado `BreadcrumbList` (invisible).
+
+### Páginas de espacio
+- La foto empieza justo bajo la cabecera y, en móvil, va de borde a borde (antes: ~100 px de vacío y márgenes laterales).
+- Puntos más pequeños en fotos muy anchas (Mássimo) y dos puntos reubicados para que no se solapen ni se salgan.
+
+### Tipografía y alineación (medida en 1440 y 390 px sobre todas las páginas)
+- Títulos de fichas y servicios: de 86 a 60 px en escritorio (32 px en móvil); título de Retail: de 70 a 56 px.
+- Versión de recursos `20261017e`.
+
+## 2026-10-17 — Filtros en cada colección y fotos enteras
+
+El catálogo global (yedi06/giandeco-studio-design#11) se revirtió a pedido del cliente (yedi06/giandeco-studio-design#12). En su lugar se mejoró lo que ya existía, sin cambiar el diseño de las páginas:
+
+- `js/gd-coleccion.js`: un solo componente para Navidad, Mueblería e Iluminación (antes, tres scripts casi iguales). Conserva los chips por categoría y las tarjetas de cada página, y suma buscador (sin tildes, por nombre, nota o referencia), precio por tramos (solo si hay más de uno), orden, contador, filtros activos que se quitan uno a uno, «Limpiar», aviso sin resultados y estado en la URL (`?cat=…&q=…&precio=…&orden=…`).
+- Fotos enteras: si una foto de producto no tiene la forma de su marco (las lámparas y muebles son cuadrados; las tarjetas, 4:5), se muestra completa y el espacio sobrante se llena con la misma foto difuminada. Aplica a todas las tarjetas de producto y a la foto principal de la ficha (`encajarFoto` en `js/giandeco.js`).
+- Fotos de producto enteras sobre **fondo liso del color del borde de la propia foto** (no se usa ninguna foto como relleno).
+- **Ninguna foto se repite dentro de una misma página.** Las tarjetas de proyecto y servicio comprueban qué fotos ya se ven (también las que son la misma foto con otro nombre, comparadas por contenido) y, si se repetiría, muestran el **fondo de marca** `.gd-fondo`. Las portadas de Retail y Hogar eligen primero proyectos con foto propia.
+- Servicios con foto propia que estaba sin uso (vitrina, detalle de arte); Mássimo Café suma boceto y obra del lounge; Ferrehome ya no repite Casacor en «otros espacios»; Walon 35, Expodeco, Espacios, Blog retail, Proyectos retail, Interiorismo, Catálogo e Iluminación sin fotos repetidas. Las pestañas del escaparate «Compra el espacio» pierden la miniatura (repetía la foto grande).
+- `docs/PROPUESTA_IMAGENES.md`: qué imagen va en cada fondo, encuadre, formato y prompt para Krea; reglas (proyectos solo con fotos reales; productos nunca como relleno) y la lista de archivos duplicados con otro nombre.
+- El color del borde se calcula una vez por foto (al filtrar en móvil, la rejilla tardaba hasta ~0,7 s en redibujarse).
+- Versión de recursos `20261017d`.
+
 ## 2026-10-16 (tarde) — Páginas de servicio, menos texto, pie compacto
 
 ### Nuevo

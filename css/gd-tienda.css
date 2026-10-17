@@ -124,7 +124,6 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 .pdp-thumb img{ width:100%; height:100%; object-fit:cover; }
 .pdp-thumb:hover, .pdp-thumb.is-active{ opacity:1; border-color:var(--accent); }
 
-.pdp-buy .gd-migas{ flex-wrap:wrap; }
 .pdp-buy h1{ font-family:var(--display); font-weight:400; font-size:clamp(2rem,3.4vw,2.9rem); line-height:1.05; letter-spacing:-.01em; color:var(--lino); margin:0 0 18px; text-wrap:balance; }
 .pdp-precio{ display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; margin:0 0 22px; }
 .pdp-precio b{ font-family:var(--body); font-weight:400; font-size:1.7rem; color:var(--accent); font-variant-numeric:tabular-nums; }
@@ -620,7 +619,7 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
      los que no tienen línea crecen con relleno.
    ========================================================================== */
 @media (max-width:899px){
-  body .gd-eyebrow, body .gd-migas, body .gd-prod-cat, body .gd-esp-cat, body .gd-pieza-cat,
+  body .gd-eyebrow, body .gd-prod-cat, body .gd-esp-cat, body .gd-pieza-cat,
   body .pdp-stock, body .pdp-var-t, body .pdp-tabla dt, body .pdp-calc label, body .pdp-h3,
   body .gd-field label, body .gd-footer-col h4, body .gd-hero-cap span, body .ct-dato h3,
   body .gdt-quick, body .pdp-sub a, body .pdp-sub button, body .pdp-conf a,
@@ -628,8 +627,8 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
   body .pdp-culqi, body .gd-prod-badge, body .gd-pieza-thumb.is-slot span{ font-size:11px; }
 
   /* subrayados: área táctil invisible de 44px */
-  body .gdt-quick, body .gd-link, body .pdp-conf a, body .gd-migas a{ position:relative; }
-  body .gdt-quick::after, body .gd-link::after, body .pdp-conf a::after, body .gd-migas a::after{
+  body .gdt-quick, body .gd-link, body .pdp-conf a{ position:relative; }
+  body .gdt-quick::after, body .gd-link::after, body .pdp-conf a::after{
     content:''; position:absolute; left:-4px; right:-4px; top:50%; height:44px; transform:translateY(-50%);
   }
   /* sin subrayado: más relleno */
