@@ -219,7 +219,8 @@ function headerHTML(){
     // mundo solo abre/cierra el acordeón (no es un link), así que este es
     // el único lugar desde el que se puede navegar a la página principal
     // de ese mundo en pantallas chicas.
-    var links = mm.secciones.map(function(s){ return '<a href="' + s.href + '">' + s.label + '</a>'; }).join('');
+    // la sección "home" repite el nombre del mundo (Retail, Hogar, Catálogo): en el acordeón se llama "Ver todo"
+    var links = mm.secciones.map(function(s){ return '<a href="' + s.href + '"' + (s.key === 'home' ? ' class="sh-acc-todo"' : '') + '>' + (s.key === 'home' ? 'Ver todo' : s.label) + '</a>'; }).join('');
     if(mm.pronto) links += mm.pronto.map(function(p){ return '<a href="' + p.href + '" data-pronto title="Disponible próximamente">' + p.label + '</a>'; }).join('');
     return '<div class="sh-acc' + (k === mundoActual ? ' is-open' : '') + '">' +
       '<button type="button" class="sh-acc-btn">' + mm.label +
@@ -257,7 +258,7 @@ function headerHTML(){
   '</header>' +
   '<div class="sh-scrim" id="shScrim"></div>' +
   '<nav class="sh-mobile" id="shMobile" aria-label="Menú móvil" aria-hidden="true">' +
-    '<div class="sh-mobile-head"><span class="sh-mobile-logo">Giandeco</span>' +
+    '<div class="sh-mobile-head"><a class="sh-mobile-logo" href="./" aria-label="Giandeco Studio Design — Inicio"><img src="img/logo-negativo.svg" alt="Giandeco Studio Design"></a>' +
       '<button class="sh-mobile-close" id="shMobileClose" type="button" aria-label="Cerrar menú">&times;</button></div>' +
     '<div class="sh-mobile-body">' + acc +
       '<div class="sh-mobile-paginas">' + PAGINAS.map(function(p){ return '<a href="' + p.href + '">' + p.label + '</a>'; }).join('') + '</div>' +
