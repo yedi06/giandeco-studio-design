@@ -580,9 +580,11 @@ img{ max-width:100%; display:block; }
 .gd-shop-bar svg{ width:16px; height:16px; flex:none; stroke:currentColor; fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
 .gd-shop-amp{ width:36px; padding:0 !important; }
 @media (max-width:719px){
-  .gd-shop-bar{ left:12px; right:auto; }
-  .gd-shop-ver{ width:36px; padding:0 !important; }
+  .gd-shop-bar{ left:10px; right:auto; top:auto; bottom:10px; gap:6px; }
+  body .gd-shop-bar button{ width:30px; height:30px; padding:0 !important; position:relative; }
+  .gd-shop-bar button::after{ content:''; position:absolute; inset:-7px; }
   .gd-shop-ver span{ display:none; }
+  .gd-shop-bar svg{ width:14px; height:14px; }
 }
 
 /* --- puntos de la escena con muchas piezas: el sello del sitio, algo más compacto,
@@ -1108,7 +1110,8 @@ input[type="checkbox"], input[type="radio"]{ cursor: default; }
 
 /* ==========================================================================
    PÁGINA DE ESPACIO — la foto empieza justo bajo la cabecera.
-   Móvil: de borde a borde, sin margen ni vacío arriba. La altura de la
+   Móvil: de borde a borde desde el borde superior de la pantalla, con la cabecera
+   transparente encima (como en «Compra el espacio»); sin margen ni vacío arriba. La altura de la
    cabecera, arriba del todo, mide una franja: --h-marca hasta 1179px y --h-marca-d después
    (la segunda fila aparece al bajar y se superpone, como en el resto del sitio).
    ========================================================================== */
@@ -1116,6 +1119,8 @@ input[type="checkbox"], input[type="radio"]{ cursor: default; }
 @media (min-width:720px){ .gd-esp-pg{ padding-top:calc(var(--h-marca) + 24px); } }
 @media (min-width:1180px){ .gd-esp-pg{ padding-top:calc(var(--h-marca-d) + 24px); } }
 @media (max-width:719px){
+  .gd-esp-pg{ padding-top:0; }
+  .gd-esp-head .gd-shop::before{ content:''; position:absolute; inset:0 0 auto; height:96px; z-index:4; pointer-events:none; background:linear-gradient(rgba(10,10,9,.55), rgba(10,10,9,0)); }
   .gd-esp-head{ gap:0; }
   .gd-esp-head .gd-shop{ width:auto; margin-inline:calc(var(--gd-gut) * -1); border-radius:0; }
   .gd-esp-info{ padding-top:var(--sp-24); }
