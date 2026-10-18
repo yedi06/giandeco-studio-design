@@ -28,7 +28,7 @@
 <link rel="stylesheet" href="css/gd-movil.css?v=20261018a">
 <link rel="stylesheet" href="css/gd-tema.css?v=20261018a">
 <script src="js/gd-tema.js?v=20261018a"></script>
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261018a">
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261018c">
 </head>
 <body data-mundo="catalogo" data-seccion="producto" data-p="taza-cascanuez-roja">
 
@@ -221,10 +221,14 @@
       return '<a class="gd-esp-card" href="' + e.href + '" data-cursor="Ver"><span class="gd-esp-thumb"><img decoding="async" loading="lazy" src="' + e.img + '" alt="' + esc(e.nombre) + '"></span>' +
         '<span class="gd-esp-cat">' + esc(e.meta) + '</span><h3 class="gd-esp-nombre">' + esc(e.nombre) + '</h3></a>';
     }).join('') +
-      '<div class="pdp-estudio-cta"><p class="gd-eyebrow">Del producto al proyecto</p><h3>¿Y si lo resolvemos completo?</h3>' +
-        '<p>Si esta pieza es parte de un ambiente que todavía no está resuelto, el estudio lo diseña, lo produce y lo monta bajo una sola dirección.</p>' +
+      '<div class="pdp-estudio-cta"><p class="gd-eyebrow">Giandeco Studio</p><h3>Su ambiente completo, <em>resuelto</em></h3>' +
+        '<ol class="pdp-est-pasos">' +
+          '<li><span>01</span><b>Diseñamos</b><i>el ambiente a su medida</i></li>' +
+          '<li><span>02</span><b>Producimos</b><i>las piezas que faltan</i></li>' +
+          '<li><span>03</span><b>Montamos</b><i>en su espacio</i></li>' +
+        '</ol>' +
         '<a class="gd-btn" href="contacto">Agendar visita técnica' + T.FLECHA + '</a>' +
-        '<a class="gd-link" href="hogar/interiorismo/">Diseño de interiores' + T.FLECHA + '</a></div>' +
+        '<a class="gd-link" href="hogar/interiorismo/">Ver diseño de interiores' + T.FLECHA + '</a></div>' +
     '</div></section>';
 
   /* ==================== 6. OPINIONES ==================== */

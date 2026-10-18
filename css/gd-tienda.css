@@ -195,13 +195,29 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 /* estudio: del producto al proyecto */
 .pdp-estudio{ display:grid; grid-template-columns:1fr; gap:var(--sp-24); }
 @media (min-width:900px){ .pdp-estudio{ grid-template-columns:1fr 1fr 1fr; } }
-.pdp-estudio-cta{ background:var(--humo); color:var(--ebano); border-radius:2px; padding:clamp(24px,3vw,40px); display:flex; flex-direction:column; }
-.pdp-estudio-cta .gd-eyebrow{ color:var(--bronce-texto); }
-.pdp-estudio-cta h3{ font-family:var(--display); font-weight:400; font-size:1.95rem; line-height:1.1; margin:0 0 14px; }
-.pdp-estudio-cta p{ margin:0 0 24px; color:var(--grafito); font-size:.94rem; line-height:1.65; }
-.pdp-estudio-cta .gd-btn{ margin-top:auto; align-self:flex-start; background:var(--ebano); color:var(--humo); }
-.pdp-estudio-cta .gd-btn:hover{ background:var(--bronce); }
-.pdp-estudio-cta .gd-link{ align-self:flex-start; margin-top:16px; color:var(--ebano); border-color:rgba(10,9,6,.2); }
+/* Del producto al proyecto: tarjeta ébano con latón, mensaje corto y tres pasos */
+.pdp-estudio-cta{ position:relative; display:flex; flex-direction:column; padding:clamp(26px,3vw,40px); border-radius:2px;
+  background:linear-gradient(165deg,#1a1812 0%,#0A0A09 70%); color:#F4F1EA; border:1px solid rgba(201,162,74,.38); }
+.pdp-estudio-cta::before{ content:''; position:absolute; left:-1px; right:-1px; top:-1px; height:3px; background:#C9A24A; }
+.pdp-estudio-cta .gd-eyebrow{ color:#C9A24A; margin:0 0 14px; }
+.pdp-estudio-cta h3{ font-family:var(--display); font-weight:400; font-size:clamp(1.9rem,2.4vw,2.3rem); line-height:1.08; margin:0 0 22px; color:#F4F1EA; }
+.pdp-estudio-cta h3 em{ font-style:normal; color:#C9A24A; }
+.pdp-est-pasos{ list-style:none; margin:0 0 28px; padding:0; border-top:1px solid rgba(222,216,203,.16); }
+.pdp-est-pasos li{ display:grid; grid-template-columns:34px 1fr; column-gap:10px; align-items:baseline; padding:14px 0; border-bottom:1px solid rgba(222,216,203,.16); }
+.pdp-est-pasos span{ grid-row:1 / span 2; font-family:var(--display); font-size:1rem; color:#C9A24A; font-variant-numeric:lining-nums tabular-nums; }
+.pdp-est-pasos b{ font-weight:500; font-size:1.12rem; letter-spacing:.01em; color:#F4F1EA; }
+.pdp-est-pasos i{ font-style:normal; font-size:.9rem; color:#B9B3A6; }
+@media (max-width:719px){
+  .pdp-est-pasos{ display:grid; grid-template-columns:repeat(3,1fr); gap:0 14px; border-bottom:1px solid rgba(222,216,203,.16); margin-bottom:24px; }
+  .pdp-est-pasos li{ display:flex; flex-direction:column; gap:3px; padding:14px 0; border-bottom:0; }
+  .pdp-est-pasos span{ margin-bottom:4px; }
+  .pdp-est-pasos b{ font-size:1.02rem; }
+  .pdp-est-pasos i{ font-size:.82rem; line-height:1.35; }
+}
+.pdp-estudio-cta .gd-btn{ margin-top:auto; align-self:stretch; justify-content:center; background:#C9A24A; color:#0A0A09; border-color:#C9A24A; }
+.pdp-estudio-cta .gd-btn:hover{ background:#D6B25C; color:#0A0A09; }
+.pdp-estudio-cta .gd-link{ align-self:flex-start; margin-top:16px; color:#DED8CB; border-color:rgba(222,216,203,.3); }
+.pdp-estudio-cta .gd-link:hover{ color:#C9A24A; border-color:#C9A24A; }
 
 /* barra fija en móvil */
 .pdp-bar{
