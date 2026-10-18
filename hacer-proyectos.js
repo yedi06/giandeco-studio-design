@@ -13,6 +13,7 @@ eval(fs.readFileSync(__dirname + '/js/gd-proyectos.js', 'utf8'));
 eval(fs.readFileSync(__dirname + '/js/gd-servicios.js', 'utf8'));
 var D = window.GD_PROYECTOS, SV = window.GD_SERVICIOS, UI = require('./js/gd-proyectos-ui.js');
 var V = (fs.readFileSync(__dirname + '/index.html', 'utf8').match(/giandeco\.css\?v=([\w]+)/) || [])[1] || '1';
+var VC = (fs.readFileSync(__dirname + '/index.html', 'utf8').match(/gd-chat\.js\?v=([\w]+)/) || [])[1] || V;
 var DOMINIO = 'https://giandeco.com';
 
 /* cabecera, estilos y scripts comunes a fichas y servicios */
@@ -36,7 +37,7 @@ function documento(o){
     '<div id="gdHeader"></div>\n<main class="pj">\n' + o.cuerpo + '\n</main>\n<div id="gdFooter"></div>\n' +
     '<script src="js/giandeco.js?v=' + V + '"></script>\n' +
     '<script src="js/gd-proyectos-ui.js?v=' + V + '"></script>\n' +
-    '<script src="js/gd-tienda.js?v=' + V + '" defer></script>\n<script src="js/gd-movil.js?v=' + V + '" defer></script>\n<script src="js/gd-chat.js?v=' + V + '" defer></script>\n</body>\n</html>\n';
+    '<script src="js/gd-tienda.js?v=' + V + '" defer></script>\n<script src="js/gd-movil.js?v=' + V + '" defer></script>\n<script src="js/gd-chat.js?v=' + VC + '" defer></script>\n</body>\n</html>\n';
 }
 function titular(nombre, cat){
   var t = nombre + ' — ' + cat + ' · Giandeco Studio Design';

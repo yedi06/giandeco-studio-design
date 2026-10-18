@@ -29,7 +29,7 @@
   + '.gdc *,.gdc-panel *{box-sizing:border-box}'
 
   /* ---------- sello lanzador: un solo círculo, sin contornos ---------- */
-  + '.gdc{position:fixed;z-index:72;display:flex;align-items:center;gap:2px;margin:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) 0;touch-action:none;-webkit-user-select:none;user-select:none;'
+  + '.gdc{position:fixed;z-index:72;display:flex;align-items:center;gap:2px;margin:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) 0;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;'
   +   'opacity:0;transform:translateY(14px) scale(.94);pointer-events:none;transition:opacity .7s ease,transform .7s ' + EASE + '}'
   + '.gdc.is-in{opacity:1;transform:none;pointer-events:auto}'
   + '.gdc.is-snap{transition:left .62s cubic-bezier(.2,1.25,.32,1),top .62s cubic-bezier(.2,1.25,.32,1),transform .5s ' + EASE + '}'
@@ -214,8 +214,8 @@
   +   '.gdc-body{padding:16px 12px 10px}.gdc-chips{padding-left:0}.gdc-msg{max-width:94%}'
   +   '.gdc-compose{margin:8px 10px 6px}.gdc-compose input{font-size:16px}'   /* 16 px: iPhone no hace zoom al escribir */
   +   '.gdc.is-open{opacity:0;pointer-events:none}'                          /* la hoja tapa la burbuja: se cierra con su X */
-  +   '.gdc{gap:6px}.gdc-seal{width:48px;height:48px}.gdc-g{width:26px;height:26px}'   /* en celular, más discreta */
-  +   '.gdc-badge{min-width:17px;height:17px;padding:0 5px;font-size:10px;top:-3px;right:-3px}.gdc-grip{transform:scale(.85)}'
+  +   '.gdc{gap:10px}.gdc-seal{width:54px;height:54px}.gdc-g{width:29px;height:29px}'   /* en celular, casi igual que en escritorio */
+  +   '.gdc-badge{top:-3px;right:-3px}'
   + '}';
 
   + ':root[data-tema="claro"] .gdc-grip i{background:#6F6A63}';
@@ -286,9 +286,8 @@
 
   function place(){
     var w = root.offsetWidth, h = root.offsetHeight, vw = window.innerWidth, vh = window.innerHeight;
-    var cap = vw <= 560 ? 16 : 9999;                                 // en móvil, más cerca de la esquina
-    var x = Math.max(M, Math.min(pos.x, cap, vw - w - M)) + 'px';
-    var y = Math.max(M, Math.min(pos.v === 'b' ? Math.min(pos.y, cap) : pos.y, vh - h - M)) + 'px';
+    var x = Math.max(M, Math.min(pos.x, vw - w - M)) + 'px';
+    var y = Math.max(M, Math.min(pos.y, vh - h - M)) + 'px';       // la altura elegida se respeta (en móvil también)
     root.style.left   = pos.h === 'l' ? x : 'auto';
     root.style.right  = pos.h === 'r' ? x : 'auto';
     root.style.top    = pos.v === 't' ? y : 'auto';
@@ -297,7 +296,7 @@
   }
   // al soltar, el sello se acomoda solo contra el borde más cercano
   function snap(){
-    var r = root.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight, E = 24;
+    var r = root.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight, E = vw <= 560 ? 16 : 24;   // más cerca de la esquina en móvil
     var toLeft = r.left + r.width / 2 < vw / 2;
     var top = Math.max(E, Math.min(r.top, vh - r.height - E));
     root.classList.add('is-snap');
