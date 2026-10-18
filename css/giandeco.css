@@ -565,6 +565,20 @@ img{ max-width:100%; display:block; }
 }
 .gd-shop-card-close:hover{ background: var(--accent); color: var(--ebano); }
 
+/* teléfono / tableta: la ficha era de 280px con foto 4:3 (~340px de alto) y tapaba el banner entero;
+   aquí es una tarjeta horizontal compacta (miniatura a la izquierda, datos a la derecha) */
+@media (max-width:899px){
+  .gd-shop .gd-shop-card{ width:min(300px, calc(100% - 20px)); display:grid; grid-template-columns:84px 1fr; align-items:stretch; }
+  .gd-shop .gd-shop-card-img{ grid-row:1; width:84px; height:100%; min-height:96px; aspect-ratio:auto; }
+  .gd-shop .gd-shop-card-body{ grid-column:2; padding:10px 34px 10px 12px; min-width:0; }
+  .gd-shop .gd-shop-card-cat{ font-size:.56rem; margin-bottom:3px; }
+  .gd-shop .gd-shop-card-name{ font-size:.86rem; line-height:1.25; margin-bottom:3px; }
+  .gd-shop .gd-shop-card-price{ font-size:.8rem; margin-bottom:8px; }
+  .gd-shop .gd-shop-card-add{ padding:8px 10px; margin:0 0 8px; font-size:.6rem; letter-spacing:.1em; }
+  .gd-shop .gd-shop-card-cta{ font-size:.62rem; }
+  .gd-shop .gd-shop-card-close{ top:6px; right:6px; }
+}
+
 /* --- controles sobre la fotografía --- */
 .gd-shop-dot{ transition: opacity .35s ease; }
 .gd-shop.sin-puntos .gd-shop-dot{ opacity:0; pointer-events:none; }
