@@ -7,7 +7,7 @@
    Los filtros viven en la dirección para que cada anuncio tenga su enlace:
      catalogo-navidad?uso=mesa&tono=dorado&precio=r1,r2&orden=asc
    Para sumar una colección nueva basta una línea en LINEAS y sus piezas en
-   giandeco.js; los atributos de filtro (tono, espacio, luz, set) van en ATR.
+   giandeco.js; los atributos de filtro (color, espacio, luz) van en ATR.
    ========================================================================== */
 (function(){
 'use strict';
@@ -33,11 +33,9 @@ var TONOS = [ ['dorado','Dorado','#C39A45'], ['rojo','Rojo','#B3262C'], ['blanco
               ['multicolor','Multicolor','conic-gradient(#B3262C,#C39A45,#3F6B3A,#EFE9DC,#B3262C)'] ];
 var RANGOS = [ ['r1','Hasta S/ 50',0,50], ['r2','S/ 50 – 100',50,100], ['r3','S/ 100 – 300',100,300],
                ['r4','S/ 300 – 1,000',300,1000], ['r5','Más de S/ 1,000',1000,Infinity] ];
-/* rótulos cortos de la regla de precio (caben en 390 px) */
-var CORTO = { r1:'≤ 50', r2:'50–100', r3:'100–300', r4:'300–1,000', r5:'+1,000' };
 var ORDENES = [ ['rec','Recomendado'], ['asc','Precio: menor a mayor'], ['desc','Precio: mayor a menor'] ];
 
-/* atributos para filtrar. tono · uso (espacios donde luce) · luz (LED) · set (se vende en set) · antes (precio regular, activa Ofertas) */
+/* atributos para filtrar. tono (color) · uso (espacios donde luce) · luz (LED) · antes (precio regular, activa Ofertas) */
 var ATR = {
   'tren-jengibre':{tono:'multicolor',uso:['aparador','vitrina']},
   'casa-jengibre':{tono:'multicolor',uso:['aparador','vitrina'],luz:1},
@@ -51,13 +49,13 @@ var ATR = {
   'papa-noel':{tono:'rojo',uso:['aparador','vitrina']},
   'bombonera-caja-regalo':{tono:'rojo',uso:['mesa','aparador']},
   'bombonera-casita':{tono:'rojo',uso:['mesa','aparador']},
-  'portavela-dorado':{tono:'dorado',uso:['mesa','aparador'],set:1},
-  'portavela-negro':{tono:'negro',uso:['mesa','aparador'],set:1},
+  'portavela-dorado':{tono:'dorado',uso:['mesa','aparador']},
+  'portavela-negro':{tono:'negro',uso:['mesa','aparador']},
   'venado-mediano':{tono:'transparente',uso:['mesa','vitrina']},
   'venado-pequeno':{tono:'transparente',uso:['mesa','vitrina']},
   'casa-musical':{tono:'negro',uso:['aparador','vitrina']},
-  'taza-cascanuez-roja':{tono:'rojo',uso:['mesa'],set:1},
-  'taza-cascanuez':{tono:'multicolor',uso:['mesa'],set:1},
+  'taza-cascanuez-roja':{tono:'rojo',uso:['mesa']},
+  'taza-cascanuez':{tono:'multicolor',uso:['mesa']},
   'arbol-iluminado':{tono:'blanco',uso:['aparador','sala'],luz:1},
   'casa-iluminada-mediana':{tono:'blanco',uso:['aparador','sala'],luz:1},
   'muneco-nieve':{tono:'blanco',uso:['aparador','sala'],luz:1},
@@ -68,9 +66,9 @@ var ATR = {
   'centro-deluxe':{tono:'madera',uso:['sala'],luz:1},
   'centro-burnie':{tono:'madera',uso:['sala']},
   'comoda-flow':{tono:'blanco',uso:['dormitorio']},
-  'comedor-city12':{tono:'madera',uso:['comedor'],set:1},
-  'comedor-city180':{tono:'madera',uso:['comedor'],set:1},
-  'comedor-living16':{tono:'blanco',uso:['comedor'],set:1},
+  'comedor-city12':{tono:'madera',uso:['comedor']},
+  'comedor-city180':{tono:'madera',uso:['comedor']},
+  'comedor-living16':{tono:'blanco',uso:['comedor']},
   'mesa-sara-canela':{tono:'madera',uso:['comedor']},
   'mesa-sara-vidrio':{tono:'blanco',uso:['comedor']},
   'ropero-bilbao-crema':{tono:'blanco',uso:['dormitorio']},
@@ -111,7 +109,7 @@ function cargar(){
         k:k, linea:f[0], nombre:p.nombre, cat:p.cat, img:p.img, precio:p.precio,
         valor: (typeof valor === 'number' && !isNaN(valor)) ? valor : null,
         antes: a.antes || null, stock: (t.stock !== undefined ? t.stock : (p.stock !== undefined ? p.stock : 1)),
-        tono:a.tono || null, uso:a.uso || [], luz:!!a.luz, set:!!a.set,
+        tono:a.tono || null, uso:a.uso || [], luz:!!a.luz,
         href: (T && T.url) ? T.url(k) : (window.GD_URL ? window.GD_URL(k) : 'producto?p=' + k)
       });
     });
@@ -119,19 +117,19 @@ function cargar(){
 }
 
 /* ---------- estado (también en la dirección) ---------- */
-var S = { cat:null, uso:null, tono:null, rangos:[], ofertas:false, luz:false, set:false, orden:'rec', abierto:null, hoja:false, sec:'precio' };
+var S = { cat:null, uso:null, tono:null, rangos:[], ofertas:false, luz:false, orden:'rec', abierto:null, hoja:false, sec:'precio' };
 (function leerURL(){
   var q = new URLSearchParams(location.search);
   if(q.get('cat')) S.cat = q.get('cat');
   if(q.get('uso')) S.uso = q.get('uso');
   if(q.get('tono')) S.tono = q.get('tono');
   if(q.get('precio')) S.rangos = q.get('precio').split(',').filter(function(r){ return RANGOS.some(function(x){ return x[0] === r; }); });
-  S.ofertas = q.get('ofertas') === '1'; S.luz = q.get('luz') === '1'; S.set = q.get('set') === '1';
+  S.ofertas = q.get('ofertas') === '1'; S.luz = q.get('luz') === '1';
   if(q.get('orden') && ORDENES.some(function(o){ return o[0] === q.get('orden'); })) S.orden = q.get('orden');
 })();
 function escribirURL(){
   var q = new URLSearchParams(location.search);
-  [['cat',S.cat],['uso',S.uso],['tono',S.tono],['precio',S.rangos.join(',')],['ofertas',S.ofertas?'1':''],['luz',S.luz?'1':''],['set',S.set?'1':''],['orden',S.orden==='rec'?'':S.orden]]
+  [['cat',S.cat],['uso',S.uso],['tono',S.tono],['precio',S.rangos.join(',')],['ofertas',S.ofertas?'1':''],['luz',S.luz?'1':''],['orden',S.orden==='rec'?'':S.orden]]
     .forEach(function(kv){ if(kv[1]) q.set(kv[0], kv[1]); else q.delete(kv[0]); });
   var s = q.toString();
   try{ history.replaceState(null, '', location.pathname + (s ? '?' + s : '') + location.hash); }catch(e){}
@@ -148,7 +146,6 @@ function pasa(p, o){
   if(s.rangos.length && (p.valor === null || s.rangos.indexOf(rangoDe(p.valor)) < 0)) return false;
   if(s.ofertas && !p.antes) return false;
   if(s.luz && !p.luz) return false;
-  if(s.set && !p.set) return false;
   return true;
 }
 function cuenta(o){ var n = 0; PRODS.forEach(function(p){ if(pasa(p, o)) n++; }); return n; }
@@ -160,7 +157,7 @@ function lista(){
   });
   return l;
 }
-function activos(){ return (S.cat?1:0) + (S.uso?1:0) + (S.tono?1:0) + (S.rangos.length?1:0) + (S.ofertas?1:0) + (S.luz?1:0) + (S.set?1:0); }
+function activos(){ return (S.cat?1:0) + (S.uso?1:0) + (S.tono?1:0) + (S.rangos.length?1:0) + (S.ofertas?1:0) + (S.luz?1:0); }
 function nombre(arr, k){ for(var i = 0; i < arr.length; i++){ if(arr[i][0] === k) return arr[i][1]; } return ''; }
 function linea(){ for(var i = 0; i < LINEAS.length; i++){ if(LINEAS[i].k === LINEA_PAGINA) return LINEAS[i]; } return LINEAS[0]; }
 function cats(){ var c = []; PRODS.forEach(function(p){ if(enLinea(p) && c.indexOf(p.cat) < 0) c.push(p.cat); }); return c; }
@@ -171,7 +168,7 @@ function precioLabel(){
   return S.rangos.length + ' tramos';
 }
 /* interruptores: solo se muestran si separan algo dentro de la colección */
-function toggleUtil(key){ var o = {}; o[key] = true; var n = cuenta(Object.assign({ cat:null, uso:null, tono:null, rangos:[], ofertas:false, luz:false, set:false }, o)); var t = cuenta({ cat:null, uso:null, tono:null, rangos:[], ofertas:false, luz:false, set:false }); return n > 0 && n < t; }
+function toggleUtil(key){ var o = {}; o[key] = true; var n = cuenta(Object.assign({ cat:null, uso:null, tono:null, rangos:[], ofertas:false, luz:false }, o)); var t = cuenta({ cat:null, uso:null, tono:null, rangos:[], ofertas:false, luz:false }); return n > 0 && n < t; }
 
 /* ---------- iconos ---------- */
 var CHEV = '<svg class="ctl-chev" viewBox="0 0 12 12" aria-hidden="true"><path d="m3 4.5 3 3 3-3"/></svg>';
@@ -224,22 +221,20 @@ function opcionesLista(key, arr){
       '<span>' + esc(o[1]) + '</span><small>' + n + '</small></button>';
   }).join('');
 }
-function reglaHTML(alto){
-  var c = RANGOS.map(function(r){ return cuenta({ rangos:[r[0]] }); });
-  var mx = Math.max.apply(null, c.concat([1]));
-  return '<div class="ctl-regla">' + RANGOS.map(function(r, i){
-    var on = S.rangos.indexOf(r[0]) >= 0;
-    return '<button type="button" class="ctl-seg' + (on ? ' is-on' : '') + '" data-act="rango" data-v="' + r[0] + '" aria-label="' + r[1] + ', ' + piezas(c[i]) + '" aria-pressed="' + on + '"' + (c[i] || on ? '' : ' disabled') + '>' +
-      '<span class="ctl-col-b"><i style="height:' + Math.max(2, Math.round(c[i] / mx * alto)) + 'px"></i></span>' +
-      '<b>' + CORTO[r[0]] + '</b><small>' + c[i] + '</small></button>';
-  }).join('') + '</div>';
+function preciosHTML(){
+  return RANGOS.map(function(r){
+    var n = cuenta({ rangos:[r[0]] }), on = S.rangos.indexOf(r[0]) >= 0;
+    if(!n && !on) return '';
+    return '<button type="button" class="ctl-opt' + (on ? ' is-on' : '') + '" data-act="rango" data-v="' + r[0] + '" aria-pressed="' + on + '">' +
+      '<span>' + esc(r[1]) + '</span><small>' + n + '</small></button>';
+  }).join('');
 }
 function boton(key, titulo, valor, cuerpo){
   var open = S.abierto === key;
   return '<div class="ctl-f">' +
     '<button type="button" class="ctl-fbtn' + (valor ? ' is-act' : '') + (open ? ' is-open' : '') + '" data-act="abrir" data-k="' + key + '" aria-expanded="' + open + '">' +
       esc(titulo) + (valor ? ': <b>' + esc(valor) + '</b>' : '') + CHEV + '</button>' +
-    (open ? '<div class="ctl-menu' + (key === 'precio' ? ' is-regla' : '') + '">' + cuerpo + '</div>' : '') +
+    (open ? '<div class="ctl-menu">' + cuerpo + '</div>' : '') +
   '</div>';
 }
 function toggleBtn(key, label){
@@ -312,10 +307,10 @@ function pintar(){
   elFil.innerHTML =
     boton('cat', 'Categoría', S.cat, opcionesLista('cat', cats().map(function(c){ return [c, c]; }))) +
     boton('uso', 'Espacio', S.uso ? nombre(USOS, S.uso) : '', opcionesLista('uso', USOS)) +
-    boton('precio', 'Precio', precioLabel(), reglaHTML(64)) +
-    boton('tono', 'Tono', S.tono ? nombre(TONOS, S.tono) : '', opcionesLista('tono', TONOS)) +
+    boton('precio', 'Precio', precioLabel(), preciosHTML()) +
+    boton('tono', 'Color', S.tono ? nombre(TONOS, S.tono) : '', opcionesLista('tono', TONOS)) +
     '<span class="ctl-sep" aria-hidden="true"></span>' +
-    toggleBtn('ofertas', 'Ofertas') + toggleBtn('luz', 'Con luz LED') + toggleBtn('set', 'Se vende en set') +
+    toggleBtn('ofertas', 'Ofertas') + toggleBtn('luz', 'Con luz LED') +
     (act ? '<button type="button" class="ctl-limpiar" data-act="limpiar">Limpiar filtros</button>' : '');
   elOrden.value = S.orden;
 
@@ -327,7 +322,6 @@ function pintar(){
   if(S.rangos.length) chips.push(['precio', precioLabel()]);
   if(S.ofertas) chips.push(['ofertas', 'Ofertas']);
   if(S.luz) chips.push(['luz', 'Con luz LED']);
-  if(S.set) chips.push(['set', 'En set']);
   elChips.innerHTML = chips.map(function(c){ return '<button type="button" class="ctl-chip" data-act="quitar" data-k="' + c[0] + '" aria-label="Quitar ' + esc(c[1]) + '">' + esc(c[1]) + X + '</button>'; }).join('');
   elChips.hidden = !chips.length;
 
@@ -361,12 +355,12 @@ function pintarHoja(){
     fila('orden', 'Ordenar', nombre(ORDENES, S.orden), ORDENES.map(function(o){
       return '<button type="button" class="ctl-opt' + (S.orden === o[0] ? ' is-on' : '') + '" data-act="ordenar" data-v="' + o[0] + '"><span>' + o[1] + '</span></button>'; }).join('')) +
     fila('cat', 'Categoría', S.cat, opcionesLista('cat', cats().map(function(c){ return [c, c]; }))) +
-    fila('precio', 'Precio', precioLabel(), reglaHTML(60)) +
+    fila('precio', 'Precio', precioLabel(), preciosHTML()) +
     fila('uso', 'Espacio', S.uso ? nombre(USOS, S.uso) : '', opcionesLista('uso', USOS)) +
-    fila('tono', 'Tono', S.tono ? nombre(TONOS, S.tono) : '', '<div class="ctl-tonos">' + opcionesLista('tono', TONOS) + '</div>') +
-    '<div class="ctl-tgs">' + ['ofertas','luz','set'].map(function(k){
+    fila('tono', 'Color', S.tono ? nombre(TONOS, S.tono) : '', '<div class="ctl-tonos">' + opcionesLista('tono', TONOS) + '</div>') +
+    '<div class="ctl-tgs">' + ['ofertas','luz'].map(function(k){
       if(!toggleUtil(k) && !S[k]) return '';
-      var lab = { ofertas:'Ofertas', luz:'Con luz LED', set:'Se vende en set' }[k];
+      var lab = { ofertas:'Ofertas', luz:'Con luz LED' }[k];
       return '<button type="button" class="ctl-sw-row' + (S[k] ? ' is-on' : '') + '" data-act="tg" data-k="' + k + '" aria-pressed="' + S[k] + '"><span>' + lab + '</span><i><b></b></i></button>';
     }).join('') + '</div>';
   elHojaB.scrollTop = top;
@@ -380,7 +374,7 @@ function abrirHoja(v){
   else { elHoja.classList.remove('is-open'); elVelo.classList.remove('is-open'); elPill.focus({ preventScroll:true }); }
   S.hoja = v;
 }
-function limpiar(){ S.cat = S.uso = S.tono = null; S.rangos = []; S.ofertas = S.luz = S.set = false; S.abierto = null; }
+function limpiar(){ S.cat = S.uso = S.tono = null; S.rangos = []; S.ofertas = S.luz = false; S.abierto = null; }
 
 raiz.addEventListener('click', function(e){
   var t = e.target.closest('[data-act]'); if(!t || !raiz.contains(t)) return;
@@ -390,7 +384,7 @@ raiz.addEventListener('click', function(e){
   if(a === 'set'){ S[k] = S[k] === v ? null : v; if(window.matchMedia('(min-width:900px)').matches) S.abierto = null; pintar(); return; }
   if(a === 'rango'){ var i = S.rangos.indexOf(v); if(i >= 0) S.rangos.splice(i, 1); else S.rangos.push(v); pintar(); return; }
   if(a === 'tg'){ S[k] = !S[k]; pintar(); return; }
-  if(a === 'quitar'){ if(k === 'precio') S.rangos = []; else if(k === 'ofertas' || k === 'luz' || k === 'set') S[k] = false; else S[k] = null; pintar(); return; }
+  if(a === 'quitar'){ if(k === 'precio') S.rangos = []; else if(k === 'ofertas' || k === 'luz') S[k] = false; else S[k] = null; pintar(); return; }
   if(a === 'limpiar'){ limpiar(); pintar(); return; }
   if(a === 'hoja'){ abrirHoja(true); return; }
   if(a === 'cerrar-hoja'){ abrirHoja(false); return; }
