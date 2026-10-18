@@ -693,6 +693,20 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
   body .gd-shop-ver, body .gd-shop-amp{ width:44px; height:44px; }
 }
 
+/* ficha de producto en el teléfono: la foto va de borde a borde desde el borde superior, con la cabecera
+   transparente encima (como en las páginas de espacio); el texto conserva solo el margen lateral mínimo */
+@media (max-width:719px){
+  body .pdp-top{ padding-top:0; padding-bottom:32px; }
+  body .pdp-grid{ gap:24px; }
+  body .pdp-gal{ position:relative; margin-inline:calc(var(--gd-gut) * -1); gap:10px; }
+  body .pdp-gal::before{ content:''; position:absolute; inset:0 0 auto; height:96px; z-index:2; pointer-events:none; background:linear-gradient(rgba(10,10,9,.5), rgba(10,10,9,0)); }
+  body .pdp-plate{ border-radius:0; }
+  body .pdp-thumbs{ padding-inline:var(--gd-gut); }
+  body .pdp-buy h1{ margin-bottom:12px; }
+  body .pdp-precio{ margin-bottom:16px; }
+  body .gdt-sec{ padding-block:36px; }
+}
+
 /* puntos de compra sobre fotografía, datos de contacto y controles del home */
 @media (max-width:899px){
   body .gd-shop-dot::after{ content:''; position:absolute; inset:-6px; border-radius:50%; }
@@ -805,4 +819,20 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
   .pdp-confianza summary{ flex-wrap:wrap; row-gap:10px; }
   .pdp-confianza summary .gdt-logos{ order:4; flex-basis:100%; padding-left:50px; }
 }
+/* características, ficha y guía: desplegables bajo la compra segura */
+.pdp-dets{ margin:12px 0 0; border-top:1px solid var(--line); }
+.pdp-det{ border-bottom:1px solid var(--line); }
+.pdp-det summary{ display:flex; align-items:center; justify-content:space-between; gap:14px; min-height:56px; padding:8px 2px; cursor:pointer; list-style:none; font-size:.92rem; font-weight:500; color:var(--lino); }
+.pdp-det summary::-webkit-details-marker{ display:none; }
+.pdp-det summary:hover{ color:var(--accent); }
+.pdp-det summary:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+.pdp-det[open] .pdp-confianza-mas::after{ transform:rotate(0deg); }
+.pdp-det-in{ padding:0 2px 20px; animation:pdpAbre .35s var(--gd-ease, ease); }
+.pdp-det-in .pdp-lista li{ padding-block:11px; font-size:.9rem; }
+.pdp-det-in .pdp-lista li::before{ top:21px; }
+.pdp-det-in .pdp-lista li:last-child{ border-bottom:none; }
+.pdp-det-in .pdp-tabla div{ grid-template-columns:minmax(96px,.55fr) 1fr; padding-block:11px; }
+.pdp-det-in .pdp-tabla div:last-child{ border-bottom:none; }
+.pdp-det-in .gd-quote{ margin:0 0 6px; font-size:1.15rem; }
+.pdp-det-in .pdp-calc{ border-left:none; border-top:1px solid var(--line); padding:20px 0 0; margin-top:6px; }
 @media (prefers-reduced-motion: reduce){ .pdp-confianza-in{ animation:none; } .pdp-confianza-mas::before, .pdp-confianza-mas::after{ transition:none; } }
