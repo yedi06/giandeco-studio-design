@@ -89,19 +89,6 @@
 .ctl-orden{ display:flex; align-items:center; gap:10px; font-family: var(--body); font-size:.82rem; color: var(--text-faint); white-space:nowrap; }
 .ctl-orden select{ height:40px; padding:0 10px; background: var(--bg); color: var(--text); border:1px solid var(--line); font-family: var(--body); font-size:.85rem; }
 
-/* regla de precio */
-.ctl-menu.is-regla{ min-width:440px; padding:16px; }
-.ctl-regla{ display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:6px; }
-.ctl-seg{ display:flex; flex-direction:column; gap:6px; padding:0; background:none; border:0; cursor:pointer; text-align:left; font-family: var(--body); color: var(--text-faint); }
-.ctl-seg[disabled]{ cursor:default; opacity:.45; }
-.ctl-col-b{ display:flex; align-items:flex-end; height:64px; border-bottom:1px solid var(--line); }
-.ctl-col-b i{ display:block; width:100%; background: rgba(201,162,74,.26); transition: background .2s ease; }
-.ctl-seg:not([disabled]):hover .ctl-col-b i{ background: rgba(201,162,74,.5); }
-.ctl-seg.is-on .ctl-col-b i{ background: var(--accent); }
-.ctl-seg b{ font-weight:400; font-size:.78rem; line-height:1.25; color: var(--text-dim); white-space:nowrap; font-variant-numeric: tabular-nums; }
-@media (max-width:420px){ .ctl-seg b{ font-size:.72rem; } }
-.ctl-seg.is-on b{ color: var(--text); }
-.ctl-seg small{ font-size:.7rem; }
 
 /* ---------- grilla ---------- */
 .ctl-body{ padding-bottom: clamp(56px,7vw,96px); }
@@ -194,7 +181,6 @@
 .ctl-acc-v .ctl-chev{ stroke: currentColor; width:12px; height:12px; }
 .ctl-acc-b{ padding:0 0 16px; }
 .ctl-acc-b .ctl-opt{ padding-inline:0; }
-.ctl-acc-b .ctl-regla{ padding-top:4px; }
 .ctl-tonos{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 16px; }
 .ctl-tonos .ctl-opt{ justify-content:flex-start; gap:10px; }
 .ctl-tonos .ctl-opt span{ flex:1; }
@@ -219,6 +205,3 @@ html.ctl-lock{ overflow:hidden; }
 .ctl-ed{ scroll-margin-top: 16px; }
 @media (min-width:900px){ .ctl-ed{ scroll-margin-top: 76px; } }
 .ctl-opt-extra{ margin-top:6px; border-top:1px solid var(--line); padding-top:14px; }
-:root[data-tema="claro"] .ctl-col-b i{ background: rgba(113,91,49,.28); }
-:root[data-tema="claro"] .ctl-seg:not([disabled]):hover .ctl-col-b i{ background: rgba(113,91,49,.5); }
-:root[data-tema="claro"] .ctl-seg.is-on .ctl-col-b i{ background: var(--accent); }
