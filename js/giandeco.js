@@ -386,7 +386,7 @@ INDICE.push({ label:'Retail · Blog', href:'retail/blog' }, { label:'Hogar · Bl
   Object.keys(L[0]).forEach(function(k){
     var p = L[0][k];
     // la categoría y la línea también se buscan: "comedor", "colgante", "navidad"
-    INDICE.push({ label: p.nombre + ' — ' + p.precio, href:window.GD_URL(k), extra: p.cat + ' ' + L[1], pieza:true });
+    INDICE.push({ label: p.nombre + ' — ' + p.precio, href:window.GD_URL(k), extra: p.cat + ' ' + L[1], pieza:true, nombre:p.nombre, precio:p.precio, meta:p.cat + ' · ' + L[1], img:p.img });
   });
 });
 /* sin tildes ni mayúsculas: "lampara" encuentra "Lámpara" */
@@ -414,7 +414,12 @@ function pintarResultados(q){
     .map(function(x){ return x.i; })
     .slice(0, 8);
   results.innerHTML = hits.length
-    ? hits.map(function(h){ return '<a class="sh-search-result" href="' + h.href + '">' + h.label + '</a>'; }).join('')
+    ? hits.map(function(h){
+        if(!h.pieza || !h.img) return '<a class="sh-search-result" href="' + h.href + '">' + h.label + '</a>';
+        // pieza del catálogo: foto, nombre, categoría y precio
+        return '<a class="sh-search-result is-pieza" href="' + h.href + '"><span class="sh-sr-foto"><img src="' + h.img + '" alt="" width="72" height="72" loading="lazy" decoding="async"></span>' +
+          '<span class="sh-sr-txt"><b>' + h.nombre + '</b><small>' + h.meta + '</small></span><span class="sh-sr-precio">' + h.precio + '</span></a>';
+      }).join('')
     : '<p class="sh-search-empty">Sin resultados. Escríbanos por WhatsApp y le respondemos.</p>';
 }
 function abrirBuscar(){ if(!overlay) return; overlay.classList.add('is-open'); overlay.setAttribute('aria-hidden','false'); if(input){ input.value=''; input.focus(); } pintarResultados(''); }
