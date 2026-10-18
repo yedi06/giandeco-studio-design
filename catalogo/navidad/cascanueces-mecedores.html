@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <base href="/"><script>if(/\.github\.io$/.test(location.hostname))document.querySelector("base").href="/"+location.pathname.split("/")[1]+"/";window.addEventListener("click",function(e){if(e.defaultPrevented)return;var a=e.target.closest&&e.target.closest("a[href^='#']");if(a&&a.getAttribute("href").length>1){e.preventDefault();location.hash=a.getAttribute("href")}})</script>
-<script src="js/gd-acceso.js?v=20261017e"></script>
+<script src="js/gd-acceso.js?v=20261018a"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cascanueces mecedores — Navidad · Giandeco Studio Design</title>
 <meta name="description" content="Cascanueces mecedores · Cascanueces · S/ 58.70. Se venden por unidad. Disponible en 3 modelos. Envío a todo el Perú.">
@@ -24,11 +24,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261017g">
-<link rel="stylesheet" href="css/gd-movil.css?v=20261017e">
-<link rel="stylesheet" href="css/gd-tema.css?v=20261017e">
-<script src="js/gd-tema.js?v=20261017e"></script>
-<link rel="stylesheet" href="css/gd-tienda.css?v=20261017e">
+<link rel="stylesheet" href="css/giandeco.css?v=20261018a">
+<link rel="stylesheet" href="css/gd-movil.css?v=20261018a">
+<link rel="stylesheet" href="css/gd-tema.css?v=20261018a">
+<script src="js/gd-tema.js?v=20261018a"></script>
+<link rel="stylesheet" href="css/gd-tienda.css?v=20261018a">
 </head>
 <body data-mundo="catalogo" data-seccion="producto" data-p="cascanueces-mecedores">
 
@@ -37,8 +37,8 @@
 <main id="pdp"><section class="pdp-top"><div class="gd-in"><h1 class="gd-h1">Cascanueces mecedores</h1><p class="gd-body">S/ 58.70</p><p class="gd-body">Se venden por unidad. Disponible en 3 modelos.</p><img src="images/navidad/cascanueces-mecedores-1.jpg" alt="Cascanueces mecedores" width="600"></div></section></main>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=20261017e"></script>
-<script src="js/gd-tienda.js?v=20261017e"></script>
+<script src="js/giandeco.js?v=20261018a"></script>
+<script src="js/gd-tienda.js?v=20261018a"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc;
@@ -56,6 +56,8 @@
 
   var L = T.LINEAS[p.linea];
   var consulta = p.valor === null;
+  // la nota de envío/instalación solo tiene sentido en piezas que se arman o instalan (mueblería, iluminación); un adorno no la necesita
+  var instala = p.linea !== 'navidad';
   var waPieza = T.wa('Hola Giandeco, tengo una consulta sobre la pieza: ' + p.nombre + ' (' + p.precio + ').');
 
   /* ---- cabecera del documento ---- */
@@ -133,7 +135,7 @@
     '<div class="pdp-buy">' +
       '<h1>' + esc(p.nombre) + '</h1>' +
       '<p class="pdp-precio"><b>' + esc(consulta ? 'Precio a consultar' : p.precio) + '</b>' +
-        (consulta ? '' : '<span>' + (T.CFG.PRECIOS_CON_IGV ? 'Incluye IGV · ' : '') + 'No incluye envío ni instalación</span>') + '</p>' +
+        (consulta ? '' : '<span>' + (T.CFG.PRECIOS_CON_IGV ? 'Incluye IGV' : '') + (instala ? (T.CFG.PRECIOS_CON_IGV ? ' · ' : '') + 'No incluye envío ni instalación' : '') + '</span>') + '</p>' +
       '<p class="pdp-stock' + (p.stock <= 0 ? ' es-agotado' : '') + '">' + (p.stock <= 0 ? 'Agotado' : p.stock === 1 ? 'Última unidad disponible' : p.stock + ' unidades disponibles') + '</p>' +
       '<p class="pdp-nota">' + esc(p.nota) + '</p>' +
       variantes +
@@ -147,7 +149,7 @@
       (p.stock <= 0 ? '</div>' : '') +
       '<div class="pdp-sub">' +
         '<button type="button" data-gdt-fav="' + key + '" class="' + (T.favs.es(key) ? 'is-on' : '') + '" aria-pressed="' + (T.favs.es(key) ? 'true' : 'false') + '">' + I.cora + 'Guardar</button>' +
-        (consulta ? '' : '<a href="' + waPieza + '" target="_blank" rel="noopener">' + I.chat + 'Hablar con un diseñador</a>') +
+        (consulta ? '' : '<a href="' + waPieza + '" target="_blank" rel="noopener">' + I.chat + 'Hablar con un asesor</a>') +
       '</div>' +
       // compra segura: abierta por defecto; el cliente puede plegarla
       '<details class="pdp-confianza" open>' +
@@ -157,13 +159,14 @@
         '<div class="pdp-confianza-in">' +
           '<ul class="pdp-seg">' +
             '<li>' + I.camion + '<span><b>Envío a todo el Perú</b>Por agencia de transporte. El flete lo paga usted a la agencia, al recibir o al recoger.</span></li>' +
-            '<li>' + I.regla + '<span><b>Armado e instalación</b>Opcional, a cargo del estudio. Se cotiza según la pieza.</span></li>' +
-            '<li>' + I.chat + '<span><b>Un diseñador le responde</b>Dudas de medida, acabado o combinación, por WhatsApp.</span></li>' +
+            (instala ? '<li>' + I.regla + '<span><b>Armado e instalación</b>Opcional, a cargo del estudio. Se cotiza según la pieza.</span></li>' : '') +
+            '<li>' + I.chat + '<span><b>Un asesor de Giandeco le responde</b>Dudas de medida, acabado o combinación, por WhatsApp.</span></li>' +
           '</ul>' +
           '<p class="pdp-pagos"><span class="pdp-culqi">Pago seguro con <img src="images/pago/culqi.svg" alt="Culqi" width="56" height="16"></span></p>' +
           '<p class="pdp-conf"><a href="ayuda/compra-segura">Compra segura</a><a href="ayuda/compra-segura#pagos">Medios de pago</a><a href="ayuda/envios-y-entregas">Envíos</a><a href="ayuda/cambios-y-garantia">Cambios y garantía</a></p>' +
         '</div>' +
       '</details>' +
+      '@@DETALLES@@' +
     '</div>' +
   '</div></div></section>';
 
@@ -172,11 +175,15 @@
   var filas = [['Línea', '<a href="' + L.href + '">' + L.label + '</a>'], ['Categoría', esc(p.cat)]];
   if(p.v) filas.push(['Variante', esc(p.v)]);
   filas.push(['Referencia', esc(key.toUpperCase())]);
-  filas.push(['Entrega', esc(T.COND)]);
-  var ficha = '<section class="gdt-sec"><div class="pdp-ficha">' +
-    '<div><h2 class="pdp-h3">Características</h2><ul class="pdp-lista">' + rasgos.map(function(r){ return '<li>' + esc(r) + '</li>'; }).join('') + '</ul></div>' +
-    '<div><h2 class="pdp-h3">Ficha</h2><dl class="pdp-tabla">' + filas.map(function(f){ return '<div><dt>' + f[0] + '</dt><dd>' + f[1] + '</dd></div>'; }).join('') + '</dl></div>' +
-  '</div></section>';
+  filas.push(['Entrega', esc(instala ? T.COND : 'Enviamos a todo el Perú por agencia de transporte; el flete lo paga el cliente a la agencia.')]);
+  // características, ficha y guía del estudio: plegadas, para que no tapen la compra ni empujen lo demás
+  function det(titulo, cuerpo){
+    return '<details class="pdp-det"><summary><span>' + titulo + '</span><i class="pdp-confianza-mas" aria-hidden="true"></i></summary>' +
+      '<div class="pdp-det-in">' + cuerpo + '</div></details>';
+  }
+  var detFicha = det('Ficha técnica', '<dl class="pdp-tabla">' + filas.map(function(f){ return '<div><dt>' + f[0] + '</dt><dd>' + f[1] + '</dd></div>'; }).join('') + '</dl>');
+  // con una sola frase, las características repetirían la descripción que ya está sobre el botón de compra
+  var detRasgos = rasgos.length > 1 ? det('Características', '<ul class="pdp-lista">' + rasgos.map(function(r){ return '<li>' + esc(r) + '</li>'; }).join('') + '</ul>') : '';
 
   /* ==================== 3. GUÍA DEL ESTUDIO ==================== */
   var calc = '';
@@ -189,10 +196,9 @@
       '<div class="pdp-calc-in"><input id="pdpCalc" type="number" inputmode="numeric" min="24" max="100" value="' + (p.tv || 55) + '"><span>pulgadas</span></div>' +
       '<p class="pdp-calc-out" id="pdpCalcOut" aria-live="polite"></p></div>';
   }
-  var guia = G ? '<section class="gdt-sec"><div class="pdp-guia' + (calc ? ' con-calc' : '') + '">' +
-    '<div><p class="gd-eyebrow">Guía del estudio</p><p class="gd-quote">' + esc(G.cita) + '</p>' +
-      '<ul class="pdp-lista">' + G.tips.map(function(t){ return '<li>' + esc(t) + '</li>'; }).join('') + '</ul></div>' + calc +
-  '</div></section>' : '';
+  var detGuia = G ? det('Guía del estudio', '<p class="gd-quote">' + esc(G.cita) + '</p>' +
+    '<ul class="pdp-lista">' + G.tips.map(function(t){ return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' + calc) : '';
+  top = top.replace('@@DETALLES@@', '<div class="pdp-dets">' + detRasgos + detFicha + detGuia + '</div>');
 
   /* ==================== 4. COMPLETE EL AMBIENTE ==================== */
   var comp = T.complementos(key, 3);
@@ -267,7 +273,7 @@
   /* ==================== 6b. PREGUNTAS AL ESTUDIO ==================== */
   var preg = T.CFG.PREGUNTAS.filter(function(q){ return q.producto === key; });
   var pregHTML = '<section class="gdt-sec" id="preguntas"><div class="op-grid"><div><p class="gd-eyebrow">Preguntas sobre esta pieza</p>' +
-      '<h2 class="gd-h2" style="font-size:clamp(1.9rem,3vw,2.4rem);">Pregúntele a un diseñador</h2>' +
+      '<h2 class="gd-h2" style="font-size:clamp(1.9rem,3vw,2.4rem);">Pregúntele a un asesor</h2>' +
       '<p class="gd-body">Medidas, acabados, si combina con lo que ya tiene. Responde una persona del estudio, no un robot.</p></div>' +
     '<div>' + (preg.length ? preg.map(function(q){
         return '<article class="op-item"><p style="color:var(--lino);font-weight:500;margin-bottom:8px;">' + esc(q.p) + '</p><p>' + esc(q.r) + '</p><span class="op-sello">Responde el estudio</span></article>';
@@ -289,12 +295,15 @@
     '<div class="gd-grid es-carrusel">' + vis.map(function(k){ return T.card(k, { sinBoton:true }); }).join('') + '</div></section>' : '';
   T.vistos.marcar(key);
 
-  root.innerHTML = top + '<div class="gd-in">' + ficha + guia + set + estudio +
+  root.innerHTML = top + '<div class="gd-in">' + set + estudio +
     pregHTML + '<section class="gdt-sec" id="opiniones">' + opinionesHTML() + '</section>' + simHTML + visHTML + '</div>' +
     '<div class="pdp-bar" id="pdpBar"><span><b>' + esc(p.nombre) + '</b><i>' + esc(p.precio) + '</i></span>' +
       (p.stock <= 0 ? '' : '<button type="button" class="gd-btn gd-btn-primary" data-gdt-add="' + key + '">' + (consulta ? 'Cotizar' : 'Añadir') + '</button>') + '</div>';
 
   /* ==================== COMPORTAMIENTO ==================== */
+  // en el teléfono la compra segura arranca plegada: deja ver la compra y los desplegables sin tanto desplazamiento
+  var conf = root.querySelector('.pdp-confianza');
+  if(conf && window.matchMedia('(max-width:719px)').matches) conf.removeAttribute('open');
   var plate = document.getElementById('pdpPlate'), img = document.getElementById('pdpImg');
   var fino = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   function ajustar(){
@@ -391,7 +400,7 @@
   if(location.hash === '#opiniones') document.getElementById('opiniones').scrollIntoView();
 })();
 </script>
-<script src="js/gd-movil.js?v=20261017e" defer></script>
-<script src="js/gd-chat.js?v=20261017e" defer></script>
+<script src="js/gd-movil.js?v=20261018a" defer></script>
+<script src="js/gd-chat.js?v=20261018a" defer></script>
 </body>
 </html>
