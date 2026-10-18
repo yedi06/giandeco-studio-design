@@ -13,7 +13,10 @@ eval(fs.readFileSync(__dirname + '/js/gd-proyectos.js', 'utf8'));
 eval(fs.readFileSync(__dirname + '/js/gd-servicios.js', 'utf8'));
 var D = window.GD_PROYECTOS, SV = window.GD_SERVICIOS, UI = require('./js/gd-proyectos-ui.js');
 var V = (fs.readFileSync(__dirname + '/index.html', 'utf8').match(/giandeco\.css\?v=([\w]+)/) || [])[1] || '1';
-var VC = (fs.readFileSync(__dirname + '/index.html', 'utf8').match(/gd-chat\.js\?v=([\w]+)/) || [])[1] || V;
+var INDEX = fs.readFileSync(__dirname + '/index.html', 'utf8');
+/* cada recurso toma la versión que lleva en index.html (la que se sube al cambiarlo); si no está allí, la del CSS general */
+function ver(archivo){ return (INDEX.match(new RegExp(archivo.replace('.', '\\.') + '\\?v=([\\w]+)')) || [])[1] || V; }
+var VC = ver('gd-chat.js');
 var DOMINIO = 'https://giandeco.com';
 
 /* cabecera, estilos y scripts comunes a fichas y servicios */
@@ -29,7 +32,7 @@ function documento(o){
     '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
     '<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">\n' +
     '<link rel="preload" as="image" href="' + o.img + '" fetchpriority="high">\n' +
-    ['giandeco', 'gd-tienda', 'gd-movil', 'gd-tema'].map(function(c){ return '<link rel="stylesheet" href="css/' + c + '.css?v=' + V + '">'; }).join('\n') + '\n' +
+    ['giandeco', 'gd-tienda', 'gd-movil', 'gd-tema'].map(function(c){ return '<link rel="stylesheet" href="css/' + c + '.css?v=' + ver(c + '.css') + '">'; }).join('\n') + '\n' +
     '<script src="js/gd-tema.js?v=' + V + '"></script>\n' +
     '<script type="application/ld+json">' + JSON.stringify(ld) + '</script>\n' +
     '</head>\n<body data-mundo="' + o.mundo + '" data-seccion="' + o.seccion + '" data-og="' + o.img.replace(/\?.*$/, '') + '">\n\n' +
