@@ -362,7 +362,8 @@ img{ max-width:100%; display:block; }
 .sh-mobile.is-open{ transform: translateX(0); }
 @media (min-width:1180px){ .sh-mobile, .sh-scrim{ display:none; } }
 .sh-mobile-head{ display:flex; align-items:center; justify-content:space-between; padding:20px clamp(18px,5vw,28px); border-bottom:1px solid var(--line); }
-.sh-mobile-logo{ font-family: var(--script); font-style:italic; font-weight:300; font-size:1.3rem; color: var(--text); }
+.sh-mobile-logo{ display:block; line-height:0; }
+.sh-mobile-logo img{ display:block; height:54px; width:auto; }
 .sh-mobile-close{ background:none; border:none; color: var(--text-dim); font-size:1.7rem; line-height:1; cursor:pointer; padding:.2rem .4rem; }
 .sh-mobile-close:hover{ color: var(--text); }
 .sh-mobile-body{ padding:4px clamp(18px,5vw,28px) 32px; }
@@ -378,6 +379,7 @@ img{ max-width:100%; display:block; }
 .sh-acc.is-open .sh-acc-panel{ max-height:340px; padding-bottom:16px; }
 .sh-acc-panel a{ font-family: var(--body); font-size:.86rem; color: var(--text-dim); text-decoration:none; padding:6px 0; }
 .sh-acc-panel a:hover{ color: var(--text); }
+.sh-acc-panel a.sh-acc-todo{ color: var(--accent); letter-spacing:.04em; }
 .sh-acc-panel a[data-pronto]{ color: var(--accent-2); opacity:.75; }
 .sh-mobile-paginas{ display:grid; gap:2px; padding:16px 0; border-bottom:1px solid var(--line); }
 .sh-mobile-paginas a{ font-family: var(--body); font-size:.92rem; color: var(--text-dim); text-decoration:none; padding:8px 0; }
