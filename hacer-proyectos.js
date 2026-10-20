@@ -38,7 +38,7 @@ function documento(o){
     '</head>\n<body data-mundo="' + o.mundo + '" data-seccion="' + o.seccion + '" data-og="' + o.img.replace(/\?.*$/, '') + '">\n\n' +
     '<!-- generado por hacer-proyectos.js: no editar a mano -->\n' +
     '<div id="gdHeader"></div>\n<main class="pj">\n' + o.cuerpo + '\n</main>\n<div id="gdFooter"></div>\n' +
-    '<script src="js/giandeco.js?v=' + V + '"></script>\n' +
+    '<script src="js/giandeco.js?v=' + ver('giandeco.js') + '"></script>\n' +
     '<script src="js/gd-proyectos-ui.js?v=' + V + '"></script>\n' +
     '<script src="js/gd-tienda.js?v=' + V + '" defer></script>\n<script src="js/gd-movil.js?v=' + V + '" defer></script>\n<script src="js/gd-chat.js?v=' + VC + '" defer></script>\n</body>\n</html>\n';
 }
