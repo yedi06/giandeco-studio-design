@@ -584,6 +584,20 @@ function montarPuntos(){
       if(abierto){ abierto.classList.remove('is-open'); abierto = null; }
     }
 
+    // zona realmente visible de la fotografía: la foto puede estar recortada por un contenedor (portada de catálogo)
+    // o quedar bajo el menú fijo; la ficha se acomoda dentro de eso, no del alto completo de la imagen
+    function limites(){
+      var r = shop.getBoundingClientRect(), L = r.left, T = r.top, R = r.right, B = r.bottom, el = shop.parentElement;
+      while(el && el !== document.body){
+        var cs = getComputedStyle(el);
+        if(cs.overflowX !== 'visible' || cs.overflowY !== 'visible'){ var c = el.getBoundingClientRect(); L = Math.max(L, c.left); T = Math.max(T, c.top); R = Math.min(R, c.right); B = Math.min(B, c.bottom); }
+        el = el.parentElement;
+      }
+      var h = document.querySelector('.site-header');
+      if(h && getComputedStyle(h).position === 'fixed'){ var hb = h.querySelector('.sh-marca') ? h.querySelector('.sh-marca').getBoundingClientRect().bottom : h.getBoundingClientRect().bottom; if(hb > T && hb < B) T = hb; }
+      return { left:L, top:T, right:R, bottom:B };
+    }
+
     function abrir(dot){
       var key = dot.getAttribute('data-prod');
       var p = PRODUCTOS[key] || NAVIDAD[key] || ILUMINACION[key];
@@ -620,7 +634,7 @@ function montarPuntos(){
 
       // la ficha nunca se sale de la fotografía: si no cabe, se corre lo justo
       card.style.translate = '';
-      var sr = shop.getBoundingClientRect(), cr = card.getBoundingClientRect(), aire = 10, dx = 0, dy = 0;
+      var sr = limites(), cr = card.getBoundingClientRect(), aire = 10, dx = 0, dy = 0;
       if(cr.right > sr.right - aire) dx = sr.right - aire - cr.right;
       if(cr.left + dx < sr.left + aire) dx = sr.left + aire - cr.left;
       if(cr.bottom > sr.bottom - aire) dy = sr.bottom - aire - cr.bottom;
