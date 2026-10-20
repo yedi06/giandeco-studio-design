@@ -1,0 +1,6 @@
+<svg width="780" height="500" viewBox="0 0 780 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- Logo provisional del BCP: sustituir por el archivo oficial del banco (mismo nombre, mismas proporciones 780x500) -->
+<path d="M40 0H740C762.092 0 780 17.909 780 40V460C780 482.092 762.092 500 740 500H40C17.909 500 0 482.092 0 460V40C0 17.909 17.909 0 40 0Z" fill="#002A8D"/>
+<text x="390" y="318" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="190" fill="#FFFFFF">BCP</text>
+<path d="M170 372H610" stroke="#FF7800" stroke-width="30" stroke-linecap="round"/>
+</svg>

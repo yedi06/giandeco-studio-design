@@ -38,7 +38,7 @@
 </footer>
 
 <script src="js/giandeco.js?v=20261020c"></script>
-<script src="js/gd-tienda.js?v=20261018a"></script>
+<script src="js/gd-tienda.js?v=20261020d"></script>
 <script src="js/gd-pago.js?v=20261018a"></script>
 <script>
 (function(){
@@ -128,7 +128,7 @@
       '<div class="co-grid pg-grid">' +
         '<section class="pg-pago" aria-labelledby="pgT">' +
           '<h2 class="pg-t" id="pgT">Datos de pago</h2>' +
-          '<p class="co-ayuda">Elija tarjeta' + (c.yape ? ' o Yape' : '') + ' y complete los datos. Se procesan en el formulario cifrado de Culqi: Giandeco no ve ni guarda los datos de su tarjeta.</p>' +
+          '<p class="co-ayuda">Elija tarjeta' + (c.yape ? ' o Yape' : '') + ' y complete los datos. Se procesan en un formulario cifrado: Giandeco no ve ni guarda los datos de su tarjeta.</p>' +
           '<div class="co-medios pg-medios"><span>Aceptamos</span>' + T.logosPago(['visa', 'mastercard', 'amex', 'diners'].concat(c.yape ? ['yape'] : [])) + '</div>' +
           '<p class="pg-aviso" id="pgAviso" role="alert"' + (aviso ? '' : ' hidden') + '>' + (aviso ? esc(aviso) : '') + '</p>' +
           '<div class="pg-culqi" id="pgCulqi"><div class="pg-espera" role="status" aria-label="Cargando el formulario de pago"></div></div>' +
