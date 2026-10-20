@@ -221,7 +221,8 @@ V.opiniones = function(){
   var cfg = config(), ops = DATOS.leer('opiniones', []), prs = DATOS.leer('preguntas', []), tss = DATOS.leer('testimonios', []);
   function bloque(titulo, lista, pinta){ return '<section class="ad-caja"><h2>' + titulo + '</h2>' + (lista.length ? lista.map(pinta).join('') : '<p class="ad-nota">Nada por revisar.</p>') + '</section>'; }
   function botones(tipo, i, estado){
-    return estado ? '<em class="ad-tag ' + (estado === 'publicada' ? 'es-ok' : '') + '">' + estado + '</em>'
+    return estado ? '<em class="ad-tag ' + (estado === 'publicada' ? 'es-ok' : '') + '">' + estado + '</em>' +
+        (estado === 'publicada' ? '<button class="ad-btn" data-a="moderar" data-t="' + tipo + '" data-i="' + i + '" data-v="retirada">Retirar de la tienda</button>' : '')
       : '<button class="ad-btn es-pri" data-a="moderar" data-t="' + tipo + '" data-i="' + i + '" data-v="publicada">Publicar</button><button class="ad-btn" data-a="moderar" data-t="' + tipo + '" data-i="' + i + '" data-v="rechazada">Rechazar</button>';
   }
   return cabecera('Opiniones y preguntas', 'Lo publicado aparece en la ficha de la pieza y en la página de opiniones.') +
@@ -362,6 +363,16 @@ root.addEventListener('click', function(e){
       it.r = r;
     }
     it.estado = v;
+    if(v === 'retirada'){
+      // se quita de lo publicado (config) y la entrada queda como «retirada» en la lista de revisión
+      var KR = tipo === 'opiniones' ? 'OPINIONES' : tipo === 'preguntas' ? 'PREGUNTAS' : 'TESTIMONIOS';
+      cfg[KR] = (cfg[KR] || []).filter(function(x){
+        return tipo === 'opiniones' ? !(x.autor === it.autor && x.fecha === it.fecha && x.texto === it.texto)
+             : tipo === 'preguntas' ? !(x.p === it.p && x.fecha === it.fecha)
+             : !(x.autor === it.autor && x.proyecto === it.proyecto && x.despues === it.despues);
+      });
+      DATOS.guardar('config', cfg);
+    }
     if(v === 'publicada'){
       var K = tipo === 'opiniones' ? 'OPINIONES' : tipo === 'preguntas' ? 'PREGUNTAS' : 'TESTIMONIOS';
       cfg[K] = cfg[K] || [];
@@ -370,7 +381,7 @@ root.addEventListener('click', function(e){
                 : { autor:it.autor, rol:it.rol, proyecto:it.proyecto, antes:it.antes, despues:it.despues });
       DATOS.guardar('config', cfg);
     }
-    DATOS.guardar(tipo, lista); pintar(); aviso(v === 'publicada' ? 'Publicado en la tienda' : 'Rechazado');
+    DATOS.guardar(tipo, lista); pintar(); aviso(v === 'publicada' ? 'Publicado en la tienda' : v === 'retirada' ? 'Retirado de la tienda' : 'Rechazado');
   }
   else if(a === 'responder'){
     var rec = DATOS.leer('reclamos', []), t = root.querySelector('[data-rec="' + i + '"]').value.trim();

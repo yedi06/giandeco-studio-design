@@ -66,7 +66,7 @@ var CFG = {
   },
   /* Datos legales del estudio. Lo que esté vacío se muestra como
      "por confirmar" en las páginas de ayuda y en el libro de reclamaciones. */
-  EMPRESA: { razon:'Luis Giancarlo Jiménez Sánchez', ruc:'10452729691', dir:'Ca. Las Bellísimas 170, Urb. Vipol — Callao 07036', correo:'contacto@giandeco.com', tel:'+51 920 775 559' },
+  EMPRESA: (function(e){ var o = {}; for(var k in e) o[k] = e[k]; return o; })(window.GD_EMPRESA || {}),   // fuente única: EMPRESA en js/giandeco.js
   /* En false, las páginas de políticas llevan el aviso "borrador pendiente
      de validación". Se pasa a true cuando el estudio las aprueba. */
   LEGAL_VALIDADO: true,
@@ -627,8 +627,9 @@ function montar(){
   // páginas de ayuda: datos del estudio, aviso de borrador y recomendados
   var E = CFG.EMPRESA;
   document.querySelectorAll('[data-emp]').forEach(function(el){
-    var v = E[el.getAttribute('data-emp')];
-    el.textContent = v || 'por confirmar';
+    var k = el.getAttribute('data-emp'), cap = /Cap$/.test(k), v = E[cap ? k.slice(0, -3) : k];
+    if(v && cap) v = v.charAt(0).toUpperCase() + v.slice(1);
+    if(v) el.textContent = v; else if(!el.textContent.trim()) el.textContent = 'por confirmar';   // el HTML ya trae el dato escrito
   });
   document.querySelectorAll('[data-borrador]').forEach(function(el){ el.hidden = CFG.LEGAL_VALIDADO; });
   document.querySelectorAll('[data-recomendados]').forEach(function(el){
