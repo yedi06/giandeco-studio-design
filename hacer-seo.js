@@ -19,6 +19,15 @@ var DOMINIO = 'https://giandeco.com';
 var OG_POR_DEFECTO = 'images/espacios/zara-sala-1.jpg';
 var NO_INDEXAR = ['producto.html', 'checkout.html', 'cuenta.html', 'seguimiento.html', '404.html', 'material-pendiente.html', 'admin.html', 'mantenimiento.html'];
 
+/* favicon: mismo bloque que escribe aplicar-favicon.js (rutas relativas; subir FAVICON_V si cambia el favicon) */
+var FAVICON_V = '1';
+var FAVICON = ['<!-- favicon -->',
+  '<link rel="icon" href="favicon.ico?v=' + FAVICON_V + '" sizes="32x32">',
+  '<link rel="icon" href="favicon.svg?v=' + FAVICON_V + '" type="image/svg+xml">',
+  '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=' + FAVICON_V + '">',
+  '<link rel="manifest" href="site.webmanifest?v=' + FAVICON_V + '">',
+  '<!-- /favicon -->'].join('\n');
+
 function leer(f){ return fs.readFileSync(f, 'utf8'); }
 function esc(s){ return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 function abs(ruta){ return DOMINIO + '/' + ruta.replace(/\?.*$/, '').split('/').map(encodeURIComponent).join('/'); }
@@ -83,7 +92,8 @@ function bloque(o){
 }
 function ponerBloque(html, b){
   html = html.replace(/\r?\n?<!-- seo -->[\s\S]*?<!-- \/seo -->/, '');
-  return html.replace(/(<meta name="theme-color"[^>]*>)/, '$1\n' + b);
+  html = html.replace(/\r?\n?<!-- favicon -->[\s\S]*?<!-- \/favicon -->/, '');
+  return html.replace(/(<meta name="theme-color"[^>]*>)/, function(m){ return m + '\n' + FAVICON + '\n' + b; });
 }
 function dato(html, re){ var m = html.match(re); return m ? m[1].trim() : ''; }
 
