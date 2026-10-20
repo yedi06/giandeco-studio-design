@@ -1,5 +1,14 @@
 # Changelog UX/UI
 
+## 2026-10-20 — Retail con la propuesta D «Plano» (Navidad zona por zona)
+
+### Cambiado
+- `retail/index.html` pasa a la propuesta D del lienzo «Maqueta Navidad Retail Giandeco»: hero partido en SuperHome y Ferrehome, marcas en movimiento, **plano interactivo de 6 zonas** (elegir, agregar al montaje, pedir la propuesta por WhatsApp con las zonas y el paquete sugerido), dos casos, servicios, locales, cuatro pasos, alcance por paquete y cierre.
+- Móvil propio (menos de 900 px): hero con las dos tiendas arriba, plano + pestañas + escena en una pantalla, barra de montaje fija abajo, carruseles de casos y locales, pestañas de servicios y paquetes.
+- Archivos nuevos: `css/gd-retail-d.css`, `js/gd-retail-d.js`, `images/retail-navidad/` (6 zonas, 2 casos y logos claros). Las fotos de cada zona se cargan al elegirla.
+- Enlaces: «Ver el servicio» lleva a cada página de servicio; los casos de Navidad a `retail/navidad` y `proyectos/ferrehome`; los locales a su ficha de proyecto.
+- La versión anterior de la página queda en el historial de git (commit previo a este cambio).
+
 ## 2026-10-17 (noche) — URLs ordenadas, sin migas y espacios pegados arriba
 
 ### Cambiado
