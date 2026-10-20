@@ -15,6 +15,9 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=1">
 <link rel="manifest" href="site.webmanifest?v=1">
 <!-- /favicon -->
+<!-- medicion -->
+<script src="js/gd-medicion.js?v=20261020a" defer></script>
+<!-- /medicion -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
@@ -108,7 +111,8 @@
   /* ---------- pagado ---------- */
   function pagado(p){
     simple();
-    if(local && !local.pagado){ var l = T.pedidos.lista(); l.forEach(function(x){ if(x.n === n) x.pagado = true; }); T.db('pedidos', l); }
+    if(local && !local.pagado){ var l = T.pedidos.lista(); l.forEach(function(x){ if(x.n === n) x.pagado = true; }); T.db('pedidos', l);
+      try{ document.dispatchEvent(new CustomEvent('gd:pago', { detail:{ n:n, monto:(p && p.monto ? p.monto / 100 : null), items:local.items || [] } })); }catch(e){} }
     var con = p && p.medio === 'yape' ? 'Yape' : p && p.ultimos4 ? (p.marca ? esc(p.marca) + ' ' : 'Tarjeta ') + 'terminada en ' + esc(p.ultimos4) : '';
     root.innerHTML = cabecera('Pago recibido', 'Gracias' + (c && c.cliente && c.cliente.nombre ? ', ' + esc(c.cliente.nombre) : '')) +
       '<p class="co-lead">Recibimos su pago' + (p && p.monto ? ' de <b style="color:var(--lino);">' + money(p.monto) + '</b>' : '') + (con ? ' con ' + con : '') + '. ' +

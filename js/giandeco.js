@@ -331,6 +331,7 @@ function footerHTML(){
       [['ayuda/compra-segura','Compra segura'], ['ayuda/envios-y-entregas','Envíos y entregas'], ['ayuda/cambios-y-garantia','Cambios y garantía'],
        ['ayuda/preguntas-frecuentes','Preguntas frecuentes'], ['ayuda/opiniones','Opiniones de clientes'], ['legal/terminos-y-condiciones','Términos y condiciones'],
        ['legal/politica-de-privacidad','Privacidad']].map(function(l){ return '<a href="' + l[0] + '">' + l[1] + '</a>'; }).join('') +
+      '<a href="legal/politica-de-privacidad#cookies" data-gd-cookies>Cookies</a>' +
       '<a class="gd-footer-libro" href="legal/libro-de-reclamaciones" aria-label="Libro de Reclamaciones">' +
         '<img src="images/legal/libro-reclamaciones.svg" alt="Libro de Reclamaciones" width="204" height="128" decoding="async"></a>' +
     '</nav>' +

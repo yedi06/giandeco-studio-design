@@ -27,6 +27,9 @@ var FAVICON = ['<!-- favicon -->',
   '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=' + FAVICON_V + '">',
   '<link rel="manifest" href="site.webmanifest?v=' + FAVICON_V + '">',
   '<!-- /favicon -->'].join('\n');
+/* medicion: script unico (GA4, Meta Pixel, Clarity); inerte sin IDs. Subir MEDICION_V si cambia js/gd-medicion.js */
+var MEDICION_V = '20261020a';
+var MEDICION = ['<!-- medicion -->', '<script src="js/gd-medicion.js?v=' + MEDICION_V + '" defer></script>', '<!-- /medicion -->'].join('\n');
 
 function leer(f){ return fs.readFileSync(f, 'utf8'); }
 function esc(s){ return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
@@ -93,7 +96,8 @@ function bloque(o){
 function ponerBloque(html, b){
   html = html.replace(/\r?\n?<!-- seo -->[\s\S]*?<!-- \/seo -->/, '');
   html = html.replace(/\r?\n?<!-- favicon -->[\s\S]*?<!-- \/favicon -->/, '');
-  return html.replace(/(<meta name="theme-color"[^>]*>)/, function(m){ return m + '\n' + FAVICON + '\n' + b; });
+  html = html.replace(/\r?\n?<!-- medicion -->[\s\S]*?<!-- \/medicion -->/, '');
+  return html.replace(/(<meta name="theme-color"[^>]*>)/, function(m){ return m + '\n' + FAVICON + '\n' + MEDICION + '\n' + b; });
 }
 function dato(html, re){ var m = html.match(re); return m ? m[1].trim() : ''; }
 
