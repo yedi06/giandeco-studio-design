@@ -16,7 +16,7 @@
 <meta property="og:title" content="Retail y visual merchandising — Giandeco Studio Design">
 <meta property="og:description" content="Visual merchandising, escaparatismo y remodelación de locales comerciales. Diseñamos y ejecutamos vitrinas, campañas y tiendas completas. El Corte Inglés, Pycca, Zara, Walon.">
 <meta property="og:url" content="https://giandeco.com/retail/">
-<meta property="og:image" content="https://giandeco.com/images/work/corteingles.jpg">
+<meta property="og:image" content="https://giandeco.com/images/espacios/zara-sala-1.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <!-- /seo -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,183 +25,245 @@
 <link rel="stylesheet" href="css/giandeco.css?v=20261018d">
 <link rel="stylesheet" href="css/gd-tienda.css?v=20261018c">
 <link rel="stylesheet" href="css/gd-movil.css?v=20261018a">
+<link rel="stylesheet" href="css/gd-retail-d.css?v=20261020a">
 <link rel="stylesheet" href="css/gd-tema.css?v=20261018a">
 <script src="js/gd-tema.js?v=20261018a"></script>
-<style>
-  /* ============ MÉTODO — 4 pasos numerados con foto real ============
-     Antes: 4 columnas de solo texto, sin ninguna imagen. Ahora cada paso muestra
-     material real del proceso (boceto técnico, render de color, obra terminada).
-     Se probó una línea conectora + punto animado entre los círculos y se quitó:
-     el cliente la vio "partida"/desalineada dos veces seguidas — sin línea no
-     hay nada que alinear mal, los círculos son simples numerales de apoyo. */
-  .mt-timeline{ position:relative; display:grid; grid-template-columns:1fr; gap:var(--sp-40); margin-top:clamp(48px,6vw,72px); }
-  @media (min-width:720px){ .mt-timeline{ grid-template-columns:repeat(2,1fr); } }
-  @media (min-width:1080px){ .mt-timeline{ grid-template-columns:repeat(4,1fr); } }
-  .mt-step{ position:relative; z-index:1; transition: transform .35s var(--gd-ease); }
-  .mt-step:hover{ transform: translateY(-6px); }
-  .mt-marker{
-    width:46px; height:46px; border-radius:50%; flex:none; background:var(--bronce);
-    border:1px solid var(--bronce); color:#fff;
-    display:flex; align-items:center; justify-content:center;
-    font-family:var(--display); font-size:1.05rem; margin-bottom:20px;
-  }
-  .mt-media{
-    position:relative; border-radius:2px; overflow:hidden; aspect-ratio:4/5; margin-bottom:18px; background:var(--humo);
-    box-shadow:0 0 0 0 rgba(10,9,6,0); transition: box-shadow .35s ease;
-  }
-  .mt-step:hover .mt-media{ box-shadow:0 22px 40px -18px rgba(10,9,6,.4); }
-  .mt-media img{ width:100%; height:100%; object-fit:cover; transition:transform 1.1s var(--gd-ease); }
-  .mt-step:hover .mt-media img{ transform:scale(1.06); }
-  .mt-media.is-slot{
-    display:grid; place-items:center; text-align:center; padding:16px; border:none;
-    background:
-      repeating-linear-gradient(90deg, rgba(10,9,6,.035) 0 1px, transparent 1px 20px),
-      radial-gradient(130% 130% at 20% 0%, rgba(138,111,60,.14), transparent 62%),
-      linear-gradient(155deg, #efeadd, #ded5bd);
-  }
-  .mt-media.is-slot span{ font-family:var(--body); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--grafito); line-height:1.7; text-align:center; }
-  .mt-media.is-slot span b{ display:block; font-family:var(--display); font-weight:400; font-size:3rem; letter-spacing:0; color:var(--bronce-texto); line-height:1; margin-bottom:10px; }
-  .mt-title{ font-family:var(--body); font-weight:500; font-size:1.05rem; color:var(--ebano); margin:0 0 8px; transition: color .3s ease; }
-  .mt-step:hover .mt-title{ color: var(--bronce-texto); }
-  .mt-desc{ margin:0; color:var(--grafito); font-size:.9rem; line-height:1.6; }
-
-  /* franja de cierre */
-  .rt-cierre{ position:relative; overflow:hidden; }
-  .rt-cierre-media{ position:absolute; inset:0; }
-  .rt-cierre-media img{ width:100%; height:100%; object-fit:cover; }
-  .rt-cierre::after{ content:''; position:absolute; inset:0; background:linear-gradient(115deg, rgba(10,9,6,.95) 0%, rgba(10,9,6,.8) 45%, rgba(10,9,6,.55) 100%); }
-  .rt-cierre .gd-in{ position:relative; z-index:2; text-align:center; }
-  .rt-cierre .gd-h2{ max-width:20ch; margin-inline:auto; }
-  .rt-cierre .gd-body{ margin-inline:auto; text-align:center; }
-  .rt-cierre-btns{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:var(--sp-24); }
-</style>
 </head>
 <body data-mundo="retail" data-seccion="home">
 
 <div id="gdHeader"></div>
 
-<!-- ==================== HERO ==================== -->
-<section class="gd-hero is-corto">
-  <div class="gd-hero-panel">
-    <p class="gd-hero-eyebrow reveal-left"><i></i>Visual para retail</p>
-    <h1 class="reveal-left d1">Su local puede <em>vender más</em></h1>
-    <p class="reveal-left d2">Visual merchandising, vitrinas, campañas y diseño de tiendas. Del concepto al montaje, con un solo equipo.</p>
-    <div class="gd-hero-cta reveal-left d3">
-      <a class="gd-btn gd-btn-primary" href="contacto">Agendar visita técnica
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-      <a class="gd-btn gd-btn-ghost" href="retail/proyectos">Ver proyectos</a>
+<main class="rd">
+
+<!-- ==================== 1 · HERO: dos tiendas, una sola promesa ==================== -->
+<section class="rd-hero">
+  <div class="rd-hero-txt">
+    <h1>Arme la Navidad de su tienda, <em>zona por zona</em></h1>
+    <p>Elija dónde quiere vender Navidad y vea cómo quedó en SuperHome y Ferrehome.</p>
+    <div class="rd-hero-cta">
+      <a class="rd-btn rd-oro" href="#plano">Armar mi montaje <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M4 9l4 4 4-4"/></svg></a>
+      <a class="rd-btn rd-linea" href="#casos">Ver los dos casos</a>
     </div>
   </div>
-
-  <div class="gd-hero-media">
-    <div class="gd-curtain">
-      <img decoding="async" class="gd-kb-img" src="images/work/corteingles.jpg" alt="Ambiente de exhibición de lujo montado por Giandeco en tienda departamental">
-    </div>
-    <div class="gd-hero-cap">
-      <span>
-        <b>Ambiente de exhibición</b>
-        <span>El Corte Inglés</span>
-      </span>
-      <span class="gd-scroll-cue" aria-hidden="true">Desplace<i></i></span>
-    </div>
+  <div class="rd-halves">
+    <a class="rd-half" href="#casos"><img src="images/retail-navidad/isla.webp" alt="Mesa de Navidad borgoña y dorado en SuperHome" style="object-position:50% 60%" fetchpriority="high" decoding="async" width="1200" height="1500"><span class="rd-chip"><span class="rd-wm">SuperHome</span></span></a>
+    <a class="rd-half" href="#casos"><img src="images/retail-navidad/arbol.webp" alt="Árbol rojo y blanco con Papá Noel en Ferrehome" style="object-position:42% 40%" fetchpriority="high" decoding="async" width="1200" height="1500"><span class="rd-chip"><span class="rd-wm">Ferrehome</span></span></a>
   </div>
 </section>
 
-<!-- ==================== MARCAS ==================== -->
-<section class="gd-sec gd-marcas">
-  <div class="gd-in">
-    <p class="gd-eyebrow is-muted reveal">Con quiénes hemos colaborado</p>
-    <h2 class="gd-h2 reveal d1">Marcas retail con las que colaboramos</h2>
-  </div>
-  <div class="gd-marcas-wall reveal d2" data-marcas="retail">
-    <div class="gd-marcas-row" id="marcasRow1"><div class="gd-marcas-track" id="marcasTrack1"></div></div>
-  </div>
-  <p class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">El Corte Inglés, Pycca, Zara, Walon, Enchantée Paris, Baby Club Chic.</p>
-</section>
-
-<!-- ==================== SERVICIOS ==================== -->
-<section class="gd-sec">
-  <div class="gd-in">
-    <div class="gd-filete is-left reveal"><span aria-hidden="true">◆</span></div>
-    <p class="gd-eyebrow reveal">Qué hacemos en retail</p>
-    <h2 class="gd-h2 reveal d1">Del escaparate a la obra completa</h2>
-    <p class="gd-body reveal d2">El espacio y la exhibición se deciden en la misma mesa.</p>
-
-    <div class="sv-grid" id="rtServicios" style="--sv-n:5;"></div>
+<!-- ==================== 2 · MARCAS ==================== -->
+<section class="rd-marcas" aria-label="Marcas con las que hemos colaborado">
+  <div class="gd-in rd-g12 rd-marcas-in">
+    <p class="rd-marcas-t">Con quiénes hemos colaborado</p>
+    <div class="rd-mqw"><div class="rd-mq"><span><img src="images/retail-navidad/logos/baby-club-chic.png" alt="Baby Club Chic" style="--h:36px" width="755" height="172" loading="lazy" decoding="async"></span><span><img src="images/retail-navidad/logos/zara.png" alt="Zara" style="--h:34px" width="476" height="200" loading="lazy" decoding="async"></span><span><img src="images/retail-navidad/logos/el-corte-ingles.png" alt="El Corte Inglés" style="--h:38px" width="198" height="114" loading="lazy" decoding="async"></span><span><img src="images/retail-navidad/logos/pycca.png" alt="Pycca" style="--h:28px" width="900" height="200" loading="lazy" decoding="async"></span><span><img src="images/retail-navidad/logos/walon.png" alt="Walon" style="--h:44px" width="214" height="181" loading="lazy" decoding="async"></span><span><img src="images/retail-navidad/logos/enchantee-paris.png" alt="Enchantée Paris" style="--h:22px" width="601" height="104" loading="lazy" decoding="async"></span><span><img src="images/retail-navidad/logos/casa-grande.png" alt="Casa Grande" style="--h:38px" width="685" height="200" loading="lazy" decoding="async"></span><span><img src="images/retail-navidad/logos/casacor.png" alt="Casacor" style="--h:32px" width="271" height="83" loading="lazy" decoding="async"></span><span><img src="images/retail-navidad/logos/massimo-cafe.png" alt="Mássimo Café" style="--h:44px" width="207" height="107" loading="lazy" decoding="async"></span><span><img src="images/retail-navidad/logos/hotel-union-cusco.png" alt="Hotel Unión Cusco" style="--h:30px" width="976" height="200" loading="lazy" decoding="async"></span></div></div>
   </div>
 </section>
 
-<!-- ==================== MÉTODO ==================== -->
-<section class="gd-sec gd-claro">
+<!-- ==================== 3 · EL PLANO ==================== -->
+<section id="plano" class="rd-sec rd-plano-sec">
   <div class="gd-in">
-    <p class="gd-eyebrow reveal">Cómo trabajamos</p>
-    <h2 class="gd-h2 reveal d1">Cuatro pasos, sin sorpresas</h2>
-    <p class="gd-body reveal d2">Nada se dibuja sin medir, y nada se ejecuta sin aprobar.</p>
-
-    <div class="mt-timeline reveal d3">
-      <div class="mt-step reveal-scale">
-        <div class="mt-marker">01</div>
-        <div class="mt-media is-slot"><span><b>01</b>En su local<br>sin costo de diagnóstico</span></div>
-        <h3 class="mt-title">Visita técnica</h3>
-        <p class="mt-desc">Medimos y leemos el recorrido real del cliente.</p>
+    <div class="rd-g12 rd-plano-head">
+      <h2 class="rd-h2">Toque una zona y vea cómo la montamos</h2>
+      <p class="rd-body">Cada zona está montada de verdad en SuperHome o Ferrehome. Agregue las que le interesan y le armamos la propuesta.</p>
+    </div>
+    <div class="rd-g12 rd-plano-grid">
+      <div class="rd-plano-col">
+        <div class="rd-plano">
+          <svg viewBox="0 0 520 640" aria-hidden="true">
+            <defs>
+              <pattern id="rdGr" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#1a1814" stroke-width="1"/></pattern>
+              <pattern id="rdHt" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V8" stroke="#2c2820" stroke-width="1.4"/></pattern>
+            </defs>
+            <rect width="520" height="640" fill="url(#rdGr)"/>
+            <rect x="10" y="10" width="500" height="620" fill="none" stroke="#6b6253" stroke-width="4"/>
+            <rect x="16" y="16" width="488" height="608" fill="none" stroke="#2f2a22" stroke-width="1"/>
+            <rect x="226" y="626" width="68" height="8" fill="#0f0e0c"/>
+            <path d="M226 630 A68 68 0 0 1 294 562" fill="none" stroke="#6b6253" stroke-width="1" stroke-dasharray="3 4"/>
+            <text x="260" y="606" text-anchor="middle" font-family="Jost, sans-serif" font-size="9" letter-spacing="3" fill="#6b6253">ENTRADA</text>
+            <g fill="url(#rdHt)" stroke="#4a443a" stroke-width="1">
+              <rect x="56" y="190" width="96" height="16"/><rect x="56" y="232" width="96" height="16"/><rect x="56" y="274" width="96" height="16"/>
+              <rect x="56" y="316" width="96" height="16"/><rect x="56" y="358" width="96" height="16"/><rect x="56" y="400" width="96" height="16"/>
+            </g>
+            <rect x="22" y="170" width="12" height="270" fill="none" stroke="#4a443a" stroke-dasharray="4 4"/>
+            <g stroke="#7a6f5c" fill="none"><rect x="26" y="520" width="468" height="40"/><path d="M104 520v40M182 520v40M260 520v40M338 520v40M416 520v40"/><path d="M26 540h468" stroke-dasharray="2 5"/></g>
+            <g stroke="#7a6f5c" fill="none"><circle cx="86" cy="92" r="50"/><circle cx="86" cy="92" r="34" stroke-dasharray="3 4"/><circle cx="86" cy="92" r="18"/><circle cx="86" cy="92" r="3" fill="#7a6f5c"/></g>
+            <g stroke="#7a6f5c" fill="none"><path d="M178 38h310M178 58h310M178 78h310"/><path d="M200 38v20M240 58v20M284 38v20M330 58v20M372 38v20M420 58v20M462 38v20"/></g>
+            <g stroke="#7a6f5c" fill="none"><rect x="192" y="292" width="134" height="74" rx="2"/><circle cx="214" cy="278" r="6"/><circle cx="259" cy="278" r="6"/><circle cx="304" cy="278" r="6"/><circle cx="214" cy="380" r="6"/><circle cx="259" cy="380" r="6"/><circle cx="304" cy="380" r="6"/><path d="M200 300h118M200 358h118" stroke-dasharray="2 4"/></g>
+            <g stroke="#7a6f5c" fill="none"><rect x="384" y="208" width="96" height="62" rx="2"/><circle cx="400" cy="294" r="6"/><circle cx="432" cy="294" r="6"/><circle cx="464" cy="294" r="6"/><circle cx="432" cy="188" r="8"/></g>
+            <g stroke="#7a6f5c" fill="none"><path d="M376 430h112v28h-80v36h-32z"/><circle cx="470" cy="486" r="8"/></g>
+          </svg>
+        </div>
+        <div class="rd-legend" role="group" aria-label="Zonas de la tienda"></div>
       </div>
-      <div class="mt-step reveal-scale d1">
-        <div class="mt-marker">02</div>
-        <div class="mt-media gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proceso/zonatienda-tecnico.jpg" alt="Corte arquitectónico con metrado y materiales de una zona de tienda"></div>
-        <h3 class="mt-title">Metrado y modelado</h3>
-        <p class="mt-desc">El espacio en 3D, con materiales y mobiliario.</p>
+
+      <div class="rd-stage-col" aria-live="polite">
+        <div class="rd-stage">
+          <span class="rd-chip"><span class="rd-wm rd-stage-tienda">Ferrehome</span></span>
+          <span class="rd-stage-n">02</span>
+          <div class="rd-arrows">
+            <button type="button" class="rd-arr rd-prev" aria-label="Zona anterior"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg></button>
+            <button type="button" class="rd-arr rd-next" aria-label="Zona siguiente"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+          </div>
+        </div>
+        <div class="rd-zdet">
+          <div><h3 class="rd-h3 rd-zname">Isla central</h3><p class="rd-zdesc"></p></div>
+          <div><ul class="rd-zlist"></ul><button type="button" class="rd-btn rd-zbtn">Agregar a mi montaje</button></div>
+        </div>
+        <div class="rd-sum">
+          <div class="rd-sum-top"><strong>Su montaje</strong><span class="rd-sum-count">Ninguna zona elegida</span></div>
+          <div class="rd-slots"></div>
+          <div class="rd-sum-bot"><strong class="rd-sum-pack">Elija al menos una zona</strong><a class="rd-btn rd-oro rd-sum-wa" href="https://wa.me/51920775559" target="_blank" rel="noopener">Pedir propuesta por WhatsApp</a></div>
+        </div>
       </div>
-      <div class="mt-step reveal-scale d2">
-        <div class="mt-marker">03</div>
-        <div class="mt-media gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proceso/zonatienda-boceto.jpg" alt="Render de aprobación en color de una zona de tienda"></div>
-        <h3 class="mt-title">Render de aprobación</h3>
-        <p class="mt-desc">Usted ve el local terminado antes de construir.</p>
+      <div class="rd-bar"><div><strong class="rd-sum-pack">Elija al menos una zona</strong><span class="rd-sum-count">Ninguna zona elegida</span></div><a class="rd-btn rd-oro rd-sum-wa" href="https://wa.me/51920775559" target="_blank" rel="noopener">Pedir propuesta</a></div>
+    </div>
+    <noscript><p class="rd-body" style="margin-top:24px">Cuéntenos qué zonas le interesan por <a class="rd-link" href="https://wa.me/51920775559">WhatsApp</a>.</p></noscript>
+  </div>
+</section>
+
+<!-- ==================== 4 · CASOS DE NAVIDAD ==================== -->
+<section id="casos" class="rd-sec rd-claro rd-casos">
+  <div class="gd-in">
+    <h2 class="rd-h2">Dos tiendas reales, este mes</h2>
+    <div class="rd-g12 rd-casos-grid">
+      <div class="rd-caso">
+        <a class="rd-caso-img" href="retail/navidad"><img src="images/retail-navidad/caso-superhome.webp" alt="Tres cortes de SuperHome: mesa borgoña, nacimiento y girasoles" loading="lazy" decoding="async" width="1800" height="1200"></a>
+        <span class="rd-chip"><span class="rd-wm">SuperHome</span></span>
+        <h3 class="rd-h3">Tres mesas que venden la cena</h3>
+        <p>Borgoña y dorado, nacimiento blanco y oro, y girasoles para fuera de temporada. Más un taller en vivo con Gian.</p>
+        <a class="rd-link" href="retail/navidad">Ver el montaje completo <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
       </div>
-      <div class="mt-step reveal-scale d3">
-        <div class="mt-marker">04</div>
-        <div class="mt-media gd-curtain"><img decoding="async" class="gd-kb-img" src="images/proceso/zonatienda-obra.jpg" alt="Zona de tienda ya montada en obra"></div>
-        <h3 class="mt-title">Ejecución y montaje</h3>
-        <p class="mt-desc">Obra, mobiliario, luz y gráfica. Un solo interlocutor.</p>
+      <div class="rd-caso">
+        <a class="rd-caso-img" href="proyectos/ferrehome"><img src="images/retail-navidad/caso-ferrehome.webp" alt="Tres cortes de Ferrehome: árbol de jengibre, árbol rojo y blanco y vitrina de casitas" loading="lazy" decoding="async" width="1800" height="1200"></a>
+        <span class="rd-chip"><span class="rd-wm">Ferrehome</span></span>
+        <h3 class="rd-h3">Cinco rincones en todo el recorrido</h3>
+        <p>Árbol de jengibre, árbol rojo y blanco, mesa de cascanueces, vitrina de casitas y un rincón junto a caja.</p>
+        <a class="rd-link" href="proyectos/ferrehome">Ver el montaje completo <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ==================== PROYECTOS (desde js/gd-proyectos.js) ==================== -->
-<section class="gd-sec">
+<!-- ==================== 5 · SERVICIOS DE RETAIL ==================== -->
+<section id="servicios" class="rd-sec">
   <div class="gd-in">
-    <div class="pj-rel-head"><div><p class="gd-eyebrow reveal">Proyectos</p><h2 class="gd-h2 reveal d1">Locales que ya cambiaron</h2></div>
-      <a class="gd-link reveal" href="retail/proyectos">Ver todos los proyectos<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
-    <div id="rtProyectos" style="margin-top:var(--sp-24);"></div>
-  </div>
-</section>
-
-<!-- ==================== CIERRE ==================== -->
-<section class="gd-sec rt-cierre">
-  <div class="rt-cierre-media"><img decoding="async" src="images/cta/cta-bg.jpg?v=2" alt=""></div>
-  <div class="gd-in">
-    <p class="gd-eyebrow reveal">Siguiente paso</p>
-    <h2 class="gd-h2 reveal d1">¿Su local vende lo que podría?</h2>
-    <p class="gd-body reveal d2">Cuéntenos qué vende y en qué fecha necesita reabrir. Respondemos con un diagnóstico de espacio y un alcance claro.</p>
-    <div class="rt-cierre-btns reveal d3">
-      <a class="gd-btn gd-btn-primary" href="contacto">Agendar visita técnica
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-      <a class="gd-btn gd-btn-ghost" href="https://wa.me/51920775559" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    <div class="rd-g12 rd-sv-head">
+      <h2 class="rd-h2">Del escaparate a la obra completa</h2>
+      <p class="rd-body">Casi nadie resuelve las dos mitades. Aquí el diseño del espacio y la exhibición del producto se deciden en la misma mesa, con el mismo criterio comercial.</p>
+    </div>
+    <div class="rd-g12 rd-sv-grid">
+      <div class="rd-sv-list">
+          <div class="rd-sv-item" data-t="Escaparatismo y vitrinas">
+            <button type="button" class="rd-sv-b" aria-expanded="false"><i>01</i><span>Escaparatismo y vitrinas</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+            <div class="rd-sv-d"><p>La venta silenciosa. Vitrina, vidriera y display interior: ángulos, styling y outfits que cuentan una historia y detienen al que pasa.</p><a class="rd-link" href="retail/servicios/escaparatismo">Ver el servicio<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+          </div>
+          <div class="rd-sv-item" data-t="Campañas y temporadas">
+            <button type="button" class="rd-sv-b" aria-expanded="false"><i>02</i><span>Campañas y temporadas</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+            <div class="rd-sv-d"><p>Concepto, paleta y montaje replicable en toda la red de tiendas. Validamos en un espacio modelo antes de salir a nivel nacional.</p><a class="rd-link" href="#plano">Ver Navidad 2026<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+          </div>
+          <div class="rd-sv-item" data-t="Remodelación de locales">
+            <button type="button" class="rd-sv-b" aria-expanded="false"><i>03</i><span>Remodelación de locales</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+            <div class="rd-sv-d"><p>Layout, circulación y ampliaciones. Reabrir a tiempo es parte del encargo.</p><a class="rd-link" href="retail/servicios/remodelacion-de-locales">Ver el servicio<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+          </div>
+          <div class="rd-sv-item" data-t="Visual merchandising">
+            <button type="button" class="rd-sv-b" aria-expanded="false"><i>04</i><span>Visual merchandising</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+            <div class="rd-sv-d"><p>Jerarquía de producto, puntos calientes y agrupación por familias de color.</p><a class="rd-link" href="retail/servicios/visual-merchandising">Ver el servicio<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+          </div>
+          <div class="rd-sv-item" data-t="Gráfica y viniles">
+            <button type="button" class="rd-sv-b" aria-expanded="false"><i>05</i><span>Gráfica y viniles</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+            <div class="rd-sv-d"><p>Tipografía en vinilo, señalética y material promocional instalado en obra.</p><a class="rd-link" href="retail/servicios/grafica-y-viniles">Ver el servicio<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+          </div>
+      </div>
+      <div class="rd-sv-media">
+          <div class="rd-sv-pic"><img class="ph" src="images/work/enchantee.jpg" alt="Vitrina de Enchantée Paris con maniquíes y styling" loading="lazy" decoding="async"><img class="lg" src="images/retail-navidad/logos/enchantee-paris.png" alt="" style="--h:22px" decoding="async"></div>
+          <div class="rd-sv-pic"><img class="ph" src="images/work/pycca.jpg" alt="Árbol de la campaña Christmas Chalet en Pycca" loading="lazy" decoding="async"><img class="lg" src="images/retail-navidad/logos/pycca.png" alt="" style="--h:30px" decoding="async"></div>
+          <div class="rd-sv-pic"><img class="ph" src="images/proyectos/walon-puntahermosa.jpg" alt="Fachada y piso de venta de Walon Punta Hermosa" loading="lazy" decoding="async"><img class="lg" src="images/retail-navidad/logos/walon.png" alt="" style="--h:44px" decoding="async"></div>
+          <div class="rd-sv-pic"><img class="ph" src="images/work/corteingles.jpg" alt="Ambiente de exhibición en El Corte Inglés" loading="lazy" decoding="async"><img class="lg" src="images/retail-navidad/logos/el-corte-ingles.png" alt="" style="--h:38px" decoding="async"></div>
+          <div class="rd-sv-pic"><img class="ph" src="images/work/walonfiguritas.jpg" alt="Gráfica en vinilo Figuritas del Barrio de Walon" loading="lazy" decoding="async"><img class="lg" src="images/retail-navidad/logos/walon.png" alt="" style="--h:44px" decoding="async"></div>
+      </div>
+      <div class="rd-sv-det"></div>
     </div>
   </div>
 </section>
+
+<!-- ==================== 6 · LOCALES QUE YA CAMBIARON ==================== -->
+<section id="locales" class="rd-sec rd-claro">
+  <div class="gd-in">
+    <div class="rd-loc-head">
+      <h2 class="rd-h2">Locales que ya cambiaron</h2>
+      <a class="rd-link" href="retail/proyectos">Ver todos los casos <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+    </div>
+    <div class="rd-g12 rd-loc-grid">
+      <div class="rd-loc-col">
+        <a class="rd-loc" style="--o:1" href="proyectos/pycca-ecuador">
+          <span class="ph" style="--ar:5/6"><img class="pic" src="images/work/pycca.jpg" alt="Pycca Ecuador — campaña navideña Christmas Chalet" loading="lazy" decoding="async"><img class="lg" src="images/retail-navidad/logos/pycca.png" alt="" style="--h:30px" decoding="async"></span>
+          <span class="t"><span class="rd-h3">Pycca Ecuador</span><span>Campaña estacional replicada en toda la red, validada primero en un espacio modelo.</span></span>
+        </a>
+        <a class="rd-loc" style="--o:3" href="proyectos/massimo-cafe">
+          <span class="ph" style="--ar:4/3"><img class="pic" src="images/work/massimo.jpg" alt="Mássimo Café — esencia bohemia en dos niveles" style="object-position:35% 50%" loading="lazy" decoding="async"><img class="lg" src="images/retail-navidad/logos/massimo-cafe.png" alt="" style="--h:42px" decoding="async"></span>
+          <span class="t"><span class="rd-h3">Mássimo Café</span><span>Concepto integral inspirado en los pubs vintage europeos, con microambientes en dos niveles.</span></span>
+        </a>
+      </div>
+      <div class="rd-loc-col">
+        <a class="rd-loc" style="--o:2" href="proyectos/walon-figuritas">
+          <span class="ph" style="--ar:5/6"><img class="pic" src="images/work/walonfiguritas.jpg" alt="Walon — Figuritas del Barrio, vitrina de fútbol y coleccionismo" loading="lazy" decoding="async"><img class="lg" src="images/retail-navidad/logos/walon.png" alt="" style="--h:44px" decoding="async"></span>
+          <span class="t"><span class="rd-h3">Walon Figuritas del Barrio</span><span>Una misma campaña en tiendas de todo el país, con vitrinas de fútbol y coleccionismo.</span></span>
+        </a>
+        <a class="rd-loc" style="--o:4" href="proyectos/walon-punta-hermosa">
+          <span class="ph" style="--ar:4/3"><img class="pic" src="images/proyectos/walon-puntahermosa.jpg" alt="Walon Punta Hermosa — primera tienda boutique de la marca" style="object-position:50% 58%" loading="lazy" decoding="async"><img class="lg" src="images/retail-navidad/logos/walon.png" alt="" style="--h:44px" decoding="async"></span>
+          <span class="t"><span class="rd-h3">Walon Punta Hermosa</span><span>De un espacio vacío al primer formato boutique de la marca.</span></span>
+        </a>
+      </div>
+    </div>
+    <a class="rd-link rd-loc-more" href="retail/proyectos" style="display:none">Ver todos los casos <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+  </div>
+</section>
+
+<!-- ==================== 7 · CÓMO TRABAJAMOS ==================== -->
+<section class="rd-sec rd-pasos">
+  <div class="gd-in">
+    <h2 class="rd-h2">Cuatro pasos, sin cerrar su tienda</h2>
+    <div class="rd-pasos-grid">
+      <div class="rd-paso"><b>01</b><h3>Visita técnica</h3><p>Vamos a su local, medimos y leemos el recorrido real del cliente. Sin costo de diagnóstico.</p></div>
+      <div class="rd-paso"><b>02</b><h3>Inventario y piezas héroe</h3><p>Elegimos del stock de su tienda lo que mejor se ve y mejor vende. Lo que falte se detalla aparte.</p></div>
+      <div class="rd-paso"><b>03</b><h3>Propuesta visual</h3><p>Paleta, zonas y ubicación en una lámina clara. Usted aprueba antes de que se mueva una caja.</p></div>
+      <div class="rd-paso"><b>04</b><h3>Montaje sin cerrar</h3><p>Obra, mobiliario, iluminación y montaje con la tienda abierta. Un solo interlocutor.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 8 · ALCANCE POR PAQUETE ==================== -->
+<section class="rd-sec rd-pk">
+  <div class="gd-in">
+    <h2 class="rd-h2">Cuántas zonas, tanto alcance</h2>
+    <div class="rd-pk-tabs" role="group" aria-label="Paquetes"><button type="button">Punto Navidad</button><button type="button">Tienda en Navidad</button><button type="button">Temporada completa</button></div>
+    <div class="rd-pk-rows">
+      <div class="rd-pkrow"><h3>Punto Navidad</h3><p>Una zona a elegir: árbol de marca, mesa o rincón foto. Incluye visita técnica, selección de piezas héroe de su inventario y montaje.</p><a class="rd-btn rd-linea" href="#plano">Armar el mío</a></div>
+      <div class="rd-pkrow is-hl"><h3>Tienda en Navidad</h3><p>Vitrina o ingreso más 2 a 3 zonas interiores, con concepto y paleta para todo el local. Mesa con su vajilla, guía de reposición y montaje sin cerrar.</p><a class="rd-btn rd-oro" href="#plano">Armar el mío</a></div>
+      <div class="rd-pkrow"><h3>Temporada completa</h3><p>Todo lo anterior, más un taller en tienda con Gian, tienda modelo y réplica en su red, visita a mitad de temporada y desmontaje en enero.</p><a class="rd-btn rd-linea" href="#plano">Armar el mío</a></div>
+    </div>
+    <p class="rd-pk-nota">El monto depende del metraje, la cantidad de zonas y de cuánto producto aporta su tienda. Lo que no exista en su inventario se detalla aparte, partida por partida.</p>
+  </div>
+</section>
+
+<!-- ==================== 9 · CIERRE ==================== -->
+<section class="rd-cierre">
+  <img src="images/retail-navidad/isla.webp" alt="" loading="lazy" decoding="async">
+  <div class="gd-in rd-cierre-in">
+    <h2 class="rd-h2">¿Su local vende lo que podría?</h2>
+    <p class="rd-body">Cuéntenos qué vende y en qué fecha necesita verlo listo. Respondemos con un diagnóstico de espacio y un alcance claro.</p>
+    <div class="rd-cierre-btns">
+      <a class="rd-btn rd-oro" href="#plano">Armar mi montaje</a>
+      <a class="rd-btn rd-linea" href="https://wa.me/51920775559" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+</main>
 
 <div id="gdFooter"></div>
 <script src="js/giandeco.js?v=20261018d"></script>
-<script src="js/gd-proyectos.js?v=20261018a"></script>
-<script src="js/gd-servicios.js?v=20261018a"></script>
-<script src="js/gd-proyectos-ui.js?v=20261018a"></script>
-<script>
-(function(){ var SV = window.GD_SERVICIOS; window.GD_U = window.GD_PJ.vistas();
-  document.getElementById('rtServicios').innerHTML = SV.de('retail').map(function(s, i){ return window.GD_PJ.tarjetaServicio(SV, s, i, window.GD_U); }).join(''); })();
-(function(){ var D = window.GD_PROYECTOS, L = window.GD_PJ.elegir(D.de('retail'), 4, window.GD_U);
-  document.getElementById('rtProyectos').innerHTML = '<div class="pj-grid es-4">' + L.map(function(p){ return window.GD_PJ.card(D, p, { usadas:window.GD_U }); }).join('') + '</div>'; })();
-</script>
+<script src="js/gd-retail-d.js?v=20261020a"></script>
 <script src="js/gd-tienda.js?v=20261018a" defer></script>
 <script src="js/gd-movil.js?v=20261018a" defer></script>
 <script src="js/gd-chat.js?v=20261018b" defer></script>
