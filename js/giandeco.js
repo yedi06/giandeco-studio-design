@@ -15,9 +15,8 @@ var SITIO = {
   retail: {
     label:'Retail', home:'retail/',
     secciones:[
-      { key:'home',      label:'Retail',              href:'retail/' },
+      { key:'home',      label:'Navidad',             href:'retail/', enSub:true },   // la página principal de Retail es Navidad: sale primero en la fila y queda marcada
       { key:'diseno',    label:'Servicios',           href:'retail/servicios/' },
-      { key:'navidad',   label:'Navidad',             href:'retail/navidad' },
       { key:'proyectos', label:'Proyectos',           href:'retail/proyectos' }
     ]
   },
@@ -201,7 +200,7 @@ function headerHTML(){
   if(m){
     // se omite la sección "home" (Retail/Hogar/Catálogo) — ya está marcada
     // como activa arriba, en la fila de mundos; repetirla aquí es redundante.
-    secHTML = m.secciones.filter(function(s){ return s.key !== 'home'; }).map(function(s){
+    secHTML = m.secciones.filter(function(s){ return s.key !== 'home' || s.enSub; }).map(function(s){
       return '<a class="sh-cat-link' + (s.key === seccionActual ? ' is-active' : '') + '" href="' + s.href + '">' + s.label + '</a>';
     }).join('');
     if(m.pronto){
@@ -220,7 +219,7 @@ function headerHTML(){
     // el único lugar desde el que se puede navegar a la página principal
     // de ese mundo en pantallas chicas.
     // la sección "home" repite el nombre del mundo (Retail, Hogar, Catálogo): en el acordeón se llama "Ver todo"
-    var links = mm.secciones.map(function(s){ return '<a href="' + s.href + '"' + (s.key === 'home' ? ' class="sh-acc-todo"' : '') + '>' + (s.key === 'home' ? 'Ver todo' : s.label) + '</a>'; }).join('');
+    var links = mm.secciones.map(function(s){ var todo = s.key === 'home' && !s.enSub; return '<a href="' + s.href + '"' + (todo ? ' class="sh-acc-todo"' : '') + '>' + (todo ? 'Ver todo' : s.label) + '</a>'; }).join('');
     if(mm.pronto) links += mm.pronto.map(function(p){ return '<a href="' + p.href + '" data-pronto title="Disponible próximamente">' + p.label + '</a>'; }).join('');
     return '<div class="sh-acc' + (k === mundoActual ? ' is-open' : '') + '">' +
       '<button type="button" class="sh-acc-btn">' + mm.label +
@@ -381,7 +380,7 @@ Object.keys(SITIO).forEach(function(k){
 });
 PAGINAS.forEach(function(p){ INDICE.push({ label:p.label, href:p.href }); });
 // el blog ya no está en el menú, pero se sigue encontrando en la búsqueda
-INDICE.push({ label:'Retail · Blog', href:'retail/blog' }, { label:'Hogar · Blog', href:'hogar/blog' });
+INDICE.push({ label:'Retail · Blog', href:'retail/blog' }, { label:'Hogar · Blog', href:'hogar/blog' }, { label:'Retail · Navidad para tiendas (montaje de campaña)', href:'retail/navidad' });
 [[PRODUCTOS,'Mueblería'],[ILUMINACION,'Iluminación'],[NAVIDAD,'Navidad']].forEach(function(L){
   Object.keys(L[0]).forEach(function(k){
     var p = L[0][k];
