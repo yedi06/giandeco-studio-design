@@ -323,8 +323,12 @@ function footerHTML(){
       '<a class="gd-footer-libro" href="legal/libro-de-reclamaciones" aria-label="Libro de Reclamaciones">' +
         '<img src="images/legal/libro-reclamaciones.svg" alt="Libro de Reclamaciones" width="204" height="128" decoding="async"></a>' +
     '</nav>' +
+    '<div class="gd-footer-pagos"><span>Medios de pago</span>' +
+      [['visa','Visa'], ['mastercard','Mastercard'], ['amex','American Express'], ['diners','Diners Club'], ['yape','Yape'], ['bcp','BCP']].map(function(m){
+        return '<img src="images/pago/' + m[0] + '.svg" alt="' + m[1] + '" width="39" height="25" loading="lazy" decoding="async">'; }).join('') +
+    '</div>' +
     '<div class="gd-footer-bar">' +
-      '<span>© 2026 Giandeco Studio Design. Todos los derechos reservados.</span>' +
+      '<span>© 2026 Giandeco Studio Design · Luis Giancarlo Jiménez Sánchez, RUC 10452729691 · Atención de lunes a sábado, de 9 a. m. a 6 p. m. · Todos los derechos reservados.</span>' +
       '<em>Espacios que saben vender</em>' +
     '</div>' +
   '</div></footer>';
