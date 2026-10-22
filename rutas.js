@@ -87,6 +87,18 @@ function archivoDe(ruta){ return ruta.charAt(ruta.length - 1) === '/' ? ruta + '
 function rutaDe(archivo){ return archivo === 'index.html' ? '' : archivo.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, ''); }
 function rutaProducto(gama, slug){ return 'catalogo/' + gama + '/' + slug; }
 function rutaProyecto(slug){ return 'proyectos/' + slug; }
+/* descripción para buscadores y redes: ≤ max caracteres, sin palabras a medias.
+   Corta en el último punto si queda al menos el 90 % del límite (no se pierde una idea entera); si no, en la última palabra completa y añade «…» */
+function recortar(txt, max){
+  txt = String(txt).replace(/\s+/g, ' ').trim();
+  if(txt.length <= max) return txt;
+  var frase = txt.slice(0, max).replace(/[^.!?]*$/, '');
+  if(frase.length >= max * 0.9) return frase.trim();
+  var corte = txt.slice(0, max - 1);
+  if(/\S/.test(txt.charAt(max - 1))) corte = corte.replace(/\s+\S*$/, '');
+  corte = corte.replace(/[\s,;:–—-]+$/, '').replace(/\s+(y|e|o|u|de|del|la|el|los|las|en|con|para|por|que|un|una)$/i, '').replace(/[\s,;:–—-]+$/, '');
+  return corte + '…';
+}
 /* <base> para que los enlaces relativos valgan a cualquier profundidad.
    En producción es «/»; en el sitio de prueba (github.io/<repo>/) lo corrige el script. */
 var BASE_HTML = "<base href=\"/\"><script>if(/\\.github\\.io$/.test(location.hostname))document.querySelector(\"base\").href=\"/\"+location.pathname.split(\"/\")[1]+\"/\";window.addEventListener(\"click\",function(e){if(e.defaultPrevented)return;var a=e.target.closest&&e.target.closest(\"a[href^='#']\");if(a&&a.getAttribute(\"href\").length>1){e.preventDefault();location.hash=a.getAttribute(\"href\")}})</script>";
@@ -100,4 +112,4 @@ function catalogo(){
 }
 
 module.exports = { slug:slug, catalogo:catalogo, MAPA:MAPA, SOLO_REDIRIGEN:SOLO_REDIRIGEN, CENTROS:CENTROS, AMBIGUAS:AMBIGUAS, GAMAS:GAMAS,
-  archivoDe:archivoDe, rutaDe:rutaDe, rutaProducto:rutaProducto, rutaProyecto:rutaProyecto, BASE_HTML:BASE_HTML };
+  archivoDe:archivoDe, rutaDe:rutaDe, rutaProducto:rutaProducto, rutaProyecto:rutaProyecto, recortar:recortar, BASE_HTML:BASE_HTML };

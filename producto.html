@@ -9,11 +9,17 @@
 <meta name="description" content="Ficha de producto del catálogo Giandeco: precio, características, guía del estudio y piezas que completan el ambiente.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#0A0A09">
+<!-- favicon -->
+<link rel="icon" href="favicon.ico?v=1" sizes="32x32">
+<link rel="icon" href="favicon.svg?v=1" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=1">
+<link rel="manifest" href="site.webmanifest?v=1">
+<!-- /favicon -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261018d">
-<link rel="stylesheet" href="css/gd-movil.css?v=20261018a">
+<link rel="stylesheet" href="css/giandeco.css?v=20261020e">
+<link rel="stylesheet" href="css/gd-movil.css?v=20261020f">
 <link rel="stylesheet" href="css/gd-tema.css?v=20261018a">
 <script src="js/gd-tema.js?v=20261018a"></script>
 <link rel="stylesheet" href="css/gd-tienda.css?v=20261018c">
@@ -25,8 +31,8 @@
 <main id="pdp"></main>
 
 <div id="gdFooter"></div>
-<script src="js/giandeco.js?v=20261020c"></script>
-<script src="js/gd-tienda.js?v=20261018a"></script>
+<script src="js/giandeco.js?v=20261021a"></script>
+<script src="js/gd-tienda.js?v=20261021a"></script>
 <script>
 (function(){
   var T = window.GD_TIENDA, esc = T.esc;
@@ -142,7 +148,7 @@
       // compra segura: abierta por defecto; el cliente puede plegarla
       '<details class="pdp-confianza" open>' +
         '<summary><span class="pdp-confianza-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span>' +
-          '<span class="pdp-confianza-t"><b>Compra segura</b><small>Envío a todo el Perú · pago con Culqi o depósito</small></span>' +
+          '<span class="pdp-confianza-t"><b>Compra segura</b><small>Envío a todo el Perú · pago con tarjeta, Yape o depósito</small></span>' +
           T.logosPago(['visa', 'mastercard', 'amex', 'diners', 'yape']) + '<i class="pdp-confianza-mas" aria-hidden="true"></i></summary>' +
         '<div class="pdp-confianza-in">' +
           '<ul class="pdp-seg">' +
@@ -150,7 +156,7 @@
             (instala ? '<li>' + I.regla + '<span><b>Armado e instalación</b>Opcional, a cargo del estudio. Se cotiza según la pieza.</span></li>' : '') +
             '<li>' + I.chat + '<span><b>Un asesor de Giandeco le responde</b>Dudas de medida, acabado o combinación, por WhatsApp.</span></li>' +
           '</ul>' +
-          '<p class="pdp-pagos"><span class="pdp-culqi">Pago seguro con <img src="images/pago/culqi.svg" alt="Culqi" width="56" height="16"></span></p>' +
+          '<p class="pdp-pagos"><span class="pdp-culqi">Pago seguro con tarjeta, Yape o depósito BCP</span></p>' +
           '<p class="pdp-conf"><a href="ayuda/compra-segura">Compra segura</a><a href="ayuda/compra-segura#pagos">Medios de pago</a><a href="ayuda/envios-y-entregas">Envíos</a><a href="ayuda/cambios-y-garantia">Cambios y garantía</a></p>' +
         '</div>' +
       '</details>' +

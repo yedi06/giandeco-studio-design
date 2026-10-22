@@ -40,7 +40,7 @@ function documento(o){
     '<div id="gdHeader"></div>\n<main class="pj">\n' + o.cuerpo + '\n</main>\n<div id="gdFooter"></div>\n' +
     '<script src="js/giandeco.js?v=' + ver('giandeco.js') + '"></script>\n' +
     '<script src="js/gd-proyectos-ui.js?v=' + V + '"></script>\n' +
-    '<script src="js/gd-tienda.js?v=' + V + '" defer></script>\n<script src="js/gd-movil.js?v=' + V + '" defer></script>\n<script src="js/gd-chat.js?v=' + VC + '" defer></script>\n</body>\n</html>\n';
+    '<script src="js/gd-tienda.js?v=' + ver('gd-tienda.js') + '" defer></script>\n<script src="js/gd-movil.js?v=' + ver('gd-movil.js') + '" defer></script>\n<script src="js/gd-chat.js?v=' + VC + '" defer></script>\n</body>\n</html>\n';
 }
 function titular(nombre, cat){
   var t = nombre + ' — ' + cat + ' · Giandeco Studio Design';
@@ -49,13 +49,13 @@ function titular(nombre, cat){
 }
 function pagina(p){
   var L = D.LINEAS[p.lineas[0]];
-  return documento({ titulo:titular(p.nombre, p.cat), desc:(p.reto + ' ' + p.res).replace(/\s+/g, ' ').slice(0, 158),
+  return documento({ titulo:titular(p.nombre, p.cat), desc:RUTAS.recortar(p.reto + ' ' + p.res, 155),
     img:p.galeria[0].src, mundo:p.lineas[0], seccion:'proyectos', cuerpo:UI.ficha(D, p),
     migas:[['Inicio', ''], [L.label, L.href], ['Proyectos', L.proyectos], [p.nombre, RUTAS.rutaProyecto(p.slug)]] });
 }
 function paginaServicio(s){
   var L = D.LINEAS[s.linea];
-  return documento({ titulo:titular(s.nombre, L.label), desc:(s.frase + ' ' + s.intro).replace(/\s+/g, ' ').slice(0, 158),
+  return documento({ titulo:titular(s.nombre, L.label), desc:RUTAS.recortar(s.frase + ' ' + s.intro, 155),
     img:s.portada.src, mundo:s.linea, seccion:'diseno', cuerpo:UI.servicio(D, SV, s),
     migas:[['Inicio', ''], [L.label, L.href], [s.nombre, s.slug]] });
 }
@@ -100,5 +100,23 @@ servicios.forEach(function(s){
     if(/\.html$/.test(n) && !escritas[archivo] && MARCA.test(fs.readFileSync(__dirname + '/' + archivo, 'utf8'))) fs.unlinkSync(__dirname + '/' + archivo);
   });
 });
+/* cifras del portafolio: se calculan de los datos y se escriben en los textos que las citan (home y retail/proyectos) */
+(function(){
+  var W = ['cero', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez', 'once', 'doce', 'trece', 'catorce', 'quince',
+           'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve', 'veinte'];
+  var NUM = '(?:' + W.join('|') + ')', nRetail = D.de('retail').length, nTotal = D.lista.length;
+  function pal(n){ return W[n] || String(n); }
+  function cap(t){ return t.charAt(0).toUpperCase() + t.slice(1); }
+  function parchear(archivo, reglas){
+    var f = __dirname + '/' + archivo, s = fs.readFileSync(f, 'utf8'), antes = s;
+    reglas.forEach(function(r){ s = s.replace(r[0], r[1]); });
+    if(s !== antes) fs.writeFileSync(f, s);
+  }
+  parchear('index.html', [
+    [new RegExp(NUM + ' proyectos retail documentados', 'i'), cap(pal(nRetail)) + ' proyectos retail documentados'],
+    [new RegExp(NUM + ' proyectos documentados, <b>' + NUM + '</b> retail', 'i'), cap(pal(nTotal)) + ' proyectos documentados, <b>' + pal(nRetail) + '</b> retail']
+  ]);   // el rótulo «[ doce casos entre… ]» de la galería de la home lo cuenta el propio script de index.html (tarjetas que hay): no se toca aquí
+  parchear('retail/proyectos.html', [[new RegExp(NUM + ' casos de retail', 'ig'), cap(pal(nRetail)) + ' casos de retail']]);
+})();
 console.log(hechas.length + ' fichas de proyecto · ' + servicios.length + ' páginas de servicio · índice de proyectos');
 module.exports = hechas;

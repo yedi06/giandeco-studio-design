@@ -50,6 +50,17 @@ var PAGINAS = [
   { key:'contacto', label:'Contacto',      href:'contacto' }
 ];
 
+/* Datos del estudio: UNA sola fuente. La leen el pie, la capa de tienda (CFG.EMPRESA),
+   las páginas legales (data-emp) y los scripts hacer-*.js, que los escriben ya en el HTML. */
+var EMPRESA = {
+  razon:'Luis Giancarlo Jiménez Sánchez',
+  ruc:'10452729691',
+  dir:'Ca. Las Bellísimas 170, Urb. Vipol — Callao 07036',
+  correo:'contacto@giandeco.com',
+  tel:'+51 920 775 559',
+  horario:'lunes a sábado, de 9:00 a. m. a 6:00 p. m.'   // POR CONFIRMAR por el estudio: se cambia solo aquí
+};
+window.GD_EMPRESA = EMPRESA;
 var WA = 'https://wa.me/51920775559';
 var WA_MSG = WA + '?text=' + encodeURIComponent('Hola Giandeco, quiero conversar sobre un proyecto.');
 
@@ -323,8 +334,12 @@ function footerHTML(){
       '<a class="gd-footer-libro" href="legal/libro-de-reclamaciones" aria-label="Libro de Reclamaciones">' +
         '<img src="images/legal/libro-reclamaciones.svg" alt="Libro de Reclamaciones" width="204" height="128" decoding="async"></a>' +
     '</nav>' +
+    '<div class="gd-footer-pagos"><span>Medios de pago</span>' +
+      [['visa','Visa'], ['mastercard','Mastercard'], ['amex','American Express'], ['diners','Diners Club'], ['yape','Yape'], ['bcp','BCP']].map(function(m){
+        return '<img src="images/pago/' + m[0] + '.svg" alt="' + m[1] + '" width="39" height="25" loading="lazy" decoding="async">'; }).join('') +
+    '</div>' +
     '<div class="gd-footer-bar">' +
-      '<span>© 2026 Giandeco Studio Design. Todos los derechos reservados.</span>' +
+      '<span>© 2026 Giandeco Studio Design · ' + EMPRESA.razon + ', RUC ' + EMPRESA.ruc + ' · Atención de ' + EMPRESA.horario + ' · Todos los derechos reservados.</span>' +
       '<em>Espacios que saben vender</em>' +
     '</div>' +
   '</div></footer>';

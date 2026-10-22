@@ -64,8 +64,13 @@ $$
   from pedidos
   where id = p_n and datos -> 'cliente' ->> 'cel' = p_cel
 $$;
+-- estado_pedido (y registrar_reclamo, en reclamos.sql) son PÚBLICAS A PROPÓSITO: la tienda las
+-- usa sin sesión (seguimiento por número de pedido + celular; Libro de Reclamaciones).
 grant execute on function estado_pedido(text, text) to anon, authenticated;
-revoke execute on function es_admin() from anon;
+-- es_admin la usan las políticas RLS de usuarios autenticados (el panel): no es para la API pública.
+-- (revocar solo de anon no basta: lo heredaba por PUBLIC. Ver migraciones/2026-10-20_permisos-funciones.sql)
+revoke execute on function es_admin() from public, anon;
+grant  execute on function es_admin() to authenticated;
 
 -- ---------- stock: cada pedido nuevo descuenta las unidades pedidas ----------
 -- El stock vive en config 'prod' (over.<clave>.stock). Sin dato, vale 1.
@@ -97,3 +102,5 @@ drop trigger if exists pedidos_descuenta_stock on pedidos;
 create trigger pedidos_descuenta_stock after insert on pedidos
   for each row when (coalesce(new.datos ->> 'demo', 'false') <> 'true')
   execute function descontar_stock();
+-- función interna de un trigger: no debe poder invocarse desde la API pública
+revoke execute on function descontar_stock() from public, anon, authenticated;

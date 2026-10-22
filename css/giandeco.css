@@ -953,6 +953,10 @@ a.gd-slot:hover .gd-slot-cta{ opacity:1; transform:none; }
 .gd-footer-libro:hover{ box-shadow:0 0 0 2px var(--accent); }
 .gd-footer-libro img{ display:block; height:64px; width:auto; border-radius:4px; }   /* aviso estándar del Libro de Reclamaciones (images/legal) */
 @media (max-width:720px){ .gd-footer-libro{ margin-left:0; } }
+.gd-footer-pagos{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:22px; }
+.gd-footer-pagos span{ font-family: var(--body); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color: var(--text-dim); margin-right:8px; }
+.gd-footer-pagos img{ display:block; width:39px; height:25px; object-fit:cover; border-radius:3px; box-shadow:0 0 0 1px rgba(128,120,104,.28); }
+.gd-footer-pagos + .gd-footer-bar{ margin-top:18px; }
 .gd-footer-ayuda + .gd-footer-bar{ margin-top:22px; }
 .gd-footer-bar{
   margin-top: clamp(40px,5vw,64px); padding-block:22px; border-top:1px solid var(--line);

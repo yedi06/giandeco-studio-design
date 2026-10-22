@@ -40,18 +40,18 @@ var CFG = {
     lista: ['Shalom', 'Olva Courier', 'Marvisur', 'Cruz del Sur Cargo']
   },
   /* Medios de pago: Giandeco cobra SOLO de dos formas.
-     · culqi:   en línea con la pasarela Culqi (tarjeta de crédito o débito, en
+     · culqi:   en línea con la pasarela de pagos (tarjeta de crédito o débito, en
                 cuotas si el banco lo permite, y Yape cuando el servidor lo
-                habilita). Esta web nunca recibe datos de tarjeta (js/gd-pago.js).
+                habilita). La clave interna 'culqi' no se muestra al público. Esta web nunca recibe datos de tarjeta (js/gd-pago.js).
      · directo: depósito o transferencia a las cuentas de Giandeco
                 (PAGO_DIRECTO) y envío del comprobante por WhatsApp.
      activo:false lo quita del checkout; el panel también puede apagarlos. */
   PAGO: [
-    { key:'culqi',   activo:true, label:'Pago en línea con Culqi', logos:['visa','mastercard','amex','diners','yape'],
+    { key:'culqi',   activo:true, label:'Pago en línea con tarjeta o Yape', logos:['visa','mastercard','amex','diners','yape'],
       nota:'Tarjeta de crédito o débito, también en cuotas, o Yape. Su pedido queda confirmado al pagar.',
       notaOff:'No disponible en este momento. Puede pagar por depósito.' },
-    { key:'directo', activo:true, label:'Depósito y envío de comprobante',
-      nota:'Al registrar el pedido verá la cuenta de Giandeco. Paga, nos envía el comprobante por WhatsApp y confirmamos.' }
+    { key:'directo', activo:true, label:'Código QR Yape, número de celular de Giandeco o número de cuenta', logos:['yape','bcp'],
+      nota:'Al registrar el pedido verá el código QR de Yape, el celular de Giandeco y la cuenta BCP. Paga, nos envía el comprobante por WhatsApp y confirmamos.' }
   ],
   /* Códigos de descuento:  { 'BIENVENIDA': { pct:10 } }  o  { 'ENVIO': { monto:30 } }.
      Vacío = el campo de cupón no se muestra. */
@@ -66,7 +66,7 @@ var CFG = {
   },
   /* Datos legales del estudio. Lo que esté vacío se muestra como
      "por confirmar" en las páginas de ayuda y en el libro de reclamaciones. */
-  EMPRESA: { razon:'Luis Giancarlo Jiménez Sánchez', ruc:'10452729691', dir:'Ca. Las Bellísimas 170, Urb. Vipol — Callao 07036', correo:'contacto@giandeco.com', tel:'+51 920 775 559' },
+  EMPRESA: (function(e){ var o = {}; for(var k in e) o[k] = e[k]; return o; })(window.GD_EMPRESA || {}),   // fuente única: EMPRESA en js/giandeco.js
   /* En false, las páginas de políticas llevan el aviso "borrador pendiente
      de validación". Se pasa a true cuando el estudio las aprueba. */
   LEGAL_VALIDADO: true,
@@ -122,7 +122,7 @@ function emitir(n){ try{ document.dispatchEvent(new CustomEvent('gd:' + n)); }ca
 /* logos de medios de pago (images/pago). Las tarjetas vienen de
    aaronfagan/svg-credit-card-payment-icons (Apache 2.0); Yape, de Wikimedia Commons;
    Plin, del juego de logos que publica Culqi en su web. */
-var MARCAS = { visa:'Visa', mastercard:'Mastercard', amex:'American Express', diners:'Diners Club', yape:'Yape', plin:'Plin' };
+var MARCAS = { visa:'Visa', mastercard:'Mastercard', amex:'American Express', diners:'Diners Club', yape:'Yape', plin:'Plin', bcp:'BCP' };
 function logosPago(lista){
   return '<i class="gdt-logos">' + (lista || []).map(function(k){
     return '<img' + (k === 'plin' ? ' class="es-icono"' : '') + ' src="images/pago/' + k + '.svg" alt="' + MARCAS[k] + '" width="39" height="25" decoding="async">';
@@ -149,7 +149,7 @@ function pagoDirectoHTML(p){
   }
   billetera('yape', 'Yape'); billetera('plin', 'Plin');
   var b = D.banco || {};
-  if(b.cuenta || b.cci) tarjetas.push('<article class="pd-medio"><header><h3>Transferencia o depósito</h3></header>' +
+  if(b.cuenta || b.cci) tarjetas.push('<article class="pd-medio"><header>' + logosPago(['bcp']) + '<h3>Transferencia o depósito BCP</h3></header>' +
     dato('Banco', b.banco) + dato('Cuenta en soles', b.cuenta, true) + dato('CCI', b.cci, true) + dato('A nombre de', b.titular) + '</article>');
   var monto = '<p class="pd-total"><span>' + (t.firme ? 'Total a pagar' : 'Total de piezas') + '</span><b>' + fmt(t.monto) + '</b></p>' +
     (t.firme ? '' : '<p class="gd-form-nota">Falta que Giandeco le confirme el costo de envío o de armado. Espere ese dato antes de pagar.</p>');
@@ -627,8 +627,9 @@ function montar(){
   // páginas de ayuda: datos del estudio, aviso de borrador y recomendados
   var E = CFG.EMPRESA;
   document.querySelectorAll('[data-emp]').forEach(function(el){
-    var v = E[el.getAttribute('data-emp')];
-    el.textContent = v || 'por confirmar';
+    var k = el.getAttribute('data-emp'), cap = /Cap$/.test(k), v = E[cap ? k.slice(0, -3) : k];
+    if(v && cap) v = v.charAt(0).toUpperCase() + v.slice(1);
+    if(v) el.textContent = v; else if(!el.textContent.trim()) el.textContent = 'por confirmar';   // el HTML ya trae el dato escrito
   });
   document.querySelectorAll('[data-borrador]').forEach(function(el){ el.hidden = CFG.LEGAL_VALIDADO; });
   document.querySelectorAll('[data-recomendados]').forEach(function(el){

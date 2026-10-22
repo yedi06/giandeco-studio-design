@@ -8,10 +8,16 @@
 <title>Finalizar pedido — Giandeco Studio Design</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#0A0A09">
+<!-- favicon -->
+<link rel="icon" href="favicon.ico?v=1" sizes="32x32">
+<link rel="icon" href="favicon.svg?v=1" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=1">
+<link rel="manifest" href="site.webmanifest?v=1">
+<!-- /favicon -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261018d">
+<link rel="stylesheet" href="css/giandeco.css?v=20261020e">
 <link rel="stylesheet" href="css/gd-tienda.css?v=20261018c">
 <link rel="stylesheet" href="css/gd-tema.css?v=20261018a">
 <script src="js/gd-tema.js?v=20261018a"></script>
@@ -37,8 +43,8 @@
   <a href="legal/libro-de-reclamaciones" target="_blank">Libro de reclamaciones</a>
 </footer>
 
-<script src="js/giandeco.js?v=20261020c"></script>
-<script src="js/gd-tienda.js?v=20261018a"></script>
+<script src="js/giandeco.js?v=20261021a"></script>
+<script src="js/gd-tienda.js?v=20261021a"></script>
 <script src="js/gd-pago.js?v=20261018a"></script>
 <script src="js/gd-ubigeo.js?v=20261018a"></script>
 <script>
@@ -246,7 +252,7 @@
   }
   function zona(){ var k = zonaKey(); return C.ENVIO.filter(function(z){ return z.key === k; })[0]; }
 
-  /* medios de pago: solo dos, Culqi y depósito. Sin pasarela activa, Culqi
+  /* medios de pago: solo dos, en línea y directo. Sin pasarela activa, el pago en línea
      se muestra apagado (no se ofrece un pago que no se puede hacer). */
   function usable(m){ return m.key !== 'culqi' || pasarela; }
   var pagoTocado = false;   // lo que el cliente eligió manda; si no eligió, se propone el último medio usado o el primero disponible
@@ -263,7 +269,7 @@
   }
   /* por qué pagar aquí es seguro: solo hechos que la pasarela respalda */
   var CONFIANZA = '<p class="co-seguro"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>' +
-    '<span>Procesado por <img src="images/pago/culqi.svg" alt="Culqi" width="56" height="16">, pasarela certificada PCI DSS. Giandeco no ve ni guarda los datos de su tarjeta.</span></p>';
+    '<span>Pago procesado por una pasarela certificada PCI DSS. Giandeco no ve ni guarda los datos de su tarjeta.</span></p>';
   /* el último botón dice lo que va a pasar */
   function botonFinal(){
     var b = form.querySelector('.co-paso[data-paso="' + ULT + '"] button[type="submit"]'); if(!b || soloCot) return;
@@ -276,7 +282,7 @@
   function enLinea(m){ return pasarela && !!m && P.EN_LINEA.indexOf(m.key) !== -1; }
   function textosPago(){
     var b = $('coConfPago'), m = pagoElegido();
-    if(b) b.textContent = soloCot ? 'Sin cobro: primero recibe la cotización.' : m && m.key === 'culqi' ? 'Pago en línea protegido por Culqi.' : 'Confirmamos su pedido al recibir el comprobante.';
+    if(b) b.textContent = soloCot ? 'Sin cobro: primero recibe la cotización.' : m && m.key === 'culqi' ? 'Pago en línea protegido.' : 'Confirmamos su pedido al recibir el comprobante.';
   }
   P.estado().then(function(a){ if(a !== pasarela){ pasarela = a; textosPago(); pintarPago(); } });
 

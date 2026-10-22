@@ -19,6 +19,15 @@ var DOMINIO = 'https://giandeco.com';
 var OG_POR_DEFECTO = 'images/espacios/zara-sala-1.jpg';
 var NO_INDEXAR = ['producto.html', 'checkout.html', 'cuenta.html', 'seguimiento.html', '404.html', 'material-pendiente.html', 'admin.html', 'mantenimiento.html'];
 
+/* favicon: mismo bloque que escribe aplicar-favicon.js (rutas relativas; subir FAVICON_V si cambia el favicon) */
+var FAVICON_V = '1';
+var FAVICON = ['<!-- favicon -->',
+  '<link rel="icon" href="favicon.ico?v=' + FAVICON_V + '" sizes="32x32">',
+  '<link rel="icon" href="favicon.svg?v=' + FAVICON_V + '" type="image/svg+xml">',
+  '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=' + FAVICON_V + '">',
+  '<link rel="manifest" href="site.webmanifest?v=' + FAVICON_V + '">',
+  '<!-- /favicon -->'].join('\n');
+
 function leer(f){ return fs.readFileSync(f, 'utf8'); }
 function esc(s){ return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 function abs(ruta){ return DOMINIO + '/' + ruta.replace(/\?.*$/, '').split('/').map(encodeURIComponent).join('/'); }
@@ -42,10 +51,22 @@ function num(precio){ var n = parseFloat(String(precio).replace(/[^0-9.]/g, ''))
 
 /* ---- catálogo: los tres objetos de js/giandeco.js ---- */
 var fuente = leer('js/giandeco.js');
+function unesc(s){ return String(s).replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&'); }
 function objeto(nombre){
   var m = fuente.match(new RegExp('var ' + nombre + ' = (\\{[\\s\\S]*?\\r?\\n\\});'));
   if(!m) throw new Error('No se encontró ' + nombre + ' en js/giandeco.js');
   return (new Function('return ' + m[1]))();
+}
+/* datos del estudio: la misma fuente que usa el navegador (EMPRESA en js/giandeco.js) */
+var EMP = objeto('EMPRESA');
+/* escribe en el HTML estático lo que el navegador pondría con JavaScript: <span data-emp="ruc">…</span> */
+function llenarEmpresa(html){
+  return html.replace(/(<([a-z0-9]+)\b[^>]*\bdata-emp="(\w+)"[^>]*>)([^<]*)(<\/\2>)/g, function(todo, abre, tag, k, viejo, cierra){
+    var cap = /Cap$/.test(k), v = EMP[cap ? k.slice(0, -3) : k];
+    if(!v) return todo;
+    if(cap) v = v.charAt(0).toUpperCase() + v.slice(1);
+    return abre + esc(v) + cierra;
+  });
 }
 var LINEAS = [
   { key:'muebleria',   label:'Mueblería',   href:'catalogo/muebleria/',   datos:objeto('PRODUCTOS') },
@@ -71,7 +92,8 @@ function bloque(o){
 }
 function ponerBloque(html, b){
   html = html.replace(/\r?\n?<!-- seo -->[\s\S]*?<!-- \/seo -->/, '');
-  return html.replace(/(<meta name="theme-color"[^>]*>)/, '$1\n' + b);
+  html = html.replace(/\r?\n?<!-- favicon -->[\s\S]*?<!-- \/favicon -->/, '');
+  return html.replace(/(<meta name="theme-color"[^>]*>)/, function(m){ return m + '\n' + FAVICON + '\n' + b; });
 }
 function dato(html, re){ var m = html.match(re); return m ? m[1].trim() : ''; }
 
@@ -91,7 +113,9 @@ LINEAS.forEach(function(L){
     if(fijas.indexOf(archivo) !== -1 || productos.indexOf(archivo) !== -1) throw new Error('La ruta ' + archivo + ' ya existe: cambie el nombre de la pieza ' + k);
     fs.mkdirSync(path.dirname(archivo), { recursive:true });
     var titulo = p.nombre + ' — ' + L.label + ' · Giandeco Studio Design';
-    var desc = p.nombre + ' · ' + p.cat + ' · ' + p.precio + '. ' + p.nota + ' Envío a todo el Perú.';
+    // la categoría solo si aporta: «Casa de jengibre · Jengibre» repetía lo mismo
+    var cat = ruta(p.nombre).indexOf(ruta(p.cat)) !== -1 ? '' : p.cat + ' · ';
+    var desc = RUTAS.recortar(p.nombre + ' · ' + cat + p.precio + '. ' + p.nota + ' Envío a todo el Perú.', 155);
     var ld = { '@context':'https://schema.org', '@type':'Product', name:p.nombre, sku:k, category:p.cat, description:p.nota,
                image:[abs(p.img)], brand:{ '@type':'Brand', name:'Giandeco' } };
     if(valor !== null) ld.offers = { '@type':'Offer', priceCurrency:'PEN', price:valor.toFixed(2), url:url, seller:{ '@type':'Organization', name:'Giandeco Studio Design' } };
@@ -130,9 +154,13 @@ fijas.forEach(function(f){
   var html = leer(f);
   if(NO_INDEXAR.indexOf(f) !== -1 || /<meta name="robots" content="noindex/.test(html)) return;
   var esHome = f === 'index.html', url = esHome ? DOMINIO + '/' : pub(f);
+  // descripción ≤ 155 caracteres, también en la etiqueta que ya trae la página
+  var d0 = unesc(dato(html, /<meta name="description" content="([^"]*)"/)), d1 = RUTAS.recortar(d0, 155);
+  if(d0 && d1 !== d0) html = html.replace(/(<meta name="description" content=")[^"]*(")/, function(t, a, b){ return a + esc(d1) + b; });
   var img = dato(html, /data-og="([^"?]+)/) || dato(html, /class="gd-kb-img" src="([^"?]+)/) || OG_POR_DEFECTO;
-  html = ponerBloque(html, bloque({ url:url, titulo:dato(html, /<title>([\s\S]*?)<\/title>/), desc:dato(html, /<meta name="description" content="([^"]*)"/),
+  html = ponerBloque(html, bloque({ url:url, titulo:dato(html, /<title>([\s\S]*?)<\/title>/), desc:d1,
                                     img:abs(img), ld: esHome ? [ORG, SITIO] : [] }));
+  html = llenarEmpresa(html);
   fs.writeFileSync(f, html);
   paginas.push({ f:f, url:url, prio: esHome ? '1.0' : /^(catalogo|retail|hogar)/.test(f) ? '0.8' : /^proyectos\//.test(f) ? '0.7' : '0.5' });
 });

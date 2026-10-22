@@ -55,6 +55,8 @@ $$;
 drop trigger if exists pedidos_sanea on pedidos;
 create trigger pedidos_sanea before insert on pedidos
   for each row execute function pedidos_sanear();
+-- función interna de un trigger: no debe poder invocarse desde la API pública
+revoke execute on function pedidos_sanear() from public, anon, authenticated;
 
 -- Un pago cobrado por la pasarela no se pierde ni se desmarca al guardar el
 -- pedido desde el panel con una copia anterior.

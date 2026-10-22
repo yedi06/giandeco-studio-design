@@ -9,10 +9,16 @@
 <meta name="robots" content="noindex">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#0A0A09">
+<!-- favicon -->
+<link rel="icon" href="favicon.ico?v=1" sizes="32x32">
+<link rel="icon" href="favicon.svg?v=1" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=1">
+<link rel="manifest" href="site.webmanifest?v=1">
+<!-- /favicon -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/giandeco.css?v=20261018d">
+<link rel="stylesheet" href="css/giandeco.css?v=20261020e">
 <link rel="stylesheet" href="css/gd-tienda.css?v=20261018c">
 <link rel="stylesheet" href="css/gd-tema.css?v=20261018a">
 <script src="js/gd-tema.js?v=20261018a"></script>
@@ -37,8 +43,8 @@
   <a href="legal/libro-de-reclamaciones" target="_blank">Libro de reclamaciones</a>
 </footer>
 
-<script src="js/giandeco.js?v=20261020c"></script>
-<script src="js/gd-tienda.js?v=20261018a"></script>
+<script src="js/giandeco.js?v=20261021a"></script>
+<script src="js/gd-tienda.js?v=20261021a"></script>
 <script src="js/gd-pago.js?v=20261018a"></script>
 <script>
 (function(){
@@ -128,7 +134,7 @@
       '<div class="co-grid pg-grid">' +
         '<section class="pg-pago" aria-labelledby="pgT">' +
           '<h2 class="pg-t" id="pgT">Datos de pago</h2>' +
-          '<p class="co-ayuda">Elija tarjeta' + (c.yape ? ' o Yape' : '') + ' y complete los datos. Se procesan en el formulario cifrado de Culqi: Giandeco no ve ni guarda los datos de su tarjeta.</p>' +
+          '<p class="co-ayuda">Elija tarjeta' + (c.yape ? ' o Yape' : '') + ' y complete los datos. Se procesan en un formulario cifrado: Giandeco no ve ni guarda los datos de su tarjeta.</p>' +
           '<div class="co-medios pg-medios"><span>Aceptamos</span>' + T.logosPago(['visa', 'mastercard', 'amex', 'diners'].concat(c.yape ? ['yape'] : [])) + '</div>' +
           '<p class="pg-aviso" id="pgAviso" role="alert"' + (aviso ? '' : ' hidden') + '>' + (aviso ? esc(aviso) : '') + '</p>' +
           '<div class="pg-culqi" id="pgCulqi"><div class="pg-espera" role="status" aria-label="Cargando el formulario de pago"></div></div>' +
