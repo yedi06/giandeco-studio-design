@@ -71,7 +71,8 @@ function alEntrar(s){
     nombre: md.nombre || md.full_name || md.name || prev.nombre || String(u.email || '').split('@')[0],
     cel: md.cel || prev.cel || '', email: u.email || prev.email || '',
     uid: u.id || '', proveedor: (u.app_metadata && u.app_metadata.provider) || 'email',
-    foto: md.avatar_url || md.picture || ''
+    foto: md.avatar_url || md.picture || '',
+    nac: md.nac || prev.nac || '', genero: md.genero || prev.genero || '', com: md.com || prev.com || null
   });
   return s;
 }

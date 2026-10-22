@@ -1,5 +1,14 @@
 # Changelog UX/UI
 
+## 2026-10-22 — Mi cuenta y acceso según el lienzo «Giandeco · Mi cuenta y acceso»
+
+### Cambiado
+- **Acceso** en dos mitades (foto del proyecto + formulario) con Iniciar sesión / Crear cuenta, Google, correo y clave, recuperar clave y aviso para quien compró como invitado. En móvil: banda de foto arriba y formulario debajo.
+- **Tres estados que no se mezclan:** sin sesión (acceso), compró como invitado («Su compra» + un solo botón «Activar mi cuenta» con el correo ya escrito; ya no dice «Hola») y cliente con cuenta (panel completo).
+- **Panel** con menú lateral (escritorio) y barra inferior de cinco accesos (móvil): Inicio, Pedidos (lista + detalle con seguimiento, repetir, comprobante), Proyectos, Guardados, Beneficios (módulos, servicios, proyecto), Direcciones y facturación (editar entrega y comprobante) y Mis datos y seguridad (perfil, nacimiento, género, método de acceso, comunicación).
+- La lógica de acceso (`js/gd-auth.js`) y los pedidos no cambian; `gd-auth.js` solo recupera además nacimiento, género y comunicación del perfil.
+- **Por definir con el estudio:** el cupón de cumpleaños y los «beneficios» son los de la maqueta; la tarjeta «Su próximo beneficio» queda como «Próximamente».
+
 ## 2026-10-20 — Retail con la propuesta D «Plano» (Navidad zona por zona)
 
 ### Cambiado
