@@ -369,6 +369,16 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 .cu-ped-item small{ grid-column:1/-1; font-size:.76rem; }
 .cu-ped-item small a{ color:var(--accent); }
 .cu-ped-acc{ display:flex; flex-wrap:wrap; gap:10px 24px; margin-top:20px; }
+.cu-chips{ display:inline-flex; flex-wrap:wrap; align-items:center; gap:8px 14px; }
+.cu-pago{ font-style:normal; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; padding:3px 10px; border-radius:20px; border:1px solid var(--line); color:var(--text-dim); }
+.cu-pago.es-ok{ color:#8FB58A; border-color:rgba(143,181,138,.5); }
+.cu-pago.es-pend{ color:#E0A36E; border-color:rgba(224,163,110,.55); }
+.cu-sig{ --sig:var(--line); margin-top:18px; padding:16px 18px; background:var(--bg-raised); border-left:3px solid var(--sig); }
+.cu-sig.es-accion{ --sig:#E0A36E; } .cu-sig.es-espera{ --sig:var(--accent); } .cu-sig.es-ok{ --sig:#8FB58A; } .cu-sig.es-mal{ --sig:#D98A6F; }
+.cu-sig b{ display:block; font-weight:500; color:var(--lino); font-size:1rem; }
+.cu-sig p{ margin:6px 0 0; font-size:.9rem; line-height:1.55; color:var(--text-dim); }
+.cu-sig-a{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+.cu-sig + .cu-linea{ margin-top:30px; }
 .cu-linea{ list-style:none; margin:22px 0 0; padding:0; display:grid; grid-template-columns:repeat(5,1fr); }
 .cu-linea li{ position:relative; padding-top:18px; font-size:.64rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); line-height:1.4; padding-right:8px; }
 .cu-linea li::before{ content:''; position:absolute; left:0; right:0; top:3px; height:1px; background:var(--line); }
@@ -493,10 +503,11 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 .co-foot a{ font-size:.76rem; color:var(--text-faint); text-decoration:none; }
 .co-foot a:hover{ color:var(--accent); }
 
-.co-ruta{ list-style:none; margin:0 0 clamp(32px,5vw,56px); padding:0; display:flex; gap:0; max-width:760px; }
+.co-ruta{ list-style:none; margin:0 0 clamp(32px,5vw,56px); padding:0; display:flex; gap:0; max-width:none; }
 .co-ruta li{ flex:1; position:relative; padding-top:18px; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint); }
 .co-ruta li::before{ content:''; position:absolute; left:0; right:0; top:4px; height:1px; background:var(--line); }
 .co-ruta li::after{ content:''; position:absolute; left:0; top:0; width:9px; height:9px; border-radius:50%; background:var(--bg); border:1px solid var(--text-faint); }
+.co-ruta li:last-child::before{ display:none; }   /* la línea une un punto con el siguiente: tras el último no hay nada */
 .co-ruta li i{ font-style:normal; margin-right:8px; font-variant-numeric:tabular-nums; }
 .co-ruta li.is-hecho{ color:var(--text-dim); }
 .co-ruta li.is-hecho::before{ background:var(--accent); }
@@ -526,7 +537,7 @@ a.gdt-line-name:hover{ color:var(--t-accent); }
 .co-body .co-res .co-conf{ margin-top:18px; }
 
 /* --- pago en línea (pagar.html) --- */
-.pg{ max-width:760px; }
+.pg{ max-width:none; }
 .pg.es-pago{ max-width:none; }
 .pg h1{ margin-bottom:16px; }
 .pg-meta{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:0 0 var(--sp-40); }

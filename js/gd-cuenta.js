@@ -155,29 +155,49 @@ function enviarAcceso(){
 }
 
 /* ==================== PEDIDOS: piezas compartidas ==================== */
-var DICHO = ['Su pedido fue registrado', 'El estudio confirmó su pedido', 'Su pedido está en preparación', 'Su pedido va en camino', 'Su pedido fue entregado'];
-function enCurso(p){ return p.estado < T.ESTADOS.length - 1; }
+/* el estado de cada pedido (pago y entrega por separado) lo calcula js/gd-estado.js */
+function S(p){ return window.GD_ESTADO.de(p); }
+function enCurso(p){ return S(p).vivo; }
 function pila(p, max){
   var n = max || 3, fotos = p.items.slice(0, n).map(function(x){ var c = x.key && T.CAT[x.key]; return c && c.img ? '<img src="' + esc(c.img) + '" alt="" loading="lazy" decoding="async">' : '<span>G</span>'; }).join('');
   return '<div class="cx-pila">' + fotos + '</div>';
 }
 function piezas(p){ return p.items.reduce(function(a, x){ return a + x.qty; }, 0); }
-function chip(p){ var e = Math.min(p.estado, T.ESTADOS.length - 1); return '<span class="cx-chip' + (e === 3 ? ' es-oro' : '') + '">' + esc(T.ESTADOS[e]) + '</span>'; }
+function chip(p){ var s = S(p); return '<span class="cx-chip' + (s.cancel ? ' es-mal' : s.e === 3 ? ' es-oro' : '') + '">' + esc(s.etapa) + '</span>'; }
+function chipPago(p){
+  var s = S(p); if(s.cancel && !s.pagado) return '';
+  return '<span class="cx-chip es-' + s.pago.tono + '">' + (s.pago.tono === 'ok' ? I.check : '<i class="pt"></i>') + esc(s.pago.t) + '</span>';
+}
+/* «qué pasa ahora»: una frase clara y, si hay algo que hacer, el botón correcto */
+function sigHTML(p){
+  var s = S(p), g = s.sig;
+  var ic = g.tono === 'mal' ? I.ayuda : s.cot ? I.doc : g.tono === 'accion' ? (s.pagado ? I.envio : I.tarjeta) : g.tono === 'ok' || s.e <= 1 ? I.check : s.e === 2 ? I.pedidos : I.envio;
+  return '<div class="cx-sig es-' + g.tono + '" role="status"><span class="ic-c">' + ic + '</span>' +
+    '<div class="cx-sig-t"><b>' + esc(g.t) + '</b><p>' + esc(g.d) + '</p></div>' +
+    (g.acc.length ? '<div class="cx-sig-a">' + g.acc.map(function(a){
+      return '<a class="' + (a.pri ? 'cx-btn' : 'cx-ghost') + '" href="' + esc(a.href) + '"' + (a.ext ? ' target="_blank" rel="noopener"' : '') + '>' + (a.pri && a.href.indexOf('pagar') === 0 ? I.tarjeta : '') + '<span>' + esc(a.t) + '</span></a>'; }).join('') + '</div>' : '') + '</div>';
+}
+function sigMini(p){
+  var g = S(p).sig, a = g.acc[0];
+  return '<div class="cx-mini es-' + g.tono + '"><i></i><b>' + esc(g.t) + '</b>' + (a && g.tono === 'accion' && a.pri ? '<a class="cx-ver" href="' + esc(a.href) + '">' + esc(a.t) + '</a>' : '') + '</div>';
+}
 function pasos(p){
-  var n = T.ESTADOS.length - 1, e = Math.min(p.estado, n);
-  return '<ol class="cx-pasos" style="--av:' + e + '" aria-label="Estado del pedido">' + T.ESTADOS.map(function(t, i){
+  var s = S(p); if(s.cancel) return '';
+  var n = s.etapas.length - 1, e = s.e;
+  return '<ol class="cx-pasos" style="--av:' + e + '" aria-label="Avance del pedido">' + s.etapas.map(function(t, i){
     var c = i < e || e === n ? 'hecho' : i === e ? 'ahora' : 'falta';
     return '<li class="' + c + '"><i>' + (c === 'hecho' ? I.check : '') + '</i><span>' + esc(t) + '</span></li>';
   }).join('') + '</ol>';
 }
 function resumenM(p, ver){
-  var n = T.ESTADOS.length - 1, e = Math.min(p.estado, n);
-  return '<div class="cx-resumen-m"><div class="f"><b>' + (ver ? DICHO[e] : T.ESTADOS[e]) + '</b><small>Paso ' + (e + 1) + ' de ' + (n + 1) + '</small></div>' +
-    '<div class="cx-barra">' + T.ESTADOS.map(function(_, i){ return '<i class="' + (i < e || e === n ? 'h' : i === e ? 'a' : '') + '"></i>'; }).join('') + '</div>' +
+  var s = S(p); if(s.cancel) return '';
+  var n = s.etapas.length - 1, e = s.e;
+  return '<div class="cx-resumen-m"><div class="f"><b>' + esc(ver ? s.dicho : s.etapas[e]) + '</b><small>Paso ' + (e + 1) + ' de ' + (n + 1) + '</small></div>' +
+    '<div class="cx-barra">' + s.etapas.map(function(_, i){ return '<i class="' + (i < e || e === n ? 'h' : i === e ? 'a' : '') + '"></i>'; }).join('') + '</div>' +
     (ver ? '<a class="cx-ver" href="seguimiento?n=' + encodeURIComponent(p.n) + '">Ver seguimiento completo ' + I.chev.replace('<svg', '<svg width="16" height="16" style="fill:none;stroke:currentColor;stroke-width:1.8;margin-left:6px"') + '</a>' : '') + '</div>';
 }
 function detalleHTML(p){
-  var fin = p.estado >= T.ESTADOS.length - 1;
+  var s = S(p), fin = s.fin;
   var items = p.items.map(function(x){
     var c = x.key && T.CAT[x.key];
     var foto = c && c.img ? '<img src="' + esc(c.img) + '" alt="" loading="lazy" decoding="async">' : '<span>G</span>';
@@ -186,18 +206,16 @@ function detalleHTML(p){
       '<em>' + (x.valor === null ? 'A cotizar' : T.fmt(x.valor * x.qty)) + '</em></li>';
   }).join('');
   var entrega = p.entrega && p.entrega.resumen ? p.entrega.resumen : '—', comp = p.comprobante && p.comprobante.resumen ? ocultarDoc(p.comprobante.resumen) : '—';
-  var pagar = p.subtotal && !p.pagado && T.db('pasarela') === true ? '<a class="cx-btn" href="pagar?n=' + encodeURIComponent(p.n) + '">' + I.tarjeta + 'Pagar</a>' : '';
-  var datosPago = p.pagoKey === 'directo' && !p.pagado ? '<a class="cx-btn" href="checkout?ok=' + encodeURIComponent(p.n) + '">' + I.tarjeta + 'Datos de pago</a>' : '';
   return '<section class="cx-det" aria-label="Detalle del pedido ' + esc(p.n) + '">' +
-    '<div class="cx-det-cab"><div><p class="cx-k">Detalle del pedido</p><h2 class="cx-h2">' + esc(p.n) + '</h2></div>' + chip(p) + '</div>' +
-    pasos(p) + resumenM(p, true) +
+    '<div class="cx-det-cab"><div><p class="cx-k">Detalle del pedido</p><h2 class="cx-h2">' + esc(p.n) + '</h2></div><div class="cx-chips">' + chipPago(p) + chip(p) + '</div></div>' +
+    sigHTML(p) + (s.cancel ? '' : '<p class="cx-k cx-k2">Avance del pedido</p>') + pasos(p) + resumenM(p, true) +
     '<ul class="cx-items">' + items + '</ul>' +
-    '<div class="cx-totbox"><span>Total</span><b>' + (p.subtotal ? T.fmt(p.subtotal) : 'A cotizar') + '</b></div>' +
+    '<div class="cx-totbox"><span>' + (s.pagado ? 'Total pagado' : s.cot || s.cancel ? 'Total' : 'Total a pagar') + '</span><b>' + (p.subtotal ? T.fmt(p.subtotal) : 'A cotizar') + '</b></div>' +
     '<div class="cx-dos"><div><span>Entrega</span><span>' + esc(entrega) + '</span></div><div><span>Comprobante</span><span>' + esc(comp) + '</span></div></div>' +
-    '<div class="cx-acc">' + pagar + datosPago +
+    '<div class="cx-acc">' +
       '<a class="cx-btn" href="' + T.wa('Hola Giandeco, quiero saber el estado de mi pedido ' + p.n + '.') + '" target="_blank" rel="noopener">' + I.burbuja + '<span>Consultar<span class="d-only"></span><span class="m-only"> por WhatsApp</span></span></a>' +
       '<div class="dup"><button type="button" class="cx-ghost" data-repetir="' + esc(p.n) + '">' + I.repetir + 'Repetir<span class="d-only"> pedido</span></button>' +
-      '<a class="cx-ghost" href="' + T.wa('Hola Giandeco, necesito el comprobante de mi pedido ' + p.n + '.') + '" target="_blank" rel="noopener">' + I.doc + 'Comprobante</a></div>' +
+      (s.pagado ? '<a class="cx-ghost" href="' + T.wa('Hola Giandeco, necesito el comprobante de mi pedido ' + p.n + '.') + '" target="_blank" rel="noopener">' + I.doc + 'Comprobante</a>' : '') + '</div>' +
     '</div></section>';
 }
 function vacio(icono, texto, href, cta){
@@ -237,11 +255,11 @@ function asesor(s){ return T.wa('Hola Giandeco, soy ' + s.nombre + ' y quiero ha
 
 var SEC = {
   inicio: function(s){
-    var L = listas(), p = L.ped.filter(enCurso)[0] || L.ped[0];
+    var L = listas(), p = L.ped.filter(function(x){ return S(x).vivo && S(x).sig.tono === 'accion'; })[0] || L.ped.filter(enCurso)[0] || L.ped[0];
     var curso = p ? '<section class="cx-tarjeta"><div class="cx-curso-cab"><div class="cx-curso-id">' + pila(p) +
         '<div><p class="cx-k">' + (enCurso(p) ? 'Pedido en curso' : 'Último pedido') + '</p><b>' + esc(p.n) + '</b><small>' + fecha(p.fecha, true) + '<span class="d-only">' + fecha(p.fecha).slice(fecha(p.fecha, true).length) + '</span> · ' + piezas(p) + ' pieza' + (piezas(p) === 1 ? '' : 's') + '</small></div></div>' +
         '<div class="cx-curso-der"><div class="cx-tot"><small>Total</small><b>' + (p.subtotal ? T.fmt(p.subtotal) : 'A cotizar') + '</b></div><a class="cx-btn" href="#pedidos/' + encodeURIComponent(p.n) + '">Ver detalle</a></div></div>' +
-        pasos(p) + resumenM(p, false) + '</section>'
+        sigMini(p) + pasos(p) + resumenM(p, false) + '</section>'
       : vacio(I.pedidos, 'Aún no hay pedidos.', 'catalogo/', 'Ver el catálogo');
     return cab(saludo() + ', ' + esc(nombre1(s)), '<a class="cx-ghost es-asesor" href="' + asesor(s) + '" target="_blank" rel="noopener">' + I.waMsg + 'Hablar con mi asesor</a>') + curso +
       '<section class="cx-sec"><div class="cx-sec-cab"><h2 class="cx-h2">Sus beneficios</h2><a class="cx-ver" href="#beneficios">Ver todos</a></div>' +
@@ -259,13 +277,13 @@ var SEC = {
     var nCurso = todos.filter(enCurso).length;
     var sel = (ruta.n && T.pedidos.get(ruta.n)) || lista[0] || todos[0];
     var seg = '<div class="cx-seg es-3" style="grid-template-columns:repeat(3,auto)" role="group" aria-label="Filtrar pedidos">' +
-      [['todos', 'Todos · ' + todos.length], ['curso', 'En curso · ' + nCurso], ['entregados', 'Entregados · ' + (todos.length - nCurso)]].map(function(f){
+      [['todos', 'Todos · ' + todos.length], ['curso', 'En curso · ' + nCurso], ['entregados', 'Finalizados · ' + (todos.length - nCurso)]].map(function(f){
         return '<button type="button" data-filtro="' + f[0] + '" class="' + (filtro === f[0] ? 'is-on' : '') + '" style="padding:0 18px">' + f[1] + '</button>'; }).join('') + '</div>';
     if(!todos.length) return cab('Pedidos') + vacio(I.pedidos, 'Aún no hay pedidos.', 'catalogo/', 'Ver el catálogo');
     return '<div class="cx-ped-cab' + (ruta.n ? ' es-detalle' : '') + '"><div style="display:flex;flex-direction:column;gap:10px"><p class="cx-k">Mi cuenta</p><h1 class="cx-h1"><span class="d-only">Pedidos</span><span class="m-only">' + (ruta.n ? 'Pedido' : 'Pedidos') + '</span></h1></div>' + seg + '</div>' +
       '<div class="cx-ped-grid' + (ruta.n ? ' es-detalle' : '') + '"><div class="cx-ped-lista">' + (lista.length ? lista.map(function(p){
         return '<a class="cx-ped-c' + (sel && p.n === sel.n ? ' on' : '') + '" href="#pedidos/' + encodeURIComponent(p.n) + '"><div class="f1"><b>' + esc(p.n) + '</b>' + chip(p) + '</div>' +
-          '<div class="f2">' + pila(p) + '<span>' + fecha(p.fecha, true) + ' · ' + piezas(p) + ' pieza' + (piezas(p) === 1 ? '' : 's') + '</span></div><strong>' + (p.subtotal ? T.fmt(p.subtotal) : 'A cotizar') + '</strong></a>'; }).join('')
+          '<div class="f2">' + pila(p) + '<span>' + fecha(p.fecha, true) + ' · ' + piezas(p) + ' pieza' + (piezas(p) === 1 ? '' : 's') + '</span></div><div class="f3"><strong>' + (p.subtotal ? T.fmt(p.subtotal) : 'A cotizar') + '</strong>' + chipPago(p) + '</div></a>'; }).join('')
         : '<p class="cx-p">No hay pedidos en esta vista.</p>') + '</div>' + (sel ? detalleHTML(sel) : '') + '</div>';
   },
   proyectos: function(s){
