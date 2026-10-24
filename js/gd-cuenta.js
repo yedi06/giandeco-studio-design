@@ -30,6 +30,7 @@ var I = {
   ojoNo:    svg('<path d="M3 3l18 18"/><path d="M10.6 5.6A9.8 9.8 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a16 16 0 0 1-3 3.7M6.6 6.7C4 8.4 2.5 12 2.5 12S6 18.5 12 18.5a9.6 9.6 0 0 0 4.1-.9"/><path d="M9.9 9.9a2.8 2.8 0 0 0 4 4"/>'),
   escudo:   svg('<path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/>'),
   wa:       svg('<path d="M4 20l1.3-3.9A8 8 0 1 1 8 18.8z"/><path d="M9.2 8.6c.2-.5.6-.5.9-.5h.5c.2 0 .4.1.5.4l.6 1.5c.1.2 0 .5-.1.7l-.5.6c.6 1.1 1.5 2 2.6 2.6l.6-.5c.2-.2.5-.2.7-.1l1.5.7c.2.1.4.3.4.5v.5c0 .4-.1.7-.5.9-1.6.9-4.2-.5-5.6-1.9s-2.8-4-1.9-5.4z"/>'),
+  burbuja:  svg('<path d="M4 20l1.3-3.9A8 8 0 1 1 8 18.8z"/>'),
   waMsg:    svg('<path d="M4 20l1.3-3.9A8 8 0 1 1 8 18.8z"/><path d="M9 11h6M9 14h3.5"/>'),
   repetir:  svg('<path d="M4 12a8 8 0 0 1 13.7-5.7L20 8.5"/><path d="M20 4v4.5h-4.5"/><path d="M20 12a8 8 0 0 1-13.7 5.7L4 15.5"/><path d="M4 20v-4.5h4.5"/>'),
   tarjeta:  svg('<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/>'),
@@ -154,29 +155,49 @@ function enviarAcceso(){
 }
 
 /* ==================== PEDIDOS: piezas compartidas ==================== */
-var DICHO = ['Su pedido fue registrado', 'El estudio confirmó su pedido', 'Su pedido está en preparación', 'Su pedido va en camino', 'Su pedido fue entregado'];
-function enCurso(p){ return p.estado < T.ESTADOS.length - 1; }
+/* el estado de cada pedido (pago y entrega por separado) lo calcula js/gd-estado.js */
+function S(p){ return window.GD_ESTADO.de(p); }
+function enCurso(p){ return S(p).vivo; }
 function pila(p, max){
   var n = max || 3, fotos = p.items.slice(0, n).map(function(x){ var c = x.key && T.CAT[x.key]; return c && c.img ? '<img src="' + esc(c.img) + '" alt="" loading="lazy" decoding="async">' : '<span>G</span>'; }).join('');
   return '<div class="cx-pila">' + fotos + '</div>';
 }
 function piezas(p){ return p.items.reduce(function(a, x){ return a + x.qty; }, 0); }
-function chip(p){ var e = Math.min(p.estado, T.ESTADOS.length - 1); return '<span class="cx-chip' + (e === 3 ? ' es-oro' : '') + '">' + esc(T.ESTADOS[e]) + '</span>'; }
+function chip(p){ var s = S(p); return '<span class="cx-chip' + (s.cancel ? ' es-mal' : s.e === 3 ? ' es-oro' : '') + '">' + esc(s.etapa) + '</span>'; }
+function chipPago(p){
+  var s = S(p); if(s.cancel && !s.pagado) return '';
+  return '<span class="cx-chip es-' + s.pago.tono + '">' + (s.pago.tono === 'ok' ? I.check : '<i class="pt"></i>') + esc(s.pago.t) + '</span>';
+}
+/* «qué pasa ahora»: una frase clara y, si hay algo que hacer, el botón correcto */
+function sigHTML(p){
+  var s = S(p), g = s.sig;
+  var ic = g.tono === 'mal' ? I.ayuda : s.cot ? I.doc : g.tono === 'accion' ? (s.pagado ? I.envio : I.tarjeta) : g.tono === 'ok' || s.e <= 1 ? I.check : s.e === 2 ? I.pedidos : I.envio;
+  return '<div class="cx-sig es-' + g.tono + '" role="status"><span class="ic-c">' + ic + '</span>' +
+    '<div class="cx-sig-t"><b>' + esc(g.t) + '</b><p>' + esc(g.d) + '</p></div>' +
+    (g.acc.length ? '<div class="cx-sig-a">' + g.acc.map(function(a){
+      return '<a class="' + (a.pri ? 'cx-btn' : 'cx-ghost') + '" href="' + esc(a.href) + '"' + (a.ext ? ' target="_blank" rel="noopener"' : '') + '>' + (a.pri && a.href.indexOf('pagar') === 0 ? I.tarjeta : '') + '<span>' + esc(a.t) + '</span></a>'; }).join('') + '</div>' : '') + '</div>';
+}
+function sigMini(p){
+  var g = S(p).sig, a = g.acc[0];
+  return '<div class="cx-mini es-' + g.tono + '"><i></i><b>' + esc(g.t) + '</b>' + (a && g.tono === 'accion' && a.pri ? '<a class="cx-ver" href="' + esc(a.href) + '">' + esc(a.t) + '</a>' : '') + '</div>';
+}
 function pasos(p){
-  var n = T.ESTADOS.length - 1, e = Math.min(p.estado, n);
-  return '<ol class="cx-pasos" style="--av:' + e + '" aria-label="Estado del pedido">' + T.ESTADOS.map(function(t, i){
+  var s = S(p); if(s.cancel) return '';
+  var n = s.etapas.length - 1, e = s.e;
+  return '<ol class="cx-pasos" style="--av:' + e + '" aria-label="Avance del pedido">' + s.etapas.map(function(t, i){
     var c = i < e || e === n ? 'hecho' : i === e ? 'ahora' : 'falta';
     return '<li class="' + c + '"><i>' + (c === 'hecho' ? I.check : '') + '</i><span>' + esc(t) + '</span></li>';
   }).join('') + '</ol>';
 }
 function resumenM(p, ver){
-  var n = T.ESTADOS.length - 1, e = Math.min(p.estado, n);
-  return '<div class="cx-resumen-m"><div class="f"><b>' + DICHO[e] + '</b><small>Paso ' + (e + 1) + ' de ' + (n + 1) + '</small></div>' +
-    '<div class="cx-barra">' + T.ESTADOS.map(function(_, i){ return '<i class="' + (i < e || e === n ? 'h' : i === e ? 'a' : '') + '"></i>'; }).join('') + '</div>' +
+  var s = S(p); if(s.cancel) return '';
+  var n = s.etapas.length - 1, e = s.e;
+  return '<div class="cx-resumen-m"><div class="f"><b>' + esc(ver ? s.dicho : s.etapas[e]) + '</b><small>Paso ' + (e + 1) + ' de ' + (n + 1) + '</small></div>' +
+    '<div class="cx-barra">' + s.etapas.map(function(_, i){ return '<i class="' + (i < e || e === n ? 'h' : i === e ? 'a' : '') + '"></i>'; }).join('') + '</div>' +
     (ver ? '<a class="cx-ver" href="seguimiento?n=' + encodeURIComponent(p.n) + '">Ver seguimiento completo ' + I.chev.replace('<svg', '<svg width="16" height="16" style="fill:none;stroke:currentColor;stroke-width:1.8;margin-left:6px"') + '</a>' : '') + '</div>';
 }
 function detalleHTML(p){
-  var fin = p.estado >= T.ESTADOS.length - 1;
+  var s = S(p), fin = s.fin;
   var items = p.items.map(function(x){
     var c = x.key && T.CAT[x.key];
     var foto = c && c.img ? '<img src="' + esc(c.img) + '" alt="" loading="lazy" decoding="async">' : '<span>G</span>';
@@ -185,18 +206,16 @@ function detalleHTML(p){
       '<em>' + (x.valor === null ? 'A cotizar' : T.fmt(x.valor * x.qty)) + '</em></li>';
   }).join('');
   var entrega = p.entrega && p.entrega.resumen ? p.entrega.resumen : '—', comp = p.comprobante && p.comprobante.resumen ? ocultarDoc(p.comprobante.resumen) : '—';
-  var pagar = p.subtotal && !p.pagado && T.db('pasarela') === true ? '<a class="cx-btn" href="pagar?n=' + encodeURIComponent(p.n) + '">' + I.tarjeta + 'Pagar</a>' : '';
-  var datosPago = p.pagoKey === 'directo' && !p.pagado ? '<a class="cx-btn" href="checkout?ok=' + encodeURIComponent(p.n) + '">' + I.tarjeta + 'Datos de pago</a>' : '';
   return '<section class="cx-det" aria-label="Detalle del pedido ' + esc(p.n) + '">' +
-    '<div class="cx-det-cab"><div><p class="cx-k">Detalle del pedido</p><h2 class="cx-h2">' + esc(p.n) + '</h2></div>' + chip(p) + '</div>' +
-    pasos(p) + resumenM(p, true) +
+    '<div class="cx-det-cab"><div><p class="cx-k">Detalle del pedido</p><h2 class="cx-h2">' + esc(p.n) + '</h2></div><div class="cx-chips">' + chipPago(p) + chip(p) + '</div></div>' +
+    sigHTML(p) + (s.cancel ? '' : '<p class="cx-k cx-k2">Avance del pedido</p>') + pasos(p) + resumenM(p, true) +
     '<ul class="cx-items">' + items + '</ul>' +
-    '<div class="cx-totbox"><span>Total</span><b>' + (p.subtotal ? T.fmt(p.subtotal) : 'A cotizar') + '</b></div>' +
+    '<div class="cx-totbox"><span>' + (s.pagado ? 'Total pagado' : s.cot || s.cancel ? 'Total' : 'Total a pagar') + '</span><b>' + (p.subtotal ? T.fmt(p.subtotal) : 'A cotizar') + '</b></div>' +
     '<div class="cx-dos"><div><span>Entrega</span><span>' + esc(entrega) + '</span></div><div><span>Comprobante</span><span>' + esc(comp) + '</span></div></div>' +
-    '<div class="cx-acc">' + pagar + datosPago +
-      '<a class="cx-btn" href="' + T.wa('Hola Giandeco, quiero saber el estado de mi pedido ' + p.n + '.') + '" target="_blank" rel="noopener">' + I.wa + '<span>Consultar<span class="d-only"></span><span class="m-only"> por WhatsApp</span></span></a>' +
+    '<div class="cx-acc">' +
+      '<a class="cx-btn" href="' + T.wa('Hola Giandeco, quiero saber el estado de mi pedido ' + p.n + '.') + '" target="_blank" rel="noopener">' + I.burbuja + '<span>Consultar<span class="d-only"></span><span class="m-only"> por WhatsApp</span></span></a>' +
       '<div class="dup"><button type="button" class="cx-ghost" data-repetir="' + esc(p.n) + '">' + I.repetir + 'Repetir<span class="d-only"> pedido</span></button>' +
-      '<a class="cx-ghost" href="' + T.wa('Hola Giandeco, necesito el comprobante de mi pedido ' + p.n + '.') + '" target="_blank" rel="noopener">' + I.doc + 'Comprobante</a></div>' +
+      (s.pagado ? '<a class="cx-ghost" href="' + T.wa('Hola Giandeco, necesito el comprobante de mi pedido ' + p.n + '.') + '" target="_blank" rel="noopener">' + I.doc + 'Comprobante</a>' : '') + '</div>' +
     '</div></section>';
 }
 function vacio(icono, texto, href, cta){
@@ -209,17 +228,17 @@ function listas(){ return { ped:T.pedidos.lista(), fav:T.favs.lista().filter(fun
 
 /* ==================== PANEL: secciones ==================== */
 var ETAPAS = ['Visita técnica', 'Propuesta y render', 'Mobiliario y compras', 'Montaje'];
-function bn(icono, t, d, href, cta, ext){
+function bn(icono, t, d, href, cta, ext, sinFlecha){
   return '<article class="cx-bn"><span class="ic-c">' + icono.replace('<svg', '<svg class="ic"') + '</span><h3>' + t + '</h3><p>' + d + '</p>' +
-    '<a class="cx-go" href="' + href + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + cta + I.flecha + '</a></article>';
+    '<a class="cx-go" href="' + href + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + cta + (sinFlecha ? '' : I.flecha) + '</a></article>';
 }
 function bnVacio(txt){ return '<article class="cx-bn es-vacio"><span class="ic-c">' + I.mas.replace('<svg', '<svg class="ic"') + '</span><h3>Su próximo beneficio</h3><p>' + txt + '</p></article>'; }
 function fila(icono, t, d, href, ic){
   return '<a class="cx-fila' + (ic ? ' es-ic' : '') + '" href="' + href + '">' + (ic ? '<span class="ic-c">' + icono + '</span>' : icono) + '<div><b>' + t + '</b><span>' + d + '</span></div>' + I.chev + '</a>';
 }
-function servicio(){
-  return '<article class="cx-serv"><span class="ic-c">' + I.agenda + '</span><div><h3 class="cx-h3">Visita técnica</h3><p class="cx-p">Visitamos su espacio, lo medimos y lo analizamos para proponerle qué muebles, iluminación y decoración le convienen.</p></div>' +
-    '<div class="cx-datos2"><div><span>Costo</span><b>S/ 100</b></div><div><span>Duración</span><b>1 h a 1 h 30</b></div></div>' +
+function servicio(corto, largo){
+  return '<article class="cx-serv' + (largo ? ' es-largo' : '') + '"><span class="ic-c">' + I.agenda + '</span><div><h3 class="cx-h3">Visita técnica</h3><p class="cx-p">' + (corto ? 'Visitamos su espacio, lo analizamos y le proponemos qué le conviene.' : 'Visitamos su espacio, lo medimos y lo analizamos para proponerle qué muebles, iluminación y decoración le convienen.') + '</p></div>' +
+    '<div class="cx-datos2"><div><span>Costo</span><b>S/ 100</b></div><div><span>Duración</span><b>' + (largo ? '1 hora<span class="d-only">, máximo 1 h 30 min</span><span class="m-only"> a 1 h 30</span>' : '1 h a 1 h 30') + '</b></div></div>' +
     '<a class="cx-btn" href="contacto">Agendar visita</a></article>';
 }
 function proyectoBloque(s){
@@ -236,20 +255,20 @@ function asesor(s){ return T.wa('Hola Giandeco, soy ' + s.nombre + ' y quiero ha
 
 var SEC = {
   inicio: function(s){
-    var L = listas(), p = L.ped.filter(enCurso)[0] || L.ped[0];
+    var L = listas(), p = L.ped.filter(function(x){ return S(x).vivo && S(x).sig.tono === 'accion'; })[0] || L.ped.filter(enCurso)[0] || L.ped[0];
     var curso = p ? '<section class="cx-tarjeta"><div class="cx-curso-cab"><div class="cx-curso-id">' + pila(p) +
-        '<div><p class="cx-k">' + (enCurso(p) ? 'Pedido en curso' : 'Último pedido') + '</p><b>' + esc(p.n) + '</b><small>' + fecha(p.fecha) + ' · ' + piezas(p) + ' pieza' + (piezas(p) === 1 ? '' : 's') + '</small></div></div>' +
+        '<div><p class="cx-k">' + (enCurso(p) ? 'Pedido en curso' : 'Último pedido') + '</p><b>' + esc(p.n) + '</b><small>' + fecha(p.fecha, true) + '<span class="d-only">' + fecha(p.fecha).slice(fecha(p.fecha, true).length) + '</span> · ' + piezas(p) + ' pieza' + (piezas(p) === 1 ? '' : 's') + '</small></div></div>' +
         '<div class="cx-curso-der"><div class="cx-tot"><small>Total</small><b>' + (p.subtotal ? T.fmt(p.subtotal) : 'A cotizar') + '</b></div><a class="cx-btn" href="#pedidos/' + encodeURIComponent(p.n) + '">Ver detalle</a></div></div>' +
-        pasos(p) + resumenM(p, false) + '</section>'
+        sigMini(p) + pasos(p) + resumenM(p, false) + '</section>'
       : vacio(I.pedidos, 'Aún no hay pedidos.', 'catalogo/', 'Ver el catálogo');
     return cab(saludo() + ', ' + esc(nombre1(s)), '<a class="cx-ghost es-asesor" href="' + asesor(s) + '" target="_blank" rel="noopener">' + I.waMsg + 'Hablar con mi asesor</a>') + curso +
       '<section class="cx-sec"><div class="cx-sec-cab"><h2 class="cx-h2">Sus beneficios</h2><a class="cx-ver" href="#beneficios">Ver todos</a></div>' +
-        '<div class="cx-bn-grid">' + bn(I.waMsg, 'Su asesor', 'Un asesor del estudio le responde por WhatsApp.', asesor(s), 'Escribir', true) +
-          bn(I.escudo, 'Cambios y garantía', 'Las condiciones de cambio y garantía de sus piezas.', 'ayuda/cambios-y-garantia', 'Ver condiciones') +
-          bn(I.navidad, 'Navidad 2026', 'Las 26 piezas de la colección, con precio y ficha.', 'catalogo/navidad/', 'Ver colección') +
+        '<div class="cx-bn-grid">' + bn(I.waMsg, 'Su asesor', 'Un asesor del estudio le responde por WhatsApp.', asesor(s), 'Escribir', true, true) +
+          bn(I.escudo, 'Cambios y garantía', 'Las condiciones de cambio y garantía de sus piezas.', 'ayuda/cambios-y-garantia', 'Ver condiciones', false, true) +
+          bn(I.navidad, 'Navidad 2026', 'Las 26 piezas de la colección, con precio y ficha.', 'catalogo/navidad/', 'Ver colección', false, true) +
           bnVacio('Próximamente.') + '</div>' +
         '<div class="cx-filas">' + fila(I.waMsg, 'Su asesor', 'Le responde por WhatsApp', asesor(s)) + fila(I.escudo, 'Cambios y garantía', 'Condiciones de sus piezas', 'ayuda/cambios-y-garantia') + fila(I.navidad, 'Navidad 2026', '26 piezas con precio y ficha', 'catalogo/navidad/') + '</div></section>' +
-      '<section class="cx-sec"><h2 class="cx-h2">Servicios</h2>' + servicio() + '</section>' +
+      '<section class="cx-sec"><h2 class="cx-h2">Servicios</h2>' + servicio(true) + '</section>' +
       (L.fav.length ? '<section class="cx-sec"><div class="cx-sec-cab"><h2 class="cx-h2">Guardados</h2><a class="cx-ver" href="#guardados">Ver los ' + L.fav.length + '</a></div>' + pcs(L.fav.slice(0, 4)) + '</section>' : '');
   },
   pedidos: function(s, ruta){
@@ -258,13 +277,13 @@ var SEC = {
     var nCurso = todos.filter(enCurso).length;
     var sel = (ruta.n && T.pedidos.get(ruta.n)) || lista[0] || todos[0];
     var seg = '<div class="cx-seg es-3" style="grid-template-columns:repeat(3,auto)" role="group" aria-label="Filtrar pedidos">' +
-      [['todos', 'Todos · ' + todos.length], ['curso', 'En curso · ' + nCurso], ['entregados', 'Entregados · ' + (todos.length - nCurso)]].map(function(f){
+      [['todos', 'Todos · ' + todos.length], ['curso', 'En curso · ' + nCurso], ['entregados', 'Finalizados · ' + (todos.length - nCurso)]].map(function(f){
         return '<button type="button" data-filtro="' + f[0] + '" class="' + (filtro === f[0] ? 'is-on' : '') + '" style="padding:0 18px">' + f[1] + '</button>'; }).join('') + '</div>';
     if(!todos.length) return cab('Pedidos') + vacio(I.pedidos, 'Aún no hay pedidos.', 'catalogo/', 'Ver el catálogo');
     return '<div class="cx-ped-cab' + (ruta.n ? ' es-detalle' : '') + '"><div style="display:flex;flex-direction:column;gap:10px"><p class="cx-k">Mi cuenta</p><h1 class="cx-h1"><span class="d-only">Pedidos</span><span class="m-only">' + (ruta.n ? 'Pedido' : 'Pedidos') + '</span></h1></div>' + seg + '</div>' +
       '<div class="cx-ped-grid' + (ruta.n ? ' es-detalle' : '') + '"><div class="cx-ped-lista">' + (lista.length ? lista.map(function(p){
         return '<a class="cx-ped-c' + (sel && p.n === sel.n ? ' on' : '') + '" href="#pedidos/' + encodeURIComponent(p.n) + '"><div class="f1"><b>' + esc(p.n) + '</b>' + chip(p) + '</div>' +
-          '<div class="f2">' + pila(p) + '<span>' + fecha(p.fecha, true) + ' · ' + piezas(p) + ' pieza' + (piezas(p) === 1 ? '' : 's') + '</span></div><strong>' + (p.subtotal ? T.fmt(p.subtotal) : 'A cotizar') + '</strong></a>'; }).join('')
+          '<div class="f2">' + pila(p) + '<span>' + fecha(p.fecha, true) + ' · ' + piezas(p) + ' pieza' + (piezas(p) === 1 ? '' : 's') + '</span></div><div class="f3"><strong>' + (p.subtotal ? T.fmt(p.subtotal) : 'A cotizar') + '</strong>' + chipPago(p) + '</div></a>'; }).join('')
         : '<p class="cx-p">No hay pedidos en esta vista.</p>') + '</div>' + (sel ? detalleHTML(sel) : '') + '</div>';
   },
   proyectos: function(s){
@@ -283,7 +302,7 @@ var SEC = {
     return cab('Guardados', '', 'Sus piezas favoritas, listas para pedir.') + (fav.length ? pcs(fav) : vacio(I.guardados, 'Aún no guarda piezas.', 'catalogo/', 'Ver el catálogo'));
   },
   beneficios: function(s){
-    return cab('Beneficios', '', 'Lo que Giandeco pone a disposición de sus clientes.') +
+    return cab('Beneficios', '', 'Lo que Giandeco pone a disposición de sus clientes.<span class="d-only"> Cada módulo se puede activar, cambiar o quitar sin tocar el resto de la cuenta.</span>') +
       '<div class="cx-bn-grid es-3">' + bn(I.waMsg, 'Su asesor', 'Un asesor del estudio resuelve sus dudas por WhatsApp.', asesor(s), 'Escribir', true) +
         bn(I.navidad, 'Colección Navidad 2026', 'Las 26 piezas de la colección, con precio y ficha.', 'catalogo/navidad/', 'Ver colección') +
         bn(I.escudo, 'Cambios y garantía', 'Conozca las condiciones de cambio y garantía de sus piezas.', 'ayuda/cambios-y-garantia', 'Ver condiciones') +
@@ -291,7 +310,7 @@ var SEC = {
         bnVacio('Próximamente.') + '</div>' +
       '<div class="cx-filas">' + fila(I.waMsg, 'Su asesor', 'Le responde por WhatsApp', asesor(s)) + fila(I.navidad, 'Colección Navidad 2026', '26 piezas con precio y ficha', 'catalogo/navidad/') +
         fila(I.escudo, 'Cambios y garantía', 'Condiciones de sus piezas', 'ayuda/cambios-y-garantia') + fila(I.envio, 'Envíos y entregas', 'Plazos y cobertura', 'ayuda/envios-y-entregas') + '</div>' +
-      '<section class="cx-sec"><div style="display:flex;flex-direction:column;gap:6px"><h2 class="cx-h2">Servicios</h2><p class="cx-p">Servicios del estudio con costo, aparte de sus beneficios.</p></div>' + servicio() + '</section>' +
+      '<section class="cx-sec"><div style="display:flex;flex-direction:column;gap:6px"><h2 class="cx-h2" style="line-height:normal">Servicios</h2><p class="cx-p">Servicios del estudio con costo, aparte de sus beneficios.</p></div>' + servicio(false, true) + '</section>' +
       proyectoBloque(s);
   },
   direcciones: function(s){
@@ -332,10 +351,10 @@ var SEC = {
       '<div class="cx-datos-grid"><div class="cx-col">' +
         '<section class="cx-cd cx-perfil"><h2>Perfil</h2><form class="cx-form2" id="cuDatos" novalidate>' +
           '<div class="cx-campo"><label class="cx-lb" for="cuNombre">Nombre y apellido</label><input class="cx-in" id="cuNombre" type="text" autocomplete="name" value="' + esc(s.nombre || '') + '"><span class="cx-err">Indique su nombre.</span></div>' +
-          '<div class="cx-dos-c"><div class="cx-campo"><label class="cx-lb" for="cuCel">Celular</label><input class="cx-in" id="cuCel" type="tel" inputmode="numeric" maxlength="9" autocomplete="tel-national" value="' + esc(s.cel || '') + '"><span class="cx-err">Celular de 9 dígitos que empiece en 9.</span></div>' +
+          '<div class="cx-dos-c"><div class="cx-campo"><label class="cx-lb" for="cuCel">Celular</label><input class="cx-in" id="cuCel" type="tel" inputmode="numeric" maxlength="11" autocomplete="tel-national" value="' + esc(String(s.cel || '').replace(/^(\d{3})(\d{3})(\d{3})$/, '$1 $2 $3')) + '"><span class="cx-err">Celular de 9 dígitos que empiece en 9.</span></div>' +
             '<div class="cx-campo"><label class="cx-lb" for="cuEmail">Correo</label><div class="cx-ctl"><input class="cx-in" id="cuEmail" type="email" autocomplete="email" value="' + esc(s.email || '') + '"' + (conCuenta ? ' readonly' : '') + '>' + (conCuenta ? I.candado : '') + '</div><span class="cx-err">Revise el correo.</span></div></div>' +
           '<div><span class="cx-lb">Fecha de nacimiento</span><div class="cx-nac">' + sel('cuDia', 'Día', dias, m ? +m[3] : '', 'Día') + sel('cuMes', 'Mes', meses, m ? +m[2] : '', 'Mes') + sel('cuAnio', 'Año', anios, m ? +m[1] : '', 'Año') + '</div>' +
-            '<span class="cx-pista">Para enviarle su cupón de cumpleaños' + (ed !== null ? ' · ' + ed + ' años' : '') + '.</span></div>' +
+            '<span class="cx-pista">Para enviarle su cupón de cumpleaños' + (ed !== null ? '<span class="m-only"> · ' + ed + ' años</span>' : '') + '</span></div>' +
           '<div class="cx-dos-c"><div><span class="cx-lb">Género · opcional</span>' + sel('cuGen', 'Género', [['f', 'Femenino'], ['m', 'Masculino'], ['o', 'Otro'], ['n', 'Prefiero no decirlo']], s.genero || '', 'Elegir') + '</div>' +
             '<div class="cx-edad-w"><span class="cx-lb">Edad</span><div class="cx-edad" id="cuEdad">' + (ed !== null ? ed + ' años' : '—') + '</div></div></div>' +
           '<div class="cx-acc"><button type="submit" class="cx-btn es-chico">Guardar</button><span class="cx-ok" id="cuOk" role="status" hidden>' + I.check + 'Guardado</span></div></form></section>' +
@@ -348,11 +367,11 @@ var SEC = {
           '<div class="cx-rw"><span class="ic-c">' + I.escudo + '</span><div><b>Clave</b><span class="d">' + (google ? 'No la necesita: su cuenta está protegida por Google.' : 'Le enviamos un enlace a su correo para cambiarla.') + '</span></div>' + (google ? '<span></span>' : '<button type="button" class="cx-ed" id="cuClave">Cambiar</button>') + '</div></section>' +
         '<section class="cx-cd cx-com"><h2>Comunicación y cupones</h2>' +
           '<label class="cx-check"><input type="checkbox" id="comCumple"' + (com.cumple !== false ? ' checked' : '') + '><span><b>Cupón de cumpleaños</b><small>Reciba su cupón en el mes de su cumpleaños.</small></span></label>' +
-          '<label class="cx-check"><input type="checkbox" id="comNovedades"' + (com.novedades !== false ? ' checked' : '') + '><span><b>Novedades y colecciones</b><small>Lanzamientos, Navidad y ofertas para clientes.</small></span></label>' +
+          '<label class="cx-check"><input type="checkbox" id="comNovedades"' + (com.novedades !== false ? ' checked' : '') + '><span><b>Novedades y colecciones</b><small>Lanzamientos, Navidad y ofertas<span class="d-only"> para clientes</span>.</small></span></label>' +
           '<label class="cx-check"><input type="checkbox" checked disabled><span><b>Avisos de sus pedidos</b><small>Estado, envío y entrega. Siempre activos.</small></span></label>' +
           '<div><span class="cx-lb">Cómo prefiere que le escribamos</span><div class="cx-seg es-3" id="comCanal" role="group">' +
             [['whatsapp', 'WhatsApp'], ['correo', 'Correo'], ['ambos', 'Ambos']].map(function(c){ return '<button type="button" data-canal="' + c[0] + '" class="' + (canal === c[0] ? 'is-on' : '') + '">' + c[1] + '</button>'; }).join('') + '</div></div>' +
-          '<p class="cx-legal2">Usamos su fecha de nacimiento solo para su cupón y para comunicarnos con usted. Puede cambiarlo cuando quiera. <a href="legal/politica-de-privacidad">Privacidad</a></p></section>' +
+          '<p class="cx-legal2">Usamos su fecha de nacimiento solo para su cupón y para comunicarnos con usted.<span class="d-only"> Puede cambiarlo cuando quiera.</span> <a href="legal/politica-de-privacidad">Privacidad</a></p></section>' +
       '</div></div>' +
       '<div class="cx-acc cx-pie-d"><button type="button" class="cx-ghost" id="cuSalir">' + I.salir + 'Cerrar sesión</button><button type="button" class="cx-ghost es-peligro" id="cuBorrar">Borrar datos de este dispositivo</button></div>';
   },
@@ -392,7 +411,7 @@ function panel(s, nota){
   var atras = (sec === 'pedidos' && r.n) ? ['#pedidos', 'Pedidos'] : (['beneficios', 'direcciones', 'datos', 'seguridad'].indexOf(sec) !== -1 ? ['#cuenta', 'Cuenta'] : null);
   var mhead = atras
     ? '<header class="cx-mhead es-atras"><a class="cx-back" href="' + atras[0] + '" aria-label="Volver a ' + atras[1].toLowerCase() + '">' + I.atras + '</a><span class="cx-back-t">' + atras[1] + '</span></header>'
-    : '<header class="cx-mhead"><a href="./" aria-label="Giandeco Studio Design"><img src="img/logo-dorado.svg" alt="Giandeco Studio Design" width="300" height="268"></a><a class="cx-aser" href="' + asesor(s) + '" target="_blank" rel="noopener" aria-label="Hablar con mi asesor">' + I.waMsg + '</a></header>';
+    : '<header class="cx-mhead"><a href="./" aria-label="Giandeco Studio Design"><img src="img/logo-dorado.svg" alt="Giandeco Studio Design" width="300" height="268"></a><a class="cx-aser" href="' + asesor(s) + '" target="_blank" rel="noopener" aria-label="Hablar con mi asesor">' + I.wa + '</a></header>';
   var cuentas = { pedidos:L.ped.length, guardados:L.fav.length };
   root.innerHTML = '<div class="cx-app" data-sec="' + sec + '">' + mhead +
     '<aside class="cx-side"><div class="cx-yo"><span class="cx-avatar">' + (s.foto ? '<img src="' + esc(s.foto) + '" alt="" referrerpolicy="no-referrer">' : iniciales(s.nombre)) + '</span>' +
@@ -481,13 +500,13 @@ root.addEventListener('submit', function(e){
   if(fm.id === 'cxForm'){ enviarAcceso(); return; }
   if(fm.id === 'cuDatos'){
     var n = fm.querySelector('#cuNombre'), c = fm.querySelector('#cuCel'), m = fm.querySelector('#cuEmail');
-    var ok = [[n, n.value.trim().length > 2], [c, !c.value.trim() || /^9\d{8}$/.test(c.value.trim())], [m, correoOk(m.value.trim())]];
+    var ok = [[n, n.value.trim().length > 2], [c, !c.value.trim() || /^9\d{8}$/.test(c.value.replace(/\s/g, ''))], [m, correoOk(m.value.trim())]];
     ok.forEach(function(x){ x[0].closest('.cx-campo').classList.toggle('is-mal', !x[1]); });
     if(ok.some(function(x){ return !x[1]; })) return;
     var d = +fm.querySelector('#cuDia').value, mes = +fm.querySelector('#cuMes').value, a = +fm.querySelector('#cuAnio').value;
     var nac = d && mes && a ? a + '-' + ('0' + mes).slice(-2) + '-' + ('0' + d).slice(-2) : '';
     if(nac && edadDe(nac) === null){ fm.querySelector('#cuDia').focus(); return; }
-    guardarSesion({ nombre:n.value.trim(), cel:c.value.trim(), email:m.value.trim(), nac:nac, genero:fm.querySelector('#cuGen').value });
+    guardarSesion({ nombre:n.value.trim(), cel:c.value.replace(/\s/g, ''), email:m.value.trim(), nac:nac, genero:fm.querySelector('#cuGen').value });
     mostrarOk(document.getElementById('cuOk'));
     return;
   }

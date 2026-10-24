@@ -40,6 +40,7 @@ function config(){ return DATOS.leer('config', {}); }
 function prod(){ var p = DATOS.leer('prod', {}); p.over = p.over || {}; p.nuevos = p.nuevos || {}; return p; }
 
 var ESTADOS = T.ESTADOS.concat(['Cancelado']);          // índice 5 = cancelado
+function S(p){ return window.GD_ESTADO.de(p); }          // pago y entrega por separado (js/gd-estado.js)
 function fecha(iso){ return iso ? new Date(iso).toLocaleDateString('es-PE', { day:'2-digit', month:'short', year:'numeric' }) : '—'; }
 function totalDe(p){ return p.total != null ? p.total : (p.subtotal || 0) - (p.descuento || 0) + (p.envio || 0) + (p.armadoMonto || 0); }
 function vivo(p){ return p.estado !== 5; }
@@ -88,7 +89,9 @@ V.resumen = function(){
   var ped = pedidos(), act = ped.filter(vivo);
   var ventas = act.reduce(function(a, p){ return a + totalDe(p); }, 0);
   var cobrado = act.filter(function(p){ return p.pagado; }).reduce(function(a, p){ return a + totalDe(p); }, 0);
-  var porConfirmar = act.filter(function(p){ return p.estado === 0; }).length;
+  var nConf = act.filter(function(p){ return S(p).estudio.k === 'confirmar'; }).length;
+  var porCobrar = act.filter(function(p){ return S(p).estudio.k === 'cobrar'; });
+  var nCot = act.filter(function(p){ return S(p).estudio.k === 'cotizar'; }).length;
   var rec = DATOS.leer('reclamos', []).filter(function(r){ return !r.respondido; });
   var ops = DATOS.leer('opiniones', []).filter(function(o){ return o.estado === 'en revisión'; }).length +
             DATOS.leer('preguntas', []).filter(function(o){ return !o.estado; }).length +
@@ -100,7 +103,9 @@ V.resumen = function(){
   var porEstado = ESTADOS.map(function(e, i){ return ped.filter(function(p){ return p.estado === i; }).length; }), maxE = Math.max.apply(null, porEstado.concat([1]));
 
   var alertas = [];
-  if(porConfirmar) alertas.push('<a href="#pedidos"><b>' + porConfirmar + '</b> pedido' + (porConfirmar > 1 ? 's' : '') + ' por confirmar al cliente</a>');
+  if(nConf) alertas.push('<a href="#pedidos" data-a="ir-filtro" data-v="confirmar" class="es-urgente"><b>' + nConf + '</b> pedido' + (nConf > 1 ? 's pagados esperan' : ' pagado espera') + ' su confirmación: confirme disponibilidad y entrega</a>');
+  if(nCot) alertas.push('<a href="#pedidos" data-a="ir-filtro" data-v="cotizar"><b>' + nCot + '</b> cotizaci' + (nCot > 1 ? 'ones' : 'ón') + ' por responder</a>');
+  if(porCobrar.length) alertas.push('<a href="#pedidos" data-a="ir-filtro" data-v="cobrar"><b>' + porCobrar.length + '</b> pedido' + (porCobrar.length > 1 ? 's' : '') + ' por cobrar (' + fmt(porCobrar.reduce(function(a, p){ return a + totalDe(p); }, 0)) + ')</a>');
   rec.forEach(function(r){ var d = Math.ceil((vence(r.iso || new Date()) - new Date()) / 864e5); alertas.push('<a href="#reclamos" class="' + (d <= 5 ? 'es-urgente' : '') + '">Reclamo <b>' + esc(r.n) + '</b>: ' + (d < 0 ? 'plazo vencido' : 'quedan ' + d + ' días para responder') + '</a>'); });
   if(ops) alertas.push('<a href="#opiniones"><b>' + ops + '</b> opinión, pregunta o testimonio por revisar</a>');
   if(!(config().EMPRESA || {}).ruc) alertas.push('<a href="#ajustes" class="es-urgente">Falta la razón social y el RUC: sin ellos el libro de reclamaciones y los términos no son válidos</a>');
@@ -120,39 +125,62 @@ V.resumen = function(){
 
 /* ---------- PEDIDOS ---------- */
 var filtroPed = '', abierto = null;
+/* filtros por tarea ('confirmar', 'cobrar', 'cotizar') o por estado de la entrega (0 a 5) */
+function coincide(p, f){ return f === '' ? true : /^\d$/.test(f) ? String(p.estado) === f : S(p).estudio.k === f; }
+function celdaPago(p){
+  var s = S(p), po = p.pagoOnline;
+  var met = po ? (po.medio === 'yape' ? 'Yape' : (po.marca || 'Tarjeta') + (po.ultimos4 ? ' ···· ' + po.ultimos4 : '')) : (p.pago || '');
+  if(s.cancel && !s.pagado) return '<em class="ad-tag">Sin cobro</em>';
+  if(s.pagado) return '<em class="ad-tag es-ok">Pagado</em><small>' + esc(met) + (po && po.prueba ? ' · prueba' : '') + '</small>';
+  if(s.cot) return '<em class="ad-tag">Cotización</em>';
+  return '<em class="ad-tag es-pend">Por cobrar</em><small>' + esc(p.pago || '') + '</small>';
+}
 V.pedidos = function(){
-  var ped = pedidos(), lista = ped.filter(function(p){ return filtroPed === '' || String(p.estado) === filtroPed; });
+  var ped = pedidos(), lista = ped.filter(function(p){ return coincide(p, filtroPed); });
+  var cuenta = function(k){ return ped.filter(function(p){ return S(p).estudio.k === k; }).length; };
+  var tareas = [['confirmar', 'Pagados por confirmar'], ['cobrar', 'Por cobrar'], ['cotizar', 'Cotizaciones']];
   if(abierto){ var p = ped.filter(function(x){ return x.n === abierto; })[0]; if(p) return pedidoDetalle(p); abierto = null; }
   return cabecera('Pedidos', ped.length + ' en total.', '<button class="ad-btn" data-a="csv-pedidos">Exportar CSV</button>') +
     '<div class="ad-filtros"><button class="' + (filtroPed === '' ? 'is-on' : '') + '" data-a="filtro" data-v="">Todos</button>' +
+      tareas.map(function(t){ var n = cuenta(t[0]); return '<button class="' + (filtroPed === t[0] ? 'is-on' : n && t[0] === 'confirmar' ? 'es-urg' : '') + '" data-a="filtro" data-v="' + t[0] + '">' + t[1] + ' · ' + n + '</button>'; }).join('') + '<span class="ad-sep"></span>' +
       ESTADOS.map(function(e, i){ return '<button class="' + (filtroPed === String(i) ? 'is-on' : '') + '" data-a="filtro" data-v="' + i + '">' + e + '</button>'; }).join('') + '</div>' +
     (lista.length ? '<div class="ad-tabla-w"><table class="ad-tabla"><thead><tr><th>Pedido</th><th>Fecha</th><th>Cliente</th><th>Entrega</th><th>Pago</th><th class="num">Total</th><th>Estado</th></tr></thead><tbody>' +
       lista.map(function(p){
         return '<tr data-a="abrir" data-v="' + esc(p.n) + '" class="es-fila"><td><b>' + esc(p.n) + '</b>' + (p.demo ? ' <em class="ad-tag">demo</em>' : '') + '</td><td>' + fecha(p.fecha) + '</td>' +
           '<td>' + esc(p.cliente.nombre) + '<small>' + esc(p.cliente.cel) + '</small></td><td>' + (p.entrega.tipo === 'recojo' ? 'Recojo' : esc(p.entrega.distrito || 'Envío') + (p.entrega.provincia ? '<small>' + esc(p.entrega.provincia) + ' · ' + esc(p.entrega.departamento || '') + '</small>' : '') + (p.entrega.porAgencia ? ' <em class="ad-tag">agencia</em>' : '')) + '</td>' +
-          '<td>' + esc(p.pago || 'Cotización') + (p.pagado ? ' <em class="ad-tag es-ok">pagado</em>' : '') + '</td><td class="num">' + (p.subtotal ? fmt(totalDe(p)) : '—') + '</td>' +
-          '<td><em class="ad-estado e' + p.estado + '">' + ESTADOS[p.estado] + '</em></td></tr>';
+          '<td>' + celdaPago(p) + '</td><td class="num">' + (p.subtotal ? fmt(totalDe(p)) : '—') + '</td>' +
+          '<td><em class="ad-estado e' + p.estado + '">' + esc(S(p).etapa) + '</em>' + (S(p).estudio.t ? '<small class="ad-todo' + (S(p).estudio.urg ? ' es-urg' : '') + '">→ ' + esc(S(p).estudio.t) + '</small>' : '') + '</td></tr>';
       }).join('') + '</tbody></table></div>' : vacio('No hay pedidos en este estado.'));
 };
 function pedidoDetalle(p){
   var num = function(v){ return v != null ? v : ''; };
-  return cabecera('Pedido ' + esc(p.n), fecha(p.fecha) + ' · ' + esc(p.cliente.nombre), '<button class="ad-btn" data-a="cerrar">← Volver</button>') +
+  var s = S(p), po = p.pagoOnline, nom = p.cliente.nombre.split(' ')[0];
+  var enlacePago = location.origin + '/pagar?n=' + encodeURIComponent(p.n);
+  var wa2 = s.pagado
+    ? '<a class="ad-btn" target="_blank" rel="noopener" href="' + waCliente(p.cliente.cel, 'Hola ' + nom + ', recibimos el pago de su pedido ' + p.n + ' (' + fmt(totalDe(p)) + '). Estamos confirmando disponibilidad y entrega; le avisamos por aquí en breve. ¡Gracias!') + '">Avisar pago recibido</a>'
+    : s.cot ? '' : '<a class="ad-btn" target="_blank" rel="noopener" href="' + waCliente(p.cliente.cel, 'Hola ' + nom + ', le escribe Giandeco por su pedido ' + p.n + '. Aún no vemos su pago. Puede pagar con tarjeta aquí: ' + enlacePago + ' o por Yape/transferencia y enviarnos el comprobante por este chat.') + '">Recordar pago</a>';
+  var sit = '<div class="ad-sit"><div class="es-' + s.pago.tono + '"><span>Pago</span><b>' + esc(s.pago.t) + '</b><small>' + (s.pagado ? (po ? fmt(po.monto / 100) + ' · ' + esc(po.medio === 'yape' ? 'Yape' : (po.marca || 'Tarjeta') + (po.ultimos4 ? ' ···· ' + po.ultimos4 : '')) + (po.prueba ? ' · PRUEBA' : '') : 'Marcado por el estudio · ' + esc(p.pago || '')) : s.cot ? 'Sin importe todavía' : esc(p.pago || 'Medio por definir') + ' · ' + fmt(totalDe(p))) + '</small></div>' +
+    '<div><span>Entrega</span><b>' + esc(s.etapa) + '</b><small>' + (p.entrega.tipo === 'recojo' ? 'Recojo en Giandeco' : p.entrega.porAgencia ? 'Por agencia' : 'Envío a domicilio') + '</small></div>' +
+    '<div class="' + (s.estudio.urg ? 'es-urg' : '') + '"><span>Qué hacer ahora</span><b>' + esc(s.estudio.t || 'Nada pendiente') + '</b></div></div>';
+  return cabecera('Pedido ' + esc(p.n), fecha(p.fecha) + ' · ' + esc(p.cliente.nombre), '<button class="ad-btn" data-a="cerrar">← Volver</button>') + sit +
     '<div class="ad-cols es-2"><section class="ad-caja"><h2>Piezas</h2><table class="ad-tabla"><tbody>' +
       p.items.map(function(x){ return '<tr><td>' + x.qty + ' × ' + esc(x.nombre) + '<small>' + esc(x.cat || '') + '</small></td><td class="num">' + (x.valor === null ? 'A cotizar' : fmt(x.valor * x.qty)) + '</td></tr>'; }).join('') +
       '</tbody></table>' +
       '<div class="ad-form es-3" style="margin-top:20px;">' +
         '<label>Envío (S/)<input type="number" step="0.01" min="0" id="pdEnvio" value="' + num(p.envio) + '" placeholder="' + (p.entrega.porAgencia ? 'a cargo del cliente' : 'por confirmar') + '"></label>' +
         '<label>Armado (S/)<input type="number" step="0.01" min="0" id="pdArmado" value="' + num(p.armadoMonto) + '"' + (p.entrega.armado ? '' : ' placeholder="no pedido"') + '></label>' +
-        '<label>Estado<select id="pdEstado">' + ESTADOS.map(function(e, i){ return '<option value="' + i + '"' + (i === p.estado ? ' selected' : '') + '>' + e + '</option>'; }).join('') + '</select></label>' +
+        '<label>Estado de la entrega<select id="pdEstado">' + s.etapas.concat(['Cancelado']).map(function(e, i){ return '<option value="' + i + '"' + (i === p.estado ? ' selected' : '') + '>' + e + '</option>'; }).join('') + '</select></label>' +
       '</div>' +
       '<label class="ad-check"><input type="checkbox" id="pdPagado"' + (p.pagado ? ' checked' : '') + '> Pago recibido</label>' +
+      '<p class="ad-nota" style="margin:4px 0 16px;">' + (po ? 'Este pago llegó por la pasarela y se marcó solo. Desmárquelo únicamente si fue un error.' : 'Márquelo cuando vea el Yape o el depósito en su banco: el cliente lo ve de inmediato en Mi cuenta.') + '</p>' +
+      '<p class="ad-aviso" id="pdAviso" hidden></p>' +
       '<label class="ad-form">Nota interna<textarea id="pdNota">' + esc(p.notaInterna || '') + '</textarea></label>' +
       '<p class="ad-total">Subtotal ' + fmt(p.subtotal || 0) + (p.descuento ? ' · Cupón −' + fmt(p.descuento) : '') + ' · <b>Total ' + fmt(totalDe(p)) + '</b></p>' +
       '<div class="ad-head-acc"><button class="ad-btn es-pri" data-a="guardar-pedido" data-v="' + esc(p.n) + '">Guardar cambios</button>' +
         '<a class="ad-btn" target="_blank" rel="noopener" href="' + waCliente(p.cliente.cel, 'Hola ' + p.cliente.nombre.split(' ')[0] + ', le escribe Giandeco por su pedido ' + p.n + '. ' +
           (p.envio != null ? 'Confirmamos disponibilidad. Envío: ' + fmt(p.envio) + (p.armadoMonto ? ' · Armado: ' + fmt(p.armadoMonto) : '') + '. Total: ' + fmt(totalDe(p)) + '. Medio de pago elegido: ' + (p.pago || 'por definir') + '.'
             : p.entrega.porAgencia ? 'Confirmamos disponibilidad. Lo despachamos por agencia' + (p.entrega.agencia ? ' (' + p.entrega.agencia + ')' : '') + '; el flete se lo cobra la agencia al ' + (p.entrega.destino === 'oficina' ? 'recogerlo' : 'recibirlo') + '. Total de las piezas: ' + fmt(totalDe(p)) + '. Medio de pago elegido: ' + (p.pago || 'por definir') + '.'
-            : 'Estamos revisando la disponibilidad y el envío.')) + '">Escribir al cliente</a></div>' +
+            : 'Estamos revisando la disponibilidad y el envío.')) + '">Escribir al cliente</a>' + wa2 + '</div>' +
     '</section>' +
     '<section class="ad-caja"><h2>Cliente</h2><dl class="ad-dl">' +
       '<dt>Nombre</dt><dd>' + esc(p.cliente.nombre) + '</dd><dt>Celular</dt><dd>' + esc(p.cliente.cel) + '</dd><dt>Correo</dt><dd>' + esc(p.cliente.email) + '</dd>' +
@@ -332,17 +360,28 @@ function demo(){
 var SECC = [['resumen', 'Resumen'], ['pedidos', 'Pedidos'], ['productos', 'Productos'], ['clientes', 'Clientes'], ['opiniones', 'Opiniones y preguntas'], ['reclamos', 'Reclamos'], ['cupones', 'Cupones'], ['ajustes', 'Ajustes']];
 function pintar(){
   var s = (location.hash || '#resumen').slice(1); if(!V[s]) s = 'resumen';
-  var n = { pedidos: pedidos().filter(function(p){ return p.estado === 0; }).length, reclamos: DATOS.leer('reclamos', []).filter(function(r){ return !r.respondido; }).length };
+  var n = { pedidos: pedidos().filter(function(p){ return S(p).estudio.urg; }).length, reclamos: DATOS.leer('reclamos', []).filter(function(r){ return !r.respondido; }).length };
   nav.innerHTML = SECC.map(function(x){ return '<a href="#' + x[0] + '"' + (x[0] === s ? ' class="is-on"' : '') + '>' + x[1] + (n[x[0]] ? '<i>' + n[x[0]] + '</i>' : '') + '</a>'; }).join('');
   root.innerHTML = V[s]();
 }
 window.addEventListener('hashchange', function(){ if(!listo) return; abierto = null; pintar(); window.scrollTo(0, 0); });
 
+/* avisos al editar un pedido: que el pago y el estado cuenten la misma historia */
+root.addEventListener('change', function(e){
+  var id = e.target && e.target.id; if(id !== 'pdPagado' && id !== 'pdEstado') return;
+  var pg = document.getElementById('pdPagado'), es = document.getElementById('pdEstado'), av = document.getElementById('pdAviso'); if(!pg || !es || !av) return;
+  var est = +es.value, msg = '';
+  if(est === 5 && pg.checked) msg = 'Este pedido tiene un pago registrado: coordine la devolución con el cliente.';
+  else if(est >= 2 && est < 5 && !pg.checked) msg = 'Aún no hay pago registrado. Normalmente el pedido se prepara después de cobrar.';
+  else if(id === 'pdPagado' && pg.checked && est === 0) msg = 'Cuando confirme disponibilidad y entrega, cambie el estado a «Confirmado por el estudio».';
+  av.textContent = msg; av.hidden = !msg;
+});
 root.addEventListener('click', function(e){
   var b = e.target.closest('[data-a]'); if(!b) return;
   var a = b.getAttribute('data-a'), v = b.getAttribute('data-v'), i = +b.getAttribute('data-i');
   if(a === 'demo'){ demo(); pintar(); }
   else if(a === 'filtro'){ filtroPed = v; pintar(); }
+  else if(a === 'ir-filtro'){ e.preventDefault(); filtroPed = v; abierto = null; location.hash = '#pedidos'; pintar(); }
   else if(a === 'linea'){ filtroLin = v; pintar(); }
   else if(a === 'abrir'){ abierto = v; pintar(); window.scrollTo(0, 0); }
   else if(a === 'cerrar'){ abierto = null; pintar(); }

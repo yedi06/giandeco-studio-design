@@ -47,8 +47,8 @@ var CFG = {
                 (PAGO_DIRECTO) y envío del comprobante por WhatsApp.
      activo:false lo quita del checkout; el panel también puede apagarlos. */
   PAGO: [
-    { key:'culqi',   activo:true, label:'Pago en línea con tarjeta o Yape', logos:['visa','mastercard','amex','diners','yape'],
-      nota:'Tarjeta de crédito o débito, también en cuotas, o Yape. Su pedido queda confirmado al pagar.',
+    { key:'culqi',   activo:true, label:'Pago en línea con tarjeta', logos:['visa','mastercard','amex','diners'],
+      nota:'Tarjeta de crédito o débito, también en cuotas. Su pedido queda confirmado al pagar.',
       notaOff:'No disponible en este momento. Puede pagar por depósito.' },
     { key:'directo', activo:true, label:'Código QR Yape, número de celular de Giandeco o número de cuenta', logos:['yape','bcp'],
       nota:'Al registrar el pedido verá el código QR de Yape, el celular de Giandeco y la cuenta BCP. Paga, nos envía el comprobante por WhatsApp y confirmamos.' }
