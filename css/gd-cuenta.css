@@ -450,8 +450,107 @@
   .cx-invitado{ padding:24px 20px 40px; min-height:0; }
   .cx-activar{ padding:20px; gap:16px; }
 }
+@media (max-width:899px){
+  /* alto completo: las acciones quedan al pie de la pantalla, como en el diseño */
+  .cx-app{ display:flex; flex-direction:column; gap:0; }
+  .cx-main{ flex:1; }
+  .cx-mhead.es-atras ~ .cx-main{ padding-top:0; }
+  .cx-auth-panel{ align-items:stretch; }
+  .cx-ped-cab.es-detalle{ display:none; }
+  .cx-ped-grid.es-detalle{ flex:1; display:flex; flex-direction:column; align-items:stretch; }
+  .cx-ped-grid.es-detalle .cx-det{ flex:1; }
+  .cx-det .cx-det-cab{ align-items:flex-end; }
+  .cx-det .cx-det-cab > div{ gap:8px; }
+  .cx-det .cx-det-cab h2{ line-height:1.08; }
+  .cx-items{ gap:14px; }
+  .cx-det .cx-acc{ margin-top:auto; }
+  .cx-cuenta-m{ flex:1; }
+  .cx-cuenta-pie{ margin-top:auto; }
+  .cx-app[data-sec="cuenta"] .cx-mhead .cx-aser{ display:none; }
+  /* Mis datos: el botón Guardar va al final, tras «Comunicación y cupones» */
+  .cx-app[data-sec="datos"] .cx-main{ gap:18px; }
+  .cx-app[data-sec="datos"] .cx-cab{ margin-bottom:4px; }
+  .cx-app[data-sec="datos"] .cx-datos-grid, .cx-app[data-sec="datos"] .cx-col, .cx-app[data-sec="datos"] .cx-perfil, .cx-app[data-sec="datos"] .cx-form2{ display:contents; }
+  .cx-app[data-sec="datos"] .cx-com{ order:2; padding:22px 18px; background:var(--cx-card); }
+  .cx-app[data-sec="datos"] .cx-form2 > .cx-acc{ order:3; }
+  .cx-app[data-sec="datos"] .cx-form2 > .cx-acc .cx-btn{ height:54px; letter-spacing:.2em; width:100%; }
+  .cx-app[data-sec="datos"] .cx-perfil .cx-in{ background:#171613; }
+  .cx-check small{ font-size:13px; }
+  .cx-com .cx-legal2{ font-size:12px; }
+  .cx-curso-cab, .cx-curso-der{ display:contents; }
+  .cx-curso-id{ order:1; } .cx-tarjeta .cx-resumen-m{ order:2; } .cx-curso-der .cx-tot{ order:3; } .cx-curso-der .cx-btn{ order:4; }
+  .cx-app[data-sec="inicio"] .cx-h1{ font-size:36px; }
+  .cx-curso-id .cx-k{ font-size:10px; }
+}
 @media (min-width:900px){
   .cx-cuenta-m, .cx-mhead.es-solo-m{ display:none; }
   .cx-det .cx-acc .dup{ display:contents; }
 }
 @media (prefers-reduced-motion:reduce){ .cx-cargando i, .cx-giro{ animation:none; } }
+
+
+/* ==========================================================================
+   AJUSTES DE FIDELIDAD CON EL LIENZO
+   ========================================================================== */
+/* cabecera del lienzo: 80 px, filete inferior, logo de 52 px, márgenes de 72 px, sin interruptor de tema */
+@media (min-width:900px){
+  body.cx-body:not(.cx-auth-b) .site-header{ background:#0A0A09 !important; border-bottom:1px solid #171613 !important; box-shadow:none !important; }
+  body.cx-body:not(.cx-auth-b) .sh-marca{ height:80px; }
+  body.cx-body:not(.cx-auth-b) .sh-marca-in{ max-width:none; padding-inline:clamp(40px,5vw,96px); }
+  body.cx-body:not(.cx-auth-b) .sh-brand{ height:80px; display:flex; align-items:center; }
+  body.cx-body:not(.cx-auth-b) .sh-brand-big, body.cx-body:not(.cx-auth-b) .sh-brand-mini{ width:52px; height:auto; }
+  body.cx-body:not(.cx-auth-b) .sh-brand-big{ display:block; } body.cx-body:not(.cx-auth-b) .sh-brand-mini{ display:none; }
+  body.cx-body:not(.cx-auth-b) .sh-tema{ display:none; }
+  body.cx-body:not(.cx-auth-b) .sh-categorias{ display:none; }
+  .cx-app{ padding:129px clamp(40px,5vw,96px) 72px; max-width:none; }
+}
+/* el acceso es una pantalla completa, sin cabecera ni pie: el logo va sobre la foto */
+body.cx-auth-b .site-header, body.cx-auth-b .gd-footer, body.cx-auth-b .sh-mobile, body.cx-auth-b .sh-scrim{ display:none !important; }
+.cx-auth-logo{ display:block; position:absolute; top:44px; left:56px; z-index:1; width:84px; height:auto; }
+.cx-auth{ min-height:100svh; }
+.cx-auth-panel{ padding:48px 56px; }
+@media (max-width:899px){
+  .cx-auth-logo{ top:22px; left:24px; width:54px; }
+  .cx-auth-panel{ padding:0 24px 24px; }
+}
+
+/* fidelidad con el diseño · escritorio: medidas exactas por pantalla */
+@media (min-width:900px){
+  .cx-app[data-sec="pedidos"] .cx-main{ gap:32px; }
+  .cx-app[data-sec="beneficios"] .cx-main{ gap:40px; }
+  .cx-app[data-sec="datos"] .cx-main, .cx-app[data-sec="direcciones"] .cx-main{ gap:36px; }
+  .cx-bn-grid.es-3 .cx-bn{ padding:28px; }
+  .cx-bn-grid.es-3 .cx-bn h3{ font-size:24px; line-height:1.12; margin-top:6px; }
+  .cx-bn-grid.es-3 .cx-bn p{ font-size:15px; color:var(--cx-dim); }
+  .cx-bn-grid.es-3 .cx-bn.es-vacio p{ color:var(--cx-faint); }
+  .cx-bn-grid.es-3 .cx-bn .ic{ width:25px; height:25px; }
+  .cx-bn-grid.es-3 .cx-bn a.cx-go{ min-height:36px; }
+  .cx-serv{ padding:24px 28px; }
+  .cx-serv .cx-h3{ font-size:22px; }
+  .cx-serv .cx-p{ font-size:14px; }
+  .cx-serv:not(.es-largo) .cx-btn{ height:48px; padding:0 24px; letter-spacing:.14em; }
+  .cx-serv.es-largo{ grid-template-columns:48px minmax(0,1fr) auto; gap:22px 24px; padding:28px 32px; }
+  .cx-serv.es-largo > div:nth-child(2){ max-width:640px; }
+  .cx-serv.es-largo .cx-h3{ font-size:24px; }
+  .cx-serv.es-largo .cx-p{ font-size:15px; }
+  .cx-serv.es-largo .cx-btn{ grid-column:3; grid-row:1; letter-spacing:.14em; padding:0 28px; }
+  .cx-serv.es-largo .cx-datos2{ grid-column:2 / -1; grid-row:2; gap:12px; }
+  .cx-serv.es-largo .cx-datos2 > div{ flex-direction:row; align-items:baseline; gap:12px; padding:12px 18px; background:var(--cx-card2); border-radius:2px; }
+  .cx-serv.es-largo .cx-datos2 b{ font-size:17px; }
+  .cx-det .cx-acc{ gap:12px; }
+  .cx-det .cx-acc .dup{ display:contents; }
+  .cx-det .cx-acc .cx-btn, .cx-det .cx-acc .cx-ghost{ height:48px; padding:0 22px; letter-spacing:.14em; text-transform:uppercase; font-weight:500; font-size:13px; }
+  .cx-det .cx-acc .cx-ghost svg{ stroke:currentColor; }
+  .cx-pasos li{ font-size:12px; gap:10px; }
+  .cx-det-cab h2{ line-height:normal; }
+  .cx-datos2 b span{ font-size:inherit; letter-spacing:0; text-transform:none; color:inherit; font-weight:inherit; }
+}
+@media (min-width:900px){
+  .cx-com{ gap:18px; }
+  .cx-com > h2{ margin-bottom:4px; }
+  .cx-pie-d{ margin-top:-8px; }
+  .cx-pie-d #cuSalir{ display:none; }
+  .cx-pie-d .cx-ghost.es-peligro{ height:40px; padding:0; box-shadow:none; background:none; color:var(--cx-mute) !important; font-size:13px; text-decoration:underline; }
+}
+.cx-check small span{ display:inline; flex-direction:row; }
+@media (max-width:899px){ .cx-check small .d-only{ display:none; } .cx-check small .m-only{ display:inline; } .cx-com .cx-legal2 .d-only{ display:none; } }

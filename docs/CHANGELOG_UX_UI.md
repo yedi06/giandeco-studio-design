@@ -1,5 +1,21 @@
 # Changelog UX/UI
 
+## 2026-10-24 — Mi cuenta: ajuste fino contra el lienzo (comparación tablero por tablero)
+
+Se renderizaron los 10 tableros del lienzo (acceso, inicio, pedidos, beneficios, datos; escritorio 1440 y móvil 390) y se compararon con la página real con los mismos datos de ejemplo.
+
+### Corregido
+- **Escritorio:** la cabecera fija tapaba el inicio del contenido; ahora la cabecera es la compacta del lienzo (80 px, logo 52 px, sin conmutador de tema) y el contenido arranca bajo ella. Márgenes laterales del lienzo; el acceso es pantalla completa con el logo sobre la foto.
+- **Inicio:** enlaces de beneficios sin flecha, texto corto en «Visita técnica»; en móvil la tarjeta del pedido sigue el orden del lienzo (pedido · «En camino / Paso 4 de 5» · total · «Ver detalle»), fecha sin año y saludo a 36 px.
+- **Pedidos:** botones del detalle iguales (48 px, mayúsculas); en móvil el detalle no repite «Mi cuenta / Pedido», y «Consultar por WhatsApp» y los botones quedan al pie.
+- **Beneficios:** tarjetas con las medidas del lienzo, texto introductorio completo y «Visita técnica» con Costo / Duración en fichas bajo el texto.
+- **Mis datos:** celular con formato «987 654 321» (se guarda sin espacios), «Guardar» al final en móvil, textos cortos en móvil y largos en escritorio, «Borrar datos de este dispositivo» como enlace discreto.
+- **Móvil:** cabecera y barra inferior según el lienzo; el menú «Cuenta» no repite el botón del asesor; acciones al pie de pantalla.
+
+### Diferencias que se mantienen a propósito
+- «Su próximo beneficio» dice «Próximamente», no el texto de relleno entre corchetes de la maqueta.
+- Se conserva el botón de chat del sitio sobre la página (no está en el lienzo).
+
 ## 2026-10-22 — Mi cuenta y acceso según el lienzo «Giandeco · Mi cuenta y acceso»
 
 ### Cambiado
